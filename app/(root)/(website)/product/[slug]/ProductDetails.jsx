@@ -195,7 +195,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
     }
 
     return (
-        <section className="website-gutter bg-[linear-gradient(180deg,rgba(62,0,13,0.03),transparent_18%)] py-8 lg:py-12">
+        <section className="website-gutter bg-[linear-gradient(180deg,rgba(11,11,11,0.03),transparent_18%)] py-8 lg:py-12">
             <div className="w-full font-neue">
 
                 <div className="mb-6 lg:mb-8">

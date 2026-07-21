@@ -6,6 +6,7 @@ import Link from 'next/link'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ArrowUpRight } from 'lucide-react'
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import { WEBSITE_PRODUCT_DETAILS } from '@/routes/WebsiteRoute'
 import './FeaturedProduct.css'
@@ -46,17 +47,14 @@ const FeaturedProductClient = ({ products = [] }) => {
         // Hover effects: image scale + title slide
         cols.forEach((col) => {
             const img = col.querySelector('img')
-            const titleEl = col.querySelector('.fp-project-title h3')
             if (!img) return
 
             const onEnter = () => {
                 gsap.to(img, { scale: 1.25, duration: 2, ease: 'power4.out' })
-                if (titleEl) gsap.to(titleEl, { y: 0, duration: 1, ease: 'power4.out' })
             }
 
             const onLeave = () => {
                 gsap.to(img, { scale: 1, duration: 2, ease: 'power4.out' })
-                if (titleEl) gsap.to(titleEl, { y: 28, duration: 1, ease: 'power4.out' })
             }
 
             col.addEventListener('mouseenter', onEnter)
@@ -83,7 +81,7 @@ const FeaturedProductClient = ({ products = [] }) => {
                         const size = sizePattern[(i + index) % sizePattern.length]
                         return (
                             <div className={`fp-col ${size}`} key={product._id}>
-                                <Link href={WEBSITE_PRODUCT_DETAILS(product.slug)}>
+                                <Link href={WEBSITE_PRODUCT_DETAILS(product.slug)} aria-label={`View ${product?.name}`}>
                                     <Image
                                         src={product?.media?.[0]?.secure_url || imgPlaceholder.src}
                                         fill
@@ -91,6 +89,10 @@ const FeaturedProductClient = ({ products = [] }) => {
                                         className="object-cover object-center"
                                         sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw"
                                     />
+                                    <span className="fp-tag">Featured</span>
+                                    <span className="fp-arrow">
+                                        <ArrowUpRight size={18} strokeWidth={2} />
+                                    </span>
                                     <div className="fp-project-title">
                                         <h3>{product?.name}</h3>
                                         <span>₹{product?.sellingPrice?.toLocaleString('en-IN')}</span>
@@ -120,9 +122,23 @@ const FeaturedProductClient = ({ products = [] }) => {
     return (
         <section className="fp-section bg-background" ref={containerRef}>
             <div className="fp-container">
+                <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <span className="eyebrow flex items-center gap-2">
+                            <span aria-hidden className="h-px w-6 bg-current opacity-40" />
+                            Selected Pieces
+                        </span>
+                        <h2 className="mt-3 text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
+                            Featured This Season
+                        </h2>
+                    </div>
+                    <p className="max-w-xs text-[0.85rem] leading-relaxed text-[var(--muted-foreground)]">
+                        A curated edit of the pieces our customers are loving right now.
+                    </p>
+                </div>
                 {renderProductRows()}
                 <div className="fp-actions">
-                    <ShopAllButton colorScheme="dark-red" radius="md" />
+                    <ShopAllButton colorScheme="dark-red" radius="full" />
                 </div>
             </div>
         </section>

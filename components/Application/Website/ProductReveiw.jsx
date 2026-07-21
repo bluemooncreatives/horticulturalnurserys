@@ -126,10 +126,11 @@ const ProductReveiw = ({ productId }) => {
     return (
         <div className="mb-20 rounded-[var(--admin-shell-radius)] border border-border/60 bg-background shadow-sm">
             <div className="border-b border-border/60 px-5 py-4 lg:px-6 lg:py-5">
-                <p className="text-[0.95rem] font-semibold uppercase text-[var(--dark-red)]/60">
+                <p className="eyebrow flex items-center gap-2">
+                    <span aria-hidden className="h-px w-6 bg-current opacity-40" />
                     What Shoppers Say
                 </p>
-                <h2 className="mt-1 font-neue text-[clamp(1.4rem,2.6vw,2rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]">
+                <h2 className="mt-2 font-neue text-[clamp(1.4rem,2.6vw,2rem)] font-medium tracking-[-0.02em] leading-[1.1] text-[var(--brand-primary)]">
                     Rating &amp; Reviews
                 </h2>
             </div>

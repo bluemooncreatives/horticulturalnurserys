@@ -62,16 +62,16 @@ const ProductBox = ({ product, priority = false }) => {
     }
 
     return (
-        <div className='group relative flex flex-col overflow-hidden rounded-[var(--radius)] border border-border/60 bg-background transition duration-300 hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-[var(--shadow-card-hover)]'>
+        <div className='group relative flex flex-col overflow-hidden rounded-[var(--radius-3xl)] border border-border bg-white transition duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[var(--shadow-card-hover)]'>
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--product-card-bg)]">
-                <span className={`absolute right-3 top-3 z-20 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-sm ${hasDiscount ? 'bg-[var(--dark-red)] text-white' : 'bg-background/90 text-foreground/70'}`}>
-                    {hasDiscount ? `Sale ${discount}%` : 'Hot'}
+                <span className={`absolute right-3 top-3 z-20 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] shadow-sm ${hasDiscount ? 'bg-[var(--brand-primary)] text-white' : 'bg-[var(--brand-lime)] text-[var(--brand-lime-ink)]'}`}>
+                    {hasDiscount ? `Sale ${discount}%` : 'New'}
                 </span>
 
                 <Link
                     href={WEBSITE_PRODUCT_DETAILS(product.slug)}
                     aria-label={`View ${product?.name}`}
-                    className="absolute left-3 top-3 z-20 flex size-9 items-center justify-center rounded-xs border border-border/40 bg-background/85 text-foreground/70 opacity-0 shadow-sm backdrop-blur-sm transition duration-200 hover:bg-background hover:text-foreground group-hover:opacity-100"
+                    className="absolute left-3 top-3 z-20 flex size-9 items-center justify-center rounded-full border border-border/40 bg-background/85 text-foreground/70 opacity-0 shadow-sm backdrop-blur-sm transition duration-200 hover:bg-background hover:text-foreground group-hover:opacity-100"
                 >
                     <Eye className="size-4" />
                 </Link>

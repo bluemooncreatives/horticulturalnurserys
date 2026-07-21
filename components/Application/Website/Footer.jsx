@@ -5,21 +5,17 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useRef } from 'react'
 import Link from 'next/link'
-import { MapPin, Phone, Mail, Instagram, MessageCircle, Facebook, Twitter, Globe, ArrowRight } from 'lucide-react'
+import { MapPin, Phone, Clock, Instagram, MessageCircle, Facebook, Twitter, ArrowUp } from 'lucide-react'
 
 import { WEBSITE_HOME, WEBSITE_SHOP } from '@/routes/WebsiteRoute'
-import FooterWordmark from '@/components/Application/Website/FooterWordmark'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const CONTACT_EMAIL = 'momstitched.official@gmail.com'
 
-// Shown when the catalogue has no categories yet, so the column is never empty.
-const fallbackCategoryLinks = [
-    { label: 'All Products', href: WEBSITE_SHOP },
-]
+const fallbackCategoryLinks = [{ label: 'All Products', href: WEBSITE_SHOP }]
 
-const usefulLinks = [
+const navigationLinks = [
     { label: 'Home', href: WEBSITE_HOME },
     { label: 'Shop', href: WEBSITE_SHOP },
     { label: 'About', href: '/about-us' },
@@ -40,13 +36,13 @@ const socialLinks = [
 ]
 
 const LinkColumn = ({ title, links }) => (
-    <div className='footer-col'>
-        <h3 className='text-2xl font-semibold text-white mb-6'>{title}</h3>
+    <div className="footer-col">
+        <p className="eyebrow text-white/40">{title}</p>
         <nav aria-label={`${title} links`}>
-            <ul className='space-y-2'>
+            <ul className="mt-5 space-y-3">
                 {links.map(({ label, href }) => (
                     <li key={`${title}-${label}`}>
-                        <Link href={href} className='text-white/70 hover:text-[var(--brand-cream)] transition-colors'>
+                        <Link href={href} className="text-[0.95rem] text-white/70 transition-colors hover:text-[var(--brand-lime)]">
                             {label}
                         </Link>
                     </li>
@@ -61,132 +57,119 @@ const Footer = ({ categoryLinks = [] }) => {
     const categories = categoryLinks.length ? categoryLinks : fallbackCategoryLinks
 
     useGSAP(() => {
-        const reveal = (selector, vars = {}) =>
-            gsap.from(selector, {
-                autoAlpha: 0,
-                y: 40,
-                duration: 0.9,
-                ease: 'power4.out',
-                scrollTrigger: { trigger: selector, start: 'top 90%', once: true },
-                ...vars,
-            })
-
-        // Top row — caption, big email, CTA card
-        reveal('.footer-caption')
-        reveal('.footer-email', { y: 60, duration: 1 })
-        reveal('.footer-cta', { x: 60, y: 0, duration: 1, ease: 'power3.out' })
-
-        // Middle row — link columns / office reveal with a stagger
+        gsap.from('.footer-word', {
+            autoAlpha: 0, y: 40, duration: 1, ease: 'power4.out',
+            scrollTrigger: { trigger: rootRef.current, start: 'top 88%', once: true },
+        })
         gsap.from('.footer-col', {
-            autoAlpha: 0,
-            y: 50,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.12,
-            scrollTrigger: { trigger: '.footer-cols', start: 'top 85%', once: true },
+            autoAlpha: 0, y: 40, duration: 0.8, ease: 'power3.out', stagger: 0.1,
+            scrollTrigger: { trigger: '.footer-cols', start: 'top 92%', once: true },
         })
     }, { scope: rootRef })
 
-    return (
-        <footer ref={rootRef} className='sticky z-0 bottom-0 left-0 w-full bg-[var(--brand-primary)] text-white overflow-hidden' aria-label='Site footer'>
-            <div className='website-gutter pt-14 pb-8'>
+    const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
-                {/* ───── Top row: caption + big email + CTA card ───── */}
-                <div className='flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10'>
-                    <div className='min-w-0'>
-                        <p className='footer-caption text-md text-white/60 leading-snug mb-5 max-w-md'>
-                            Every stitch carries a story of care, craft, and grace. Discover handcrafted garments made to celebrate femininity and
-                            culture Reach <span className='font-semibold text-white'>MomStitched</span> at
+    return (
+        <footer ref={rootRef} className="website-gutter pt-6 pb-4" aria-label="Site footer">
+            <div className="dark-panel relative overflow-hidden px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+
+                {/* ── Top: wordmark + copyright mark ── */}
+                <div className="flex flex-col gap-6 border-b border-white/10 pb-8 sm:flex-row sm:items-start sm:justify-between">
+                    <h2 className="footer-word font-wordmark text-white text-[clamp(2.75rem,11vw,7rem)] leading-[0.82]">
+                        MomStitched
+                        <sup className="ml-[0.05em] align-top text-[0.26em] font-normal opacity-70">°</sup>
+                    </h2>
+                    <div className="shrink-0 sm:text-right">
+                        <p className="text-sm text-white/55">© 20 — 26°</p>
+                        <span aria-hidden className="mt-3 block h-px w-24 bg-white/25 sm:ml-auto" />
+                    </div>
+                </div>
+
+                {/* ── Middle: caption + email + columns ── */}
+                <div className="footer-cols grid gap-x-8 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
+                    <div className="footer-col">
+                        <p className="max-w-xs text-[0.95rem] leading-relaxed text-white/55">
+                            For women ready to feel quietly unforgettable in what they wear.
                         </p>
                         <Link
                             href={`mailto:${CONTACT_EMAIL}`}
-                            className='footer-email inline-block border-b border-white/30 pb-3 font-semibold tracking-tight text-[clamp(1.25rem,4.8vw,2.6rem)] leading-none hover:text-[var(--brand-cream)] transition-colors break-all'
+                            className="mt-6 inline-block break-all border-b border-white/25 pb-2 text-[clamp(1.1rem,2.4vw,1.6rem)] font-medium tracking-[-0.01em] text-white transition-colors hover:text-[var(--brand-lime)]"
                         >
                             {CONTACT_EMAIL}
                         </Link>
                     </div>
 
-                    {/* Get Started CTA card */}
-                    <div className='shrink-0'>
-                        <div className='footer-cta bg-[var(--brand-cream)] rounded-sm p-5 w-56'>
-                            <p className='text-[var(--brand-ink)] text-xl font-semibold mb-10'>Get Started</p>
-                            <Link
-                                href={WEBSITE_SHOP}
-                                className='flex items-center justify-between bg-[var(--brand-primary)] text-white rounded-sm pl-5 pr-4 py-3 hover:bg-[var(--brand-primary-hover)] transition-colors'
-                            >
-                                <span className='text-sm'>Go</span>
-                                <ArrowRight className='size-4' />
-                            </Link>
+                    <LinkColumn title="Navigation" links={navigationLinks} />
+                    <LinkColumn title="Explore" links={categories} />
+
+                    <div className="footer-col">
+                        <p className="eyebrow text-white/40">Social</p>
+                        <div className="mt-5 flex flex-wrap gap-2.5">
+                            {socialLinks.map(({ label, href, Icon }) => (
+                                <Link
+                                    key={label}
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`MomStitched on ${label}`}
+                                    className="flex size-11 items-center justify-center rounded-[var(--radius-2xl)] border border-white/15 bg-white/[0.04] text-white/70 transition-colors hover:border-[var(--brand-lime)] hover:text-[var(--brand-lime)]"
+                                >
+                                    <Icon className="size-[18px]" strokeWidth={1.6} />
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </div>
 
-                {/* ───── Middle row: link columns + contact / office ───── */}
-                <div className='footer-cols grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 mt-14'>
-                    <LinkColumn title='Categories' links={categories} />
-                    <LinkColumn title='Useful Links' links={usefulLinks} />
-                    <LinkColumn title='Help Center' links={helpLinks} />
-
-                    {/* Office / Contact */}
-                    <div className='footer-col lg:text-right'>
-                        <h3 className='text-2xl font-semibold text-white mb-6'>Office</h3>
-                        <ul className='space-y-2 text-white/70'>
-                            <li className='flex lg:justify-end items-center gap-2'>
-                                <MapPin className='size-5 shrink-0 lg:order-2' />
-                                <span>Lucknow, India 256320</span>
-                            </li>
-                            <li className='flex lg:justify-end items-center gap-2'>
-                                <Phone className='size-5 shrink-0 lg:order-2' />
-                                <Link href='tel:+91-8569874589' className='hover:text-[var(--brand-cream)] transition-colors'>+91-8569874589</Link>
-                            </li>
-                            <li className='flex lg:justify-end items-center gap-2'>
-                                <Mail className='size-5 shrink-0 lg:order-2' />
-                                <Link href={`mailto:${CONTACT_EMAIL}`} className='hover:text-[var(--brand-cream)] transition-colors'>Email Us</Link>
-                            </li>
-                            <li className='flex lg:justify-end items-center gap-4'>
-                                {socialLinks.map(({ label, href, Icon }) => (
-                                    <Link key={label} href={href} target='_blank' rel='noopener noreferrer' aria-label={`MomStitched on ${label}`}>
-                                        <Icon className='size-5 text-white/70 hover:text-[var(--brand-cream)] transition-colors' />
-                                    </Link>
-                                ))}
-                            </li>
-                        </ul>
+                {/* ── Contact strip + back-to-top ── */}
+                <div className="flex flex-col gap-8 border-t border-white/10 pt-8 sm:flex-row sm:items-end sm:justify-between">
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-10">
+                        <div>
+                            <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
+                                <Phone className="size-3.5" /> Phone
+                            </p>
+                            <Link href="tel:+91-8569874589" className="mt-2 block text-[0.95rem] text-white/70 transition-colors hover:text-[var(--brand-lime)]">
+                                +91 85698 74589
+                            </Link>
+                        </div>
+                        <div>
+                            <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
+                                <MapPin className="size-3.5" /> Studio
+                            </p>
+                            <p className="mt-2 text-[0.95rem] text-white/70">Lucknow, India 226001</p>
+                        </div>
+                        <div>
+                            <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
+                                <Clock className="size-3.5" /> Hours
+                            </p>
+                            <p className="mt-2 text-[0.95rem] text-white/70">Mon – Sat · 10:00 – 19:00</p>
+                        </div>
                     </div>
+
+                    <button
+                        type="button"
+                        onClick={toTop}
+                        aria-label="Back to top"
+                        className="icon-round shrink-0 border-white/25 text-white transition-colors hover:bg-white hover:text-[var(--brand-ink)]"
+                    >
+                        <ArrowUp className="size-5" />
+                    </button>
                 </div>
 
-                {/* ───── Giant wordmark (scroll-stretch GSAP effect) ───── */}
-                <FooterWordmark />
-            </div>
-
-            {/* ───── Bottom bar (purple) ───── */}
-            <div className='bg-[var(--brand-ink-soft)] text-[var(--brand-cream)]'>
-                <div className='website-gutter py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm'>
-                    <div className='flex flex-col items-center gap-1 sm:flex-row sm:items-center sm:gap-3'>
-                        <p>Copyright © {new Date().getFullYear()} MomStitched. All Rights Reserved.</p>
-                        <span className='hidden text-[var(--brand-cream)]/40 sm:inline' aria-hidden='true'>•</span>
-                        <p className='text-[var(--brand-cream)]/70'>
-                            Designed, built &amp; engineered end-to-end by{' '}
-                            <Link
-                                href='https://www.instagram.com/bluemoon.creatives/'
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                aria-label='Blue Moon Creatives on Instagram'
-                                className='font-semibold text-[var(--brand-cream)] underline decoration-[var(--brand-cream)]/40 underline-offset-2 transition-colors hover:text-[var(--brand-white)] hover:decoration-[var(--brand-white)]'
-                            >
-                                Blue Moon Creatives
-                            </Link>
-                        </p>
-                    </div>
-                    <div className='flex items-center flex-wrap justify-center gap-x-8 gap-y-2'>
-                        <span className='flex items-center gap-1.5'>
-                            <Globe className='size-4' /> Lucknow, India
-                        </span>
-                        {socialLinks.map(({ label, href }) => (
-                            <Link key={`bar-${label}`} href={href} target='_blank' rel='noopener noreferrer' className='hover:text-[var(--brand-white)] transition-colors'>
-                                {label}
-                            </Link>
-                        ))}
-                    </div>
+                {/* ── Bottom bar ── */}
+                <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 text-[0.8rem] text-white/40 sm:flex-row sm:items-center sm:justify-between">
+                    <p>© {new Date().getFullYear()} MomStitched. All rights reserved.</p>
+                    <p>
+                        Crafted by{' '}
+                        <Link
+                            href="https://www.instagram.com/bluemoon.creatives/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-white/70 underline decoration-white/25 underline-offset-2 transition-colors hover:text-[var(--brand-lime)]"
+                        >
+                            Blue Moon Creatives
+                        </Link>
+                    </p>
                 </div>
             </div>
         </footer>

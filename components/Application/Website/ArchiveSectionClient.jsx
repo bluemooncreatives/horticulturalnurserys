@@ -294,6 +294,10 @@ const ArchiveSectionClient = ({ title, writeup, columns, items = [] }) => {
                 <div className={styles.archive}>
                     {(title || writeup) && (
                         <div className={styles.copyBlock}>
+                            <span className="eyebrow mb-3 flex items-center gap-2">
+                                <span aria-hidden className="h-px w-6 bg-current opacity-40" />
+                                Browse the Archive
+                            </span>
                             {title && <h2 className={styles.title}>{title}</h2>}
                             {writeup && <p className={styles.writeup}>{writeup}</p>}
                         </div>

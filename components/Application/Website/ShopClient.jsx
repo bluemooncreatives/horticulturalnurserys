@@ -146,7 +146,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
     return (
         <div>
             <section className="relative isolate h-[172px] overflow-hidden sm:h-[180px] lg:h-[280px]">
-                <div className="absolute inset-0 bg-[var(--dark-red-2)]" />
+                <div className="absolute inset-0 bg-[var(--brand-ink-soft)]" />
                 <div className="absolute inset-x-0 top-14 z-10 flex justify-center sm:top-5 lg:top-6">
                     <div
                         className="pointer-events-none select-none font-neue font-semibold uppercase tracking-[0.02em] text-white/90"

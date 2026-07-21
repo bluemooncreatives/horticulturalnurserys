@@ -116,7 +116,13 @@ const BestsellersSectionClient = ({ products = [] }) => {
 
                 {/* ── Left: heading + arrows ── */}
                 <div ref={sidebarRef} className={styles.sidebar}>
-                    <h2 className={styles.heading}>Bestsellers</h2>
+                    <div>
+                        <span className="eyebrow mb-3 flex items-center gap-2">
+                            <span aria-hidden className="h-px w-6 bg-current opacity-40" />
+                            Most Loved
+                        </span>
+                        <h2 className={styles.heading}>Bestsellers</h2>
+                    </div>
                     <div className={styles.navControls}>
                         <button className={styles.navBtn} onClick={() => scroll('left')} aria-label="Scroll left">
                             <ChevronLeft size={18} strokeWidth={1.8} />

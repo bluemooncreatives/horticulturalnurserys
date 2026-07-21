@@ -22,7 +22,7 @@
     height: clamp(18rem, 32vw, 23.75rem);
     margin-bottom: clamp(1rem, 2vw, 2rem);
     overflow: hidden;
-    border-radius: var(--radius);
+    border-radius: var(--radius-3xl);
     clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
     background: var(--product-card-bg);
 }
@@ -60,12 +60,11 @@
 
 .fp-project-title h3 {
     position: relative;
-    transform: translateY(28px);
-    font-size: clamp(1rem, 1.5vw, 1.125rem);
-    font-weight: 300;
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
     color: #fff;
-    will-change: transform;
-    line-height: 1.3;
+    line-height: 1.2;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -76,15 +75,54 @@
 .fp-project-title span {
     display: block;
     font-size: clamp(0.8rem, 1vw, 0.9rem);
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.85);
-    margin-top: 0.2rem;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 0.3rem;
+    opacity: 1;
 }
 
-.fp-col:hover .fp-project-title span {
+/* Pill tag (top-left) */
+.fp-tag {
+    position: absolute;
+    top: clamp(0.75rem, 1.6vw, 1rem);
+    left: clamp(0.75rem, 1.6vw, 1rem);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    height: 1.75rem;
+    padding: 0 0.75rem;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+/* Arrow badge (top-right, reveals on hover) */
+.fp-arrow {
+    position: absolute;
+    top: clamp(0.75rem, 1.6vw, 1rem);
+    right: clamp(0.75rem, 1.6vw, 1rem);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-pill);
+    background: var(--brand-lime);
+    color: var(--brand-lime-ink);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.fp-col:hover .fp-arrow {
     opacity: 1;
+    transform: translateY(0);
 }
 
 /* Subtle dark gradient at bottom for text readability */

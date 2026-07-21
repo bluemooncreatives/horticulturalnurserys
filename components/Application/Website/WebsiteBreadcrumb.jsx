@@ -55,7 +55,7 @@ const WebsiteBreadcrumb = ({ props }) => {
     return (
         <section className="relative isolate h-[180px] overflow-hidden sm:h-[160px] lg:h-[200px]">
             {/* Brand background */}
-            <div className="absolute inset-0 bg-[var(--dark-red-2)]" />
+            <div className="absolute inset-0 bg-[var(--brand-ink-soft)]" />
 
             {/* Watermark title — measured + scaled to fill the banner width. On
                 mobile it sits below the fixed header so it isn't clipped by it. */}

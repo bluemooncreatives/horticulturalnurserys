@@ -133,7 +133,7 @@ const Marquee = ({ text = 'freshly arrived', repeatCount = 12, speed = 1 }) => {
     return (
         <section
             ref={containerRef}
-            className='marquee-shell relative overflow-hidden bg-[var(--brand-primary)] px-3 py-5 text-[var(--brand-cream)] shadow-[0_16px_36px_rgba(62,0,13,0.18)] sm:mx-0 sm:rounded-none sm:border-0 sm:px-0 sm:py-8 sm:shadow-none'
+            className='marquee-shell relative overflow-hidden bg-[var(--brand-ink-soft)] px-3 py-5 text-[var(--brand-cream)] shadow-[0_16px_36px_rgba(0,0,0,0.18)] sm:mx-0 sm:rounded-none sm:border-0 sm:px-0 sm:py-8 sm:shadow-none'
         >
             <div className='marquee__inner' ref={innerRef}>
                 {Array.from({ length: repeatCount }).map((_, index) => (
@@ -182,7 +182,7 @@ const Marquee = ({ text = 'freshly arrived', repeatCount = 12, speed = 1 }) => {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    color: currentColor;
+                    color: var(--brand-lime);
                     flex-shrink: 0;
                 }
                 .arrow.active {

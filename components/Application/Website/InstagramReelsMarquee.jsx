@@ -53,8 +53,8 @@ const InstagramReelsMarquee = () => {
     return (
         <section className="relative overflow-hidden bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
             <div className="website-gutter relative z-20 mb-6 flex items-center justify-between gap-6">
-                <h2 className="text-left text-[clamp(1.8rem,4.8vw,3.8rem)] font-medium uppercase text-[var(--dark-red-2)] z-50">
-                    Gallery
+                <h2 className="text-left text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)] z-50">
+                    From the Gallery
                 </h2>
                 <div className="flex shrink-0 items-center gap-4 text-[var(--dark-red-2)]">
                     <Link
@@ -114,7 +114,7 @@ const InstagramReelsMarquee = () => {
                 .instagram-card {
                     width: 200px;
                     aspect-ratio: 9 / 16;
-                    border-radius: var(--admin-shell-radius);
+                    border-radius: var(--radius-3xl);
                     overflow: hidden;
                     background: var(--brand-warm-bg);
                     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);

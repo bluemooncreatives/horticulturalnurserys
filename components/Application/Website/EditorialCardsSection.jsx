@@ -104,10 +104,11 @@ const EditorialCardsSection = () => {
             {/* section header */}
             <div ref={headerRef} className="mb-4 flex items-end justify-between lg:mb-6">
                 <div>
-                    <p className="text-[1rem] font-semibold uppercase text-[var(--dark-red)]/60">
+                    <span className="eyebrow flex items-center gap-2">
+                        <span aria-hidden className="h-px w-6 bg-current opacity-40" />
                         Explore More
-                    </p>
-                    <h2 className="mt-1.5 font-neue text-[clamp(1.8rem,4.8vw,3.8rem)] font-medium uppercase text-[var(--dark-red-2)]">
+                    </span>
+                    <h2 className="mt-3 text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
                         The Full Picture
                     </h2>
                 </div>
@@ -128,7 +129,7 @@ const EditorialCardsSection = () => {
                         ref={(el) => { cardRefs.current[i] = el }}
                         onMouseEnter={() => handleEnter(i)}
                         onMouseLeave={() => handleLeave(i)}
-                        className="group relative overflow-hidden rounded-xl"
+                        className="group relative overflow-hidden rounded-[var(--radius-3xl)]"
                         style={{ aspectRatio: '4/5' }}
                     >
                         {/* background image */}
@@ -154,12 +155,12 @@ const EditorialCardsSection = () => {
                             </p>
 
                             {/* heading */}
-                            <h3 className="font-neue text-[1.55rem] font-semibold uppercase leading-tight tracking-[0.03em] text-white lg:text-[1.7rem]">
+                            <h3 className="text-[1.55rem] font-medium leading-tight tracking-[-0.01em] text-white lg:text-[1.75rem]">
                                 {card.heading}
                             </h3>
 
                             {/* divider */}
-                            <div className="my-3 h-px w-8 bg-white/30" />
+                            <div className="my-3 h-px w-8 bg-[var(--brand-lime)]" />
 
                             {/* description */}
                             <p className="line-clamp-2 text-[0.8rem] leading-relaxed text-white/70">
@@ -167,9 +168,9 @@ const EditorialCardsSection = () => {
                             </p>
 
                             {/* CTA */}
-                            <div className="mt-5 inline-flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase text-white/85 transition-colors duration-200 group-hover:text-white">
+                            <div className="mt-5 inline-flex items-center gap-1.5 text-[0.78rem] font-medium tracking-[-0.01em] text-white/85 transition-colors duration-200 group-hover:text-[var(--brand-lime)]">
                                 {card.cta}
-                                <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                             </div>
                         </div>
                     </Link>

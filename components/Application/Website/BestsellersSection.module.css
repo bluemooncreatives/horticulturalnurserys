@@ -26,12 +26,11 @@
 
 .heading {
     margin: 0;
-    font-size: clamp(1.8rem, 4.8vw, 3.8rem);
+    font-size: clamp(1.7rem, 4.2vw, 3rem);
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    color: var(--brand-primary-hover);
-    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--brand-primary);
+    line-height: 1.05;
     white-space: nowrap;
 }
 
@@ -103,6 +102,7 @@
     aspect-ratio: 4 / 5;
     background: var(--product-card-bg);
     overflow: hidden;
+    border-radius: var(--radius-3xl);
 }
 
 /* ── Card body ───────────────────────────────────────────────────── */
@@ -162,7 +162,7 @@
     text-transform: uppercase;
     letter-spacing: 0.07em;
     text-decoration: none;
-    border-radius: 3px;
+    border-radius: var(--radius-pill);
     white-space: nowrap;
     border: none;
     transition: background var(--duration-fast) var(--ease-in-out),
@@ -182,9 +182,9 @@
     height: 32px;
     flex-shrink: 0;
     border: none;
-    background: var(--brand-primary-hover);
+    background: var(--brand-primary);
     color: var(--brand-white);
-    border-radius: 3px;
+    border-radius: var(--radius-pill);
     cursor: pointer;
     transition: background var(--duration-fast) var(--ease-in-out);
 }

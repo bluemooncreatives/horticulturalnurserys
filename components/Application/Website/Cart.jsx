@@ -20,8 +20,12 @@ import { showToast } from "@/lib/showToast"
 
 const fmt = (n) => n?.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })
 
-const Cart = () => {
-    const [open, setOpen] = useState(false)
+const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
+    const [openState, setOpenState] = useState(false)
+    // Controlled when the parent passes open/onOpenChange (e.g. driven from the
+    // navbar menu panel); otherwise falls back to its own internal state.
+    const open = openProp !== undefined ? openProp : openState
+    const setOpen = onOpenChange ?? setOpenState
     const [subtotal, setSubTotal] = useState(0)
     const [mounted, setMounted] = useState(false)
     useEffect(() => setMounted(true), [])
@@ -37,15 +41,17 @@ const Cart = () => {
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
-            {/* ── Trigger ── */}
-            <SheetTrigger aria-label="Open cart" className="relative flex items-center justify-center rounded-md px-1.5 py-1.5 transition hover:bg-muted/40 sm:px-2.5 sm:py-2">
-                <ShoppingCart className="h-4 w-4 text-foreground sm:h-5 sm:w-5" strokeWidth={1.75} />
-                {cartCount > 0 && (
-                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--dark-red)] px-1 text-[9px] font-semibold text-white tabular-nums sm:-right-2 sm:-top-2 sm:h-5 sm:min-w-5 sm:text-[10px]">
-                        {cartCount}
-                    </span>
-                )}
-            </SheetTrigger>
+            {/* ── Trigger ── (hidden when the navbar drives the drawer directly) */}
+            {!hideTrigger && (
+                <SheetTrigger aria-label="Open cart" className="relative flex items-center justify-center rounded-md px-1.5 py-1.5 transition hover:bg-muted/40 sm:px-2.5 sm:py-2">
+                    <ShoppingCart className="h-4 w-4 text-foreground sm:h-5 sm:w-5" strokeWidth={1.75} />
+                    {cartCount > 0 && (
+                        <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--dark-red)] px-1 text-[9px] font-semibold text-white tabular-nums sm:-right-2 sm:-top-2 sm:h-5 sm:min-w-5 sm:text-[10px]">
+                            {cartCount}
+                        </span>
+                    )}
+                </SheetTrigger>
+            )}
 
             {/* ── Drawer ── */}
             <SheetContent className="w-full gap-0 border-l border-border/40 bg-background p-0 shadow-xl sm:max-w-[440px]">

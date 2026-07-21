@@ -2,36 +2,61 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Menu, Search as SearchIcon } from "lucide-react"
+import { Search as SearchIcon, ShoppingCart, ArrowUpRight } from "lucide-react"
+import { useSelector } from "react-redux"
 
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import {
   Sheet,
   SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet"
 import Cart from "@/components/Application/Website/Cart"
 import GlobalSearch from "@/components/Application/Website/GlobalSearch"
 
 const defaultMenu = [
+  { title: "Home", url: "/" },
   { title: "Shop", url: "/shop" },
-  { title: "About Us", url: "/about-us" },
+  { title: "About", url: "/about-us" },
   { title: "Contact", url: "/contact" },
 ]
 
+// Small superscript degree accent echoing the reference's ®/° motif —
+// decorative only, not a trademark claim.
+const Wordmark = ({ title, className = "" }) => (
+  <span className={`font-wordmark inline-flex items-start ${className}`}>
+    {title}
+    <sup className="ml-[0.12em] mt-[0.15em] text-[0.42em] font-normal leading-none opacity-70">°</sup>
+  </span>
+)
+
 export default function Navbar({
-  logo = {
-    url: "/",
-    alt: "MomStitched logo",
-    title: "MomStitched",
-  },
+  logo = { url: "/", alt: "MomStitched logo", title: "MomStitched" },
   menu = defaultMenu,
 }) {
   const [openSearch, setOpenSearch] = React.useState(false)
+  const [openMenu, setOpenMenu] = React.useState(false)
+  const [openCart, setOpenCart] = React.useState(false)
+  const [scrolled, setScrolled] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
 
+  const rawCount = useSelector((store) => store.cartStore?.count ?? 0)
+  const cartCount = mounted ? rawCount : 0
+
+  React.useEffect(() => setMounted(true), [])
+
+  // Transparent at the top of the page; picks up a faint blurred surface once
+  // the user scrolls, so links stay readable over the sections below the hero.
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  // Cmd/Ctrl+K opens the global search palette.
   React.useEffect(() => {
     const onKeyDown = (event) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
@@ -43,108 +68,129 @@ export default function Navbar({
     return () => document.removeEventListener("keydown", onKeyDown)
   }, [])
 
+  // Radix scroll-lock/focus can race if two dialogs toggle in the same tick,
+  // so let the menu finish closing before opening the cart/search overlay.
+  const openFromMenu = (open) => {
+    setOpenMenu(false)
+    setTimeout(open, 80)
+  }
+
   return (
-    <section className="py-4">
-      <div className="w-full px-4 lg:px-10">
-        <nav className="hidden grid-cols-[1fr_auto_1fr] items-center lg:grid" aria-label="Main navigation">
-          <div className="flex items-center gap-8">
-            {menu.map((item) => (
+    <div
+      className={cn(
+        "w-full transition-colors duration-300",
+        scrolled
+          ? "border-b border-black/[0.06] bg-[var(--background)]/85 backdrop-blur-md supports-[backdrop-filter]:bg-[var(--background)]/70"
+          : "border-b border-transparent"
+      )}
+    >
+      <nav
+        className="website-gutter flex w-full items-center py-1.5 sm:py-2"
+        aria-label="Main navigation"
+      >
+        {/* ── Logo ── */}
+        <Link
+          href={logo.url}
+          className="shrink-0 text-lg text-[var(--brand-primary)] transition-opacity hover:opacity-70 sm:text-xl"
+          aria-label={logo.alt}
+        >
+          <Wordmark title={logo.title} />
+        </Link>
+
+        {/* ── Equally-distributed plus-separated links (desktop) ── */}
+        <div className="hidden flex-1 items-center justify-between px-8 lg:flex xl:px-14">
+          {menu.map((item, index) => (
+            <React.Fragment key={item.title}>
               <Link
-                key={item.title}
                 href={item.url}
-                className="text-base font-semibold text-[var(--brand-primary)] transition-colors hover:text-[var(--brand-primary-hover)]"
+                className="text-[0.85rem] font-normal tracking-[0.01em] text-[var(--brand-primary)] transition-opacity hover:opacity-55"
               >
                 {item.title}
               </Link>
-            ))}
-          </div>
+              {index < menu.length - 1 && (
+                <span aria-hidden="true" className="select-none text-[0.85rem] font-light text-[var(--muted-foreground)]/40">
+                  +
+                </span>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
 
-          <Link
-            href={logo.url}
-            className="font-header text-3xl leading-none tracking-wide text-[var(--brand-primary)] transition-colors hover:text-[var(--brand-primary-hover)]"
-            aria-label={logo.alt}
-          >
-            {logo.title}
-          </Link>
+        {/* ── Hamburger — two-line mark (opens the full menu, incl. search + cart) ── */}
+        <button
+          type="button"
+          onClick={() => setOpenMenu(true)}
+          aria-label="Open menu"
+          className="relative ml-auto flex size-10 shrink-0 items-center justify-center rounded-full text-[var(--brand-primary)] transition-colors hover:bg-black/[0.05] lg:ml-0"
+        >
+          <span aria-hidden className="flex flex-col items-center gap-[6px]">
+            <span className="block h-[2px] w-[26px] rounded-full bg-current" />
+            <span className="block h-[2px] w-[26px] rounded-full bg-current" />
+          </span>
+          {cartCount > 0 && (
+            <span className="absolute right-0.5 top-0.5 size-2 rounded-full bg-[var(--brand-primary)] ring-2 ring-[var(--background)]" />
+          )}
+        </button>
+      </nav>
 
-          <div className="flex items-center justify-end gap-3 lg:gap-5">
+      {/* ── Slide-out menu panel ── */}
+      <Sheet open={openMenu} onOpenChange={setOpenMenu}>
+        <SheetContent
+          side="right"
+          className="flex w-[88%] max-w-md flex-col gap-0 border-l border-black/[0.06] bg-[var(--background)] p-0"
+        >
+          <SheetHeader className="flex-shrink-0 border-b border-black/[0.06] px-6 py-6">
+            <SheetTitle className="text-[1.7rem] text-[var(--brand-primary)]">
+              <Wordmark title={logo.title} />
+            </SheetTitle>
+          </SheetHeader>
+
+          {/* Search + Cart — relocated here per the reference's single-menu model */}
+          <div className="grid flex-shrink-0 grid-cols-2 gap-2.5 border-b border-black/[0.06] px-4 py-4">
             <button
               type="button"
-              onClick={() => setOpenSearch(true)}
-              className="text-stone-600 transition-colors hover:text-[var(--brand-primary-hover)]"
-              aria-label="Open search"
-              title="Search (Ctrl K)"
+              onClick={() => openFromMenu(() => setOpenSearch(true))}
+              className="flex items-center justify-center gap-2 rounded-[var(--radius-2xl)] border border-[var(--border)] bg-white px-4 py-3 text-[0.9rem] font-medium text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
             >
-              <SearchIcon className="h-6 w-6" strokeWidth={1.75} />
+              <SearchIcon className="size-[1.05rem]" strokeWidth={1.75} />
+              Search
             </button>
-
-            <div>
-              <Cart />
-            </div>
-          </div>
-        </nav>
-
-        <div className="flex items-center justify-between lg:hidden" role="navigation" aria-label="Mobile navigation">
-          <Link
-            href={logo.url}
-            className="font-header text-2xl leading-none tracking-wide text-[var(--brand-primary)]"
-            aria-label={logo.alt}
-          >
-            {logo.title}
-          </Link>
-
-          <div className="flex items-center gap-0.5">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setOpenSearch(true)}
-              className="size-8 text-stone-700 hover:text-[var(--brand-primary-hover)]"
-              aria-label="Open search"
+            <button
+              type="button"
+              onClick={() => openFromMenu(() => setOpenCart(true))}
+              className="relative flex items-center justify-center gap-2 rounded-[var(--radius-2xl)] bg-[var(--brand-primary)] px-4 py-3 text-[0.9rem] font-medium text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
             >
-              <SearchIcon className="size-4" strokeWidth={1.75} />
-            </Button>
-
-            <div>
-              <Cart />
-            </div>
-
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="size-8 text-stone-700 hover:text-[var(--brand-primary-hover)]"
-                  aria-label="Open menu"
-                >
-                  <Menu className="size-4" strokeWidth={1.75} />
-                </Button>
-              </SheetTrigger>
-              <SheetContent className="flex w-[85%] max-w-sm gap-0 border-l border-black/[0.08] bg-background p-0 sm:max-w-sm">
-                <SheetHeader className="flex-shrink-0 border-b border-black/[0.08] px-5 py-5">
-                  <SheetTitle className="font-header text-2xl leading-none tracking-wide text-[var(--brand-primary)]">
-                    {logo.title}
-                  </SheetTitle>
-                </SheetHeader>
-
-                <nav className="flex flex-1 flex-col overflow-y-auto px-3 py-3" aria-label="Mobile menu">
-                  {menu.map((item) => (
-                    <SheetClose asChild key={item.title}>
-                      <Link
-                        href={item.url}
-                        className="rounded-md px-3 py-3.5 font-neue text-base font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--brand-cream)]/50 hover:text-[var(--brand-primary-hover)] active:bg-[var(--brand-cream)]/70"
-                      >
-                        {item.title}
-                      </Link>
-                    </SheetClose>
-                  ))}
-                </nav>
-              </SheetContent>
-            </Sheet>
+              <ShoppingCart className="size-[1.05rem]" strokeWidth={1.75} />
+              Cart
+              {cartCount > 0 && (
+                <span className="ml-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-lime)] px-1 text-[10px] font-semibold tabular-nums text-[var(--brand-lime-ink)]">
+                  {cartCount}
+                </span>
+              )}
+            </button>
           </div>
-        </div>
-      </div>
 
+          {/* Primary navigation */}
+          <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 py-4" aria-label="Menu">
+            {menu.map((item) => (
+              <SheetClose asChild key={item.title}>
+                <Link
+                  href={item.url}
+                  className="group flex items-center justify-between rounded-[var(--radius-2xl)] px-4 py-3.5 text-[1.6rem] font-medium tracking-[-0.02em] text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
+                >
+                  {item.title}
+                  <ArrowUpRight className="size-5 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                </Link>
+              </SheetClose>
+            ))}
+          </nav>
+        </SheetContent>
+      </Sheet>
+
+      {/* Cart drawer + search palette live outside the menu to avoid nesting
+          two Radix dialogs; both are driven by the panel buttons above. */}
+      <Cart open={openCart} onOpenChange={setOpenCart} hideTrigger />
       <GlobalSearch open={openSearch} setOpen={setOpenSearch} isLoggedIn={false} />
-    </section>
+    </div>
   )
 }

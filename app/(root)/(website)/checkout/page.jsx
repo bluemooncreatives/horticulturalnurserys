@@ -358,7 +358,7 @@ const Checkout = () => {
                 },
 
                 "theme": {
-                    "color": "#3E000D"
+                    "color": "#0B0B0B"
                 }
             }
 

@@ -442,10 +442,12 @@ const AboutUsContent = ({ products = [] }) => {
         <div className={styles.inner}>
           <section className={styles.related}>
             <div className="mb-8 text-center lg:mb-10">
-              <p className="text-[1rem] font-semibold uppercase text-[var(--dark-red)]/60">
+              <p className="eyebrow inline-flex items-center gap-2">
+                <span aria-hidden className="h-px w-6 bg-current opacity-40" />
                 Curated For You
+                <span aria-hidden className="h-px w-6 bg-current opacity-40" />
               </p>
-              <h2 className="mt-1.5 font-neue text-[clamp(1.6rem,3.4vw,2.6rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]">
+              <h2 className="mt-3 font-neue text-[clamp(1.6rem,3.4vw,2.6rem)] font-medium tracking-[-0.02em] leading-[1.1] text-[var(--brand-primary)]">
                 You May Also Like
               </h2>
             </div>

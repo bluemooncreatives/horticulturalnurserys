@@ -177,7 +177,7 @@
   min-height: 3rem;
   background-color: var(--contact-heading);
   border: 1px solid var(--contact-heading);
-  border-radius: var(--radius, 8px);
+  border-radius: var(--radius, 6px);
   color: var(--contact-bg);
   cursor: pointer;
   font: inherit;
@@ -206,7 +206,7 @@
   flex-direction: column;
   gap: 1.75rem;
   border: 1px solid var(--contact-line);
-  border-radius: var(--radius, 8px);
+  border-radius: var(--radius, 6px);
   padding: 2.25rem;
 }
 
@@ -233,7 +233,7 @@
   gap: 1rem;
   background: var(--contact-warm, rgba(0, 0, 0, 0.03));
   border: 1px dashed var(--contact-line);
-  border-radius: var(--radius, 8px);
+  border-radius: var(--radius, 6px);
   padding: 1.1rem 1.25rem;
 }
 
@@ -264,7 +264,7 @@
 .copyBtn {
   background: transparent;
   border: 1px solid var(--contact-line);
-  border-radius: var(--radius, 8px);
+  border-radius: var(--radius, 6px);
   color: var(--contact-heading);
   cursor: pointer;
   font: inherit;

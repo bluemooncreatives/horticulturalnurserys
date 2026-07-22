@@ -25,7 +25,7 @@ const defaultMenu = [
   { title: "About", url: "/about-us" },
 ]
 
-const defaultCta = { title: "Contact", url: "/contact" }
+const defaultCta = { title: "Contact Us", url: "/contact" }
 
 // Stacked lockup: the trading name is long, so the first word carries the
 // display weight and the rest sits under it as a tracked caption. Keeps the
@@ -183,7 +183,7 @@ export default function Navbar({
           {cta && (
             <Link
               href={cta.url}
-              className="ml-1 hidden h-10 items-center justify-center rounded-full bg-[var(--brand-primary)] px-6 text-[0.85rem] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[var(--brand-primary-hover)] lg:inline-flex"
+              className="ml-1 hidden h-8 items-center justify-center rounded-full bg-[var(--brand-primary)] px-6 text-[0.85rem] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[var(--brand-primary-hover)] lg:inline-flex"
             >
               {cta.title}
             </Link>

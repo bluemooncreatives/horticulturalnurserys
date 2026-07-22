@@ -78,7 +78,6 @@ const Footer = ({ categoryLinks = [] }) => {
                         <span className="block text-[clamp(2.4rem,10vw,6.4rem)]">Horticultural</span>
                         <span className="block text-[clamp(1.15rem,4.9vw,3.15rem)]">
                             Development Centre
-                            <sup className="ml-[0.05em] align-top text-[0.26em] font-normal opacity-70">°</sup>
                         </span>
                     </h2>
                     <div className="shrink-0 sm:text-right">

@@ -16,12 +16,16 @@ import {
 import Cart from "@/components/Application/Website/Cart"
 import GlobalSearch from "@/components/Application/Website/GlobalSearch"
 
+// `menu` holds only the centred links; the CTA is passed separately because it
+// renders as a button on the right of the bar. The slide-out sheet re-joins the
+// two so mobile still sees one complete list.
 const defaultMenu = [
   { title: "Home", url: "/" },
   { title: "Shop", url: "/shop" },
   { title: "About", url: "/about-us" },
-  { title: "Contact", url: "/contact" },
 ]
+
+const defaultCta = { title: "Contact", url: "/contact" }
 
 // Stacked lockup: the trading name is long, so the first word carries the
 // display weight and the rest sits under it as a tracked caption. Keeps the
@@ -33,10 +37,9 @@ const Wordmark = ({ title, subtitle, className = "" }) => (
   <span className={`inline-flex flex-col leading-none ${className}`}>
     <span className="font-wordmark inline-flex items-start">
       {title}
-      <sup className="ml-[0.12em] mt-[0.15em] text-[0.42em] font-normal leading-none opacity-70">°</sup>
     </span>
     {subtitle && (
-      <span className="mt-[0.35em] text-[0.58rem] font-medium uppercase tracking-[0.2em] opacity-60">
+      <span className="mt-[0.25em] text-[0.58rem] font-medium uppercase opacity-60">
         {subtitle}
       </span>
     )}
@@ -51,6 +54,7 @@ export default function Navbar({
     subtitle: "Development Centre",
   },
   menu = defaultMenu,
+  cta = defaultCta,
 }) {
   const [openSearch, setOpenSearch] = React.useState(false)
   const [openMenu, setOpenMenu] = React.useState(false)
@@ -60,6 +64,11 @@ export default function Navbar({
 
   const rawCount = useSelector((store) => store.cartStore?.count ?? 0)
   const cartCount = mounted ? rawCount : 0
+
+  const sheetMenu = React.useMemo(
+    () => (cta ? [...menu, cta] : menu),
+    [menu, cta]
+  )
 
   React.useEffect(() => setMounted(true), [])
 
@@ -101,7 +110,7 @@ export default function Navbar({
       )}
     >
       <nav
-        className="website-gutter flex w-full items-center py-1.5 sm:py-2"
+        className="website-gutter relative flex w-full items-center py-1.5 sm:py-2"
         aria-label="Main navigation"
       >
         {/* ── Logo ── */}
@@ -113,40 +122,85 @@ export default function Navbar({
           <Wordmark title={logo.title} subtitle={logo.subtitle} />
         </Link>
 
-        {/* ── Equally-distributed plus-separated links (desktop) ── */}
-        <div className="hidden flex-1 items-center justify-between px-8 lg:flex xl:px-14">
-          {menu.map((item, index) => (
-            <React.Fragment key={item.title}>
-              <Link
-                href={item.url}
-                className="text-[0.85rem] font-normal tracking-[0.01em] text-[var(--brand-primary)] transition-opacity hover:opacity-55"
-              >
-                {item.title}
-              </Link>
-              {index < menu.length - 1 && (
-                <span aria-hidden="true" className="select-none text-[0.85rem] font-light text-[var(--muted-foreground)]/40">
-                  +
-                </span>
-              )}
-            </React.Fragment>
-          ))}
+        {/* ── Plus-separated links, optically centred in the bar (desktop) ──
+            Absolutely positioned rather than flex-centred: the logo lockup and
+            the right-hand cluster are different widths, so a flex-centred group
+            would sit off-centre relative to the viewport. The wrapper ignores
+            pointer events so it never covers the logo or the buttons. */}
+        <div className="pointer-events-none absolute inset-0 hidden items-center justify-center lg:flex">
+          <div className="pointer-events-auto flex items-center gap-7 xl:gap-10">
+            {menu.map((item, index) => (
+              <React.Fragment key={item.title}>
+                <Link
+                  href={item.url}
+                  className="text-[0.85rem] font-normal tracking-[0.01em] text-[var(--brand-primary)] transition-opacity hover:opacity-55"
+                >
+                  {item.title}
+                </Link>
+                {index < menu.length - 1 && (
+                  <span aria-hidden="true" className="select-none text-[0.85rem] font-light text-[var(--muted-foreground)]/40">
+                    +
+                  </span>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
 
-        {/* ── Hamburger — two-line mark (opens the full menu, incl. search + cart) ── */}
-        <button
-          type="button"
-          onClick={() => setOpenMenu(true)}
-          aria-label="Open menu"
-          className="relative ml-auto flex size-10 shrink-0 items-center justify-center rounded-full text-[var(--brand-primary)] transition-colors hover:bg-black/[0.05] lg:ml-0"
-        >
-          <span aria-hidden className="flex flex-col items-center gap-[6px]">
-            <span className="block h-[2px] w-[26px] rounded-full bg-current" />
-            <span className="block h-[2px] w-[26px] rounded-full bg-current" />
-          </span>
-          {cartCount > 0 && (
-            <span className="absolute right-0.5 top-0.5 size-2 rounded-full bg-[var(--brand-primary)] ring-2 ring-[var(--background)]" />
+        {/* ── Right cluster ── */}
+        <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
+
+          {/* Search + cart move out of the hamburger on desktop, since the
+              hamburger itself is mobile-only there. */}
+          <button
+            type="button"
+            onClick={() => setOpenSearch(true)}
+            aria-label="Search"
+            className="hidden size-10 items-center justify-center rounded-full text-[var(--brand-primary)] transition-colors hover:bg-black/[0.05] lg:flex"
+          >
+            <SearchIcon className="size-[1.15rem]" strokeWidth={1.75} />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setOpenCart(true)}
+            aria-label={cartCount > 0 ? `Cart, ${cartCount} item${cartCount === 1 ? '' : 's'}` : 'Cart'}
+            className="relative hidden size-10 items-center justify-center rounded-full text-[var(--brand-primary)] transition-colors hover:bg-black/[0.05] lg:flex"
+          >
+            <ShoppingCart className="size-[1.15rem]" strokeWidth={1.75} />
+            {cartCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full bg-[var(--brand-primary)] px-1 text-[10px] font-semibold tabular-nums text-white ring-2 ring-[var(--background)]">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
+          {/* CTA — takes the slot the hamburger used to occupy on desktop */}
+          {cta && (
+            <Link
+              href={cta.url}
+              className="ml-1 hidden h-10 items-center justify-center rounded-full bg-[var(--brand-primary)] px-6 text-[0.85rem] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[var(--brand-primary-hover)] lg:inline-flex"
+            >
+              {cta.title}
+            </Link>
           )}
-        </button>
+
+          {/* ── Hamburger — two-line mark, mobile only (menu incl. search + cart) ── */}
+          <button
+            type="button"
+            onClick={() => setOpenMenu(true)}
+            aria-label="Open menu"
+            className="relative flex size-10 shrink-0 items-center justify-center rounded-full text-[var(--brand-primary)] transition-colors hover:bg-black/[0.05] lg:hidden"
+          >
+            <span aria-hidden className="flex flex-col items-center gap-[6px]">
+              <span className="block h-[2px] w-[26px] rounded-full bg-current" />
+              <span className="block h-[2px] w-[26px] rounded-full bg-current" />
+            </span>
+            {cartCount > 0 && (
+              <span className="absolute right-0.5 top-0.5 size-2 rounded-full bg-[var(--brand-primary)] ring-2 ring-[var(--background)]" />
+            )}
+          </button>
+        </div>
       </nav>
 
       {/* ── Slide-out menu panel ── */}
@@ -186,9 +240,10 @@ export default function Navbar({
             </button>
           </div>
 
-          {/* Primary navigation */}
+          {/* Primary navigation — the CTA rejoins the list here, since the
+              hamburger is the only entry point at this breakpoint. */}
           <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 py-4" aria-label="Menu">
-            {menu.map((item) => (
+            {sheetMenu.map((item) => (
               <SheetClose asChild key={item.title}>
                 <Link
                   href={item.url}

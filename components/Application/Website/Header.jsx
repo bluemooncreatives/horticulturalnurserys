@@ -3,12 +3,15 @@
 import Navbar from '@/components/ui/navbar'
 import { WEBSITE_HOME, WEBSITE_SHOP } from '@/routes/WebsiteRoute'
 
+// Centred links only — Contact renders as the right-hand button (and rejoins
+// this list inside the mobile menu sheet).
 const menu = [
   { title: 'Home', url: WEBSITE_HOME },
   { title: 'Shop', url: WEBSITE_SHOP },
   { title: 'About', url: '/about-us' },
-  { title: 'Contact', url: '/contact' },
 ]
+
+const cta = { title: 'Contact', url: '/contact' }
 
 const Header = () => {
   return (
@@ -24,6 +27,7 @@ const Header = () => {
           alt: 'Horticultural Development Centre — landscaping and plant nursery, Kolkata',
         }}
         menu={menu}
+        cta={cta}
       />
     </header>
   )

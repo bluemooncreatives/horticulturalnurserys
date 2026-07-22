@@ -12,19 +12,19 @@ const CATEGORIES = [
     { 
         label: 'mens', 
         name: 'MENS',
-        image: '/assets/images/hero/01.webp',
+        image: '/assets/images/hero/01.jpg',
         href: `${WEBSITE_SHOP}?category=mens`
     },
     { 
         label: 'womens', 
         name: 'WOMENS',
-        image: '/assets/images/hero/02.jpg',
+        image: '/assets/images/hero/01.jpg',
         href: `${WEBSITE_SHOP}?category=womens`
     },
     { 
         label: 'kids', 
         name: 'KIDS',
-        image: '/assets/images/hero/03.jpg',
+        image: '/assets/images/hero/01.jpg',
         href: `${WEBSITE_SHOP}?category=kids`
     },
     { 

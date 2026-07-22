@@ -253,8 +253,8 @@
    8. LAYOUT TOKENS
    ──────────────────────────────────────────────────────────────── */
 :root {
-  /* Fluid horizontal gutter — 16px on mobile, up to 48px on desktop */
-  --website-gutter:     clamp(1rem, 2.2vw, 3rem);
+  /* Fluid horizontal gutter — 12px on mobile, up to 32px on desktop */
+  --website-gutter:     clamp(0.75rem, 1.5vw, 2rem);
   /* Max content width */
   --website-content-max: 1280px;
   /* Admin shell — base of the whole radius scale (see section 9) */
@@ -756,12 +756,6 @@ body {
   50%       { opacity: 0.5; }
 }
 
-/* Marquee scroll */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
 /* Shimmer (loading states) */
 @keyframes shimmer {
   from { background-position: -200% 0; }
@@ -778,9 +772,12 @@ body {
 /* Section shell — constrained, centred content with the fluid gutter */
 .lumora-shell {
   width:         100%;
-  max-width:     var(--website-content-max);
+  max-width:     max-content;
   margin-inline: auto;
-  padding-inline: var(--website-gutter);
+  /* Arithmetic has to live in calc(), not inside var() — `var(--a + var(--b))`
+     is parsed as a single malformed custom-property name and kills the whole
+     stylesheet with "Unexpected token Delim('+')". */
+  padding-inline: calc(var(--website-gutter) + var(--space-12));
 }
 
 /* Pill button base */

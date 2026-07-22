@@ -10,7 +10,6 @@ import Testimonial from '@/components/Application/Website/Testimonial'
 
 // Defer all GSAP/ScrollTrigger and media-heavy sections into separate JS chunks
 // so they don't block parsing and hydration of the above-fold critical path.
-const Marquee = dynamic(() => import('@/components/Application/Website/Marquee'))
 const InstagramReelsMarquee = dynamic(() => import('@/components/Application/Website/InstagramReelsMarquee'))
 const AboutUsSection = dynamic(() => import('@/components/Application/Website/AboutUsSection'))
 const EditorialCardsSection = dynamic(() => import('@/components/Application/Website/EditorialCardsSection'))
@@ -38,8 +37,6 @@ const Home = () => {
                 LazyHydrate keeps each section's server HTML in the document but
                 defers its hydration until the user scrolls near it, so the
                 initial load only hydrates the hero + header. */}
-            <Marquee text="fresh from the nursery" repeatCount={12} />
-
             <LazyHydrate>
                 <FeaturedProduct />
             </LazyHydrate>

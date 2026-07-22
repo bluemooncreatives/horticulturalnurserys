@@ -18,7 +18,7 @@ const CARDS = [
         description: 'A nursery started in 1990 that grew into a landscaping house — parks, lakes, townships and institutional grounds across West Bengal.',
         cta: 'Read More',
         href: '/about-us',
-        image: '/assets/images/hero/03.webp',
+        image: '/assets/images/hero/01.jpg',
         overlay: 'bg-gradient-to-t from-black/80 via-black/30 to-black/10',
     },
     {
@@ -27,7 +27,7 @@ const CARDS = [
         description: 'Ornamental trees, shrubs, indoor and hanging plants, topiary, seasonal flowers, lawn grass, manure, pots and implements.',
         cta: 'Browse Catalogue',
         href: WEBSITE_SHOP,
-        image: '/assets/images/hero/01.webp',
+        image: '/assets/images/hero/01.jpg',
         overlay: 'bg-gradient-to-t from-[var(--dark-red)]/90 via-[var(--dark-red)]/25 to-transparent',
     },
     {
@@ -36,7 +36,7 @@ const CARDS = [
         description: 'Tell us about the site — terrace, courtyard, campus or township — and our horticulturists will come and see it.',
         cta: 'Request a Site Visit',
         href: '/contact',
-        image: '/assets/images/hero/04.webp',
+        image: '/assets/images/hero/01.jpg',
         overlay: 'bg-gradient-to-t from-black/85 via-black/35 to-black/10',
     },
 ]

@@ -33,8 +33,12 @@ const defaultCta = { title: "Contact", url: "/contact" }
 // The caption size is fixed rather than em-relative: this lockup renders at
 // 1.25rem in the bar and 1.7rem in the menu sheet, and an em-scaled caption
 // falls below legible size at the smaller of the two.
+// `flex w-fit` rather than `inline-flex`: as an inline-level box the lockup sat
+// in the link's line box, which added ~6px of half-leading above it and none
+// below, so the mark read as bottom-heavy however the nav padding was set.
+// Block-level removes the strut; `w-fit` keeps it hugging its own width.
 const Wordmark = ({ title, subtitle, className = "" }) => (
-  <span className={`inline-flex flex-col leading-none ${className}`}>
+  <span className={`flex w-fit flex-col leading-none ${className}`}>
     <span className="font-wordmark inline-flex items-start">
       {title}
     </span>

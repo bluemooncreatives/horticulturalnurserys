@@ -32,7 +32,7 @@ export const metadata = {
     url: 'https://www.horticulturaldevelopmentcentre.com',
     images: [
       {
-        url: '/assets/images/hero/01.webp',
+        url: '/assets/images/hero/01.jpg',
         width: 1200,
         height: 630,
         alt: 'Horticultural Development Centre - landscaping and plant nursery, Kolkata',
@@ -44,7 +44,7 @@ export const metadata = {
     title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
     description:
       'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance, plus a 50-bigha nursery and an Alipore outlet stocking everything a garden needs.',
-    images: ['/assets/images/hero/01.webp'],
+    images: ['/assets/images/hero/01.jpg'],
   },
   icons: {
     icon: '/favicon.ico',

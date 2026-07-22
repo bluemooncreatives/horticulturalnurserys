@@ -54,22 +54,22 @@ const InstagramReelsMarquee = () => {
         <section className="relative overflow-hidden bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
             <div className="website-gutter relative z-20 mb-6 flex items-center justify-between gap-6">
                 <h2 className="text-left text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)] z-50">
-                    From the Gallery
+                    From the Field
                 </h2>
                 <div className="flex shrink-0 items-center gap-4 text-[var(--dark-red-2)]">
                     <Link
-                        href="https://www.instagram.com/mom.stitched/"
+                        href="https://www.instagram.com/horticulturaldevelopmentcentre/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Open MomStitched on Instagram"
+                        aria-label="Open Horticultural Development Centre on Instagram"
                     >
                         <InstagramIcon className="size-8" />
                     </Link>
                     <Link
-                        href="https://www.facebook.com/people/momstitched/100087738263074/#"
+                        href="https://www.facebook.com/horticulturaldevelopmentcentre"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Open MomStitched on Facebook"
+                        aria-label="Open Horticultural Development Centre on Facebook"
                     >
                         <FacebookIcon className="size-8" />
                     </Link>

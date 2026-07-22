@@ -19,8 +19,9 @@ const Header = () => {
       <Navbar
         logo={{
           url: WEBSITE_HOME,
-          title: 'MomStitched',
-          alt: 'MomStitched — handcrafted women\'s ethnic wear',
+          title: 'Horticultural',
+          subtitle: 'Development Centre',
+          alt: 'Horticultural Development Centre — landscaping and plant nursery, Kolkata',
         }}
         menu={menu}
       />

@@ -28,14 +28,14 @@ const PrivacyPolicy = () => {
                 {/* Header */}
                 <div className='border-b border-gray-200 pb-8'>
                     <h1 className='text-3xl lg:text-4xl font-semibold mb-2'>Privacy Policy</h1>
-                    <p className='text-sm text-gray-500'>Last Updated: June 20, 2025 &nbsp;|&nbsp; Effective Date: June 20, 2025</p>
+                    <p className='text-sm text-gray-500'>Last Updated: July 22, 2026 &nbsp;|&nbsp; Effective Date: July 22, 2026</p>
                     <p className='mt-5 text-base lg:text-[17px] leading-relaxed text-gray-700'>
-                        At <strong>MomStitched</strong>, we are committed to protecting your privacy and handling your personal data with transparency,
+                        At <strong>Horticultural Development Centre</strong>, we are committed to protecting your privacy and handling your personal data with transparency,
                         integrity, and care. This Privacy Policy explains what information we collect, how we use it, who we share it with,
                         and the rights you have over your data.
                     </p>
                     <p className='mt-3 text-base lg:text-[17px] leading-relaxed text-gray-700'>
-                        By visiting <strong>momstitched.com</strong> (the &quot;Website&quot;) or placing an order with us, you acknowledge
+                        By visiting <strong>horticulturaldevelopmentcentre.com</strong> (the &quot;Website&quot;) or placing an order with us, you acknowledge
                         that you have read and understood this Privacy Policy. If you do not agree, please discontinue use of the Website.
                     </p>
                     <p className='mt-3 text-base lg:text-[17px] leading-relaxed text-gray-700'>
@@ -49,15 +49,15 @@ const PrivacyPolicy = () => {
                 <Section number="1" title="Data Controller Information">
                     <p>
                         The data controller responsible for your personal information is:<br /><br />
-                        <strong>Business Name:</strong> MomStitched<br />
-                        <strong>Registered Address:</strong> Market, Lucknow, Uttar Pradesh, India – 256320<br />
+                        <strong>Business Name:</strong> Horticultural Development Centre<br />
+                        <strong>Registered Address:</strong> 2/5 Judges Court Road, Alipore, Kolkata, West Bengal, India – 700027<br />
                         <strong>Email:</strong>{' '}
-                        <a href="mailto:momstitched.official@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>
-                            momstitched.official@gmail.com
+                        <a href="mailto:horticulturaldc@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>
+                            horticulturaldc@gmail.com
                         </a><br />
                         <strong>Phone:</strong>{' '}
-                        <a href="tel:+918569874589" className='text-[var(--dark-red-2)] underline underline-offset-2'>
-                            +91 85698 74589
+                        <a href="tel:+919088275576" className='text-[var(--dark-red-2)] underline underline-offset-2'>
+                            +91 90882 75576
                         </a>
                     </p>
                     <p>
@@ -144,7 +144,7 @@ const PrivacyPolicy = () => {
                         <li><strong>Payment Processors:</strong> Secure, PCI-DSS compliant gateways to process transactions. They receive only the data necessary to complete payments.</li>
                         <li><strong>IT & Hosting Providers:</strong> Cloud and server infrastructure providers who support our Website operations, bound by strict data processing agreements.</li>
                         <li><strong>Marketing & Analytics Tools:</strong> Services like Google Analytics or email marketing platforms, used under data processing agreements and with appropriate safeguards.</li>
-                        <li><strong>Legal & Regulatory Authorities:</strong> When required by law, court order, or to protect the rights, property, or safety of MomStitched, our customers, or the public.</li>
+                        <li><strong>Legal & Regulatory Authorities:</strong> When required by law, court order, or to protect the rights, property, or safety of Horticultural Development Centre, our customers, or the public.</li>
                         <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your data may be transferred to the successor entity, subject to the same privacy protections.</li>
                     </ul>
                     <p>All third-party service providers are contractually obligated to handle your data securely and in compliance with applicable data protection laws.</p>
@@ -153,7 +153,7 @@ const PrivacyPolicy = () => {
                 {/* Section 7 */}
                 <Section number="7" title="International Data Transfers">
                     <ul className='list-disc ps-6 space-y-2'>
-                        <li>MomStitched is based in India. If you access our Website from outside India, your data may be transferred to and processed in India or other countries where our service providers operate.</li>
+                        <li>Horticultural Development Centre is based in India. If you access our Website from outside India, your data may be transferred to and processed in India or other countries where our service providers operate.</li>
                         <li>For transfers from the EU/EEA or UK, we rely on Standard Contractual Clauses (SCCs) approved by the European Commission or the UK ICO to ensure adequate protection.</li>
                         <li>We take all reasonable steps to ensure that international transfers are protected by appropriate safeguards in accordance with applicable data protection law.</li>
                     </ul>
@@ -200,7 +200,7 @@ const PrivacyPolicy = () => {
                     <ul className='list-disc ps-6 space-y-2'>
                         <li><strong>Right to Know:</strong> Request disclosure of the categories and specific pieces of personal information we have collected about you.</li>
                         <li><strong>Right to Delete:</strong> Request deletion of personal information we have collected, subject to certain exceptions.</li>
-                        <li><strong>Right to Opt-Out of Sale:</strong> We do not sell personal information. You may still submit an opt-out request at <a href="mailto:momstitched.official@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>momstitched.official@gmail.com</a>.</li>
+                        <li><strong>Right to Opt-Out of Sale:</strong> We do not sell personal information. You may still submit an opt-out request at <a href="mailto:horticulturaldc@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>horticulturaldc@gmail.com</a>.</li>
                         <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your CCPA rights.</li>
                         <li><strong>Right to Correct:</strong> Request correction of inaccurate personal information.</li>
                     </ul>
@@ -209,7 +209,7 @@ const PrivacyPolicy = () => {
                     <ul className='list-disc ps-6 space-y-2'>
                         <li><strong>Right to Access:</strong> Request a summary of personal data held and its processing activities.</li>
                         <li><strong>Right to Correction & Erasure:</strong> Request correction of inaccurate data or erasure of data no longer necessary for its original purpose.</li>
-                        <li><strong>Right to Grievance Redressal:</strong> Submit grievances to our Data Protection Officer via <a href="mailto:momstitched.official@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>momstitched.official@gmail.com</a>.</li>
+                        <li><strong>Right to Grievance Redressal:</strong> Submit grievances to our Data Protection Officer via <a href="mailto:horticulturaldc@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>horticulturaldc@gmail.com</a>.</li>
                         <li><strong>Right to Nominate:</strong> Nominate another individual to exercise rights on your behalf in the event of death or incapacity.</li>
                     </ul>
 
@@ -221,8 +221,8 @@ const PrivacyPolicy = () => {
 
                     <p className='mt-3'>
                         To exercise any of the above rights, please contact us at{' '}
-                        <a href="mailto:momstitched.official@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>
-                            momstitched.official@gmail.com
+                        <a href="mailto:horticulturaldc@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>
+                            horticulturaldc@gmail.com
                         </a>{' '}
                         with the subject line <strong>&quot;Privacy Rights Request&quot;</strong>. We will respond within 30 days (or 72 hours for urgent GDPR requests).
                     </p>
@@ -233,7 +233,7 @@ const PrivacyPolicy = () => {
                     <ul className='list-disc ps-6 space-y-2'>
                         <li>Our Website is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13.</li>
                         <li>If we become aware that a child under 13 has provided us with personal data without verifiable parental consent, we will delete that information promptly.</li>
-                        <li>If you are a parent or guardian and believe your child has provided us with personal information, please contact us at <a href="mailto:momstitched.official@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>momstitched.official@gmail.com</a>.</li>
+                        <li>If you are a parent or guardian and believe your child has provided us with personal information, please contact us at <a href="mailto:horticulturaldc@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>horticulturaldc@gmail.com</a>.</li>
                     </ul>
                 </Section>
 
@@ -249,7 +249,7 @@ const PrivacyPolicy = () => {
                 <Section number="13" title="Marketing Communications & Opt-Out">
                     <ul className='list-disc ps-6 space-y-2'>
                         <li>With your consent, we may send you promotional emails about new products, sales, and events.</li>
-                        <li>You can unsubscribe from marketing emails at any time by clicking the &quot;Unsubscribe&quot; link in any email or by contacting us at <a href="mailto:momstitched.official@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>momstitched.official@gmail.com</a>.</li>
+                        <li>You can unsubscribe from marketing emails at any time by clicking the &quot;Unsubscribe&quot; link in any email or by contacting us at <a href="mailto:horticulturaldc@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>horticulturaldc@gmail.com</a>.</li>
                         <li>Opting out of marketing emails will not affect transactional emails related to your orders (e.g., order confirmation, shipping updates).</li>
                         <li>We comply with the CAN-SPAM Act (USA), CASL (Canada), and applicable Indian regulations on unsolicited commercial communications.</li>
                     </ul>
@@ -272,16 +272,16 @@ const PrivacyPolicy = () => {
                     </p>
                     <ul className='mt-4 space-y-2 text-base lg:text-[17px] text-gray-700'>
                         <li><strong>Email:</strong>{' '}
-                            <a href="mailto:momstitched.official@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>
-                                momstitched.official@gmail.com
+                            <a href="mailto:horticulturaldc@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>
+                                horticulturaldc@gmail.com
                             </a>
                         </li>
                         <li><strong>Phone:</strong>{' '}
-                            <a href="tel:+918569874589" className='text-[var(--dark-red-2)] underline underline-offset-2'>
-                                +91 85698 74589
+                            <a href="tel:+919088275576" className='text-[var(--dark-red-2)] underline underline-offset-2'>
+                                +91 90882 75576
                             </a>
                         </li>
-                        <li><strong>Address:</strong> MomStitched, Market, Lucknow, Uttar Pradesh, India – 256320</li>
+                        <li><strong>Address:</strong> Horticultural Development Centre, 2/5 Judges Court Road, Alipore, Kolkata, West Bengal, India – 700027</li>
                     </ul>
                     <p className='mt-4 text-base lg:text-[17px] leading-relaxed text-gray-700'>
                         You may also review our{' '}
@@ -291,7 +291,7 @@ const PrivacyPolicy = () => {
                         for additional information on your rights and obligations when using our Website.
                     </p>
                     <p className='mt-6 text-sm text-gray-500'>
-                        Thank you for trusting MomStitched. Your privacy is important to us and we are committed to safeguarding it.
+                        Thank you for trusting Horticultural Development Centre. Your privacy is important to us and we are committed to safeguarding it.
                     </p>
                 </div>
 

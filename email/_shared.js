@@ -1,28 +1,29 @@
 /* ================================================================
-   MOMSTITCHED — EMAIL DESIGN SYSTEM (shared)
+   HORTICULTURAL DEVELOPMENT CENTRE — EMAIL DESIGN SYSTEM (shared)
    Single source of truth for every transactional email.
    Email clients strip <style> custom-properties and external fonts,
    so every value here is a literal inline-able constant and every
    layout primitive is table-based with inline styles.
-   Brand tokens mirror app/design-system.css (oxblood / crimson /
-   cream / warm) but are hard-coded because CSS vars don't survive
-   in Gmail/Outlook/Apple Mail.
+   Brand tokens mirror app/design-system.css (monochrome ink + lime)
+   but are hard-coded because CSS vars don't survive in
+   Gmail/Outlook/Apple Mail. The key names predate the monochrome
+   re-skin and are kept so all eight templates re-colour from here.
    ================================================================ */
 
 // ── Brand palette (mirrors design-system.css) ──
 export const BRAND = {
-    oxblood: "#3E000D", // --brand-primary
-    crimson: "#8E1616", // --brand-primary-hover
-    cream: "#FFECD1", // --brand-cream
-    warm: "#EFE9E2", // --brand-warm-bg
-    ink: "#1A1A1A", // --brand-ink-soft
+    oxblood: "#0B0B0B", // --brand-primary  (near-black ink)
+    crimson: "#232323", // --brand-primary-hover (lifted ink)
+    cream: "#F1F0EC", // --brand-cream
+    warm: "#EFEDE8", // --brand-warm-bg
+    ink: "#0D0D0D", // --brand-ink-soft
     body: "#4A4A4A", // --text-body
     white: "#FFFFFF",
-    border: "#ECE3D8", // soft cream-grey hairline
-    borderStrong: "#D8CBBB",
-    muted: "#9A8F82", // warm muted label
+    border: "#E4E2DC", // soft grey hairline
+    borderStrong: "#CBC8C1",
+    muted: "#8C8880", // muted label
     success: "#2E7D32",
-    danger: "#8E1616",
+    danger: "#B3261E",
 };
 
 // Web-safe stacks that read closest to the brand faces
@@ -30,15 +31,14 @@ export const BRAND = {
 export const FONT_DISPLAY = "Georgia, 'Times New Roman', Times, serif";
 export const FONT_BODY = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 
-// Brand red logo — renders cleanly on the cream header band.
-export const LOGO_URL =
-    "https://res.cloudinary.com/darrsi9y2/image/upload/v1782245561/red_pzeluu.png";
-
-// The only real social account we own.
+// The header renders the wordmark as live text rather than an image: no hosted
+// logo asset exists for the new identity, and a text lockup also survives the
+// image-blocking that most clients apply to a first-open email.
 export const INSTAGRAM_URL =
-    "https://www.instagram.com/mom.stitched?igsh=MW84azk0ZG14dzlncw==";
+    "https://www.instagram.com/horticulturaldevelopmentcentre/";
 
-export const BRAND_NAME = "MomStitched";
+export const BRAND_NAME = "Horticultural Development Centre";
+export const BRAND_TAGLINE = "Landscaping & nursery · Kolkata since 1989";
 
 /**
  * Resolve the public site origin for absolute links inside emails.
@@ -47,7 +47,7 @@ export const BRAND_NAME = "MomStitched";
  * production domain so links never break even if the var is unset.
  */
 export const siteUrl = () => {
-    const raw = process.env.NEXT_PUBLIC_BASE_URL || "https://www.momstitched.com";
+    const raw = process.env.NEXT_PUBLIC_BASE_URL || "https://www.horticulturaldevelopmentcentre.com";
     return String(raw).replace(/\/+$/, ""); // strip trailing slash
 };
 
@@ -154,7 +154,12 @@ export const emailShell = ({ preheader = "", bodyHtml = "", title = BRAND_NAME }
           <!-- Header -->
           <tr>
             <td align="center" style="background-color:${BRAND.cream};padding:30px 40px;">
-              <img src="${LOGO_URL}" alt="${BRAND_NAME}" width="120" style="display:block;width:120px;max-width:45%;height:auto;" />
+              <div style="font-family:${FONT_DISPLAY};font-size:24px;line-height:28px;color:${BRAND.oxblood};">
+                Horticultural
+              </div>
+              <div style="font-family:${FONT_BODY};font-size:11px;line-height:16px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:${BRAND.muted};padding-top:6px;">
+                Development Centre
+              </div>
             </td>
           </tr>
 
@@ -170,13 +175,13 @@ export const emailShell = ({ preheader = "", bodyHtml = "", title = BRAND_NAME }
             <td style="background-color:${BRAND.oxblood};padding:30px 40px;">
               <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="font-family:${FONT_DISPLAY};font-size:20px;letter-spacing:0;text-transform:uppercase;color:${BRAND.cream};padding-bottom:14px;">
+                  <td style="font-family:${FONT_DISPLAY};font-size:16px;line-height:22px;letter-spacing:0;text-transform:uppercase;color:${BRAND.cream};padding-bottom:14px;">
                     ${BRAND_NAME}
                   </td>
                 </tr>
                 <tr>
                   <td style="font-family:${FONT_BODY};font-size:13px;line-height:21px;color:${BRAND.cream};opacity:0.85;padding-bottom:16px;">
-                    Handmade with care, stitched with love.
+                    ${BRAND_TAGLINE}
                   </td>
                 </tr>
                 <tr>

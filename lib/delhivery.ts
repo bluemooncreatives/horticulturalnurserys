@@ -322,7 +322,7 @@ export const createShipment = async (input: CreateShipmentInput): Promise<Create
             shipment_width: positiveNumber(input.dimensions.breadth, "Breadth"),
             shipment_height: positiveNumber(input.dimensions.height, "Height"),
             weight: positiveNumber(input.weight, "Weight"),
-            seller_name: cleanText(input.sellerName || "MomStitched"),
+            seller_name: cleanText(input.sellerName || "Horticultural Development Centre"),
             seller_add: cleanText(input.sellerAddress),
             ...(input.sellerGstTin ? { seller_gst_tin: cleanText(input.sellerGstTin) } : {}),
             ...(input.hsnCode ? { hsn_code: cleanText(input.hsnCode) } : {}),

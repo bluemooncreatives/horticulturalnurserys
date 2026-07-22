@@ -29,7 +29,7 @@ import websiteSearchData from '@/lib/websiteSearchData'
 import { WEBSITE_SHOP, WEBSITE_PRODUCT_DETAILS } from '@/routes/WebsiteRoute'
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 
-const RECENT_KEY = 'momstitched:recent-searches'
+const RECENT_KEY = 'hdc:recent-searches'
 const MAX_RECENT = 6
 const RESULT_LIMIT = 8
 const MAX_PAGE_MATCHES = 6
@@ -189,7 +189,7 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                 className="flex max-h-[85vh] max-w-[calc(100%-1.5rem)] flex-col gap-0 overflow-hidden p-0 ring-1 ring-foreground/10 sm:max-w-xl"
             >
                 <DialogHeader className="sr-only">
-                    <DialogTitle>Search MomStitched</DialogTitle>
+                    <DialogTitle>Search the catalogue</DialogTitle>
                     <DialogDescription>Search products, pages and shortcuts across the store.</DialogDescription>
                 </DialogHeader>
 

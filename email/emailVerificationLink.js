@@ -25,7 +25,7 @@ export const emailVerificationLink = (link, opts = {}) => {
 ${eyebrow("Confirm your email")}
 ${heading("You're almost there")}
 ${paragraph(`Hi ${firstName(name)},`)}
-${paragraph("Welcome to MomStitched! Please confirm your email address to activate your account and start shopping.")}
+${paragraph("Welcome to Horticultural Development Centre. Please confirm your email address to activate your account.")}
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:8px 0 28px;">
   <tr><td align="center">${button("Verify my email", esc(link))}</td></tr>
 </table>
@@ -35,13 +35,13 @@ ${paragraph("Welcome to MomStitched! Please confirm your email address to activa
       If the button doesn't work, copy and paste this link into your browser:<br />
       <a href="${esc(link)}" target="_blank" style="color:${BRAND.crimson};word-break:break-all;">${esc(link)}</a>
       <br /><br />
-      This link expires in <strong style="color:${BRAND.ink};">1 hour</strong>. If you didn't create a MomStitched account, you can safely ignore this email.
+      This link expires in <strong style="color:${BRAND.ink};">1 hour</strong>. If you didn't create an account with us, you can safely ignore this email.
     </td>
   </tr>
 </table>`;
 
     return emailShell({
-        preheader: "Confirm your email to activate your MomStitched account.",
+        preheader: "Confirm your email to activate your Horticultural Development Centre account.",
         title: "Verify your email",
         bodyHtml,
     });

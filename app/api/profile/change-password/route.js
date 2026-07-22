@@ -68,7 +68,7 @@ export async function PUT(request) {
         // Security notice. Best-effort — the change already succeeded.
         try {
             await sendMail(
-                hasPassword ? 'Your MomStitched password was changed' : 'Your MomStitched password is set',
+                hasPassword ? 'Your password was changed' : 'Your password is set',
                 user.email,
                 passwordChanged({ name: user.name, action: hasPassword ? 'changed' : 'set' })
             )

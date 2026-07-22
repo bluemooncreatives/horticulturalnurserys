@@ -21,7 +21,7 @@ const MainSlider = () => {
 
                 {/* center image overlaying bottom brand text */}
                 <div className='absolute bottom-[-60px] left-1/2 -translate-x-1/2 z-10'>
-                    <h1 className='text-[197px] text-white'>MOMSTITCHED</h1>
+                    <h1 className='text-[120px] text-white'>HORTICULTURAL</h1>
                 </div>
 
                 <div className='absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-[20%] z-20 w-[380px] h-[480px] overflow-hidden'>

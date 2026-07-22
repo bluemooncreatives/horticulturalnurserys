@@ -45,7 +45,7 @@ export async function POST(request) {
                 .sign(secret)
 
             await sendMail(
-                'Verify your email - MomStitched',
+                'Verify your email',
                 email,
                 emailVerificationLink(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-email/${token}`, { name: getUser.name })
             )
@@ -72,7 +72,7 @@ export async function POST(request) {
         await newOtpData.save()
 
         const otpEmailTemplate = otpEmail(OTP, { name: getUser.name, purpose: 'login' })
-        const otpEmailStatus = await sendMail("Your MomStitched admin login code", email, otpEmailTemplate)
+        const otpEmailStatus = await sendMail("Your admin login code", email, otpEmailTemplate)
         if (!otpEmailStatus.success) {
             return response(false, 500, 'Something went wrong.')
         }

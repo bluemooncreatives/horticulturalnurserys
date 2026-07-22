@@ -319,8 +319,8 @@ const Checkout = () => {
                 "key": process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
                 "amount": payableAmount * 100,
                 "currency": "INR",
-                "name": "MomStitched",
-                "description": "Handcrafted Women's Fashion",
+                "name": "Horticultural Development Centre",
+                "description": "Plants & garden supplies",
                 "image": razorpayLogoUrl,
                 "order_id": order_id,
                 "handler": async function (response) {

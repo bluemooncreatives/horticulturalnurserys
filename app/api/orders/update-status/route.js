@@ -12,10 +12,10 @@ const NOTIFY_STATUSES = new Set(['processing', 'shipped', 'delivered', 'cancelle
 
 // Per-status subject lines.
 const STATUS_SUBJECT = {
-    processing: 'Your MomStitched order is being prepared',
-    shipped: 'Your MomStitched order has shipped',
-    delivered: 'Your MomStitched order has been delivered',
-    cancelled: 'Your MomStitched order was cancelled',
+    processing: 'Your order is being prepared',
+    shipped: 'Your order has shipped',
+    delivered: 'Your order has been delivered',
+    cancelled: 'Your order was cancelled',
 }
 
 export async function PUT(request) {
@@ -59,7 +59,7 @@ export async function PUT(request) {
         if (NOTIFY_STATUSES.has(status) && orderData.email) {
             try {
                 await sendMail(
-                    STATUS_SUBJECT[status] || 'Update on your MomStitched order',
+                    STATUS_SUBJECT[status] || 'Update on your order',
                     orderData.email,
                     orderStatusUpdate({
                         name: orderData.name,

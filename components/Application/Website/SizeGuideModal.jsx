@@ -23,7 +23,7 @@ const SizeGuideModal = ({ open, onOpenChange, sizeGuide }) => {
                 <div className="space-y-0.5">
                     <p className="font-neue text-[13px] font-semibold text-[var(--brand-primary)]">Note</p>
                     <p className="font-neue text-[13px] leading-relaxed text-[var(--text-body)]">
-                        {sizeGuide?.note ? sizeGuide.note : "Measurements may vary slightly depending on fabric and fit."}
+                        {sizeGuide?.note ? sizeGuide.note : "Plants are living material — height, spread and pot dimensions vary from specimen to specimen and change as they grow."}
                     </p>
                 </div>
             </div>
@@ -48,7 +48,7 @@ const SizeGuideModal = ({ open, onOpenChange, sizeGuide }) => {
                                 Size Guide
                             </SheetTitle>
                             <SheetDescription className="font-neue text-[13px] text-muted-foreground">
-                                Find your best fit.
+                                Indicative measurements.
                             </SheetDescription>
                         </div>
                     </SheetHeader>
@@ -73,7 +73,7 @@ const SizeGuideModal = ({ open, onOpenChange, sizeGuide }) => {
                             Size Guide
                         </DialogTitle>
                         <DialogDescription className="font-neue text-sm text-muted-foreground">
-                            Find your best fit.
+                            Indicative measurements.
                         </DialogDescription>
                     </div>
                 </DialogHeader>

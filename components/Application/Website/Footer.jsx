@@ -5,19 +5,19 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useRef } from 'react'
 import Link from 'next/link'
-import { MapPin, Phone, Clock, Instagram, MessageCircle, Facebook, Twitter, ArrowUp } from 'lucide-react'
+import { MapPin, Phone, Clock, Sprout, Instagram, MessageCircle, Facebook, ArrowUp } from 'lucide-react'
 
 import { WEBSITE_HOME, WEBSITE_SHOP } from '@/routes/WebsiteRoute'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const CONTACT_EMAIL = 'momstitched.official@gmail.com'
+const CONTACT_EMAIL = 'horticulturaldc@gmail.com'
 
-const fallbackCategoryLinks = [{ label: 'All Products', href: WEBSITE_SHOP }]
+const fallbackCategoryLinks = [{ label: 'Full Catalogue', href: WEBSITE_SHOP }]
 
 const navigationLinks = [
     { label: 'Home', href: WEBSITE_HOME },
-    { label: 'Shop', href: WEBSITE_SHOP },
+    { label: 'Nursery', href: WEBSITE_SHOP },
     { label: 'About', href: '/about-us' },
     { label: 'Contact', href: '/contact' },
 ]
@@ -29,10 +29,9 @@ const helpLinks = [
 ]
 
 const socialLinks = [
-    { label: 'Instagram', href: 'https://www.instagram.com/mom.stitched/', Icon: Instagram },
-    { label: 'WhatsApp', href: 'https://wa.me/918569874589', Icon: MessageCircle },
-    { label: 'Facebook', href: 'https://www.facebook.com/people/momstitched/100087738263074/', Icon: Facebook },
-    { label: 'X (Twitter)', href: 'https://twitter.com/momstitched', Icon: Twitter },
+    { label: 'Instagram', href: 'https://www.instagram.com/horticulturaldevelopmentcentre/', Icon: Instagram },
+    { label: 'WhatsApp', href: 'https://wa.me/919088275576', Icon: MessageCircle },
+    { label: 'Facebook', href: 'https://www.facebook.com/horticulturaldevelopmentcentre', Icon: Facebook },
 ]
 
 const LinkColumn = ({ title, links }) => (
@@ -75,9 +74,12 @@ const Footer = ({ categoryLinks = [] }) => {
 
                 {/* ── Top: wordmark + copyright mark ── */}
                 <div className="flex flex-col gap-6 border-b border-white/10 pb-8 sm:flex-row sm:items-start sm:justify-between">
-                    <h2 className="footer-word font-wordmark text-white text-[clamp(2.75rem,11vw,7rem)] leading-[0.82]">
-                        MomStitched
-                        <sup className="ml-[0.05em] align-top text-[0.26em] font-normal opacity-70">°</sup>
+                    <h2 className="footer-word font-wordmark text-white leading-[0.84]">
+                        <span className="block text-[clamp(2.4rem,10vw,6.4rem)]">Horticultural</span>
+                        <span className="block text-[clamp(1.15rem,4.9vw,3.15rem)]">
+                            Development Centre
+                            <sup className="ml-[0.05em] align-top text-[0.26em] font-normal opacity-70">°</sup>
+                        </span>
                     </h2>
                     <div className="shrink-0 sm:text-right">
                         <p className="text-sm text-white/55">© 20 — 26°</p>
@@ -89,7 +91,7 @@ const Footer = ({ categoryLinks = [] }) => {
                 <div className="footer-cols grid gap-x-8 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
                     <div className="footer-col">
                         <p className="max-w-xs text-[0.95rem] leading-relaxed text-white/55">
-                            For women ready to feel quietly unforgettable in what they wear.
+                            Designing, growing and maintaining gardens across West Bengal since 1989.
                         </p>
                         <Link
                             href={`mailto:${CONTACT_EMAIL}`}
@@ -111,7 +113,7 @@ const Footer = ({ categoryLinks = [] }) => {
                                     href={href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    aria-label={`MomStitched on ${label}`}
+                                    aria-label={`Horticultural Development Centre on ${label}`}
                                     className="flex size-11 items-center justify-center rounded-[var(--radius-2xl)] border border-white/15 bg-white/[0.04] text-white/70 transition-colors hover:border-[var(--brand-lime)] hover:text-[var(--brand-lime)]"
                                 >
                                     <Icon className="size-[18px]" strokeWidth={1.6} />
@@ -123,20 +125,37 @@ const Footer = ({ categoryLinks = [] }) => {
 
                 {/* ── Contact strip + back-to-top ── */}
                 <div className="flex flex-col gap-8 border-t border-white/10 pt-8 sm:flex-row sm:items-end sm:justify-between">
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-10">
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4">
                         <div>
                             <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
                                 <Phone className="size-3.5" /> Phone
                             </p>
-                            <Link href="tel:+91-8569874589" className="mt-2 block text-[0.95rem] text-white/70 transition-colors hover:text-[var(--brand-lime)]">
-                                +91 85698 74589
+                            <Link href="tel:+913324795710" className="mt-2 block text-[0.95rem] text-white/70 transition-colors hover:text-[var(--brand-lime)]">
+                                (033) 2479-5710
+                            </Link>
+                            <Link href="tel:+919088275576" className="mt-1 block text-[0.95rem] text-white/70 transition-colors hover:text-[var(--brand-lime)]">
+                                +91 90882 75576
                             </Link>
                         </div>
                         <div>
                             <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
-                                <MapPin className="size-3.5" /> Studio
+                                <MapPin className="size-3.5" /> Sale Counter
                             </p>
-                            <p className="mt-2 text-[0.95rem] text-white/70">Lucknow, India 226001</p>
+                            <p className="mt-2 text-[0.95rem] leading-snug text-white/70">
+                                2/5 Judges Court Road,
+                                <br />
+                                Alipore, Kolkata 700027
+                            </p>
+                        </div>
+                        <div>
+                            <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
+                                <Sprout className="size-3.5" /> Farm
+                            </p>
+                            <p className="mt-2 text-[0.95rem] leading-snug text-white/70">
+                                Bibirhut, Ramdevpur,
+                                <br />
+                                24 Parganas (S)
+                            </p>
                         </div>
                         <div>
                             <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
@@ -158,7 +177,7 @@ const Footer = ({ categoryLinks = [] }) => {
 
                 {/* ── Bottom bar ── */}
                 <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 text-[0.8rem] text-white/40 sm:flex-row sm:items-center sm:justify-between">
-                    <p>© {new Date().getFullYear()} MomStitched. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} Horticultural Development Centre. All rights reserved.</p>
                     <p>
                         Crafted by{' '}
                         <Link

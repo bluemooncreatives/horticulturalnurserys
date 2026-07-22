@@ -220,7 +220,7 @@ export async function POST(request) {
                 },
             }
 
-            await sendMail('Your MomStitched order is confirmed', validatedData.email, orderNotification(mailData))
+            await sendMail('Your order is confirmed', validatedData.email, orderNotification(mailData))
 
         } catch (error) {
             console.log(error)

@@ -5,17 +5,17 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useRef } from 'react'
 import Link from 'next/link'
-import { RotateCcw, Truck, Headset, BadgePercent, ArrowUpRight } from 'lucide-react'
+import { Ruler, Sprout, Store, CalendarCheck, ArrowUpRight } from 'lucide-react'
 
 import { WEBSITE_SHOP } from '@/routes/WebsiteRoute'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const BENEFITS = [
-    { num: '01', Icon: RotateCcw, title: '7-Day Returns', description: 'Risk-free shopping with easy, hassle-free returns on every order.' },
-    { num: '02', Icon: Truck, title: 'Free Shipping', description: 'No hidden costs — just the price you see at checkout, delivered.' },
-    { num: '03', Icon: Headset, title: '24/7 Support', description: 'Our team is always here, ready to help you at any hour of the day.' },
-    { num: '04', Icon: BadgePercent, title: 'Member Perks', description: 'Exclusive offers and early access for our most loyal customers.' },
+    { num: '01', Icon: Ruler, title: 'Survey & Design', description: 'Qualified horticulturists read your site — light, soil, drainage — before a single plant is chosen.' },
+    { num: '02', Icon: Sprout, title: 'Grown, Not Traded', description: 'Stock comes off our own farm at Bibirhut, hardened under shade and ready to establish.' },
+    { num: '03', Icon: Store, title: 'Everything One Roof', description: 'Plants, manure, pots, implements, pebbles and roof-garden materials from a single counter.' },
+    { num: '04', Icon: CalendarCheck, title: 'Season Maintenance', description: 'Pruning, feeding, pest control and replanting on a schedule, so a garden holds its first-year look.' },
 ]
 
 const BenefitsSection = () => {
@@ -58,14 +58,15 @@ const BenefitsSection = () => {
                     <div>
                         <span className="eyebrow flex items-center gap-2 text-white/50">
                             <span aria-hidden className="h-px w-6 bg-current opacity-50" />
-                            Our Promise
+                            How We Work
                         </span>
                         <h2 className="mt-3 max-w-xl text-[clamp(1.7rem,3.6vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.02em] text-white">
-                            Crafted With Care At Every Step
+                            From First Survey To Season After Season
                         </h2>
                     </div>
                     <p className="max-w-xs text-[0.82rem] leading-relaxed text-white/45">
-                        Every order is handled with the same devotion we put into the stitch — from cart to doorstep.
+                        Landscaping, nursery and supply sit in one house — so nothing is
+                        handed off and nothing gets lost between them.
                     </p>
                 </div>
 
@@ -95,7 +96,7 @@ const BenefitsSection = () => {
                 {/* CTA */}
                 <div ref={ctaRef} className="mt-12 flex justify-center lg:mt-14">
                     <Link href={WEBSITE_SHOP} className="pill pill-lime group">
-                        Shop All Products
+                        Browse the Catalogue
                         <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </Link>
                 </div>

@@ -126,14 +126,14 @@ const FeaturedProductClient = ({ products = [] }) => {
                     <div>
                         <span className="eyebrow flex items-center gap-2">
                             <span aria-hidden className="h-px w-6 bg-current opacity-40" />
-                            Selected Pieces
+                            Selected Stock
                         </span>
                         <h2 className="mt-3 text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
-                            Featured This Season
+                            In Season Right Now
                         </h2>
                     </div>
                     <p className="max-w-xs text-[0.85rem] leading-relaxed text-[var(--muted-foreground)]">
-                        A curated edit of the pieces our customers are loving right now.
+                        What is ready at the farm and moving fastest off the Alipore counter.
                     </p>
                 </div>
                 {renderProductRows()}

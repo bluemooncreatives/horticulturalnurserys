@@ -28,8 +28,8 @@ export const otpEmail = (otp, opts = {}) => {
     const eyebrowText = isReset ? "Password Reset" : "Secure Sign In";
     const headingText = isReset ? "Reset your password" : "Verify it's you";
     const lead = isReset
-        ? "Use the one-time code below to reset your MomStitched password."
-        : "Use the one-time code below to finish signing in to your MomStitched account.";
+        ? "Use the one-time code below to reset your Horticultural Development Centre password."
+        : "Use the one-time code below to finish signing in to your Horticultural Development Centre account.";
 
     const codeBlock = `
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:8px 0 24px;">
@@ -59,7 +59,7 @@ ${codeBlock}
 ${noteBlock}`;
 
     return emailShell({
-        preheader: `Your MomStitched code is ${otp} (valid for 10 minutes).`,
+        preheader: `Your Horticultural Development Centre code is ${otp} (valid for 10 minutes).`,
         title: headingText,
         bodyHtml,
     });

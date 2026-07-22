@@ -7,12 +7,13 @@ import { getHomeColors } from '@/lib/services/colorService'
 const ArchiveSectionClient = dynamic(() => import('./ArchiveSectionClient'))
 
 const WRITEUP =
-    'Discover signature silhouettes, everyday essentials, and statement pieces curated for every ' +
-    'wardrobe. Each category brings together styles designed for comfort, movement, and everyday ' +
-    'confidence, from relaxed daily basics to elevated looks for special moments. Explore collections ' +
-    'that balance fit, fabric, and finish, so every piece feels as good as it looks. Whether you are ' +
-    'building a capsule wardrobe, updating seasonal staples, or searching for one standout outfit, this ' +
-    'archive helps you find the right mood, shape, and style with ease.'
+    'Everything a garden needs, grouped the way a gardener actually shops. Ornamental trees, shrubs, ' +
+    'shade-loving indoor plants, hanging varieties, creepers and topiary sit alongside summer and winter ' +
+    'seasonal flowers, carpet grass for lawns, and seedlings and seeds released in their proper months. ' +
+    'Beyond the plants you will find organic and inorganic manure, insecticides, earthen and fibre pots, ' +
+    'hanging and vertical biowall planters, hand implements, cocopeat, garden soil, cowdung, decorative ' +
+    'pebbles, and geotextile net and drain cell for roof gardens. If you are unsure what suits your light, ' +
+    'soil or season, our counter staff will help you narrow it down.'
 
 const mapCategory = (category) => ({
     // Prefixed so a category id can never collide with a colour key.

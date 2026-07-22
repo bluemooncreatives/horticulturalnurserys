@@ -8,15 +8,19 @@ import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
  * formatted with an "Rs." prefix to render reliably without a custom font.
  */
 
+// The trading name is too wide to set on one line beside the INVOICE block at
+// header size, so it is stacked; `name` stays whole for prose and PDF metadata.
 const BRAND = {
-    name: 'MOMSTITCHED',
-    tagline: 'Fashion, stitched with love',
-    email: 'support@momstitched.com',
-    web: 'www.momstitched.com',
+    name: 'Horticultural Development Centre',
+    nameTop: 'HORTICULTURAL',
+    nameBottom: 'DEVELOPMENT CENTRE',
+    tagline: 'Landscaping & nursery · Kolkata since 1989',
+    email: 'horticulturaldc@gmail.com',
+    web: 'www.horticulturaldevelopmentcentre.com',
 }
 
-const OX = '#3E000D'
-const CREAM = '#FFECD1'
+const OX = '#0B0B0B'
+const CREAM = '#F1F0EC'
 const INK = '#1A1A1A'
 const MUTE = '#8a8a8a'
 const GREEN = '#15803d'
@@ -48,7 +52,7 @@ const s = StyleSheet.create({
 
     // header
     head: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', borderBottomWidth: 2, borderBottomColor: OX, paddingBottom: 14 },
-    brandName: { fontSize: 18, fontFamily: 'Helvetica-Bold', color: OX, letterSpacing: 1 },
+    brandName: { fontSize: 14, fontFamily: 'Helvetica-Bold', color: OX, letterSpacing: 1, lineHeight: 1.15 },
     brandTag: { fontSize: 7.5, color: MUTE, marginTop: 2, letterSpacing: 0.5 },
     brandMeta: { fontSize: 7.5, color: '#6a6a6a', marginTop: 6 },
     invTitleWrap: { alignItems: 'flex-end' },
@@ -123,7 +127,8 @@ const InvoiceDocument = ({ order = {} }) => {
                 {/* Header */}
                 <View style={s.head}>
                     <View>
-                        <Text style={s.brandName}>{BRAND.name}</Text>
+                        <Text style={s.brandName}>{BRAND.nameTop}</Text>
+                        <Text style={s.brandName}>{BRAND.nameBottom}</Text>
                         <Text style={s.brandTag}>{BRAND.tagline}</Text>
                         <Text style={s.brandMeta}>{BRAND.web}   ·   {BRAND.email}</Text>
                     </View>
@@ -253,7 +258,7 @@ const InvoiceDocument = ({ order = {} }) => {
 
                 {/* Footer */}
                 <View style={s.foot}>
-                    <Text style={s.thanks}>Thank you for shopping with {BRAND.name}!</Text>
+                    <Text style={s.thanks}>Thank you for your order.</Text>
                     <Text style={s.footSmall}>
                         This is a computer-generated invoice and does not require a signature.{'\n'}
                         For any queries about your order, contact us at {BRAND.email}.

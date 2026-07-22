@@ -1,7 +1,7 @@
 import { connectDB } from '@/lib/databaseConnection'
 import ProductModel from '@/models/Product.model'
 
-const BASE_URL = 'https://www.momstitched.com'
+const BASE_URL = 'https://www.horticulturaldevelopmentcentre.com'
 
 // Regenerate the sitemap at most once an hour so new products show up
 // without hitting the database on every crawl.

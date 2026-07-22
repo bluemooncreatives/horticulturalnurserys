@@ -31,10 +31,10 @@ export const passwordChanged = (opts = {}) => {
 
     const lead =
         action === "set"
-            ? "A password has been set on your MomStitched account. You can now sign in with your email and password."
+            ? "A password has been set on your Horticultural Development Centre account. You can now sign in with your email and password."
             : action === "reset"
-                ? "Your MomStitched password was just reset successfully. You can now sign in with your new password."
-                : "Your MomStitched password was just changed successfully.";
+                ? "Your Horticultural Development Centre password was just reset successfully. You can now sign in with your new password."
+                : "Your Horticultural Development Centre password was just changed successfully.";
 
     const bodyHtml = `
 ${eyebrow("Security")}
@@ -49,11 +49,11 @@ ${paragraph(lead)}
   </tr>
 </table>
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:0 0 8px;">
-  <tr><td align="center">${button("Go to MomStitched", contactUrl().replace(/\/contact$/, ""))}</td></tr>
+  <tr><td align="center">${button("Go to the website", contactUrl().replace(/\/contact$/, ""))}</td></tr>
 </table>`;
 
     return emailShell({
-        preheader: "Your MomStitched account password was just updated.",
+        preheader: "Your Horticultural Development Centre account password was just updated.",
         title: headingText,
         bodyHtml,
     });

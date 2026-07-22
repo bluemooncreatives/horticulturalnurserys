@@ -2,25 +2,25 @@ import { adminNavGroups } from '@/lib/adminSidebarMenu'
 import { Command, Crown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const MomStitchedMark = ({ className }) => (
-    <span className={cn('text-[10px] font-bold tracking-tight', className)}>MS</span>
+const HDCMark = ({ className }) => (
+    <span className={cn('text-[10px] font-bold tracking-tight', className)}>HDC</span>
 )
 
 const teams = [
     {
-        name: 'MomStitched',
-        logo: MomStitchedMark,
+        name: 'Horticultural DC',
+        logo: HDCMark,
         plan: 'Admin Panel',
     },
     {
-        name: 'MomStitched Pro',
+        name: 'Nursery Operations',
         logo: Crown,
-        plan: 'Operations',
+        plan: 'Farm & Stock',
     },
     {
-        name: 'Studio',
+        name: 'Sale Counter',
         logo: Command,
-        plan: 'Merch',
+        plan: 'Alipore',
     },
 ]
 

@@ -119,7 +119,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                     <div>
                         <span className="eyebrow mb-3 flex items-center gap-2">
                             <span aria-hidden className="h-px w-6 bg-current opacity-40" />
-                            Most Loved
+                            Most Asked For
                         </span>
                         <h2 className={styles.heading}>Bestsellers</h2>
                     </div>

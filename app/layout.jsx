@@ -4,13 +4,13 @@ import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export const metadata = {
-  metadataBase: new URL('https://www.momstitched.com'),
+  metadataBase: new URL('https://www.horticulturaldevelopmentcentre.com'),
   title: {
-    default: 'MomStitched - Handcrafted Women\'s Ethnic Wear',
-    template: '%s | MomStitched',
+    default: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
+    template: '%s | Horticultural Development Centre',
   },
   description:
-    "From everyday comfort to festive charm, Momstitched brings you handcrafted women's ethnic wear — designs that make you shine effortlessly.",
+    'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance, plus a 50-bigha nursery and an Alipore outlet stocking plants, manure, pots, garden implements and roof-garden materials under one roof.',
   robots: {
     index: true,
     follow: true,
@@ -25,25 +25,25 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    siteName: 'MomStitched',
-    title: 'MomStitched - Handcrafted Women\'s Ethnic Wear',
+    siteName: 'Horticultural Development Centre',
+    title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
     description:
-      "From everyday comfort to festive charm, Momstitched brings you handcrafted women's ethnic wear — designs that make you shine effortlessly.",
-    url: 'https://www.momstitched.com',
+      'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance, plus a 50-bigha nursery and an Alipore outlet stocking plants, manure, pots, garden implements and roof-garden materials under one roof.',
+    url: 'https://www.horticulturaldevelopmentcentre.com',
     images: [
       {
         url: '/assets/images/hero/01.webp',
         width: 1200,
         height: 630,
-        alt: 'MomStitched - Handcrafted Women\'s Ethnic Wear',
+        alt: 'Horticultural Development Centre - landscaping and plant nursery, Kolkata',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Momstitched - Handcrafted Women\'s Ethnic Wear',
+    title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
     description:
-      "From everyday comfort to festive charm, Momstitched brings you handcrafted women's ethnic wear — designs that make you shine effortlessly.",
+      'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance, plus a 50-bigha nursery and an Alipore outlet stocking everything a garden needs.',
     images: ['/assets/images/hero/01.webp'],
   },
   icons: {

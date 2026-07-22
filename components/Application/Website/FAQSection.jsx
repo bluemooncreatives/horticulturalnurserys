@@ -10,56 +10,56 @@ gsap.registerPlugin(ScrollTrigger)
 
 const FAQS = [
     {
-        q: 'How long does it take to process an order?',
-        a: 'Since every piece is made-to-order, it typically takes 7–14 days to carefully stitch and dispatch your outfit. This ensures each garment receives the time and attention it deserves.',
+        q: 'Do you take up landscaping projects, or only sell plants?',
+        a: 'Both. Our horticulturists design, execute and maintain gardens for residences, farm houses, institutions and government bodies — and the same nursery supplies the plants and materials for it. You can hire us for the whole garden or simply buy a pot at the counter.',
     },
     {
-        q: 'Can I wear these outfits for daily use or only occasions?',
-        a: 'Our designs are crafted to be truly versatile — refined enough for small festive gatherings yet comfortable enough for everyday elegance. One wardrobe, many moments.',
+        q: 'How does a landscaping project usually start?',
+        a: 'With a site visit. We read the light, soil, drainage and how you intend to use the space, then return a planting plan with a costing. Work begins only once the layout and estimate are approved.',
     },
     {
-        q: 'What if the outfit doesn\'t fit well?',
-        a: 'We put great care into getting the fit right, but if something feels off, simply reach out to us. We\'ll guide you through possible alterations or find the best solution for you.',
+        q: 'Where do your plants come from?',
+        a: 'From our own farm at Bibirhut, Ramdevpur in South 24 Parganas — roughly 50 bighas, with 2,500 sqm of polyshed, 2,000 sqm of green house and a 200 sqm fanpad house. We also import selected varieties from abroad for projects that call for them.',
     },
     {
-        q: 'How should I care for my outfit?',
-        a: 'To preserve the fabric quality and stitching, we recommend a gentle hand wash or dry clean. Treating each piece with care ensures it stays beautiful for years to come.',
+        q: 'Will a plant from the nursery survive in my home or balcony?',
+        a: 'That depends on light more than anything else. Tell us how many hours of direct sun the spot gets and we will point you to the right group — shade-loving indoor plants, hanging varieties, or full-sun shrubs and ornamental trees.',
     },
     {
-        q: 'Do you accept returns or exchanges?',
-        a: 'As most pieces are made-to-order, we offer limited exchange options. Please review our return policy for full details, or reach out to us — we\'re happy to help find a resolution.',
+        q: 'When are seasonal flowers available?',
+        a: 'Seedlings of winter flowers are available from August to December, and seeds of summer flowers from February to May. Summer and winter seasonal flowering plants are stocked in their respective seasons.',
     },
     {
-        q: 'What fabrics do you use?',
-        a: 'We carefully source fabrics that are breathable, comfortable, and suited for Indian weather — without compromising on the elegant ethnic aesthetic that defines MomStitched.',
+        q: 'Which lawn grass should I choose?',
+        a: 'Mexican grass gives the finest, most manicured carpet and needs good sun. Shade grass is the choice for areas under tree cover or between buildings. Blade grass is hardier and better suited to larger, rougher lawns. We can advise once we know the site.',
     },
     {
-        q: 'Do you offer customization?',
-        a: 'Yes, we welcome minor customizations such as sleeve length, neckline adjustments, and fit preferences. Simply mention your requirements while placing the order and we\'ll do our best.',
+        q: 'Do you supply manure and plant protection chemicals?',
+        a: 'Yes. Organic manures include vermicompost, bone meal, mustard oil cake, horn meal and neem oil cake. Inorganic options include super phosphate, DAP, NPK, Suphala, 19:19:19, 20:20:20, potash and ammonium sulphate. We stock both organic and inorganic insecticides.',
     },
     {
-        q: 'How do I choose the right size?',
-        a: 'We provide a detailed size guide to help you find your fit. If you\'re unsure, feel free to share your measurements with us — we\'ll personally assist you in selecting the perfect size.',
+        q: 'Can you build a roof garden?',
+        a: 'Yes, and it is one of the things we are asked for most in Kolkata. We supply and lay geotextile net and drain cell so the slab stays protected, and design the planting around the load and wind the terrace can actually take.',
     },
     {
-        q: 'Are all outfits made to order?',
-        a: 'Yes, every MomStitched piece is made-to-order with close attention to detail. This approach ensures a better fit, superior finish, and a quality that truly stands apart.',
+        q: 'What kind of pots and planters do you stock?',
+        a: 'Earthen pots including general, mazla / chali and bonsai shapes, plus LLDPE and fibre pots — general, decorative, decorative planters, hanging pots and vertical / biowall systems for green walls.',
     },
     {
-        q: 'Can I place a bulk or group order?',
-        a: 'Absolutely. We happily take bulk orders for small functions or coordinated group outfits. Reach out to us with your requirements and we\'ll take care of the rest.',
+        q: 'Do you sell garden tools and soil media?',
+        a: 'We carry hedge shears, secateurs, rakes, khurpa, sprayers, watering pipes, sprinklers and watering cans, along with cocopeat, garden soil, cowdung and decorative pebbles.',
     },
     {
-        q: 'Can I make changes after placing the order?',
-        a: 'If your order hasn\'t entered production yet, we\'ll do our best to accommodate your request. Please contact us as early as possible so we can act in time.',
+        q: 'Do you handle garden maintenance after handover?',
+        a: 'Yes. We take annual maintenance for gardens we have built and for existing gardens too — regular pruning, feeding, pest control, lawn upkeep and seasonal replanting by our own field staff.',
     },
     {
-        q: 'Are your outfits suitable for all age groups?',
-        a: 'Yes — our designs are timeless, comfortable, and thoughtfully crafted to be worn and loved across different age groups, from young adults to elders.',
+        q: 'Can you take on government or institutional work?',
+        a: 'We hold credentials for beautification work executed under State Government departments and CPWD, and have completed parks, lake fronts, zoo and library grounds, IT parks, tourist lodges and township landscapes.',
     },
     {
-        q: 'Do you restock designs?',
-        a: 'Since most pieces are made-to-order, traditional restocks aren\'t our usual practice. However, you\'re welcome to reach out and we\'ll let you know what\'s possible.',
+        q: 'Can I visit before ordering?',
+        a: 'Please do. Our sale counter at 2/5 Judges Court Road, Alipore, Kolkata 700027 keeps plants, pots, nutrients, chemicals and implements together in one place, and our staff can walk you through the options.',
     },
 ]
 
@@ -157,7 +157,7 @@ const FAQSection = () => {
                     </h2>
                 </div>
                 <span className="hidden text-[0.68rem] font-semibold uppercase text-muted-foreground sm:block">
-                    Returns · Shipping · Orders
+                    Plants · Landscaping · Supplies
                 </span>
             </div>
 

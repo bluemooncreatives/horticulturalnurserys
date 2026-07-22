@@ -67,11 +67,11 @@ const TestimonialClient = ({ testimonials = [] }) => {
                         Testimonials
                     </span>
                     <h2 className="mt-3 text-[clamp(1.8rem,4.4vw,3.2rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
-                        Voices, Stitched In
+                        From Our Gardens
                     </h2>
                 </div>
                 <p className="max-w-sm text-[0.9rem] leading-relaxed text-[var(--muted-foreground)]">
-                    Behind every order is a woman who felt seen in what she wears. A few of the notes they&apos;ve left us.
+                    Notes from the people whose terraces, courtyards and campuses we have planted.
                 </p>
             </div>
 
@@ -88,11 +88,11 @@ const TestimonialClient = ({ testimonials = [] }) => {
                         </p>
                         <Stars rating={clampRating(avg)} className="mt-3 text-white" />
                         <p className="mt-5 text-[0.85rem] leading-relaxed text-white/50">
-                            Trusted by women across India — every piece made with intention, and worn with pride.
+                            Homes, farm houses and public grounds across West Bengal — planted once, tended season after season.
                         </p>
                     </div>
                     <Link href={WEBSITE_SHOP} className="pill pill-lime group mt-8 self-start">
-                        Explore &amp; Review
+                        Browse &amp; Review
                         <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </Link>
                 </div>
@@ -113,7 +113,7 @@ const TestimonialClient = ({ testimonials = [] }) => {
                                 <figcaption className="mt-5 flex items-center justify-between gap-3 border-t border-[var(--border)] pt-4">
                                     <div className="min-w-0">
                                         <p className="truncate text-[0.9rem] font-medium text-[var(--brand-primary)]">{item.name}</p>
-                                        <p className="text-[0.72rem] uppercase tracking-[0.14em] text-[var(--muted-foreground)]">Verified Buyer</p>
+                                        <p className="text-[0.72rem] uppercase tracking-[0.14em] text-[var(--muted-foreground)]">Verified Client</p>
                                     </div>
                                     <Stars rating={rating} className="shrink-0 text-[var(--brand-primary)]" />
                                 </figcaption>

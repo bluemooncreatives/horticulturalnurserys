@@ -172,7 +172,7 @@ ${addressBlock}
 ${paragraph("We'll email you again as soon as your order ships. Questions? Just reply to this email or reach us through our contact page.")}`;
 
     return emailShell({
-        preheader: `Order ${order_id} confirmed — thank you for shopping with MomStitched.`,
+        preheader: `Order ${order_id} confirmed — thank you for your order.`,
         title: "Order confirmed",
         bodyHtml,
     });

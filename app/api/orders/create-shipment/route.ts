@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
             },
             weight: parsed.data.weight,
             pickupLocation: process.env.DELHIVERY_PICKUP_LOCATION,
-            sellerName: "MomStitched",
+            sellerName: "Horticultural Development Centre",
             sellerAddress: process.env.DELHIVERY_SELLER_ADD,
             sellerGstTin: process.env.DELHIVERY_SELLER_GST_TIN,
             hsnCode: process.env.DELHIVERY_HSN_CODE,

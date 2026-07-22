@@ -5,7 +5,7 @@ import { useGSAP } from '@gsap/react'
 import { useRef, useState } from 'react'
 
 /**
- * Giant "MOMSTITCHED" wordmark.
+ * Giant "HORTICULTURAL" wordmark.
  *
  * The text is measured on mount and the SVG viewBox is sized to its real
  * bounding box, so `width: 100%` scales the word to fill the screen width
@@ -77,7 +77,7 @@ const FooterWordmark = () => {
                 ref={svgRef}
                 viewBox={viewBox}
                 role='img'
-                aria-label='MomStitched'
+                aria-label='Horticultural Development Centre'
                 onMouseMove={handleMove}
                 onMouseEnter={handleEnter}
                 onMouseLeave={handleLeave}
@@ -107,7 +107,7 @@ const FooterWordmark = () => {
                     stroke='rgba(255,255,255,0.28)'
                     strokeWidth='0.5'
                 >
-                    MOMSTITCHED
+                    HORTICULTURAL
                 </text>
             </svg>
         </div>

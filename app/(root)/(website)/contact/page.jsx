@@ -186,14 +186,14 @@ const ContactPage = () => {
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="address" className={styles.label}>
-                  Address <span className={styles.optional}>(optional)</span>
+                  Site Address <span className={styles.optional}>(optional)</span>
                 </label>
                 <input
                   id="address"
                   name="address"
                   type="text"
                   autoComplete="street-address"
-                  placeholder="City, State"
+                  placeholder="Locality, City"
                   value={form.address}
                   onChange={handleChange}
                   className={styles.input}
@@ -209,7 +209,7 @@ const ContactPage = () => {
                 id="subject"
                 name="subject"
                 type="text"
-                placeholder="What's this about?"
+                placeholder="Site visit, plant enquiry, maintenance…"
                 value={form.subject}
                 onChange={handleChange}
                 className={styles.input}
@@ -223,7 +223,7 @@ const ContactPage = () => {
                 name="message"
                 required
                 rows={6}
-                placeholder="Write your message here..."
+                placeholder="Tell us about the site — terrace, courtyard, campus — or the plants and materials you need."
                 value={form.message}
                 onChange={handleChange}
                 className={`${styles.input} ${styles.textarea}`}
@@ -253,18 +253,28 @@ const ContactPage = () => {
           {/* Left column */}
           <div className={styles.col}>
             <div>
-              <div className={styles.sectionLabel}><p>Where</p></div>
+              <div className={styles.sectionLabel}><p>Office / Sale Counter</p></div>
               <div className={styles.divider} />
-              <div className={styles.item}><p>MomStitched</p></div>
-              <div className={styles.item}><p>Market, Lucknow</p></div>
-              <div className={styles.item}><p>India - 256320</p></div>
+              <div className={styles.item}><p>Horticultural Development Centre</p></div>
+              <div className={styles.item}><p>2/5 Judges Court Road, Alipore</p></div>
+              <div className={styles.item}><p>Kolkata - 700027</p></div>
+            </div>
+
+            <div>
+              <div className={styles.sectionLabel}><p>Farm</p></div>
+              <div className={styles.divider} />
+              <div className={styles.item}><p>Bibirhut, Ramdevpur</p></div>
+              <div className={styles.item}><p>24 Parganas (South), West Bengal</p></div>
             </div>
 
             <div>
               <div className={styles.sectionLabel}><p>Phone</p></div>
               <div className={styles.divider} />
               <div className={styles.item}>
-                <a href="tel:+918569874589">+91 85698 74589</a>
+                <a href="tel:+913324795710">(033) 2479-5710</a>
+              </div>
+              <div className={styles.item}>
+                <a href="tel:+919088275576">+91 90882 75576</a>
               </div>
             </div>
           </div>
@@ -275,13 +285,13 @@ const ContactPage = () => {
               <div className={styles.sectionLabel}><p>Socials</p></div>
               <div className={styles.divider} />
               <div className={styles.item}>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+                <a href="https://www.instagram.com/horticulturaldevelopmentcentre/" target="_blank" rel="noreferrer">Instagram</a>
               </div>
               <div className={styles.item}>
-                <a href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</a>
+                <a href="https://www.facebook.com/horticulturaldevelopmentcentre" target="_blank" rel="noreferrer">Facebook</a>
               </div>
               <div className={styles.item}>
-                <a href="https://youtube.com" target="_blank" rel="noreferrer">YouTube</a>
+                <a href="https://wa.me/919088275576" target="_blank" rel="noreferrer">WhatsApp</a>
               </div>
             </div>
 
@@ -289,8 +299,14 @@ const ContactPage = () => {
               <div className={styles.sectionLabel}><p>Mail</p></div>
               <div className={styles.divider} />
               <div className={styles.item}>
-                <a href="mailto:momstitched.official@gmail.com">momstitched.official@gmail.com</a>
+                <a href="mailto:horticulturaldc@gmail.com">horticulturaldc@gmail.com</a>
               </div>
+            </div>
+
+            <div>
+              <div className={styles.sectionLabel}><p>Hours</p></div>
+              <div className={styles.divider} />
+              <div className={styles.item}><p>Mon &ndash; Sat &middot; 10:00 &ndash; 19:00</p></div>
             </div>
           </div>
 

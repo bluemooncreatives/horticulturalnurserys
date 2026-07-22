@@ -31,34 +31,34 @@ const HERO_RIGHT_IMAGE = "https://res.cloudinary.com/darrsi9y2/image/upload/v178
 
 // Brand-story paragraphs shown beneath the statement.
 const STORY = [
-  "Momstitched was born in May 2021, in the heart of India's hardest COVID days. What started as one small idea, carried through so much uncertainty, slowly grew into something far greater - a quiet symbol of hope. And it began with my mom: her creativity, her strength, and her endless love became the spirit behind every thread we stitch, and the reason this journey ever started.",
-  "What makes us different is simple - we're not backed by big corporations, we're powered by family. My sister keeps everything running seamlessly online, my father handles logistics like a pro, and together, by hand, we build every part of this brand. Every design, every package, every decision travels straight from our home to yours.",
-  "Rooted in India and driven by passion, we make clothing that feels real, personal, and meaningful - because it truly is. This isn't fast fashion. It's family fashion. This is Momstitched.",
+  "Horticultural Development Centre began in Kolkata as a plant nursery, opened in 1990 by a small group of people who had spent their working lives in horticulture. The idea was modest: grow good planting material properly, and sell it honestly. Everything since has grown out of that one decision.",
+  "The nursery came first, and it is still the foundation. Our farm at Bibirhut, Ramdevpur in South 24 Parganas runs to roughly fifty bighas, developed scientifically over the years — 2,500 sqm of polyshed house, 2,000 sqm of green house and a 200 sqm fanpad house, served by sprinkler, fogger and drip irrigation. It exists to propagate and produce plants and grasses suited to tropical and subtropical conditions, and to send out material that establishes rather than merely survives the journey.",
+  "Landscaping followed naturally. Our qualified horticulturists and skilled field staff design, execute and maintain gardens, and we have built credentials in parks, gardens and beautification work under State Government departments, CPWD and private clients across the country. Alongside it we run a showroom and sale counter at Alipore — the one place in West Bengal where plants, seeds, pots, hanging baskets, nutrients, plant protection chemicals, garden implements and every accessory sit under one roof.",
 ];
 
-// The two people behind the brand. `reverse` flips the image/text order.
+// The people behind the organisation. `reverse` flips the image/text order.
 const PEOPLE = [
   {
-    name: "Aditi Dhakate",
-    role: "Founder · Face Behind the brand",
+    name: "Tapan Maiti",
+    role: "Proprietor · Horticultural Development Centre",
     image: HERO_CENTER_IMAGE,
     bio: [
-      "I started out in IT engineering - a world of code, systems, and logic. But creativity had other plans for me.",
-      "Taking a leap from tech into fashion wasn't random - it was inspired by the strongest influence in my life: my mom. Her creativity and passion became the soul of Momstitched, and the reason I dared to turn this idea into reality.",
-      "Today I'm the face behind the brand, bringing together creativity, clarity, and a fresh perspective. I still carry my technical mindset - but now I use it to build something more expressive and personal.",
-      "Bubbly, driven, and real - professional when it matters, cool always. For me, fashion is about confidence, identity, and owning your story. And I'm just getting started.",
+      "Landscaping in Kolkata is rarely a matter of taste alone. The soil is heavy, the monsoon is unforgiving, and a terrace has only so much load to give. What survives here is what was chosen with those things in mind.",
+      "That conviction is why we kept the nursery rather than becoming a trading house. When a plant is raised on our own farm we know its age, its hardening, and what it will do in its second year — none of which can be guaranteed from a bought-in consignment.",
+      "It is also why we invested early in protected cultivation and modern irrigation. Polyshed, green house and fanpad structures with sprinkler, fogger and drip systems let us hold quality through the seasons that would otherwise dictate what we could offer.",
+      "We import selected varieties from abroad for projects that call for them, and we stay on afterwards to maintain what we plant. A garden handed over and forgotten is not a finished project.",
     ],
   },
   {
-    name: "Sandhya Dhakate",
-    role: "Mom · Heart of Momstitched",
+    name: "Our Horticulturists",
+    role: "Design · Execution · Maintenance",
     image: HERO_RIGHT_IMAGE,
     reverse: true,
     bio: [
-      "She is the heart, the strength, and the soul behind Momstitched. A homemaker by role but a creator by passion, she has always expressed her love through every stitch she made for her daughters.",
-      "What began as simple, thoughtful creations at home has grown into something much bigger - today she stitches not just for us, but for daughters everywhere.",
-      "Her strength lies in her warmth, her creativity, and the way she brings life into everything she touches - graceful, vibrant, and endlessly inspiring.",
-      "Beyond the brand she's full of life — kitty parties, picnics, community work, and peace in her bhajan groups. Momstitched exists because of her: her love, her vision, and her magic in every stitch.",
+      "Every project is read on site before it is drawn. Light hours, drainage, soil, wind, load and how the space will actually be used decide the planting plan — not a catalogue picked in an office.",
+      "Our team covers the full arc: survey and design, soil preparation and planting, lawn laying, roof-garden waterproofing with geotextile and drain cell, and the irrigation that keeps it all alive.",
+      "The field staff who plant a garden are the ones who come back to it. Pruning, feeding, pest control, lawn upkeep and seasonal replanting run on a schedule, which is how a garden still looks considered in its fifth year.",
+      "That combination — designing, growing and maintaining under one house — is what allowed us to work on the Assembly House, the National Library, Alipore Zoo, Rabindra Sarobar, IT parks at Krishnanagar and Malda, tourist lodges, township landscapes and a great many private gardens.",
     ],
   },
 ];
@@ -306,7 +306,7 @@ const AboutUsContent = ({ products = [] }) => {
           <div className={`${styles.flankImage} ${styles.flankLeft}`} ref={flankLeftRef}>
             <Image
               src={HERO_LEFT_IMAGE}
-              alt="MomStitched detail"
+              alt="Nursery detail"
               fill
               sizes="130px"
               className="object-cover"
@@ -315,7 +315,7 @@ const AboutUsContent = ({ products = [] }) => {
           <div className={`${styles.flankImage} ${styles.flankRight}`} ref={flankRightRef}>
             <Image
               src={HERO_RIGHT_IMAGE}
-              alt="MomStitched detail"
+              alt="Landscaping detail"
               fill
               sizes="110px"
               className="object-cover"
@@ -325,7 +325,7 @@ const AboutUsContent = ({ products = [] }) => {
           <div className={styles.centerImage} ref={centerImgRef}>
             <Image
               src={HERO_CENTER_IMAGE}
-              alt="MomStitched atelier"
+              alt="Our nursery at Bibirhut, Ramdevpur"
               fill
               priority
               sizes="(max-width: 900px) 70vw, 360px"
@@ -345,9 +345,9 @@ const AboutUsContent = ({ products = [] }) => {
           <span className={styles.plus}>+</span>
           <span className={styles.rule} />
           <span className={styles.caption}>
-            Born May 2021 · made by family,
+            Kolkata since 1989 · our own
             <br />
-            rooted in India
+            nursery, our own field staff
           </span>
         </div>
 
@@ -355,8 +355,8 @@ const AboutUsContent = ({ products = [] }) => {
         <div className={styles.statementWrap}>
           <div ref={statementRef}>
             <h2 className={styles.statement}>
-              Momstitched isn&apos;t just a clothing brand - it&apos;s a story
-              stitched with love, resilience, and family.
+              We are not a garden shop that also plants. We grow the plant,
+              design the space it goes into, and come back to look after it.
             </h2>
           </div>
           <div className={styles.story} ref={supportRef}>
@@ -374,7 +374,7 @@ const AboutUsContent = ({ products = [] }) => {
         <img
           ref={scrollImgRef}
           src={SCROLL_IMAGE}
-          alt="MomStitched craftsmanship"
+          alt="Landscaping work in progress"
           className={styles.scrollImage}
           loading="lazy"
           decoding="async"
@@ -385,15 +385,15 @@ const AboutUsContent = ({ products = [] }) => {
         {/* The family behind the brand */}
         <div className={styles.people} ref={peopleRef}>
           <div className={styles.peopleHead}>
-            <span className={styles.peopleEyebrow}>THE FAMILY</span>
+            <span className={styles.peopleEyebrow}>THE PEOPLE</span>
             <h2 className={styles.peopleHeadline}>
-              Not built by a corporation - built by a family, by hand.
+              Qualified horticulturists, and field staff who come back.
             </h2>
             <p className={styles.peopleIntro}>
-              Behind every Momstitched piece is one small family doing every
-              part themselves - designing, stitching, packing, and shipping
-              straight from our home in India to yours. These are the two women
-              at the very heart of it.
+              Behind every garden we build is one house doing all of it — raising
+              the plants at Bibirhut, surveying and designing the site, executing
+              the work, and returning season after season to maintain it. Nothing
+              is subcontracted out and then forgotten.
             </p>
           </div>
 
@@ -428,7 +428,7 @@ const AboutUsContent = ({ products = [] }) => {
           {/* CTA — shared website button for consistent styling */}
           <div className={styles.ctaWrap}>
             <ShopAllButton
-              label="Get in touch"
+              label="Request a site visit"
               href="/contact"
               colorScheme="dark-red"
               radius="sm"
@@ -444,11 +444,11 @@ const AboutUsContent = ({ products = [] }) => {
             <div className="mb-8 text-center lg:mb-10">
               <p className="eyebrow inline-flex items-center gap-2">
                 <span aria-hidden className="h-px w-6 bg-current opacity-40" />
-                Curated For You
+                From the Nursery
                 <span aria-hidden className="h-px w-6 bg-current opacity-40" />
               </p>
               <h2 className="mt-3 font-neue text-[clamp(1.6rem,3.4vw,2.6rem)] font-medium tracking-[-0.02em] leading-[1.1] text-[var(--brand-primary)]">
-                You May Also Like
+                You May Also Need
               </h2>
             </div>
 

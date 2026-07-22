@@ -15,26 +15,26 @@ const CARDS = [
     {
         num: '01',
         heading: 'Our Story',
-        description: "Crafted with a mother's love — each piece carries the warmth, care, and attention that defines who we are.",
-        cta: 'Discover More',
+        description: 'A nursery started in 1990 that grew into a landscaping house — parks, lakes, townships and institutional grounds across West Bengal.',
+        cta: 'Read More',
         href: '/about-us',
         image: '/assets/images/hero/03.webp',
         overlay: 'bg-gradient-to-t from-black/80 via-black/30 to-black/10',
     },
     {
         num: '02',
-        heading: 'Shop Now',
-        description: 'From everyday essentials to statement pieces — explore our full range of thoughtfully designed clothing.',
-        cta: 'Shop Collection',
+        heading: 'The Nursery',
+        description: 'Ornamental trees, shrubs, indoor and hanging plants, topiary, seasonal flowers, lawn grass, manure, pots and implements.',
+        cta: 'Browse Catalogue',
         href: WEBSITE_SHOP,
         image: '/assets/images/hero/01.webp',
         overlay: 'bg-gradient-to-t from-[var(--dark-red)]/90 via-[var(--dark-red)]/25 to-transparent',
     },
     {
         num: '03',
-        heading: 'Contact Us',
-        description: "Have a question or need help finding the right fit? We're always here to help you.",
-        cta: 'Get In Touch',
+        heading: 'Plan a Garden',
+        description: 'Tell us about the site — terrace, courtyard, campus or township — and our horticulturists will come and see it.',
+        cta: 'Request a Site Visit',
         href: '/contact',
         image: '/assets/images/hero/04.webp',
         overlay: 'bg-gradient-to-t from-black/85 via-black/35 to-black/10',
@@ -109,11 +109,11 @@ const EditorialCardsSection = () => {
                         Explore More
                     </span>
                     <h2 className="mt-3 text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
-                        The Full Picture
+                        Three Ways In
                     </h2>
                 </div>
                 <span className="hidden text-[0.68rem] font-semibold uppercase text-muted-foreground sm:block">
-                    Story · Shop · Connect
+                    Story · Nursery · Site Visit
                 </span>
             </div>
 

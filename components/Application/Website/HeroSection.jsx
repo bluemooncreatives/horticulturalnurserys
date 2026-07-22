@@ -11,14 +11,14 @@ import { WEBSITE_SHOP } from "@/routes/WebsiteRoute";
 
 gsap.registerPlugin(useGSAP);
 
-// Craft credentials shown as the "trusted by" mark row — adapts the reference's
-// client-logo strip to a fashion label's making credentials.
+// Horticultural credentials shown as the "trusted by" mark row — adapts the
+// reference's client-logo strip to the nursery's field capabilities.
 const CRAFT_MARKS = [
-  "Handloom",
-  "Pure Cotton",
-  "Hand-Embroidered",
-  "Natural Dyes",
-  "Made in India",
+  "Landscape Design",
+  "50-Bigha Nursery",
+  "Green & Polyshed Houses",
+  "Drip · Fogger · Sprinkler",
+  "Imported Plants",
 ];
 
 const AVATARS = [
@@ -50,7 +50,7 @@ const HeroSection = () => {
           {/* Full-bleed background image */}
           <Image
             src="/assets/images/hero/01.webp"
-            alt="MomStitched handcrafted women's ethnic wear collection"
+            alt="A landscaped garden developed by Horticultural Development Centre, Kolkata"
             fill
             priority
             sizes="100vw"
@@ -69,9 +69,17 @@ const HeroSection = () => {
 
           {/* Top region: wordmark + tagline (overlaid) */}
           <div className="relative z-[2] grid grid-cols-1 gap-6 px-5 pt-8 sm:px-8 sm:pt-10 lg:grid-cols-[1fr_auto] lg:items-start lg:gap-10 lg:px-11 lg:pt-12">
-            <h1 className="hero-word font-wordmark whitespace-nowrap text-[var(--brand-ink)] text-[clamp(2.4rem,11vw,9.5rem)] leading-[0.9] [font-weight:700]">
-              MomStitched
-              <sup className="relative top-[0.12em] ml-[0.03em] align-top text-[0.26em] font-normal leading-none opacity-80">®</sup>
+            {/* Two-line lockup: the trading name is far too long for a single
+                nowrap line, so the first word carries the display size and the
+                rest sits under it at roughly half scale. */}
+            <h1 className="hero-word font-wordmark text-[var(--brand-ink)] leading-[0.88] [font-weight:700]">
+              <span className="block whitespace-nowrap text-[clamp(2.1rem,10.5vw,9rem)]">
+                Horticultural
+              </span>
+              <span className="block whitespace-nowrap text-[clamp(1.05rem,5.2vw,4.4rem)]">
+                Development Centre
+                <sup className="relative top-[0.12em] ml-[0.05em] align-top text-[0.26em] font-normal leading-none opacity-80">®</sup>
+              </span>
             </h1>
 
             <div className="hero-tag w-full max-w-md lg:w-[17rem] lg:pt-3">
@@ -88,13 +96,14 @@ const HeroSection = () => {
                 </div>
                 <span aria-hidden className="h-px w-6 bg-black/25" />
                 <span className="text-[0.6rem] font-medium uppercase tracking-[0.24em] text-[var(--muted-foreground)]">
-                  [ Handcrafted ]
+                  [ Kolkata · Since 1989 ]
                 </span>
               </div>
               <p className="mt-3.5 text-justify text-[0.78rem] leading-[1.5] text-[var(--text-body)]">
-                We craft heirloom ethnic wear for weddings, festivals, and everyday
-                women who want more than fast fashion — pieces stitched with a
-                mother&apos;s devotion and an artisan&apos;s eye.
+                Qualified horticulturists designing, building and maintaining
+                gardens across West Bengal - backed by our own 50-bigha nursery
+                and an Alipore counter that stocks every plant, tool and input a
+                garden needs under one roof.
               </p>
             </div>
           </div>
@@ -104,8 +113,8 @@ const HeroSection = () => {
             {/* bottom-left: trusted-by + craft marks */}
             <div className="hero-overlay">
               <p className="max-w-xs text-[0.72rem] leading-snug text-white/85 sm:text-[0.8rem]">
-                Trusted by 100+ women turning everyday moments into occasions worth
-                dressing for.
+                Entrusted with the Assembly House, National Library, Alipore Zoo
+                and Rabindra Sarobar.
               </p>
               <div className="mt-3.5 flex flex-wrap items-center gap-x-5 gap-y-2 sm:gap-x-7">
                 {CRAFT_MARKS.map((mark) => (
@@ -131,10 +140,10 @@ const HeroSection = () => {
               <span className="flex items-center justify-between gap-2 px-3.5 py-3">
                 <span className="min-w-0">
                   <span className="block truncate text-[0.85rem] font-medium text-[var(--brand-primary)]">
-                    Festive Edit®
+                    Winter Seedlings®
                   </span>
                   <span className="mt-0.5 flex items-center gap-2 text-[0.68rem] text-[var(--muted-foreground)]">
-                    New Collection <span className="opacity-60">2026°</span>
+                    August – December <span className="opacity-60">2026°</span>
                   </span>
                 </span>
                 <ArrowUpRight className="size-4 shrink-0 text-[var(--brand-primary)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

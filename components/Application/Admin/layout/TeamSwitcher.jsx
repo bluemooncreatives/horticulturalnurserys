@@ -18,7 +18,7 @@ const TeamSwitcher = ({ teams = [] }) => {
                     <div className="flex aspect-square items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                         <Image
                             src={logoWhite}
-                            alt="MomStitched"
+                            alt="Horticultural Development Centre"
                             width={42}
                             height={42}
                             className="object-contain"

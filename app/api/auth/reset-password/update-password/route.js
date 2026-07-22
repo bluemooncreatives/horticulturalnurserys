@@ -36,7 +36,7 @@ export async function PUT(request) {
 
         // Security notice. Best-effort — the reset already succeeded.
         try {
-            await sendMail('Your MomStitched password was reset', getUser.email, passwordChanged({ name: getUser.name, action: 'reset' }))
+            await sendMail('Your password was reset', getUser.email, passwordChanged({ name: getUser.name, action: 'reset' }))
         } catch (mailError) {
             console.error('Failed to send password-reset email:', mailError?.message || mailError)
         }

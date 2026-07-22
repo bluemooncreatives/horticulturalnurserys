@@ -18,13 +18,13 @@ const BenefitsSection = dynamic(() => import('@/components/Application/Website/B
 const FAQSection = dynamic(() => import('@/components/Application/Website/FAQSection'))
 
 export const metadata = {
-    title: 'MOMSTITCHED - Handcrafted Women\'s Ethnic Wear | Shop Online',
+    title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
     description:
-        'Discover handcrafted women\'s ethnic wear at MomStitched. From festive ensembles to everyday elegance - premium fabrics, thoughtful silhouettes, and meticulous detailing.',
+        'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance by qualified horticulturists, plus ornamental plants, seasonal flowers, lawn grass, manure, pots, garden implements and roof-garden materials — buy online or at our Alipore counter.',
     openGraph: {
-        title: 'MOMSTITCHED - Handcrafted Women\'s Ethnic Wear | Shop Online',
+        title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
         description:
-            'Discover handcrafted women\'s ethnic wear at MomStitched. From festive ensembles to everyday elegance - premium fabrics, thoughtful silhouettes, and meticulous detailing.',
+            'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance by qualified horticulturists, plus ornamental plants, seasonal flowers, lawn grass, manure, pots, garden implements and roof-garden materials.',
     },
 }
 
@@ -38,7 +38,7 @@ const Home = () => {
                 LazyHydrate keeps each section's server HTML in the document but
                 defers its hydration until the user scrolls near it, so the
                 initial load only hydrates the hero + header. */}
-            <Marquee text="freshly arrived" repeatCount={12} />
+            <Marquee text="fresh from the nursery" repeatCount={12} />
 
             <LazyHydrate>
                 <FeaturedProduct />

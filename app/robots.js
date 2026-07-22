@@ -1,4 +1,4 @@
-const BASE_URL = 'https://www.momstitched.com'
+const BASE_URL = 'https://www.horticulturaldevelopmentcentre.com'
 
 export default function robots() {
     return {

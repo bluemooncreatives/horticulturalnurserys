@@ -53,10 +53,10 @@ const AboutUsSection = () => {
                     About Company
                 </span>
                 <h2 className="max-w-4xl text-[clamp(1.5rem,3.4vw,2.35rem)] font-medium leading-[1.28] tracking-[-0.01em] text-[var(--brand-ink)]">
-                    We believe the most cherished garments are not simply bought, but
+                    A garden is not decorated, but
                     <span className="px-1.5 text-[var(--muted-foreground)]">/</span>
-                    worn into memory —
-                    <span className="text-[var(--muted-foreground)]"> quietly holding a moment, and carrying its grace long after the occasion it was made for.</span>
+                    grown into place —
+                    <span className="text-[var(--muted-foreground)]"> which is why we raise our own plants, design the space they will live in, and stay on to maintain it long after the handover.</span>
                 </h2>
             </div>
 
@@ -72,34 +72,34 @@ const AboutUsSection = () => {
                             </span>
                         ))}
                         <span className="flex size-9 items-center justify-center rounded-full bg-[var(--brand-lime)] text-[0.62rem] font-semibold text-[var(--brand-lime-ink)]">
-                            45+
+                            50+
                         </span>
                     </div>
                     <p className="mt-5 text-[0.7rem] uppercase tracking-[0.16em] text-[var(--muted-foreground)]">
-                        Loved Across India
+                        Projects Delivered
                     </p>
                 </div>
 
                 {/* 2 · Dark number + seal */}
                 <div className="about-stat relative flex min-h-[13.5rem] flex-col justify-between overflow-hidden rounded-[var(--radius-card)] bg-[var(--brand-ink-soft)] p-5 text-white lg:min-h-[15rem]">
-                    <span className="text-[0.7rem] uppercase tracking-[0.16em] text-white/45">Years of Craft</span>
+                    <span className="text-[0.7rem] uppercase tracking-[0.16em] text-white/45">Years in the Field</span>
                     {/* circular seal */}
                     <span aria-hidden className="absolute right-4 top-4 flex size-[4.2rem] items-center justify-center rounded-full border border-white/15">
                         <span className="absolute inset-1 rounded-full border border-dashed border-white/15" />
                         <Star className="size-5 text-[var(--brand-lime)]" strokeWidth={1.5} fill="currentColor" />
                     </span>
-                    <p className="text-[3rem] font-medium leading-none tracking-[-0.03em]">6+</p>
+                    <p className="text-[3rem] font-medium leading-none tracking-[-0.03em]">35+</p>
                 </div>
 
                 {/* 3 · Text */}
                 <div className="about-stat flex min-h-[13.5rem] flex-col justify-between rounded-[var(--radius-card)] border border-[var(--border)] bg-white p-5 lg:min-h-[15rem]">
                     <p className="text-[0.92rem] leading-snug text-[var(--brand-ink)]">
-                        From everyday comfort to festive charm, each piece is approached as
-                        a world of its own — made to be cherished.
+                        One potted plant at the Alipore counter or an entire township
+                        landscape — both are grown on the same farm at Bibirhut.
                     </p>
                     <div>
-                        <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Pieces Delivered</span>
-                        <span className="mt-1 block text-[1.9rem] font-medium leading-none tracking-[-0.02em] text-[var(--brand-ink)]">4k+</span>
+                        <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Nursery Spread</span>
+                        <span className="mt-1 block text-[1.9rem] font-medium leading-none tracking-[-0.02em] text-[var(--brand-ink)]">50 Bighas</span>
                     </div>
                 </div>
 
@@ -107,15 +107,15 @@ const AboutUsSection = () => {
                 <div className="about-stat relative flex min-h-[13.5rem] flex-col justify-end overflow-hidden rounded-[var(--radius-card)] p-5 text-white lg:min-h-[15rem]">
                     <Image
                         src="/assets/images/hero/03.webp"
-                        alt="MomStitched craft"
+                        alt="Protected cultivation under the green house at our Bibirhut farm"
                         fill
                         sizes="(min-width:1024px) 25vw, 50vw"
                         className="object-cover object-top"
                     />
                     <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
                     <div className="relative">
-                        <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-white/70">Cities Reached</span>
-                        <span className="mt-1 block text-[3rem] font-medium leading-none tracking-[-0.03em]">18+</span>
+                        <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-white/70">Under Cover</span>
+                        <span className="mt-1 block text-[2.4rem] font-medium leading-none tracking-[-0.03em]">4,700 m²</span>
                     </div>
                 </div>
             </div>

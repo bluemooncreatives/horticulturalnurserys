@@ -23,17 +23,33 @@ const defaultMenu = [
   { title: "Contact", url: "/contact" },
 ]
 
-// Small superscript degree accent echoing the reference's ®/° motif —
-// decorative only, not a trademark claim.
-const Wordmark = ({ title, className = "" }) => (
-  <span className={`font-wordmark inline-flex items-start ${className}`}>
-    {title}
-    <sup className="ml-[0.12em] mt-[0.15em] text-[0.42em] font-normal leading-none opacity-70">°</sup>
+// Stacked lockup: the trading name is long, so the first word carries the
+// display weight and the rest sits under it as a tracked caption. Keeps the
+// mark to ~150px wide at nav size instead of overflowing the bar on mobile.
+// The caption size is fixed rather than em-relative: this lockup renders at
+// 1.25rem in the bar and 1.7rem in the menu sheet, and an em-scaled caption
+// falls below legible size at the smaller of the two.
+const Wordmark = ({ title, subtitle, className = "" }) => (
+  <span className={`inline-flex flex-col leading-none ${className}`}>
+    <span className="font-wordmark inline-flex items-start">
+      {title}
+      <sup className="ml-[0.12em] mt-[0.15em] text-[0.42em] font-normal leading-none opacity-70">°</sup>
+    </span>
+    {subtitle && (
+      <span className="mt-[0.35em] text-[0.58rem] font-medium uppercase tracking-[0.2em] opacity-60">
+        {subtitle}
+      </span>
+    )}
   </span>
 )
 
 export default function Navbar({
-  logo = { url: "/", alt: "MomStitched logo", title: "MomStitched" },
+  logo = {
+    url: "/",
+    alt: "Horticultural Development Centre logo",
+    title: "Horticultural",
+    subtitle: "Development Centre",
+  },
   menu = defaultMenu,
 }) {
   const [openSearch, setOpenSearch] = React.useState(false)
@@ -94,7 +110,7 @@ export default function Navbar({
           className="shrink-0 text-lg text-[var(--brand-primary)] transition-opacity hover:opacity-70 sm:text-xl"
           aria-label={logo.alt}
         >
-          <Wordmark title={logo.title} />
+          <Wordmark title={logo.title} subtitle={logo.subtitle} />
         </Link>
 
         {/* ── Equally-distributed plus-separated links (desktop) ── */}
@@ -141,7 +157,7 @@ export default function Navbar({
         >
           <SheetHeader className="flex-shrink-0 border-b border-black/[0.06] px-6 py-6">
             <SheetTitle className="text-[1.7rem] text-[var(--brand-primary)]">
-              <Wordmark title={logo.title} />
+              <Wordmark title={logo.title} subtitle={logo.subtitle} />
             </SheetTitle>
           </SheetHeader>
 

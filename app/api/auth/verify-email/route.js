@@ -47,7 +47,7 @@ export async function POST(request) {
         // First-time welcome. Best-effort — verification already succeeded.
         if (!wasAlreadyVerified) {
             try {
-                await sendMail('Welcome to MomStitched', user.email, welcomeEmail({ name: user.name }))
+                await sendMail('Welcome to Horticultural Development Centre', user.email, welcomeEmail({ name: user.name }))
             } catch (mailError) {
                 console.error('Failed to send welcome email:', mailError?.message || mailError)
             }

@@ -1,13 +1,7 @@
 'use client'
 
-import { useRef } from 'react'
 import Image from 'next/image'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
 import { Star } from 'lucide-react'
-
-gsap.registerPlugin(ScrollTrigger)
 
 // Nine thumbnails + the count chip fill a 5-column grid as two even rows, the
 // way the reference lays them out. A flex-wrap here produced a ragged 6 / 2+chip
@@ -15,29 +9,8 @@ gsap.registerPlugin(ScrollTrigger)
 const CLUSTER = Array.from({ length: 9 }, () => '/assets/images/hero/01.jpg')
 
 const AboutUsSection = () => {
-    const sectionRef = useRef(null)
-
-    useGSAP(() => {
-        gsap.fromTo(
-            '.about-statement > *',
-            { autoAlpha: 0, y: 24 },
-            {
-                autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12,
-                scrollTrigger: { trigger: sectionRef.current, start: 'top 78%', once: true },
-            }
-        )
-        gsap.fromTo(
-            '.about-stat',
-            { autoAlpha: 0, y: 34 },
-            {
-                autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.08,
-                scrollTrigger: { trigger: '.about-stats', start: 'top 88%', once: true },
-            }
-        )
-    }, { scope: sectionRef })
-
     return (
-        <section ref={sectionRef} className="lumora-shell py-16 lg:py-24">
+        <section className="lumora-shell py-16 lg:py-24">
 
             {/* ── Statement ── */}
             {/* The label column is proportional, not a fixed 14rem: the reference

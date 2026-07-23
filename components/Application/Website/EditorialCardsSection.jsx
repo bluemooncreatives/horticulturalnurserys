@@ -1,15 +1,9 @@
 'use client'
 
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
-import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { WEBSITE_SHOP } from '@/routes/WebsiteRoute'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const CARDS = [
     {
@@ -42,67 +36,11 @@ const CARDS = [
 ]
 
 const EditorialCardsSection = () => {
-    const sectionRef = useRef(null)
-    const headerRef = useRef(null)
-    const ruleRef = useRef(null)
-    const cardRefs = useRef([])
-    const imgRefs = useRef([])
-
-    useGSAP(() => {
-        gsap.fromTo(
-            headerRef.current,
-            { autoAlpha: 0, y: 40 },
-            {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.9,
-                ease: 'power4.out',
-                scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-            }
-        )
-
-        gsap.fromTo(
-            ruleRef.current,
-            { scaleX: 0, transformOrigin: 'left center' },
-            {
-                scaleX: 1,
-                duration: 1.2,
-                ease: 'expo.inOut',
-                delay: 0.12,
-                scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-            }
-        )
-
-        gsap.fromTo(
-            cardRefs.current,
-            { autoAlpha: 0, y: 50, scale: 0.97 },
-            {
-                autoAlpha: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.95,
-                ease: 'power4.out',
-                stagger: 0.1,
-                scrollTrigger: { trigger: sectionRef.current, start: 'top 72%', once: true },
-            }
-        )
-    }, { scope: sectionRef })
-
-    const handleEnter = (i) => {
-        if (!imgRefs.current[i]) return
-        gsap.to(imgRefs.current[i], { scale: 1.07, duration: 0.7, ease: 'power2.out', overwrite: true })
-    }
-
-    const handleLeave = (i) => {
-        if (!imgRefs.current[i]) return
-        gsap.to(imgRefs.current[i], { scale: 1, duration: 0.7, ease: 'power2.out', overwrite: true })
-    }
-
     return (
-        <section ref={sectionRef} className="website-gutter bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
+        <section className="website-gutter bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
 
             {/* section header */}
-            <div ref={headerRef} className="mb-4 flex items-end justify-between lg:mb-6">
+            <div className="mb-4 flex items-end justify-between lg:mb-6">
                 <div>
                     <span className="eyebrow flex items-center gap-2">
                         <span aria-hidden className="h-px w-6 bg-current opacity-40" />
@@ -117,8 +55,8 @@ const EditorialCardsSection = () => {
                 </span>
             </div>
 
-            {/* animated rule */}
-            <div ref={ruleRef} className="mb-10 h-px w-full bg-foreground/10 lg:mb-12" />
+            {/* rule */}
+            <div className="mb-10 h-px w-full bg-foreground/10 lg:mb-12" />
 
             {/* cards grid */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
@@ -126,21 +64,17 @@ const EditorialCardsSection = () => {
                     <Link
                         key={card.num}
                         href={card.href}
-                        ref={(el) => { cardRefs.current[i] = el }}
-                        onMouseEnter={() => handleEnter(i)}
-                        onMouseLeave={() => handleLeave(i)}
                         className="group relative overflow-hidden rounded-[var(--radius-3xl)]"
                         style={{ aspectRatio: '4/5' }}
                     >
                         {/* background image */}
                         <Image
-                            ref={(el) => { imgRefs.current[i] = el }}
                             src={card.image}
                             alt={card.heading}
                             fill
                             quality={82}
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="object-cover will-change-transform"
+                            className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.07]"
                         />
 
                         {/* gradient overlay */}

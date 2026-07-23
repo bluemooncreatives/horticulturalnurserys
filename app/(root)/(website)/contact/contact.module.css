@@ -49,9 +49,7 @@
   font-weight: 700;
   letter-spacing: 0;
   position: relative;
-  transform: translateY(100%);
   text-wrap: balance;
-  will-change: transform;
 }
 
 .formSection {
@@ -325,8 +323,6 @@
   margin: 0;
   position: relative;
   text-transform: uppercase;
-  transform: translateY(20px);
-  will-change: transform;
 }
 
 .divider {
@@ -350,9 +346,7 @@
   overflow-wrap: anywhere;
   position: relative;
   text-decoration: none;
-  transform: translateY(28px);
   transition: color 0.2s ease, opacity 0.2s ease;
-  will-change: transform;
 }
 
 .item a:hover {

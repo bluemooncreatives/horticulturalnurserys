@@ -1,46 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import { useState } from "react";
 import { toast } from "sonner";
 import styles from "./contact.module.css";
 import { PhoneInput } from "@/components/ui/phone-input";
 
 const ContactPage = () => {
-  const container = useRef();
   const [form, setForm] = useState({ name: "", email: "", phone: "", address: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [ticketId, setTicketId] = useState(null);
-
-  useGSAP(
-    () => {
-      gsap.to(`.${styles.contactHeading} h1`, {
-        y: 0,
-        duration: 1.2,
-        delay: 0.8,
-        ease: "power4.out",
-      });
-
-      gsap.to(
-        [`.${styles.sectionLabel} p`, `.${styles.item} p`, `.${styles.item} a`],
-        {
-          y: 0,
-          duration: 1,
-          delay: 1,
-          stagger: 0.07,
-          ease: "power3.out",
-        }
-      );
-
-      gsap.fromTo(
-        `.${styles.formSection}`,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 1, delay: 1.2, ease: "power3.out" }
-      );
-    },
-    { scope: container }
-  );
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -90,7 +58,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className={`${styles.contactPage} website-gutter`} ref={container}>
+    <div className={`${styles.contactPage} website-gutter`}>
 
       {/* 1. Heading */}
       <div className={styles.headingSection}>

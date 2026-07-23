@@ -1,15 +1,9 @@
 'use client'
 
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
-import { useRef } from 'react'
 import Link from 'next/link'
 import { MapPin, Phone, Clock, Sprout, Instagram, MessageCircle, Facebook, ArrowUp } from 'lucide-react'
 
 import { WEBSITE_HOME, WEBSITE_SHOP } from '@/routes/WebsiteRoute'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const CONTACT_EMAIL = 'horticulturaldc@gmail.com'
 
@@ -52,24 +46,12 @@ const LinkColumn = ({ title, links }) => (
 )
 
 const Footer = ({ categoryLinks = [] }) => {
-    const rootRef = useRef(null)
     const categories = categoryLinks.length ? categoryLinks : fallbackCategoryLinks
-
-    useGSAP(() => {
-        gsap.from('.footer-word', {
-            autoAlpha: 0, y: 40, duration: 1, ease: 'power4.out',
-            scrollTrigger: { trigger: rootRef.current, start: 'top 88%', once: true },
-        })
-        gsap.from('.footer-col', {
-            autoAlpha: 0, y: 40, duration: 0.8, ease: 'power3.out', stagger: 0.1,
-            scrollTrigger: { trigger: '.footer-cols', start: 'top 92%', once: true },
-        })
-    }, { scope: rootRef })
 
     const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
     return (
-        <footer ref={rootRef} className="website-gutter pt-6 pb-4" aria-label="Site footer">
+        <footer className="website-gutter pt-6 pb-4" aria-label="Site footer">
             <div className="dark-panel relative overflow-hidden px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
 
                 {/* ── Top: wordmark + copyright mark ── */}

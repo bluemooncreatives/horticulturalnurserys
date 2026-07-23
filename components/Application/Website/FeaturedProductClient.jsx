@@ -1,75 +1,17 @@
 'use client'
 
-import { useCallback, useRef } from 'react'
+import { useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight } from 'lucide-react'
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import { WEBSITE_PRODUCT_DETAILS } from '@/routes/WebsiteRoute'
 import './FeaturedProduct.css'
 import ShopAllButton from '@/components/Application/Website/ShopAllButton'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const sizePattern = ['lg', 'sm', 'lg', 'sm', 'lg', 'lg', 'lg', 'lg', 'sm']
 
 const FeaturedProductClient = ({ products = [] }) => {
-    const containerRef = useRef(null)
-
-    useGSAP(() => {
-        if (!products.length || !containerRef.current) return
-
-        const cols = containerRef.current.querySelectorAll('.fp-col')
-        const hoverHandlers = []
-
-        // Reveal animation starts when section scrolls into view
-        gsap.fromTo(cols, {
-            y: 120,
-            opacity: 0,
-            clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
-        }, {
-            y: 0,
-            opacity: 1,
-            clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)',
-            duration: 1.2,
-            ease: 'power4.out',
-            stagger: 0.12,
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: 'top 75%',
-                once: true,
-            },
-        })
-
-        // Hover effects: image scale + title slide
-        cols.forEach((col) => {
-            const img = col.querySelector('img')
-            if (!img) return
-
-            const onEnter = () => {
-                gsap.to(img, { scale: 1.25, duration: 2, ease: 'power4.out' })
-            }
-
-            const onLeave = () => {
-                gsap.to(img, { scale: 1, duration: 2, ease: 'power4.out' })
-            }
-
-            col.addEventListener('mouseenter', onEnter)
-            col.addEventListener('mouseleave', onLeave)
-            hoverHandlers.push({ col, onEnter, onLeave })
-        })
-
-        return () => {
-            hoverHandlers.forEach(({ col, onEnter, onLeave }) => {
-                col.removeEventListener('mouseenter', onEnter)
-                col.removeEventListener('mouseleave', onLeave)
-            })
-        }
-    }, { scope: containerRef, dependencies: [products.length] })
-
     // Build rows of 3 products
     const renderProductRows = useCallback(() => {
         const rows = []
@@ -120,7 +62,7 @@ const FeaturedProductClient = ({ products = [] }) => {
     }
 
     return (
-        <section className="fp-section bg-background" ref={containerRef}>
+        <section className="fp-section bg-background">
             <div className="fp-container">
                 <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
                     <div>

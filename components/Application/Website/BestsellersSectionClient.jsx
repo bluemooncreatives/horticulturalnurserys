@@ -5,21 +5,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { Check, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import { WEBSITE_CART, WEBSITE_PRODUCT_DETAILS } from '@/routes/WebsiteRoute'
 import { addIntoCart } from '@/store/reducer/cartReducer'
 import { showToast } from '@/lib/showToast'
 import styles from './BestsellersSection.module.css'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const BestsellersSectionClient = ({ products = [] }) => {
-    const sectionRef = useRef(null)
-    const sidebarRef = useRef(null)
-    const trackRef   = useRef(null)
+    const trackRef = useRef(null)
 
     const dispatch = useDispatch()
     const cartProducts = useSelector((store) => store.cartStore.products)
@@ -59,50 +52,6 @@ const BestsellersSectionClient = ({ products = [] }) => {
         trackRef.current.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' })
     }
 
-    useGSAP(() => {
-        if (!sectionRef.current) return
-
-        gsap.fromTo(
-            sidebarRef.current,
-            { autoAlpha: 0, x: -20 },
-            {
-                autoAlpha: 1, x: 0,
-                duration: 0.85, ease: 'power3.out',
-                scrollTrigger: { trigger: sectionRef.current, start: 'top 78%', once: true },
-            }
-        )
-
-        const cards = trackRef.current?.querySelectorAll(`.${styles.card}`)
-        if (!cards?.length) return
-
-        gsap.fromTo(cards,
-            { y: 40, opacity: 0 },
-            {
-                y: 0, opacity: 1,
-                duration: 0.75, ease: 'power3.out', stagger: 0.08,
-                scrollTrigger: { trigger: trackRef.current, start: 'top 80%', once: true },
-            }
-        )
-
-        const handlers = []
-        cards.forEach((card) => {
-            const img = card.querySelector('img')
-            if (!img) return
-            const enter = () => gsap.to(img, { scale: 1.07, duration: 0.55, ease: 'power2.out' })
-            const leave = () => gsap.to(img, { scale: 1,    duration: 0.55, ease: 'power2.out' })
-            card.addEventListener('mouseenter', enter)
-            card.addEventListener('mouseleave', leave)
-            handlers.push({ card, enter, leave })
-        })
-
-        return () => {
-            handlers.forEach(({ card, enter, leave }) => {
-                card.removeEventListener('mouseenter', enter)
-                card.removeEventListener('mouseleave', leave)
-            })
-        }
-    }, { scope: sectionRef, dependencies: [products.length] })
-
     const formatPrice = (price) =>
         price ? `₹${price.toLocaleString('en-IN')}` : null
 
@@ -111,11 +60,11 @@ const BestsellersSectionClient = ({ products = [] }) => {
     const items = products
 
     return (
-        <section ref={sectionRef} className={styles.section}>
+        <section className={styles.section}>
             <div className={styles.inner}>
 
                 {/* ── Left: heading + arrows ── */}
-                <div ref={sidebarRef} className={styles.sidebar}>
+                <div className={styles.sidebar}>
                     <div>
                         <span className="eyebrow mb-3 flex items-center gap-2">
                             <span aria-hidden className="h-px w-6 bg-current opacity-40" />

@@ -23,7 +23,6 @@
     margin-bottom: clamp(1rem, 2vw, 2rem);
     overflow: hidden;
     border-radius: var(--radius-3xl);
-    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
     background: var(--product-card-bg);
 }
 
@@ -35,8 +34,12 @@
 }
 
 .fp-col img {
-    will-change: transform;
     object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.fp-col:hover img {
+    transform: scale(1.25);
 }
 
 /* Size variants */

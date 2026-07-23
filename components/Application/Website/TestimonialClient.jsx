@@ -1,15 +1,9 @@
 'use client'
 
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
-import { useRef } from 'react'
 import Link from 'next/link'
 import { Star, ArrowUpRight, Quote } from 'lucide-react'
 
 import { WEBSITE_SHOP } from '@/routes/WebsiteRoute'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const clampRating = (rating) => Math.max(0, Math.min(5, Math.round(Number(rating) || 0)))
 
@@ -25,8 +19,6 @@ const Stars = ({ rating, className = '' }) => (
 )
 
 const TestimonialClient = ({ testimonials = [] }) => {
-    const sectionRef = useRef(null)
-
     // Cap the grid so a large review set doesn't create an unwieldy wall.
     const cards = testimonials.slice(0, 8)
 
@@ -35,29 +27,10 @@ const TestimonialClient = ({ testimonials = [] }) => {
         : 0
     const avgLabel = avg ? avg.toFixed(1) : '5.0'
 
-    useGSAP(() => {
-        gsap.fromTo(
-            '.voices-head > *',
-            { autoAlpha: 0, y: 30 },
-            {
-                autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1,
-                scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-            }
-        )
-        gsap.fromTo(
-            '.voices-card',
-            { autoAlpha: 0, y: 34 },
-            {
-                autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.07,
-                scrollTrigger: { trigger: '.voices-grid', start: 'top 85%', once: true },
-            }
-        )
-    }, { scope: sectionRef })
-
     if (!cards.length) return null
 
     return (
-        <section ref={sectionRef} className="lumora-shell py-16 lg:py-24">
+        <section className="lumora-shell py-16 lg:py-24">
 
             {/* ── Header ── */}
             <div className="voices-head mb-8 flex flex-col gap-4 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">

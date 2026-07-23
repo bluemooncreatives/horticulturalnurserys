@@ -1,15 +1,10 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ArrowUpRight } from "lucide-react";
 
 import { WEBSITE_SHOP } from "@/routes/WebsiteRoute";
-
-gsap.registerPlugin(useGSAP);
+import { BrandButton, BrandOutlineButton } from "@/components/Application/Website/BrandButton";
 
 // Horticultural credentials shown as the "trusted by" mark row — adapts the
 // reference's client-logo strip to the nursery's field capabilities.
@@ -27,22 +22,8 @@ const AVATARS = [
 ];
 
 const HeroSection = () => {
-  const rootRef = useRef(null);
-
-  useGSAP(
-    () => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      tl.from(".hero-word", { yPercent: 12, autoAlpha: 0, duration: 0.9 })
-        .from(".hero-tag > *", { y: 18, autoAlpha: 0, duration: 0.7, stagger: 0.08 }, "-=0.5")
-        .from(".hero-frame", { scale: 0.985, autoAlpha: 0, duration: 1, ease: "power2.out" }, "-=0.5")
-        .from(".hero-overlay", { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.12 }, "-=0.6")
-        .from(".hero-mark", { y: 12, autoAlpha: 0, duration: 0.5, stagger: 0.05 }, "-=0.5");
-    },
-    { scope: rootRef }
-  );
-
   return (
-    <section ref={rootRef} className="website-gutter pt-[2.75rem] sm:pt-[3.5rem]">
+    <section className="website-gutter pt-[2.75rem] sm:pt-[3.5rem]">
       <div className="mx-auto max-w">
         {/* ── Framed hero card — image fills the whole card, content overlaid ── */}
         <div className="hero-frame relative flex min-h-[calc(100svh_-_2.75rem)] flex-col justify-between overflow-hidden rounded-[var(--radius-section)] bg-[var(--background)] sm:min-h-[calc(100svh_-_3.5rem)]">
@@ -149,26 +130,44 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* bottom-right: floating vertical product card */}
-            <Link
-              href={WEBSITE_SHOP}
-              className="hero-overlay group hidden w-52 shrink-0 overflow-hidden rounded-[var(--radius-2xl)] bg-white/95 shadow-lg backdrop-blur transition-transform hover:-translate-y-0.5 sm:block"
-            >
-              <span className="relative block aspect-[16/10] w-full overflow-hidden">
-                <Image src="/assets/images/hero/01.jpg" alt="" fill sizes="208px" className="object-cover object-top" />
-              </span>
-              <span className="flex items-center justify-between gap-2 px-3.5 py-3">
-                <span className="min-w-0">
-                  <span className="block truncate text-[0.85rem] font-medium text-[var(--brand-primary)]">
+            {/* bottom-right: floating vertical product card — image and
+                content are two independently rounded, independently
+                shadowed blocks stacked inside one wrapper, not a single
+                continuous card shape. */}
+            <div className="hero-overlay hidden w-64 shrink-0 flex-col gap-2 transition-transform hover:-translate-y-0.5 sm:flex">
+              <Link
+                href={WEBSITE_SHOP}
+                className="group relative block aspect-[16/11] w-full overflow-hidden rounded-[var(--radius-3xl)] shadow-lg"
+              >
+                <Image
+                  src="/assets/images/hero/01.jpg"
+                  alt=""
+                  fill
+                  sizes="256px"
+                  className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                />
+              </Link>
+
+              <div className="flex flex-col gap-3 rounded-[var(--radius-3xl)] bg-white/95 px-4 py-3.5 shadow-lg backdrop-blur">
+                <div className="min-w-0">
+                  <span className="block truncate text-[0.9rem] font-semibold text-[var(--brand-primary)]">
                     Winter Seedlings®
                   </span>
-                  <span className="mt-0.5 flex items-center gap-2 text-[0.68rem] text-[var(--muted-foreground)]">
-                    August – December <span className="opacity-60">2026°</span>
-                  </span>
-                </span>
-                <ArrowUpRight className="size-4 shrink-0 text-[var(--brand-primary)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </span>
-            </Link>
+                  <p className="mt-1 text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)]">
+                    Hardy nursery-raised seedlings, ready to plant this season.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <BrandOutlineButton asChild className="h-9 text-[0.72rem] tracking-normal">
+                    <Link href={WEBSITE_SHOP}>Learn More</Link>
+                  </BrandOutlineButton>
+                  <BrandButton asChild className="h-9 text-[0.72rem] tracking-normal">
+                    <Link href={WEBSITE_SHOP}>Get It Now</Link>
+                  </BrandButton>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -619,17 +619,6 @@ body {
 
 
 /* ────────────────────────────────────────────────────────────────
-   18. GSAP ANIMATION HELPERS
-   Elements must start invisible; GSAP reveals them post-loader.
-   ──────────────────────────────────────────────────────────────── */
-.writeup-title,
-.writeup-desc {
-  opacity:      0;
-  will-change:  opacity, transform;
-}
-
-
-/* ────────────────────────────────────────────────────────────────
    19. EFFECT UTILITIES
    ──────────────────────────────────────────────────────────────── */
 

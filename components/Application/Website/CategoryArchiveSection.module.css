@@ -138,6 +138,11 @@
   height: 100%;
   object-fit: cover;
   transform: scale(0);
+  transition: transform var(--duration-normal, 0.3s) var(--ease-in-out, ease);
+}
+
+.previewVisible {
+  transform: scale(1);
 }
 
 @media (max-width: 900px) {

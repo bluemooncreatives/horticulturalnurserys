@@ -41,7 +41,7 @@ const nextConfig = {
     // be bundled — keep it external so it runs correctly in the Node server runtime.
     serverExternalPackages: ['@react-pdf/renderer'],
     experimental: {
-        optimizePackageImports: ['lucide-react', 'gsap', '@gsap/react', 'react-icons', 'radix-ui'],
+        optimizePackageImports: ['lucide-react', 'react-icons', 'radix-ui'],
     },
     async headers() {
         return [

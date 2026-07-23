@@ -2,8 +2,8 @@ import dynamic from 'next/dynamic'
 import { getHomeCategories } from '@/lib/services/categoryService'
 import { getHomeColors } from '@/lib/services/colorService'
 
-// Heavy GSAP/ScrollTrigger client logic is split into its own chunk so it does
-// not block parsing/hydration of the critical path.
+// Interactive hover-preview logic is split into its own client chunk so it
+// does not block parsing/hydration of the critical path.
 const ArchiveSectionClient = dynamic(() => import('./ArchiveSectionClient'))
 
 const WRITEUP =

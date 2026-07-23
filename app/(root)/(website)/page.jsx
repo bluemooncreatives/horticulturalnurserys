@@ -8,8 +8,8 @@ import BestsellersSection from '@/components/Application/Website/BestsellersSect
 import CategoryArchiveSection from '@/components/Application/Website/CategoryArchiveSection'
 import Testimonial from '@/components/Application/Website/Testimonial'
 
-// Defer all GSAP/ScrollTrigger and media-heavy sections into separate JS chunks
-// so they don't block parsing and hydration of the above-fold critical path.
+// Defer media-heavy sections into separate JS chunks so they don't block
+// parsing and hydration of the above-fold critical path.
 const InstagramReelsMarquee = dynamic(() => import('@/components/Application/Website/InstagramReelsMarquee'))
 const AboutUsSection = dynamic(() => import('@/components/Application/Website/AboutUsSection'))
 const EditorialCardsSection = dynamic(() => import('@/components/Application/Website/EditorialCardsSection'))

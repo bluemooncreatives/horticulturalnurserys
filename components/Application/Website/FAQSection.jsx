@@ -1,12 +1,7 @@
 'use client'
 
-import { useState, useRef } from 'react'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
+import { useState } from 'react'
 import { Plus } from 'lucide-react'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const FAQS = [
     {
@@ -95,58 +90,14 @@ const FAQItem = ({ faq, isOpen, onToggle }) => (
 
 const FAQSection = () => {
     const [openIndex, setOpenIndex] = useState(null)
-    const sectionRef = useRef(null)
-    const headerRef = useRef(null)
-    const ruleRef = useRef(null)
-    const itemRefs = useRef([])
 
     const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i))
 
-    useGSAP(() => {
-        gsap.fromTo(
-            headerRef.current,
-            { autoAlpha: 0, y: 40 },
-            {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.9,
-                ease: 'power4.out',
-                scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-            }
-        )
-
-        gsap.fromTo(
-            ruleRef.current,
-            { scaleX: 0, transformOrigin: 'left center' },
-            {
-                scaleX: 1,
-                duration: 1.2,
-                ease: 'expo.inOut',
-                delay: 0.12,
-                scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-            }
-        )
-
-        gsap.fromTo(
-            itemRefs.current,
-            { autoAlpha: 0, y: 50, scale: 0.97 },
-            {
-                autoAlpha: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.95,
-                ease: 'power4.out',
-                stagger: 0.1,
-                scrollTrigger: { trigger: sectionRef.current, start: 'top 72%', once: true },
-            }
-        )
-    }, { scope: sectionRef })
-
     return (
-        <section ref={sectionRef} className="website-gutter bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
+        <section className="website-gutter bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
 
             {/* section header */}
-            <div ref={headerRef} className="mb-4 flex items-end justify-between lg:mb-6">
+            <div className="mb-4 flex items-end justify-between lg:mb-6">
                 <div>
                     <span className="eyebrow flex items-center gap-2">
                         <span aria-hidden className="h-px w-6 bg-current opacity-40" />
@@ -161,16 +112,13 @@ const FAQSection = () => {
                 </span>
             </div>
 
-            {/* animated rule */}
-            <div ref={ruleRef} className="mb-10 h-px w-full bg-foreground/10 lg:mb-14" />
+            {/* rule */}
+            <div className="mb-10 h-px w-full bg-foreground/10 lg:mb-14" />
 
             {/* two-column grid on desktop */}
             <div className="grid gap-x-16 lg:grid-cols-2">
                 {FAQS.map((faq, i) => (
-                    <div
-                        key={i}
-                        ref={(el) => { itemRefs.current[i] = el }}
-                    >
+                    <div key={i}>
                         <FAQItem
                             faq={faq}
                             isOpen={openIndex === i}

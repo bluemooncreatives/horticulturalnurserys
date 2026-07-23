@@ -1,6 +1,6 @@
 'use client'
 import { Card, CardContent } from '@/components/ui/card'
-import { Suspense, useState } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import Logo from '@/public/assets/images/logo-white.webp'
 import Image from 'next/image'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -36,6 +36,21 @@ const AdminLoginPage = () => {
     const [otpVerificationLoading, setOtpVerificationLoading] = useState(false)
     const [isTypePassword, setIsTypePassword] = useState(true)
     const [otpEmail, setOtpEmail] = useState()
+    const [hasAdmin, setHasAdmin] = useState(true)
+
+    useEffect(() => {
+        const checkSetupStatus = async () => {
+            try {
+                const { data } = await axios.get('/api/auth/setup-status')
+                if (data.success) {
+                    setHasAdmin(data.data.hasAdmin)
+                }
+            } catch (error) {
+                console.error('Error checking setup status:', error)
+            }
+        }
+        checkSetupStatus()
+    }, [])
 
     const formSchema = zSchema.pick({
         email: true
@@ -164,6 +179,15 @@ const AdminLoginPage = () => {
                                     <div className='text-center text-sm'>
                                         <Link href={WEBSITE_RESETPASSWORD} className='font-semibold text-foreground underline underline-offset-4'>Forgot password?</Link>
                                     </div>
+
+                                    {!hasAdmin && (
+                                        <div className='mt-4 rounded-md bg-amber-500/10 p-3 text-center border border-amber-500/20'>
+                                            <p className='text-sm text-amber-500 font-medium mb-1'>No admin account detected</p>
+                                            <Link href='/admin/register' className='text-xs font-semibold underline text-foreground hover:text-[var(--brand-primary)]'>
+                                                Register First Admin Account
+                                            </Link>
+                                        </div>
+                                    )}
                                 </form>
                             </Form>
                         </>

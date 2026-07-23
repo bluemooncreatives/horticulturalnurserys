@@ -9,7 +9,6 @@ import TopNav from './layout/TopNav'
 import { Button } from '@/components/ui/button'
 import { Settings } from 'lucide-react'
 import {
-    ADMIN_CUSTOMERS_SHOW,
     ADMIN_DASHBOARD,
     ADMIN_PRODUCT_SHOW,
     ADMIN_TRASH,
@@ -17,7 +16,6 @@ import {
 
 const topNav = [
     { title: 'Overview', href: ADMIN_DASHBOARD },
-    { title: 'Customers', href: ADMIN_CUSTOMERS_SHOW },
     { title: 'Products', href: ADMIN_PRODUCT_SHOW },
     { title: 'Settings', href: ADMIN_TRASH },
 ]

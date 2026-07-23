@@ -7,6 +7,7 @@ export async function middleware(request) {
         const pathname = request.nextUrl.pathname
         const isAdminRoute = pathname.startsWith('/admin')
         const isAdminLoginRoute = pathname === ADMIN_LOGIN
+        const isAdminRegisterRoute = pathname === '/admin/register'
         const hasToken = request.cookies.has('access_token')
 
         let role = null
@@ -24,7 +25,7 @@ export async function middleware(request) {
         }
 
         if (!role) {
-            if (isAdminRoute && !isAdminLoginRoute) {
+            if (isAdminRoute && !isAdminLoginRoute && !isAdminRegisterRoute) {
                 const loginUrl = new URL(ADMIN_LOGIN, request.nextUrl)
                 loginUrl.searchParams.set('callback', pathname + request.nextUrl.search)
                 const response = NextResponse.redirect(loginUrl)

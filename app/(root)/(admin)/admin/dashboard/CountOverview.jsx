@@ -1,8 +1,8 @@
 'use client'
 import Link from 'next/link'
 import useFetch from '@/hooks/useFetch';
-import { ADMIN_CATEGORY_SHOW, ADMIN_CUSTOMERS_SHOW, ADMIN_PRODUCT_SHOW, ADMIN_ORDER_SHOW } from '@/routes/AdminPanelRoute';
-import { FolderTree, Shirt, UsersRound, ShoppingBag, TrendingUp, TrendingDown } from 'lucide-react';
+import { ADMIN_CATEGORY_SHOW, ADMIN_PRODUCT_SHOW, ADMIN_ORDER_SHOW } from '@/routes/AdminPanelRoute';
+import { FolderTree, Shirt, ShoppingBag, TrendingUp, TrendingDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 const CountOverview = () => {
 
@@ -21,7 +21,7 @@ const CountOverview = () => {
 
     const categoryTrend = getTrendInfo(countData?.data?.category || 0, countData?.data?.categoryPrevious)
     const productTrend = getTrendInfo(countData?.data?.product || 0, countData?.data?.productPrevious)
-    const customerTrend = getTrendInfo(countData?.data?.customer || 0, countData?.data?.customerPrevious)
+
     const orderTrend = getTrendInfo(countData?.data?.order || 0, countData?.data?.orderPrevious)
 
     const cards = [
@@ -42,25 +42,17 @@ const CountOverview = () => {
             chartVar: '--chart-2'
         },
         {
-            title: 'Total Customers',
-            value: countData?.data?.customer || 0,
-            trend: customerTrend,
-            href: ADMIN_CUSTOMERS_SHOW,
-            icon: UsersRound,
-            chartVar: '--chart-3'
-        },
-        {
             title: 'Total Orders',
             value: countData?.data?.order || 0,
             trend: orderTrend,
             href: ADMIN_ORDER_SHOW,
             icon: ShoppingBag,
-            chartVar: '--chart-4'
+            chartVar: '--chart-3'
         },
     ]
 
     return (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
             {cards.map((card) => (
                 <Link key={card.title} href={card.href} aria-label={`${card.title}: ${card.value}`}>
                         <Card className={`border-l-4 hover:border-l-8`} style={{ borderLeftColor: `var(${card.chartVar})` }}> 

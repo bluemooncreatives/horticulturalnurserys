@@ -38,9 +38,8 @@ import LazyHydrate from "@/components/Application/LazyHydrate"
 // Split the heavy client-only islands out of the page's hydration chunk.
 // ProductReveiw drags in react-hook-form, zod, tanstack-query and axios but
 // renders nothing until its own client fetches resolve, so there is no SSR
-// markup to lose. SizeGuideModal is invisible until the shopper asks for it.
+// markup to lose.
 const ProductReveiw = dynamic(() => import("@/components/Application/Website/ProductReveiw"), { ssr: false })
-const SizeGuideModal = dynamic(() => import("@/components/Application/Website/SizeGuideModal"), { ssr: false })
 import { cn, decodeHTMLDeep, htmlToText, normalizeColor } from "@/lib/utils"
 import { resolveColorStyle } from "@/lib/colorMap"
 import { MAX_CART_QTY } from "@/lib/cartConstants"
@@ -85,10 +84,6 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
     const media = variant?.media?.length ? variant.media : []
     const [activeIndex, setActiveIndex] = useState(0)
     const [qty, setQty] = useState(1)
-    const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false)
-    // Latches true on first open and stays true so the dynamic chunk only
-    // downloads on demand, but the dialog stays mounted to animate closed.
-    const [sizeGuideRequested, setSizeGuideRequested] = useState(false)
     // Color swatch resolution uses CSS.supports (browser-only). Gate the
     // resolved fill behind a mount flag to avoid an SSR/client hydration
     // mismatch for CSS-named colors. The same flag gates the cart-state UI so
@@ -415,13 +410,6 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                     <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                                         Size: <span className="text-foreground">{variant?.size}</span>
                                     </p>
-                                    <button
-                                        type="button"
-                                        onClick={() => { setSizeGuideRequested(true); setIsSizeGuideOpen(true) }}
-                                        className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--dark-red)] underline-offset-4 hover:underline"
-                                    >
-                                        Size Guide
-                                    </button>
                                 </div>
                                 <div className="flex flex-wrap gap-2">
                                     {sizes.map((size) => {
@@ -614,13 +602,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                     </dl>
                 </section>
 
-                {sizeGuideRequested && (
-                    <SizeGuideModal
-                        open={isSizeGuideOpen}
-                        onOpenChange={setIsSizeGuideOpen}
-                        sizeGuide={product?.sizeGuide}
-                    />
-                )}
+
 
                 <div id="reviews" className="mt-14 scroll-mt-24">
                     <LazyHydrate>

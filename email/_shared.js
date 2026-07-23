@@ -12,11 +12,11 @@
 
 // ── Brand palette (mirrors design-system.css) ──
 export const BRAND = {
-    oxblood: "#0B0B0B", // --brand-primary  (near-black ink)
-    crimson: "#232323", // --brand-primary-hover (lifted ink)
+    oxblood: "#1D4020", // --brand-primary (forest green)
+    crimson: "#2C5E30", // --brand-primary-hover (lifted green)
     cream: "#F1F0EC", // --brand-cream
     warm: "#EFEDE8", // --brand-warm-bg
-    ink: "#0D0D0D", // --brand-ink-soft
+    ink: "#16311A", // --brand-ink-soft (deep forest)
     body: "#4A4A4A", // --text-body
     white: "#FFFFFF",
     border: "#E4E2DC", // soft grey hairline

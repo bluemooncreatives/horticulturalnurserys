@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/sheet"
 import Cart from "@/components/Application/Website/Cart"
 import GlobalSearch from "@/components/Application/Website/GlobalSearch"
+import RollingLink from "@/components/ui/RollingLink"
+import CircleReveal from "@/components/ui/CircleReveal"
 
 // `menu` holds only the centred links; the CTA is passed separately because it
 // renders as a button on the right of the bar. The slide-out sheet re-joins the
@@ -135,12 +137,12 @@ export default function Navbar({
           <div className="pointer-events-auto flex items-center gap-7 xl:gap-10">
             {menu.map((item, index) => (
               <React.Fragment key={item.title}>
-                <Link
+                <RollingLink
                   href={item.url}
-                  className="text-[0.85rem] font-normal tracking-[0.01em] text-[var(--brand-primary)] transition-opacity hover:opacity-55"
+                  className="text-[0.95rem] font-semibold tracking-[0.01em] text-[var(--brand-primary)]"
                 >
                   {item.title}
-                </Link>
+                </RollingLink>
                 {index < menu.length - 1 && (
                   <span aria-hidden="true" className="select-none text-[0.85rem] font-light text-[var(--muted-foreground)]/40">
                     +
@@ -179,14 +181,20 @@ export default function Navbar({
             )}
           </button>
 
-          {/* CTA — takes the slot the hamburger used to occupy on desktop */}
+          {/* CTA — takes the slot the hamburger used to occupy on desktop.
+              Wrapper owns the desktop-only visibility so it doesn't collide
+              with RollingLink's own inline-flex display. */}
           {cta && (
-            <Link
-              href={cta.url}
-              className="ml-1 hidden h-8 items-center justify-center rounded-full bg-[var(--brand-primary)] px-6 text-[0.85rem] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[var(--brand-primary-hover)] lg:inline-flex"
-            >
-              {cta.title}
-            </Link>
+            <span className="ml-1 hidden lg:inline-flex">
+              <RollingLink
+                href={cta.url}
+                underline={false}
+                background={<CircleReveal color="var(--brand-lime)" />}
+                className="h-8 items-center justify-center overflow-hidden rounded-full bg-[var(--brand-primary)] px-6 text-[0.85rem] font-medium tracking-[0.01em] text-white transition-colors duration-500 hover:text-[var(--brand-primary)]"
+              >
+                {cta.title}
+              </RollingLink>
+            </span>
           )}
 
           {/* ── Hamburger — two-line mark, mobile only (menu incl. search + cart) ── */}

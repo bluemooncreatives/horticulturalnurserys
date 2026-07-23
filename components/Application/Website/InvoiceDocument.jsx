@@ -19,7 +19,7 @@ const BRAND = {
     web: 'www.horticulturaldevelopmentcentre.com',
 }
 
-const OX = '#0B0B0B'
+const OX = '#1D4020'   // --brand-primary (forest green)
 const CREAM = '#F1F0EC'
 const INK = '#1A1A1A'
 const MUTE = '#8a8a8a'

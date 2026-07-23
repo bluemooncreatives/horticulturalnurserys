@@ -2,9 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import { WEBSITE_SHOP } from "@/routes/WebsiteRoute";
-import { BrandButton, BrandOutlineButton } from "@/components/Application/Website/BrandButton";
+import CircleReveal from "@/components/ui/CircleReveal";
+
+// Product-card title, split into characters so each glyph can roll
+// independently with a staggered delay on hover (see the card button below).
+const CARD_TITLE = "Winter Seedlings®";
 
 // Horticultural credentials shown as the "trusted by" mark row — adapts the
 // reference's client-logo strip to the nursery's field capabilities.
@@ -148,25 +153,68 @@ const HeroSection = () => {
                 />
               </Link>
 
-              <div className="flex flex-col gap-3 rounded-[var(--radius-3xl)] bg-white/95 px-4 py-3.5 shadow-lg backdrop-blur">
-                <div className="min-w-0">
-                  <span className="block truncate text-[0.9rem] font-semibold text-[var(--brand-primary)]">
-                    Winter Seedlings®
+              {/* The entire white block is now a single button. Hovering it
+                  drives three coordinated micro-interactions: the card lifts,
+                  the title rolls glyph-by-glyph with a stagger, and the arrow
+                  circle fills while the arrow rotates 45° → 0°. */}
+              <Link
+                href={WEBSITE_SHOP}
+                aria-label="Winter Seedlings — shop this season's seedlings"
+                className="group relative flex items-center gap-3 rounded-[var(--radius-3xl)] bg-white/95 px-4 py-3.5 text-left shadow-lg backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]/40 focus-visible:ring-offset-2"
+              >
+                {/* Lime circular reveal — sweeps in from the left on hover. */}
+                <CircleReveal color="var(--brand-lime)" />
+
+                <div className="relative z-10 min-w-0 flex-1">
+                  {/* Title: per-character roll. Each glyph is stacked over a
+                      duplicate; on hover the top copy rolls up and out while the
+                      bottom copy rolls into place, staggered left-to-right. */}
+                  <span
+                    aria-label={CARD_TITLE}
+                    className="flex text-[0.9rem] font-semibold leading-none text-[var(--brand-primary)]"
+                  >
+                    {CARD_TITLE.split("").map((ch, i) => (
+                      <span
+                        key={i}
+                        aria-hidden
+                        className="relative inline-block overflow-hidden"
+                      >
+                        <span
+                          className="inline-block transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full"
+                          style={{ transitionDelay: `${i * 18}ms` }}
+                        >
+                          {ch === " " ? " " : ch}
+                        </span>
+                        <span
+                          className="absolute left-0 top-0 inline-block translate-y-full transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0"
+                          style={{ transitionDelay: `${i * 18}ms` }}
+                        >
+                          {ch === " " ? " " : ch}
+                        </span>
+                      </span>
+                    ))}
                   </span>
-                  <p className="mt-1 text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)]">
+                  {/* Description: gentler counterpart — colour deepens and the
+                      line eases inward as the card is hovered. */}
+                  <p className="mt-1.5 text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)]">
                     Hardy nursery-raised seedlings, ready to plant this season.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
-                  <BrandOutlineButton asChild className="h-9 text-[0.72rem] tracking-normal">
-                    <Link href={WEBSITE_SHOP}>Learn More</Link>
-                  </BrandOutlineButton>
-                  <BrandButton asChild className="h-9 text-[0.72rem] tracking-normal">
-                    <Link href={WEBSITE_SHOP}>Get It Now</Link>
-                  </BrandButton>
-                </div>
-              </div>
+                {/* Arrow circle: fill sweeps out from the centre while the
+                    arrow un-rotates from 45° to horizontal. */}
+                <span className="relative z-10 grid size-10 shrink-0 place-items-center overflow-hidden rounded-full border border-[var(--brand-primary)]/30 text-[var(--brand-primary)] transition-colors duration-500 group-hover:border-[var(--brand-primary)] group-hover:text-white">
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 scale-0 rounded-full bg-[var(--brand-primary)] transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:scale-100"
+                  />
+                  <ArrowRight
+                    aria-hidden
+                    strokeWidth={2.2}
+                    className="relative size-4 -rotate-45 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:rotate-0"
+                  />
+                </span>
+              </Link>
             </div>
           </div>
         </div>

@@ -12,27 +12,33 @@
    All component colors should resolve back to these tokens.
    ──────────────────────────────────────────────────────────────── */
 :root {
-  /* ── LUMÓRA MONOCHROME + LIME ──
-     "primary" is now the near-black ink that drives logos, CTAs, dark
+  /* ── FOREST GREEN + LIME (nursery palette) ──
+     "primary" is now the deep forest green that drives logos, CTAs, dark
      sections and borders. The name is kept so every component that reads
-     --brand-primary / --dark-red re-skins automatically. */
-  --brand-primary:       #0B0B0B;   /* near-black ink — logo, CTAs, borders    */
-  --brand-primary-hover: #232323;   /* lifted ink — hover / active states       */
+     --brand-primary / --dark-red re-skins automatically. The green is dark
+     enough (~12:1 on white) to double as brand text as well as a CTA fill. */
+  --brand-primary:       #1D4020;   /* forest green — logo, CTAs, borders, text */
+  --brand-primary-hover: #2C5E30;   /* lifted green — hover / active states      */
 
   /* Neutral palette */
-  --brand-ink:       #000000;   /* true black                                   */
-  --brand-ink-soft:  #0D0D0D;   /* dark-section fill (services, footer, cards)   */
+  --brand-ink:       #000000;   /* true black — wordmark & pure-black text       */
+  --brand-ink-soft:  #16311A;   /* deep-forest section fill (services, footer)   */
   --brand-white:     #FFFFFF;   /* pure white — card surfaces                    */
   --brand-cream:     #F1F0EC;   /* off-white — secondary fills (was warm cream)  */
 
-  /* ── Lime accent (the calculator screen in the reference) ── */
+  /* ── Lime accent (the bright pop) ── */
   --brand-lime:       #C9F24E;   /* chartreuse accent — highlights, key CTAs     */
   --brand-lime-hover: #D6F86F;   /* lifted lime — hover                          */
-  --brand-lime-ink:   #0B0B0B;   /* ink used ON lime surfaces                    */
+  --brand-lime-ink:   #16311A;   /* deep-forest ink used ON lime surfaces        */
+
+  /* ── Olive accent (secondary / support — moss green) ── */
+  --brand-olive:       #A5B33D;   /* moss-olive — secondary accents, tags        */
+  --brand-olive-hover: #B4C24C;   /* lifted olive — hover                        */
+  --brand-olive-ink:   #16311A;   /* deep-forest ink used ON olive surfaces      */
 
   /* Dark-panel gradient range (auth panel + decorative highlights) */
-  --brand-primary-bright: #202020;   /* charcoal highlight                       */
-  --brand-primary-deep:   #000000;   /* black depth stop                         */
+  --brand-primary-bright: #356B38;   /* brighter green highlight                 */
+  --brand-primary-deep:   #0E2812;   /* near-black green depth stop              */
 
   /* Warm-neutral fill kept as an alias to off-white so image placeholders,
      section accents etc. resolve to the new light-grey surface. */
@@ -62,18 +68,18 @@
   --card-foreground:     #0B0B0B;
   --popover:             #FFFFFF;
   --popover-foreground:  #0B0B0B;
-  --primary:             #0B0B0B;   /* black buttons / primary UI               */
+  --primary:             #1D4020;   /* forest-green buttons / primary UI        */
   --primary-foreground:  #FFFFFF;
   --secondary:           #EDECE8;   /* light-grey chips / secondary fills       */
-  --secondary-foreground:#0B0B0B;
+  --secondary-foreground:#1D4020;
   --muted:               #EDECE8;
   --muted-foreground:    #6B6B6B;   /* muted grey copy                          */
   --accent:              #E7E6E1;
-  --accent-foreground:   #0B0B0B;
+  --accent-foreground:   #1D4020;
   --destructive:         oklch(0.577 0.245 27.325);
   --border:              #E3E1DC;   /* hairline warm-grey border                */
   --input:               #E3E1DC;
-  --ring:                #0B0B0B;   /* dark focus ring                          */
+  --ring:                #1D4020;   /* forest-green focus ring                  */
 }
 
 
@@ -796,6 +802,9 @@ body {
 
 .pill-lime  { background: var(--brand-lime); color: var(--brand-lime-ink); }
 .pill-lime:hover  { background: var(--brand-lime-hover); }
+
+.pill-olive { background: var(--brand-olive); color: var(--brand-olive-ink); }
+.pill-olive:hover { background: var(--brand-olive-hover); }
 
 .pill-ghost { background: transparent; color: var(--brand-primary); border: 1px solid color-mix(in srgb, var(--brand-primary) 22%, transparent); }
 .pill-ghost:hover { background: var(--brand-primary); color: var(--brand-white); border-color: var(--brand-primary); }

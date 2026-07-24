@@ -37,7 +37,7 @@ const FeaturedProductClient = ({ products = [] }) => {
                                     </span>
                                     <div className="fp-project-title">
                                         <h3>{product?.name}</h3>
-                                        <span>₹{product?.sellingPrice?.toLocaleString('en-IN')}</span>
+                                        <span>Price on enquiry</span>
                                     </div>
                                 </Link>
                             </div>

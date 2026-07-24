@@ -26,7 +26,6 @@ import { useDispatch } from 'react-redux'
 import { login } from '@/store/reducer/authReducer'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
-import { WEBSITE_RESETPASSWORD } from '@/routes/WebsiteRoute'
 
 const AdminLoginPage = () => {
     const dispatch = useDispatch()
@@ -174,10 +173,6 @@ const AdminLoginPage = () => {
 
                                     <div className='pt-1'>
                                         <ButtonLoading loading={loading} type="submit" text="Login" variant="brand" className="h-9 w-full rounded-sm text-base font-semibold uppercase cursor-pointer" />
-                                    </div>
-
-                                    <div className='text-center text-sm'>
-                                        <Link href={WEBSITE_RESETPASSWORD} className='font-semibold text-foreground underline underline-offset-4'>Forgot password?</Link>
                                     </div>
 
                                     {!hasAdmin && (

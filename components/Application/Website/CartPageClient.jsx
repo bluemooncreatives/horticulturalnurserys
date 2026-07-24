@@ -3,12 +3,11 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { WEBSITE_CHECKOUT, WEBSITE_PRODUCT_DETAILS, WEBSITE_SHOP } from '@/routes/WebsiteRoute'
+import { WEBSITE_ENQUIRY, WEBSITE_PRODUCT_DETAILS, WEBSITE_SHOP } from '@/routes/WebsiteRoute'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import { Minus, Plus, XCircle } from 'lucide-react'
 import { decreaseQuantity, increaseQuantity, removeFromCart } from '@/store/reducer/cartReducer'
@@ -18,12 +17,6 @@ const CartPageClient = () => {
     const dispatch = useDispatch()
     const router = useRouter()
     const cart = useSelector((store) => store.cartStore)
-    const [subtotal, setSubTotal] = useState(0)
-
-    useEffect(() => {
-        const totalAmount = cart.products.reduce((sum, product) => sum + (product.sellingPrice * product.qty), 0)
-        setSubTotal(totalAmount)
-    }, [cart])
 
     const isEmpty = cart.count === 0
 
@@ -35,7 +28,7 @@ const CartPageClient = () => {
                     <div
                         className="pointer-events-none select-none font-neue font-semibold uppercase tracking-[0.02em] text-white/90"
                         style={{
-                            fontSize: "clamp(7.5rem, 34vw, 30rem)",
+                            fontSize: "clamp(4.5rem, 20vw, 18rem)",
                             lineHeight: 0.78,
                             WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)",
                             maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)",
@@ -43,7 +36,7 @@ const CartPageClient = () => {
                         }}
                         aria-hidden
                     >
-                        Cart
+                        Enquiry
                     </div>
                 </div>
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-16 bg-gradient-to-b from-transparent via-white/50 to-white sm:h-36" />
@@ -55,15 +48,15 @@ const CartPageClient = () => {
                         <div className="lg:col-span-2">
                             <Card className="mx-auto w-full max-w-2xl border-border/60 shadow-sm">
                                 <CardHeader className="border-b border-border/60">
-                                    <CardTitle className="text-xl font-semibold uppercase tracking-[0.04em]">Your cart is empty</CardTitle>
+                                    <CardTitle className="text-xl font-semibold uppercase tracking-[0.04em]">Your enquiry list is empty</CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-3 text-muted-foreground">
-                                    <p>Looks like you haven&apos;t added anything yet.</p>
-                                    <p>Explore the shop and add items you love to see them here.</p>
+                                    <p>You haven&apos;t added any products yet.</p>
+                                    <p>Browse the catalogue and add the plants &amp; supplies you need to send us an enquiry.</p>
                                 </CardContent>
                                 <CardFooter className="flex justify-start">
                                     <Button type="button" asChild variant="brand" className="px-6 text-[11px] font-semibold uppercase tracking-[0em]">
-                                        <Link href={WEBSITE_SHOP}>Continue Shopping</Link>
+                                        <Link href={WEBSITE_SHOP}>Browse Catalogue</Link>
                                     </Button>
                                 </CardFooter>
                             </Card>
@@ -74,31 +67,29 @@ const CartPageClient = () => {
                                 <div className="sticky top-6">
                                     <Card className="border-border/60 shadow-sm">
                                         <CardHeader className="border-b border-border/60">
-                                            <CardTitle className="text-lg font-semibold uppercase tracking-[0.04em]">Order Summary</CardTitle>
+                                            <CardTitle className="text-lg font-semibold uppercase tracking-[0.04em]">Enquiry Summary</CardTitle>
                                         </CardHeader>
                                         <CardContent className="space-y-3">
                                             <div className="flex items-center justify-between text-sm">
-                                                <span className="text-muted-foreground">Subtotal</span>
-                                                <span className="font-medium">
-                                                    {subtotal.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
-                                                </span>
+                                                <span className="text-muted-foreground">Products</span>
+                                                <span className="font-medium tabular-nums">{cart.count}</span>
                                             </div>
-                                            <div className="flex items-center justify-between text-base font-semibold">
-                                                <span>Total</span>
-                                                <span>
-                                                    {subtotal.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
+                                            <div className="flex items-center justify-between text-sm">
+                                                <span className="text-muted-foreground">Total quantity</span>
+                                                <span className="font-medium tabular-nums">
+                                                    {cart.products.reduce((sum, p) => sum + (p.qty || 0), 0)}
                                                 </span>
                                             </div>
                                             <p className="text-xs text-muted-foreground">
-                                                Coupon discounts can be applied at checkout.
+                                                No payment is taken here. Submit your enquiry and our team will get back to you with availability and pricing.
                                             </p>
                                         </CardContent>
                                         <CardFooter className="flex flex-col gap-3">
-                                            <Button type="button" onClick={() => router.push(WEBSITE_CHECKOUT)} variant="brand" className="h-11 w-full text-[11px] font-semibold uppercase tracking-[0.2em]">
-                                                Proceed to Checkout
+                                            <Button type="button" onClick={() => router.push(WEBSITE_ENQUIRY)} variant="brand" className="h-11 w-full text-[11px] font-semibold uppercase tracking-[0.2em]">
+                                                Submit Enquiry
                                             </Button>
                                             <Button type="button" variant="link" asChild className="h-auto p-0 text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground">
-                                                <Link href={WEBSITE_SHOP}>Continue Shopping</Link>
+                                                <Link href={WEBSITE_SHOP}>Continue Browsing</Link>
                                             </Button>
                                         </CardFooter>
                                     </Card>
@@ -111,9 +102,7 @@ const CartPageClient = () => {
                                         <TableHeader className="hidden bg-muted/40 md:table-header-group">
                                             <TableRow>
                                                 <TableHead className="px-3">Product</TableHead>
-                                                <TableHead className="px-3 text-center">Price</TableHead>
                                                 <TableHead className="px-3 text-center">Quantity</TableHead>
-                                                <TableHead className="px-3 text-center">Total</TableHead>
                                                 <TableHead className="px-3 text-center">Action</TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -138,14 +127,11 @@ const CartPageClient = () => {
                                                                 <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
                                                                     {product.color} / {product.size}
                                                                 </p>
+                                                                <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--dark-red)]">
+                                                                    Price on enquiry
+                                                                </p>
                                                             </div>
                                                         </div>
-                                                    </TableCell>
-                                                    <TableCell className="flex justify-between px-3 pb-3 text-center md:table-cell md:py-4">
-                                                        <span className="font-medium md:hidden">Price</span>
-                                                        <span>
-                                                            {product.sellingPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
-                                                        </span>
                                                     </TableCell>
                                                     <TableCell className="flex justify-between px-3 pb-3 md:table-cell md:py-4">
                                                         <span className="font-medium md:hidden">Quantity</span>
@@ -178,12 +164,6 @@ const CartPageClient = () => {
                                                                 </Button>
                                                             </div>
                                                         </div>
-                                                    </TableCell>
-                                                    <TableCell className="flex justify-between px-3 pb-3 text-center md:table-cell md:py-4">
-                                                        <span className="font-medium md:hidden">Total</span>
-                                                        <span>
-                                                            {(product.sellingPrice * product.qty).toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
-                                                        </span>
                                                     </TableCell>
                                                     <TableCell className="flex justify-between px-3 pb-4 text-center md:table-cell md:py-4">
                                                         <span className="font-medium md:hidden">Remove</span>

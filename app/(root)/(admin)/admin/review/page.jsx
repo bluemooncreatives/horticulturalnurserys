@@ -5,8 +5,10 @@ import DeleteAction from "@/components/Application/Admin/DeleteAction"
 import PageHeader from "@/components/Application/Admin/PageHeader"
 import { DT_REVIEW_COLUMN, } from "@/lib/column"
 import { columnConfig } from "@/lib/helperFunction"
-import { ADMIN_DASHBOARD, ADMIN_TRASH } from "@/routes/AdminPanelRoute"
-
+import { ADMIN_DASHBOARD, ADMIN_REVIEW_ADD, ADMIN_TRASH } from "@/routes/AdminPanelRoute"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { Plus } from "lucide-react"
 import { useCallback, useMemo } from "react"
 
 const breadcrumbData = [
@@ -30,8 +32,16 @@ const ShowReview = () => {
         <div className="flex flex-col gap-4 sm:gap-6">
             <PageHeader
                 title="Reviews"
-                description="Monitor customer sentiment and product feedback."
+                description="Admin-managed product reviews shown on the storefront."
                 breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
+                actions={
+                    <Link href={ADMIN_REVIEW_ADD}>
+                        <Button className="gap-2 h-9" size="lg">
+                            <Plus className="size-4" />
+                            Add Review
+                        </Button>
+                    </Link>
+                }
             />
 
             <div className="rounded-md bg-card">

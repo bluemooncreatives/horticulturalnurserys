@@ -25,13 +25,6 @@ export const ADMIN_PRODUCT_VARIANT_SHOW = '/admin/product-variant'
 export const ADMIN_PRODUCT_VARIANT_EDIT = (id) => id ? `/admin/product-variant/edit/${id}` : ''
 
 
-// Coupon routes 
-
-export const ADMIN_COUPON_ADD = '/admin/coupon/add'
-export const ADMIN_COUPON_SHOW = '/admin/coupon'
-export const ADMIN_COUPON_EDIT = (id) => id ? `/admin/coupon/edit/${id}` : ''
-
-
 // Bestseller route
 export const ADMIN_BESTSELLER_SHOW = '/admin/bestseller'
 
@@ -45,14 +38,15 @@ export const ADMIN_CUSTOMERS_SHOW = '/admin/customers'
 
 // Review route
 export const ADMIN_REVIEW_SHOW = '/admin/review'
+export const ADMIN_REVIEW_ADD = '/admin/review/add'
 
 // Testimonial route (homepage "Customer Reviews" / "What They Say" section)
 export const ADMIN_TESTIMONIAL_SHOW = '/admin/testimonial'
 
-// orders routes  
+// Enquiry (product enquiry / lead) routes
 
-export const ADMIN_ORDER_SHOW = '/admin/orders'
-export const ADMIN_ORDER_DETAILS = (order_id) => order_id ? `/admin/orders/details/${order_id}` : ''
+export const ADMIN_ENQUIRY_SHOW = '/admin/enquiries'
+export const ADMIN_ENQUIRY_DETAILS = (id) => id ? `/admin/enquiries/details/${id}` : ''
 
 
 // Contact Queries routes

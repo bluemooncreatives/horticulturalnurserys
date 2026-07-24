@@ -3,7 +3,7 @@ import BreadCrumb from "@/components/Application/Admin/BreadCrumb"
 import DatatableWrapper from "@/components/Application/Admin/DatatableWrapper"
 import DeleteAction from "@/components/Application/Admin/DeleteAction"
 import PageHeader from "@/components/Application/Admin/PageHeader"
-import { DT_CATEGORY_COLUMN, DT_CONTACT_COLUMN, DT_COUPON_COLUMN, DT_CUSTOMERS_COLUMN, DT_ORDER_COLUMN, DT_PRODUCT_COLUMN, DT_PRODUCT_VARIANT_COLUMN, DT_REVIEW_COLUMN } from "@/lib/column"
+import { DT_CATEGORY_COLUMN, DT_CONTACT_COLUMN, DT_ENQUIRY_COLUMN, DT_CUSTOMERS_COLUMN, DT_PRODUCT_COLUMN, DT_PRODUCT_VARIANT_COLUMN, DT_REVIEW_COLUMN } from "@/lib/column"
 import { columnConfig } from "@/lib/helperFunction"
 import { ADMIN_DASHBOARD, ADMIN_TRASH } from "@/routes/AdminPanelRoute"
 
@@ -38,13 +38,6 @@ const TRASH_CONFIG = {
         exportUrl: '/api/product-variant/export',
         deleteUrl: '/api/product-variant/delete'
     },
-    coupon: {
-        title: 'Coupon Trash',
-        columns: DT_COUPON_COLUMN,
-        fetchUrl: '/api/coupon',
-        exportUrl: '/api/coupon/export',
-        deleteUrl: '/api/coupon/delete'
-    },
     customers: {
         title: 'Customers Trash',
         columns: DT_CUSTOMERS_COLUMN,
@@ -59,12 +52,12 @@ const TRASH_CONFIG = {
         exportUrl: '/api/review/export',
         deleteUrl: '/api/review/delete'
     },
-    orders: {
-        title: 'Orders Trash',
-        columns: DT_ORDER_COLUMN,
-        fetchUrl: '/api/orders',
-        exportUrl: '/api/orders/export',
-        deleteUrl: '/api/orders/delete'
+    enquiries: {
+        title: 'Enquiries Trash',
+        columns: DT_ENQUIRY_COLUMN,
+        fetchUrl: '/api/enquiry',
+        exportUrl: '/api/enquiry/export',
+        deleteUrl: '/api/enquiry/delete'
     },
 
 

@@ -43,7 +43,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
             media: product?.media?.[0]?.secure_url || imgPlaceholder.src,
             qty: 1,
         }))
-        showToast('success', 'Product added into cart.')
+        showToast('success', 'Added to your enquiry list.')
     }
 
     const scroll = (dir) => {
@@ -51,9 +51,6 @@ const BestsellersSectionClient = ({ products = [] }) => {
         const amount = trackRef.current.clientWidth * 0.75
         trackRef.current.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' })
     }
-
-    const formatPrice = (price) =>
-        price ? `₹${price.toLocaleString('en-IN')}` : null
 
     if (!products.length) return null
 
@@ -126,7 +123,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                 className={styles.cartBtn}
                                                 onClick={(e) => handleAddToCart(e, product)}
                                                 disabled={!product?.defaultVariant}
-                                                aria-label="Add to cart"
+                                                aria-label="Add to enquiry list"
                                             >
                                                 <ShoppingCart size={15} strokeWidth={1.8} />
                                             </button>
@@ -138,11 +135,9 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                     <p className={styles.productName}>
                                         {product?.name || 'Product Name'}
                                     </p>
-                                    {formatPrice(product?.sellingPrice) && (
-                                        <p className={styles.productPrice}>
-                                            {formatPrice(product.sellingPrice)}
-                                        </p>
-                                    )}
+                                    <p className={styles.productPrice}>
+                                        Price on enquiry
+                                    </p>
                                 </div>
 
                             </div>

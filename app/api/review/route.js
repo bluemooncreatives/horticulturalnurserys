@@ -106,7 +106,7 @@ export async function GET(request) {
                 $project: {
                     _id: 1,
                     product: '$productData.name',
-                    user: '$userData.name',
+                    user: { $ifNull: ['$userData.name', '$authorName'] },
                     rating: 1,
                     review: 1,
                     title: 1,

@@ -349,7 +349,6 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                                         <CommandSeparator className="my-1.5" />
                                         <CommandGroup heading="Products">
                                             {products.map((product) => {
-                                                const hasDiscount = product?.mrp > product?.sellingPrice
                                                 const thumb = product?.media?.[0]?.secure_url || imgPlaceholder.src
                                                 return (
                                                     <CommandItem
@@ -372,14 +371,9 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                                                                 {product?.name}
                                                             </p>
                                                             <p className="flex items-center gap-2 text-[13px]">
-                                                                <span className="font-semibold text-foreground">
-                                                                    {formatINR(product?.sellingPrice)}
+                                                                <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--dark-red)]">
+                                                                    Price on enquiry
                                                                 </span>
-                                                                {hasDiscount && (
-                                                                    <span className="text-muted-foreground line-through">
-                                                                        {formatINR(product?.mrp)}
-                                                                    </span>
-                                                                )}
                                                             </p>
                                                         </div>
                                                         <ArrowRight className="size-4 shrink-0 text-muted-foreground opacity-0 transition-opacity group-data-[selected=true]/command-item:opacity-100" />

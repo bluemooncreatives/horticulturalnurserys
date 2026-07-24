@@ -143,7 +143,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
             media: media[0]?.secure_url || imgPlaceholder.src,
             qty: qty,
         }))
-        showToast('success', qty > 1 ? `${qty} added to cart.` : 'Product added into cart.')
+        showToast('success', qty > 1 ? `${qty} added to your enquiry list.` : 'Added to your enquiry list.')
     }
 
     // In-cart stepper: + / − adjust the cart line live. Dropping below 1 removes
@@ -156,7 +156,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
     const handleCartDec = () => {
         if (cartQty <= 1) {
             dispatch(removeFromCart(cartKey))
-            showToast('success', 'Removed from cart.')
+            showToast('success', 'Removed from your enquiry list.')
             return
         }
         dispatch(decreaseQuantity(cartKey))
@@ -178,8 +178,6 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
         return (variantOptions || []).find((o) => o.color === c)?.size || variant.size
     }
 
-    const inr = (n) => Number(n || 0).toLocaleString('en-IN', { style: 'currency', currency: 'INR' })
-    const hasDiscount = variant?.mrp > variant?.sellingPrice
     const shortDescription = htmlToText(product?.description)
     const swatches = colorEntries?.length ? colorEntries : (colors || []).map((name) => ({ name, hex: '' }))
 
@@ -270,12 +268,6 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                         className="object-cover object-center"
                                     />
 
-                                    {hasDiscount && (
-                                        <span className="absolute left-4 top-4 z-10 rounded-full bg-[var(--dark-red)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white shadow-sm">
-                                            -{variant.discountPercentage}%
-                                        </span>
-                                    )}
-
                                     {media.length > 1 && (
                                         <>
                                             <button
@@ -340,18 +332,12 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             </span>
                         </button>
 
-                        <div className="mt-5 flex flex-wrap items-end gap-3">
-                            <span className="text-[1.75rem] font-semibold leading-none text-foreground">{inr(variant?.sellingPrice)}</span>
-                            {hasDiscount && (
-                                <>
-                                    <span className="text-base leading-none text-muted-foreground line-through">{inr(variant?.mrp)}</span>
-                                    <span className="rounded-md bg-[var(--brand-cream)] px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--dark-red)]">
-                                        Save {inr(variant.mrp - variant.sellingPrice)}
-                                    </span>
-                                </>
-                            )}
+                        <div className="mt-5 flex flex-wrap items-center gap-3">
+                            <span className="rounded-md bg-[var(--brand-cream)] px-3 py-1.5 text-[13px] font-semibold uppercase tracking-[0.12em] text-[var(--dark-red)]">
+                                Price on enquiry
+                            </span>
                         </div>
-                        <p className="mt-1.5 text-xs text-muted-foreground">Inclusive of all taxes</p>
+                        <p className="mt-1.5 text-xs text-muted-foreground">Add to your enquiry list and our team will share availability &amp; pricing.</p>
 
                         {shortDescription && (
                             <p className="mt-5 line-clamp-3 text-sm leading-relaxed text-[var(--text-body)]">
@@ -485,7 +471,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 <div className="flex-1">
                                     <ButtonLoading
                                         type="button"
-                                        text="Add To Cart"
+                                        text="Add To Enquiry"
                                         variant="brand"
                                         className="h-12 w-full rounded-[var(--radius-sm)] text-[12px] font-semibold uppercase tracking-[0.2em]"
                                         onClick={handleAddToCart}
@@ -523,7 +509,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                         type="button"
                                         asChild
                                     >
-                                        <Link href={WEBSITE_CART}>Go To Cart</Link>
+                                        <Link href={WEBSITE_CART}>Go To Enquiry</Link>
                                     </Button>
                                 </div>
                             </div>
@@ -531,18 +517,18 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
 
                         {inCart ? (
                             <p className="mt-2 text-xs text-muted-foreground">
-                                {cartQty} in your cart{cartQty >= MAX_QTY ? ` · max ${MAX_QTY} per order` : ' · use − / + to adjust'}
+                                {cartQty} in your enquiry list{cartQty >= MAX_QTY ? ` · max ${MAX_QTY} per item` : ' · use − / + to adjust'}
                             </p>
                         ) : qty >= MAX_QTY ? (
-                            <p className="mt-2 text-xs text-muted-foreground">Maximum {MAX_QTY} units per order.</p>
+                            <p className="mt-2 text-xs text-muted-foreground">Maximum {MAX_QTY} units per item.</p>
                         ) : null}
 
                         {/* Trust badges */}
                         <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
                             {[
-                                { icon: Truck, title: 'Free Shipping', sub: 'On all prepaid orders' },
-                                { icon: RefreshCw, title: 'Easy Returns', sub: '7-day return policy' },
-                                { icon: ShieldCheck, title: 'Secure Checkout', sub: '100% protected' },
+                                { icon: ShieldCheck, title: 'Quality Assured', sub: 'Nursery-grade stock' },
+                                { icon: RefreshCw, title: 'Quick Response', sub: 'We reply to every enquiry' },
+                                { icon: Truck, title: 'Pan-India Supply', sub: 'Delivery arranged on request' },
                             ].map(({ icon: Icon, title, sub }) => (
                                 <div key={title} className="flex items-center gap-3 rounded-[var(--radius-sm)] border border-border/50 bg-muted/20 px-3 py-2.5">
                                     <Icon className="size-5 shrink-0 text-[var(--dark-red)]" strokeWidth={1.75} />
@@ -573,22 +559,22 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                     />
                 </section>
 
-                {/* ── Full-width Shipping & Returns ────────────────────── */}
+                {/* ── Full-width How Enquiries Work ────────────────────── */}
                 <section className="mt-10 lg:mt-14">
                     <div className="mb-6 lg:mb-8">
                         <p className="text-[1rem] font-semibold uppercase text-[var(--dark-red)]/60">
                             Good To Know
                         </p>
                         <h2 className="mt-1.5 font-neue text-[clamp(1.6rem,3.4vw,2.6rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]">
-                            Shipping &amp; Returns
+                            How Enquiries Work
                         </h2>
                     </div>
                     <dl className="w-full divide-y divide-border/50">
                         {[
-                            { label: 'Delivery', text: 'Dispatched within 1–2 business days; delivered in 4–7 days.' },
-                            { label: 'Shipping', text: 'Free shipping on all prepaid orders across India.' },
-                            { label: 'Returns', text: 'Easy 7-day returns on unused items with tags intact.' },
-                            { label: 'Refunds', text: 'Processed to the original payment method within 5–7 business days.' },
+                            { label: 'Step 1', text: 'Add the plants and supplies you need to your enquiry list — no account required.' },
+                            { label: 'Step 2', text: 'Submit the enquiry with your contact details and the quantities you want.' },
+                            { label: 'Step 3', text: 'Our team gets back to you with availability and pricing for your requirement.' },
+                            { label: 'Step 4', text: 'We arrange delivery or nursery pickup once the details are confirmed.' },
                         ].map(({ label, text }) => (
                             <div key={label} className="flex flex-col gap-1 py-4 first:pt-0 last:pb-0 sm:flex-row sm:gap-6">
                                 <dt className="shrink-0 pt-0.5 text-[0.625rem] font-semibold uppercase tracking-[0.22em] text-foreground/45 sm:w-24">

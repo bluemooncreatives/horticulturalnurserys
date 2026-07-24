@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { FolderTree, Shirt, TicketPercent, Images } from 'lucide-react'
-import { ADMIN_CATEGORY_ADD, ADMIN_COUPON_ADD, ADMIN_MEDIA_SHOW, ADMIN_PRODUCT_ADD } from '@/routes/AdminPanelRoute';
+import { FolderTree, Shirt, ClipboardList, Images } from 'lucide-react'
+import { ADMIN_CATEGORY_ADD, ADMIN_ENQUIRY_SHOW, ADMIN_MEDIA_SHOW, ADMIN_PRODUCT_ADD } from '@/routes/AdminPanelRoute';
 import { CardDefaultSm as Card } from '@/components/ui/card';
 const QuickAdd = () => {
     const quickLinks = [
@@ -19,10 +19,10 @@ const QuickAdd = () => {
             chartVar: '--chart-2'
         },
         {
-            title: 'Add Coupon',
-            href: ADMIN_COUPON_ADD,
-            icon: TicketPercent,
-            description: 'Create a discount code',
+            title: 'View Enquiries',
+            href: ADMIN_ENQUIRY_SHOW,
+            icon: ClipboardList,
+            description: 'Review customer enquiries',
             chartVar: '--chart-3'
         },
         {

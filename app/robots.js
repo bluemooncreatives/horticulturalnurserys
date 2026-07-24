@@ -6,19 +6,14 @@ export default function robots() {
             {
                 userAgent: '*',
                 allow: '/',
-                // Keep crawlers out of private, transactional and API routes —
-                // they're either auth-gated (middleware redirects them to login)
-                // or meaningless in search results.
+                // Keep crawlers out of the admin panel, API routes and the personal
+                // enquiry list/form — they're either auth-gated or meaningless in
+                // search results.
                 disallow: [
                     '/admin',
                     '/api/',
-                    '/auth/',
                     '/cart',
-                    '/checkout',
-                    '/my-account',
-                    '/profile',
-                    '/orders',
-                    '/order-details/',
+                    '/enquiry',
                 ],
             },
         ],

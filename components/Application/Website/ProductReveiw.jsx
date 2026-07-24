@@ -1,52 +1,20 @@
 'use client'
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import { Progress } from '@/components/ui/progress'
-import { zSchema } from '@/lib/zodSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import { Star } from 'lucide-react'
 import ButtonLoading from '../ButtonLoading'
-import { useSelector } from 'react-redux'
-import { Textarea } from '@/components/ui/textarea'
 import axios from 'axios'
-import { showToast } from '@/lib/showToast'
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import ReviewList from './ReviewList'
 import useFetch from '@/hooks/useFetch'
 
-const StarRatingField = ({ value = 0, onChange }) => {
-    return (
-        <div className='flex items-center gap-1'>
-            {[1, 2, 3, 4, 5].map((star) => {
-                const isFilled = star <= Number(value || 0)
-                return (
-                    <button
-                        key={star}
-                        type='button'
-                        onClick={() => onChange(star)}
-                        className='text-2xl text-amber-500 transition-transform hover:scale-110'
-                        aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
-                    >
-                        <Star className={`size-6 ${isFilled ? 'fill-amber-500 text-amber-500' : 'text-amber-500'}`} />
-                    </button>
-                )
-            })}
-        </div>
-    )
-}
-
+// Reviews are admin-managed and read-only on the storefront (there are no
+// customer accounts). This component only displays the rating summary and the
+// list of reviews; there is no submission form.
 const ProductReveiw = ({ productId }) => {
-    const queryClient = useQueryClient()
-    const auth = useSelector(store => store.authStore.auth)
-    const canSubmitReview = false
-    const [loading, setLoading] = useState(false)
-    const [isReview, setIsReview] = useState(false)
     const [reviewCount, setReviewCount] = useState()
 
-    const { data: reviewDetails, refetch: refetchReviewSummary } = useFetch(`/api/review/details?productId=${productId}`)
+    const { data: reviewDetails } = useFetch(`/api/review/details?productId=${productId}`)
 
     useEffect(() => {
         if (reviewDetails && reviewDetails.success) {
@@ -54,53 +22,6 @@ const ProductReveiw = ({ productId }) => {
             setReviewCount(reviewCountData)
         }
     }, [reviewDetails])
-
-    const formSchema = zSchema.pick({
-        product: true,
-        userId: true,
-        rating: true,
-        title: true,
-        review: true
-    })
-
-    const form = useForm({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            product: productId,
-            userId: auth?._id,
-            rating: 0,
-            title: "",
-            review: "",
-        },
-    })
-
-
-    useEffect(() => {
-        form.setValue('userId', auth?._id)
-    }, [auth])
-
-    const handleReviewSubmit = async (values) => {
-        setLoading(true)
-        try {
-            const { data: response } = await axios.post('/api/review/create', values)
-            if (!response.success) {
-                throw new Error(response.message)
-            }
-
-            form.reset()
-            setIsReview(false)
-            showToast('success', response.message)
-            queryClient.invalidateQueries({ queryKey: ['product-review', productId] })
-            // Refresh the rating summary (average + distribution bars) so the
-            // shopper's freshly-posted review is reflected immediately.
-            refetchReviewSummary()
-        } catch (error) {
-            showToast('error', error.message)
-        } finally {
-            setLoading(false)
-        }
-    }
-
 
     const fetchReview = async (pageParam) => {
         const { data: getReviewData } = await axios.get(`/api/review/get?productId=${productId}&page=${pageParam}`)
@@ -173,85 +94,7 @@ const ProductReveiw = ({ productId }) => {
                         </div>
 
                     </div>
-
-                    <div className='md:w-1/2 w-full md:text-end text-center'>
-                        <Button onClick={() => setIsReview(!isReview)} type="button" variant="outline" disabled={!canSubmitReview} className="md:w-fit w-full rounded-md border-border/70 py-6 px-10 font-semibold uppercase tracking-[0.18em]">
-                            {canSubmitReview ? 'Write Review' : 'Reviews Closed'}
-                        </Button>
-                    </div>
                 </div>
-
-                {isReview &&
-                    <div className='my-6 rounded-[var(--radius)] border border-border/60 bg-muted/20 p-5 lg:p-6'>
-                        <h4 className='mb-1 font-neue text-[clamp(1.2rem,2.2vw,1.6rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]'>Write A Review</h4>
-
-                        {!canSubmitReview
-                            ?
-                            <>
-                                <p className='mb-4 text-sm text-muted-foreground'>Customer review submission is disabled because customer login has been removed.</p>
-                            </>
-                            :
-                            <>
-                                <p className='mb-5 text-sm text-muted-foreground'>Share your thoughts to help other shoppers.</p>
-
-                                <Form {...form}>
-                                    <form onSubmit={form.handleSubmit(handleReviewSubmit)} >
-
-                                        <div className='mb-5'>
-                                            <FormField
-                                                control={form.control}
-                                                name="rating"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel className='mb-1 text-[12px] font-semibold uppercase tracking-[0.18em] text-muted-foreground'>Your Rating</FormLabel>
-                                                        <FormControl>
-                                                            <StarRatingField value={field.value} onChange={field.onChange} />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
-                                        <div className='mb-5'>
-                                            <FormField
-                                                control={form.control}
-                                                name="title"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel className='mb-1 text-[12px] font-semibold uppercase tracking-[0.18em] text-muted-foreground'>Title</FormLabel>
-                                                        <FormControl>
-                                                            <Input type="text" placeholder="Sum up your review" {...field} />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
-                                        <div className='mb-6'>
-                                            <FormField
-                                                control={form.control}
-                                                name="review"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel className='mb-1 text-[12px] font-semibold uppercase tracking-[0.18em] text-muted-foreground'>Review</FormLabel>
-                                                        <FormControl>
-                                                            <Textarea placeholder="Write your comment here..." className='min-h-28' {...field} />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
-
-                                        <ButtonLoading loading={loading} type="submit" text="Submit Review" variant="brand" className="h-11 w-full cursor-pointer text-[11px] font-semibold uppercase tracking-[0.2em] sm:w-fit sm:px-10" />
-
-                                    </form>
-                                </Form>
-                            </>
-                        }
-                    </div>
-                }
-
 
                 <div className='mt-10 border-t border-border/60 pt-5'>
                     <h5 className='font-neue text-[clamp(1.1rem,2vw,1.4rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]'>{data?.pages[0]?.totalReview || 0} Reviews</h5>

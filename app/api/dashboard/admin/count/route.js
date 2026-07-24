@@ -2,7 +2,7 @@ import { isAuthenticated } from "@/lib/authentication"
 import { connectDB } from "@/lib/databaseConnection"
 import { catchError, response } from "@/lib/helperFunction"
 import CategoryModel from "@/models/Category.model"
-import OrderModel from "@/models/Order.model"
+import EnquiryModel from "@/models/Enquiry.model"
 import ProductModel from "@/models/Product.model"
 
 export async function GET() {
@@ -14,15 +14,15 @@ export async function GET() {
 
         await connectDB()
 
-
-        const [category, product, order] = await Promise.all([
+        const [category, product, enquiry, newEnquiry] = await Promise.all([
             CategoryModel.countDocuments({ deletedAt: null }),
             ProductModel.countDocuments({ deletedAt: null }),
-            OrderModel.countDocuments({ deletedAt: null }),
+            EnquiryModel.countDocuments({ deletedAt: null }),
+            EnquiryModel.countDocuments({ deletedAt: null, status: 'new' }),
         ])
 
         return response(true, 200, 'Dashboard count.', {
-            category, product, order
+            category, product, enquiry, newEnquiry
         })
 
     } catch (error) {

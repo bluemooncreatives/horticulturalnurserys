@@ -13,12 +13,10 @@ import Image from "next/image"
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import { removeFromCart } from "@/store/reducer/cartReducer"
 import Link from "next/link"
-import { WEBSITE_CART, WEBSITE_CHECKOUT, WEBSITE_SHOP } from "@/routes/WebsiteRoute"
+import { WEBSITE_CART, WEBSITE_ENQUIRY, WEBSITE_SHOP } from "@/routes/WebsiteRoute"
 import { BrandButton, BrandOutlineButton } from "@/components/Application/Website/BrandButton"
 import { useEffect, useState } from "react"
 import { showToast } from "@/lib/showToast"
-
-const fmt = (n) => n?.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })
 
 const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
     const [openState, setOpenState] = useState(false)
@@ -26,18 +24,12 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
     // navbar menu panel); otherwise falls back to its own internal state.
     const open = openProp !== undefined ? openProp : openState
     const setOpen = onOpenChange ?? setOpenState
-    const [subtotal, setSubTotal] = useState(0)
     const [mounted, setMounted] = useState(false)
     useEffect(() => setMounted(true), [])
 
     const cart = useSelector(store => store.cartStore)
     const dispatch = useDispatch()
     const cartCount = mounted ? cart.count : 0
-
-    useEffect(() => {
-        const cartProducts = cart.products
-        setSubTotal(cartProducts.reduce((s, p) => s + p.sellingPrice * p.qty, 0))
-    }, [cart])
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
@@ -60,7 +52,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                 <SheetHeader className="flex-shrink-0 border-b border-border/50 px-5 py-4 sm:px-6 sm:py-5">
                     <div className="flex items-center justify-between pr-8">
                         <SheetTitle className="font-header text-2xl leading-none tracking-wide text-[var(--brand-primary)] sm:font-neue sm:text-xl sm:font-semibold sm:leading-normal sm:tracking-[0.01em] sm:text-foreground">
-                            My Cart
+                            My Enquiry
                         </SheetTitle>
                         {cartCount > 0 && (
                             <span className="rounded-full bg-[var(--brand-cream)]/60 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--brand-primary)] sm:bg-muted/60 sm:text-muted-foreground">
@@ -79,10 +71,10 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                 <ShoppingCartIcon className="size-8" strokeWidth={1.5} />
                             </div>
                             <h3 className="font-header mt-5 text-2xl leading-none tracking-wide text-[var(--brand-primary)] sm:font-neue sm:text-xl sm:font-semibold sm:leading-normal sm:tracking-normal sm:text-foreground">
-                                Your cart is empty
+                                Your enquiry list is empty
                             </h3>
                             <p className="font-neue mt-2.5 max-w-[220px] text-sm text-muted-foreground">
-                                Add pieces you love to see them here with pricing and quick checkout.
+                                Add plants and supplies you're interested in, then send us an enquiry.
                             </p>
                             <div className="mt-6 w-full">
                                 <BrandButton asChild onClick={() => setOpen(false)}>
@@ -121,10 +113,10 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                         </span>
                                         <div className="flex items-center justify-between">
                                             <span className="rounded-xs bg-[var(--dark-red)]/10 px-1.5 py-0.5 font-neue text-[10px] font-semibold text-[var(--dark-red)]">
-                                                ×{product.qty}
+                                                Qty ×{product.qty}
                                             </span>
-                                            <span className="font-neue text-[14px] font-semibold text-foreground">
-                                                {fmt(product.sellingPrice)}
+                                            <span className="font-neue text-[11px] font-medium uppercase tracking-[0.06em] text-muted-foreground">
+                                                Price on enquiry
                                             </span>
                                         </div>
                                         <button
@@ -143,35 +135,16 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
 
                 {/* Footer */}
                 <div className="flex-shrink-0 border-t border-border/50 bg-background px-6 pb-6 pt-5">
-                    {cart.count > 0 ? (
-                        <>
-                            {/* Price summary */}
-                            <div className="space-y-2">
-                                <div className="flex items-center justify-between">
-                                    <span className="font-neue text-[15px] text-muted-foreground">Subtotal</span>
-                                    <span className="font-neue text-[15px] font-medium text-foreground">{fmt(subtotal)}</span>
-                                </div>
-
-                                <div className="my-1 border-t border-border/40" />
-
-                                <div className="flex items-center justify-between">
-                                    <span className="font-neue text-[17px] font-semibold text-foreground">Total</span>
-                                    <span className="font-neue text-[17px] font-semibold text-foreground">{fmt(subtotal)}</span>
-                                </div>
-                            </div>
-
-                            <p className="mt-2.5 rounded-lg bg-muted/40 px-3 py-2 text-center text-[11.5px] font-medium text-muted-foreground">
-                                Have a coupon? Apply it at checkout.
-                            </p>
-                        </>
-                    ) : (
-                        <div className="space-y-1.5">
-                            <div className="flex items-center justify-between">
-                                <span className="font-neue text-[15px] font-semibold text-foreground">Total</span>
-                                <span className="font-neue text-[15px] font-semibold text-foreground">{fmt(0)}</span>
-                            </div>
+                    {cart.count > 0 && (
+                        <div className="flex items-center justify-between">
+                            <span className="font-neue text-[15px] text-muted-foreground">Items in list</span>
+                            <span className="font-neue text-[15px] font-semibold text-foreground tabular-nums">{cartCount}</span>
                         </div>
                     )}
+
+                    <p className="mt-2.5 rounded-lg bg-muted/40 px-3 py-2 text-center text-[11.5px] font-medium text-muted-foreground">
+                        No payment now — submit the list and our team will share pricing.
+                    </p>
 
                     {/* Action buttons */}
                     <div className="mt-4 grid grid-cols-2 gap-2.5">
@@ -181,7 +154,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                             className="text-[13px] tracking-wide sm:text-base sm:tracking-normal"
                             onClick={() => setOpen(false)}
                         >
-                            <Link href={WEBSITE_CART}>View Cart</Link>
+                            <Link href={WEBSITE_CART}>View List</Link>
                         </BrandOutlineButton>
                         <BrandButton
                             type="button"
@@ -190,10 +163,10 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                             onClick={() => setOpen(false)}
                         >
                             {cart.count ? (
-                                <Link href={WEBSITE_CHECKOUT}>Checkout</Link>
+                                <Link href={WEBSITE_ENQUIRY}>Submit Enquiry</Link>
                             ) : (
-                                <span onClick={(e) => { e.preventDefault(); showToast('error', 'Your cart is empty!') }}>
-                                    Checkout
+                                <span onClick={(e) => { e.preventDefault(); showToast('error', 'Your enquiry list is empty!') }}>
+                                    Submit Enquiry
                                 </span>
                             )}
                         </BrandButton>

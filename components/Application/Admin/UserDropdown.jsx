@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useSelector } from "react-redux"
 
-import { PackagePlus, ShoppingBag } from 'lucide-react'
+import { PackagePlus, ClipboardList } from 'lucide-react'
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
-import { ADMIN_ORDER_SHOW, ADMIN_PRODUCT_ADD } from "@/routes/AdminPanelRoute";
+import { ADMIN_ENQUIRY_SHOW, ADMIN_PRODUCT_ADD } from "@/routes/AdminPanelRoute";
 
 const UserDropdown = () => {
     const auth = useSelector((store) => store.authStore.auth)
@@ -44,9 +44,9 @@ const UserDropdown = () => {
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                    <Link href={ADMIN_ORDER_SHOW} className="cursor-pointer">
-                        <ShoppingBag className="size-4" />
-                        Orders
+                    <Link href={ADMIN_ENQUIRY_SHOW} className="cursor-pointer">
+                        <ClipboardList className="size-4" />
+                        Enquiries
                     </Link>
                 </DropdownMenuItem>
 

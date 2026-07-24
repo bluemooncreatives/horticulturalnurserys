@@ -1,25 +1,26 @@
 
 // Content-Security-Policy scoped to the third parties this app actually uses:
-// Razorpay checkout (script/frame/connect), Cloudinary images (res.cloudinary.com)
-// and the Cloudinary Upload Widget used in the admin Media section. The widget
-// injects a script from and renders inside an iframe on upload-widget.cloudinary.com,
-// and uploads go to api.cloudinary.com — all three must be whitelisted or the
-// "Upload Media" button does nothing. 'unsafe-inline' is required for Next.js'
-// inline bootstrap/hydration scripts and inline style attributes; tightening to a
-// nonce-based strict-dynamic CSP is a future step.
+// Cloudinary images (res.cloudinary.com) and the Cloudinary Upload Widget used in
+// the admin Media section. The widget injects a script from and renders inside an
+// iframe on upload-widget.cloudinary.com, and uploads go to api.cloudinary.com —
+// all three must be whitelisted or the "Upload Media" button does nothing. There
+// is no payment gateway: this is a catalogue + enquiry site, so no Razorpay hosts.
+// 'unsafe-inline' is required for Next.js' inline bootstrap/hydration scripts and
+// inline style attributes; tightening to a nonce-based strict-dynamic CSP is a
+// future step.
 const contentSecurityPolicy = [
     "default-src 'self'",
     "base-uri 'self'",
     "object-src 'none'",
     "frame-ancestors 'self'",
     "form-action 'self'",
-    "img-src 'self' data: blob: https://res.cloudinary.com https://upload-widget.cloudinary.com https://*.razorpay.com",
+    "img-src 'self' data: blob: https://res.cloudinary.com https://upload-widget.cloudinary.com",
     "media-src 'self' https://res.cloudinary.com",
     "font-src 'self'",
     "style-src 'self' 'unsafe-inline'",
-    "script-src 'self' 'unsafe-inline' https://upload-widget.cloudinary.com https://checkout.razorpay.com https://*.razorpay.com",
-    "connect-src 'self' https://api.cloudinary.com https://upload-widget.cloudinary.com https://*.razorpay.com https://lumberjack.razorpay.com",
-    "frame-src 'self' https://upload-widget.cloudinary.com https://*.razorpay.com https://api.razorpay.com",
+    "script-src 'self' 'unsafe-inline' https://upload-widget.cloudinary.com",
+    "connect-src 'self' https://api.cloudinary.com https://upload-widget.cloudinary.com",
+    "frame-src 'self' https://upload-widget.cloudinary.com",
     "upgrade-insecure-requests",
 ].join('; ')
 
@@ -37,11 +38,26 @@ const securityHeaders = [
 const nextConfig = {
     compress: true,
     poweredByHeader: false,
-    // react-pdf relies on native-ish deps (fontkit, yoga-layout wasm) that must not
-    // be bundled — keep it external so it runs correctly in the Node server runtime.
-    serverExternalPackages: ['@react-pdf/renderer'],
     experimental: {
         optimizePackageImports: ['lucide-react', 'react-icons', 'radix-ui'],
+    },
+    // Permanent redirects for routes removed in the catalogue + enquiry migration:
+    // the old buy/checkout, customer-account and customer-auth surfaces no longer
+    // exist. Point old/bookmarked links at their sensible successor so they never
+    // dead-end on a 404.
+    async redirects() {
+        return [
+            { source: '/checkout', destination: '/enquiry', permanent: true },
+            { source: '/order-details/:path*', destination: '/shop', permanent: true },
+            { source: '/my-account', destination: '/', permanent: true },
+            { source: '/profile', destination: '/', permanent: true },
+            { source: '/orders', destination: '/', permanent: true },
+            { source: '/auth/:path*', destination: '/admin/login', permanent: true },
+            { source: '/admin/orders/:path*', destination: '/admin/enquiries', permanent: true },
+            { source: '/admin/orders', destination: '/admin/enquiries', permanent: true },
+            { source: '/admin/coupon/:path*', destination: '/admin/dashboard', permanent: true },
+            { source: '/admin/coupon', destination: '/admin/dashboard', permanent: true },
+        ]
     },
     async headers() {
         return [

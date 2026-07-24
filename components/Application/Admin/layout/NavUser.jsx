@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { ChevronsUpDown, PackagePlus, ShoppingBag } from 'lucide-react'
+import { ChevronsUpDown, PackagePlus, ClipboardList } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
     DropdownMenu,
@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/sidebar'
 import { useSelector } from 'react-redux'
 import LogoutButton from '@/components/Application/Admin/LogoutButton'
-import { ADMIN_ORDER_SHOW, ADMIN_PRODUCT_ADD } from '@/routes/AdminPanelRoute'
+import { ADMIN_ENQUIRY_SHOW, ADMIN_PRODUCT_ADD } from '@/routes/AdminPanelRoute'
 
 const NavUser = () => {
     const { isMobile } = useSidebar()
@@ -79,9 +79,9 @@ const NavUser = () => {
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <Link href={ADMIN_ORDER_SHOW}>
-                                    <ShoppingBag />
-                                    Orders
+                                <Link href={ADMIN_ENQUIRY_SHOW}>
+                                    <ClipboardList />
+                                    Enquiries
                                 </Link>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>

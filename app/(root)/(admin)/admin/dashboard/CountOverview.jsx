@@ -1,8 +1,8 @@
 'use client'
 import Link from 'next/link'
 import useFetch from '@/hooks/useFetch';
-import { ADMIN_CATEGORY_SHOW, ADMIN_PRODUCT_SHOW, ADMIN_ORDER_SHOW } from '@/routes/AdminPanelRoute';
-import { FolderTree, Shirt, ShoppingBag, TrendingUp, TrendingDown } from 'lucide-react';
+import { ADMIN_CATEGORY_SHOW, ADMIN_PRODUCT_SHOW, ADMIN_ENQUIRY_SHOW } from '@/routes/AdminPanelRoute';
+import { FolderTree, Shirt, ClipboardList, Inbox, TrendingUp, TrendingDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 const CountOverview = () => {
 
@@ -21,8 +21,8 @@ const CountOverview = () => {
 
     const categoryTrend = getTrendInfo(countData?.data?.category || 0, countData?.data?.categoryPrevious)
     const productTrend = getTrendInfo(countData?.data?.product || 0, countData?.data?.productPrevious)
-
-    const orderTrend = getTrendInfo(countData?.data?.order || 0, countData?.data?.orderPrevious)
+    const enquiryTrend = getTrendInfo(countData?.data?.enquiry || 0, countData?.data?.enquiryPrevious)
+    const newEnquiryTrend = getTrendInfo(countData?.data?.newEnquiry || 0, countData?.data?.newEnquiryPrevious)
 
     const cards = [
         {
@@ -42,17 +42,25 @@ const CountOverview = () => {
             chartVar: '--chart-2'
         },
         {
-            title: 'Total Orders',
-            value: countData?.data?.order || 0,
-            trend: orderTrend,
-            href: ADMIN_ORDER_SHOW,
-            icon: ShoppingBag,
+            title: 'Total Enquiries',
+            value: countData?.data?.enquiry || 0,
+            trend: enquiryTrend,
+            href: ADMIN_ENQUIRY_SHOW,
+            icon: ClipboardList,
             chartVar: '--chart-3'
+        },
+        {
+            title: 'New Enquiries',
+            value: countData?.data?.newEnquiry || 0,
+            trend: newEnquiryTrend,
+            href: ADMIN_ENQUIRY_SHOW,
+            icon: Inbox,
+            chartVar: '--chart-4'
         },
     ]
 
     return (
-        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((card) => (
                 <Link key={card.title} href={card.href} aria-label={`${card.title}: ${card.value}`}>
                         <Card className={`border-l-4 hover:border-l-8`} style={{ borderLeftColor: `var(${card.chartVar})` }}> 

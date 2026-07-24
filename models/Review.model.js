@@ -7,10 +7,20 @@ const reviewSchema = new mongoose.Schema({
         required: true,
     },
 
+    // Optional now: customer accounts have been removed, so reviews are
+    // admin-managed. Legacy reviews still reference a real User; new
+    // admin-authored reviews carry an `authorName` instead.
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
+        required: false,
+    },
+
+    // Display name for admin-authored reviews (used when there is no linked user).
+    authorName: {
+        type: String,
+        trim: true,
+        default: '',
     },
 
     rating: {

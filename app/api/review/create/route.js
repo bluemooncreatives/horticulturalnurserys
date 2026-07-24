@@ -4,9 +4,12 @@ import { catchError, response } from "@/lib/helperFunction"
 import { zSchema } from "@/lib/zodSchema"
 import ReviewModel from "@/models/Review.model"
 
+// Admin-only: create an admin-authored review. Customer accounts have been
+// removed, so reviews are seeded and managed by the admin. The author's display
+// name is stored on `authorName` (there is no linked user).
 export async function POST(request) {
     try {
-        const auth = await isAuthenticated('user')
+        const auth = await isAuthenticated('admin')
         if (!auth.isAuth) {
             return response(false, 403, 'Unauthorized.')
         }
@@ -16,7 +19,7 @@ export async function POST(request) {
 
         const schema = zSchema.pick({
             product: true,
-            userId: true,
+            authorName: true,
             rating: true,
             title: true,
             review: true
@@ -27,19 +30,21 @@ export async function POST(request) {
             return response(false, 400, 'Invalid or missing fields.', validate.error)
         }
 
-        const { product, userId, rating, title, review } = validate.data
+        const { product, authorName, rating, title, review } = validate.data
+
+        const numericRating = Math.min(5, Math.max(1, Math.round(Number(rating))))
 
         const newReview = new ReviewModel({
-            product: product,
-            user: userId,
-            rating: rating,
-            title: title,
-            review: review,
+            product,
+            authorName,
+            rating: numericRating,
+            title,
+            review,
         })
 
         await newReview.save()
 
-        return response(true, 200, 'Your review submitted successfully.')
+        return response(true, 200, 'Review added successfully.')
 
     } catch (error) {
         return catchError(error)

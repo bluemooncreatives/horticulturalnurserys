@@ -15,8 +15,6 @@ const ProductBox = ({ product, priority = false }) => {
     const dispatch = useDispatch()
     const cartProducts = useSelector((store) => store.cartStore.products)
 
-    const hasDiscount = product?.mrp > product?.sellingPrice
-    const discount = hasDiscount ? Math.round(((product.mrp - product.sellingPrice) / product.mrp) * 100) : 0
     const rating = Number(product?.ratingAvg || 0)
     const filledStars = Math.round(rating)
     const ratingCount = Number(product?.ratingCount || 0)
@@ -57,16 +55,18 @@ const ProductBox = ({ product, priority = false }) => {
             media: product?.media?.[0]?.secure_url || imgPlaceholder.src,
             qty: 1,
         }))
-        showToast('success', 'Product added into cart.')
+        showToast('success', 'Added to your enquiry list.')
         setIsAdding(false)
     }
 
     return (
         <div className='group relative flex flex-col overflow-hidden rounded-[var(--radius-3xl)] border border-border bg-white transition duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[var(--shadow-card-hover)]'>
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--product-card-bg)]">
-                <span className={`absolute right-3 top-3 z-20 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] shadow-sm ${hasDiscount ? 'bg-[var(--brand-primary)] text-white' : 'bg-[var(--brand-lime)] text-[var(--brand-lime-ink)]'}`}>
-                    {hasDiscount ? `Sale ${discount}%` : 'New'}
-                </span>
+                {product?.isFreshlyArrived && (
+                    <span className="absolute right-3 top-3 z-20 rounded-full bg-[var(--brand-lime)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--brand-lime-ink)] shadow-sm">
+                        New
+                    </span>
+                )}
 
                 <Link
                     href={WEBSITE_PRODUCT_DETAILS(product.slug)}
@@ -141,21 +141,16 @@ const ProductBox = ({ product, priority = false }) => {
                     </div>
 
                     <div className='flex items-baseline gap-1.5 sm:gap-2'>
-                        <span className='text-base font-semibold text-foreground sm:text-[18px]'>
-                            {product?.sellingPrice?.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
+                        <span className='text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--dark-red)]'>
+                            Price on enquiry
                         </span>
-                        {hasDiscount && (
-                            <span className='text-[12px] text-stone-700 line-through'>
-                                {product?.mrp?.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
-                            </span>
-                        )}
                     </div>
                 </div>
 
                 <div className="mt-1 grid w-full grid-cols-1 gap-2 sm:mt-0 sm:grid-cols-2">
                     {isInCart ? (
                         <BrandOutlineButton asChild className="text-[13px] tracking-normal sm:text-base">
-                            <Link href={WEBSITE_CART}>Go To Cart</Link>
+                            <Link href={WEBSITE_CART}>Go To Enquiry</Link>
                         </BrandOutlineButton>
                     ) : (
                         <BrandOutlineButton
@@ -165,13 +160,13 @@ const ProductBox = ({ product, priority = false }) => {
                             className="text-[13px] tracking-normal sm:text-base"
                         >
                             <ShoppingBag className="size-3.5" />
-                            Add To Cart
+                            Add To Enquiry
                         </BrandOutlineButton>
                     )}
 
                     <BrandButton asChild className="text-[13px] tracking-normal sm:text-base">
-                        <Link href={WEBSITE_PRODUCT_DETAILS(product.slug)} aria-label={`Buy Product: ${product?.name}`}>
-                            Buy Product
+                        <Link href={WEBSITE_PRODUCT_DETAILS(product.slug)} aria-label={`View details: ${product?.name}`}>
+                            View Details
                         </Link>
                     </BrandButton>
                 </div>

@@ -2,6 +2,8 @@
 import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Lenis from 'lenis'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 export default function LenisProvider({ children }) {
   const lenisRef = useRef(null)
@@ -45,6 +47,13 @@ export default function LenisProvider({ children }) {
       })
 
       lenisRef.current = lenis
+
+      // Keep ScrollTrigger locked to Lenis' smoothed scroll position. Without
+      // this, pinned / scrubbed sections read the native scrollbar and jitter
+      // against Lenis' interpolated value — this single hook is what makes the
+      // pinned About section (and any future ScrollTrigger work) buttery.
+      gsap.registerPlugin(ScrollTrigger)
+      lenis.on('scroll', ScrollTrigger.update)
 
       const onRaf = (time) => {
         lenis.raf(time)

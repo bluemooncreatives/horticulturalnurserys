@@ -38,15 +38,17 @@ const Home = () => {
                 defers its hydration until the user scrolls near it, so the
                 initial load only hydrates the hero + header. */}
             <LazyHydrate>
-                <FeaturedProduct />
-            </LazyHydrate>
-
-            <LazyHydrate>
                 <CategoryArchiveSection />
             </LazyHydrate>
 
             <LazyHydrate>
                 <AboutUsSection />
+            </LazyHydrate>
+
+            {/* Featured ("freshly arrived") products — sits directly under the
+                About Company section. */}
+            <LazyHydrate>
+                <FeaturedProduct />
             </LazyHydrate>
 
             <LazyHydrate>

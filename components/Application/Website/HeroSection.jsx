@@ -1,11 +1,14 @@
 "use client";
 
-import Image from "next/image";
+import { useCallback, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowLeftRight } from "lucide-react";
 
 import { WEBSITE_SHOP } from "@/routes/WebsiteRoute";
 import CircleReveal from "@/components/ui/CircleReveal";
+import CrossfadeImage from "@/components/ui/CrossfadeImage";
+import CircleWipeImage from "@/components/ui/CircleWipeImage";
+import useHeroCarousel from "@/components/ui/useHeroCarousel";
 
 // Product-card title, split into characters so each glyph can roll
 // independently with a staggered delay on hover (see the card button below).
@@ -21,26 +24,79 @@ const CRAFT_MARKS = [
   "Imported Plants",
 ];
 
-const AVATARS = [
+// The three hero frames. The big screen shows HERO_IMAGES[i]; the floating
+// thumbnail always shows the *next* frame, HERO_IMAGES[i + 1]. A single
+// index (see useHeroCarousel) drives both, so they can never fall out of step.
+const HERO_IMAGES = [
   "/assets/images/hero/01.jpg",
-  "/assets/images/hero/01.jpg",
+  "/assets/images/hero/02.jpg",
+  "/assets/images/hero/03.jpg",
 ];
 
+// Only the first (LCP) frame carries a descriptive alt; the cycling frames
+// behind it are decorative, so a screen reader isn't handed three near-
+// identical background descriptions. The page's headline carries the meaning.
+const HERO_ALTS = [
+  "A landscaped garden developed by Horticultural Development Centre, Kolkata",
+  "",
+  "",
+];
+
+// Countdown-ring geometry (36×36 viewBox, centred at 18).
+const RING_R = 15.5;
+const RING_C = 2 * Math.PI * RING_R;
+
 const HeroSection = () => {
+  const ringRef = useRef(null);
+
+  // Paint the thumbnail's countdown ring straight from the carousel clock's
+  // 0→1 progress — one tween drives both the auto-advance and this ring, so
+  // the ring always reflects exactly how long until the next change.
+  const onProgress = useCallback((p) => {
+    const ring = ringRef.current;
+    if (ring) ring.style.strokeDashoffset = String(RING_C * (1 - p));
+  }, []);
+
+  const { index, advance, pause, resume } = useHeroCarousel({
+    length: HERO_IMAGES.length,
+    interval: 10,
+    onProgress,
+  });
+
+  const bigIndex = index;
+  const smallIndex = (index + 1) % HERO_IMAGES.length;
+
   return (
     <section className="website-gutter pt-[2.75rem] sm:pt-[3.5rem]">
       <div className="mx-auto max-w">
         {/* ── Framed hero card — image fills the whole card, content overlaid ── */}
         <div className="hero-frame relative flex min-h-[calc(100svh_-_2.75rem)] flex-col justify-between overflow-hidden rounded-[var(--radius-section)] bg-[var(--background)] sm:min-h-[calc(100svh_-_3.5rem)]">
 
-          {/* Full-bleed background image */}
-          <Image
-            src="/assets/images/hero/01.jpg"
-            alt="A landscaped garden developed by Horticultural Development Centre, Kolkata"
-            fill
-            priority
+          {/* Full-bleed background — the hero frames cross-fade here (frame i).
+              Advanced GSAP fade in / fade out: the incoming (top) frame fades
+              up while sliding in from the LEFT (enterX) with a subtle scale +
+              de-blur; the outgoing (bottom) frame holds its position and only
+              fades (stillOutgoing) — it never shifts. A slow Ken Burns drift
+              keeps the resting frame alive. It keeps the base stacking layer,
+              so the washes and content below still sit on top. */}
+          <CrossfadeImage
+            images={HERO_IMAGES}
+            activeIndex={bigIndex}
+            alt={HERO_ALTS[0]}
+            alts={HERO_ALTS}
             sizes="100vw"
-            className="object-cover object-[center_38%]"
+            priority
+            objectClassName="object-cover object-[center_38%]"
+            className="absolute inset-0"
+            duration={1.35}
+            ease="power2.inOut"
+            scaleFrom={1.08}
+            blur={10}
+            enterX={-8}
+            stillOutgoing
+            kenBurns
+            kenBurnsScale={1.07}
+            kenBurnsDuration={10}
           />
           {/* Light wash on top → keeps the dark wordmark legible over the photo.
               It fades from --background, not --brand-warm-bg: the two differ
@@ -50,7 +106,7 @@ const HeroSection = () => {
               ramp neutral instead of drifting through grey. */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[62%] bg-gradient-to-b from-[var(--background)] via-[var(--background)]/78 to-[var(--background)]/0"
+            className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[55%] bg-gradient-to-b from-[var(--background)] via-[var(--background)]/78 to-[var(--background)]/0"
           />
           {/* Dark wash on bottom → keeps the white trust strip legible */}
           <div
@@ -71,10 +127,10 @@ const HeroSection = () => {
                   lines scaling far enough that the gap stays tight on wide
                   screens. The second line's cap is held at ~0.49x the first so
                   the longer string never out-measures it. */}
-              <span className="block whitespace-nowrap text-[clamp(2.1rem,10.5vw,12.5rem)]">
+              <span className="block whitespace-nowrap text-[clamp(1.9rem,9.4vw,11.2rem)]">
                 Horticultural
               </span>
-              <span className="block whitespace-nowrap text-[clamp(1.05rem,5.2vw,6.1rem)]">
+              <span className="block whitespace-nowrap text-[clamp(0.95rem,4.65vw,5.5rem)]">
                 Development Centre
                 <sup className="relative top-[0.12em] ml-[0.05em] align-top text-[0.26em] font-normal leading-none opacity-80">®</sup>
               </span>
@@ -88,12 +144,25 @@ const HeroSection = () => {
             <div className="hero-tag w-full max-w-md lg:w-[16rem] lg:pt-3 xl:w-[18rem] 2xl:w-[20rem]">
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2.5">
-                  {AVATARS.map((src, i) => (
+                  {/* "Up next" preview — the two frames queued behind the big
+                      screen (i+1, i+2). On each advance they circular-wipe to
+                      their new frame: the incoming blooms in from the right
+                      while the outgoing slides off to the left. A small stagger
+                      on the second circle makes the pair read as a cascade. */}
+                  {[1, 2].map((offset) => (
                     <span
-                      key={i}
+                      key={offset}
                       className="relative size-7 overflow-hidden rounded-full border-2 border-[var(--background)]"
                     >
-                      <Image src={src} alt="" fill sizes="28px" className="object-cover object-top" />
+                      <CircleWipeImage
+                        images={HERO_IMAGES}
+                        activeIndex={(index + offset) % HERO_IMAGES.length}
+                        sizes="28px"
+                        objectClassName="object-cover object-top"
+                        duration={0.7}
+                        ease="power2.out"
+                        delay={(offset - 1) * 0.08}
+                      />
                     </span>
                   ))}
                 </div>
@@ -140,18 +209,76 @@ const HeroSection = () => {
                 shadowed blocks stacked inside one wrapper, not a single
                 continuous card shape. */}
             <div className="hero-overlay hidden w-64 shrink-0 flex-col gap-2 transition-transform hover:-translate-y-0.5 sm:flex">
-              <Link
-                href={WEBSITE_SHOP}
-                className="group relative block aspect-[16/11] w-full overflow-hidden rounded-[var(--radius-3xl)] shadow-lg"
+              {/* Floating thumbnail — shows the *next* frame (i+1) and doubles
+                  as the carousel control: clicking promotes it to the big
+                  screen and rolls the thumbnail forward, resetting the 10s
+                  clock. It's a real <button> (was a shop link); the shop CTA
+                  lives in the white card just below, so that path is intact. */}
+              <button
+                type="button"
+                onClick={advance}
+                onMouseEnter={pause}
+                onMouseLeave={resume}
+                onFocus={pause}
+                onBlur={resume}
+                aria-label={`Feature the next garden view — now showing ${smallIndex + 1} of ${HERO_IMAGES.length}`}
+                className="group relative block aspect-[16/11] w-full cursor-pointer overflow-hidden rounded-[var(--radius-3xl)] shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-lime)] focus-visible:ring-offset-2"
               >
-                <Image
-                  src="/assets/images/hero/01.jpg"
-                  alt=""
-                  fill
-                  sizes="256px"
-                  className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                {/* Zoom wrapper: hover adds a little scale on top of the GSAP
+                    crossfade running on the layers inside (different element,
+                    so the transforms compose cleanly). */}
+                <span className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105">
+                  <CrossfadeImage
+                    images={HERO_IMAGES}
+                    activeIndex={smallIndex}
+                    alt=""
+                    sizes="256px"
+                    objectClassName="object-cover object-top"
+                    className="absolute inset-0"
+                    duration={0.95}
+                    ease="power2.out"
+                    scaleFrom={1.14}
+                    blur={10}
+                    kenBurns
+                    kenBurnsScale={1.04}
+                    kenBurnsDuration={10}
+                  />
+                </span>
+
+                {/* Legibility wash behind the ring. */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-black/35 to-transparent"
                 />
-              </Link>
+
+                {/* Countdown ring — sweeps as the 10s clock runs, resets on advance. */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute right-2.5 top-2.5 z-10 size-4"
+                >
+                  <svg viewBox="0 0 36 36" className="absolute inset-0 size-full -rotate-90">
+                    <circle cx="18" cy="18" r={RING_R} fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="3" />
+                    <circle
+                      ref={ringRef}
+                      cx="18"
+                      cy="18"
+                      r={RING_R}
+                      fill="none"
+                      stroke="var(--brand-lime)"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeDasharray={RING_C}
+                      strokeDashoffset={RING_C}
+                    />
+                  </svg>
+                </span>
+
+                {/* Hover affordance — signals the box is an interactive control. */}
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex translate-y-full items-center justify-center gap-1.5 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2.5 pt-6 text-[0.66rem] font-medium text-white opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+                  <ArrowLeftRight aria-hidden className="size-3.5" />
+                  Click to feature
+                </span>
+              </button>
 
               {/* The entire white block is now a single button. Hovering it
                   drives three coordinated micro-interactions: the card lifts,

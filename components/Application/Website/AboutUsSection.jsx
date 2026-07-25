@@ -353,6 +353,73 @@ const AboutUsSection = () => {
             }
         }
 
+        // Card 4 (the photo card). Split like card 2 so the payoff is actually
+        // watchable: `settle` is the entrance as the card arrives (pre-pin) —
+        // the card pops from a soft blur, the gradient veil deepens, the eyebrow
+        // clip-rises and the area figure unfolds in 3D. `hold` runs over the
+        // long range (the pinned hold on desktop), while the card sits fully in
+        // view: the image stack slow-zooms (Ken Burns) AND crossfades through
+        // THREE frames in turn (the "changing images" — a live photo swap), and
+        // the number counts 0 → 4,700 end to end. Earlier this was one short
+        // window keyed to the section entrance, so every beat finished while the
+        // card was still near the bottom of the screen / about to pin — nothing
+        // was left to see once it settled. SSR / reduced motion paints the base
+        // frame + "4,700 m²" in place.
+        const makeCardFour = ({ settle, hold }) => {
+            const card = root.querySelector('.about-card-four')
+            if (!card) return
+            const wrap = card.querySelector('.about-c4-imgwrap')
+            const frames = gsap.utils.toArray('.about-c4-img', card)
+            const overlay = card.querySelector('.about-c4-overlay')
+            const eyebrow = card.querySelector('.about-c4-eyebrow')
+            const figure = card.querySelector('.about-c4-figure')
+            const numEl = card.querySelector('.about-c4-num')
+            const fmt = (n) => Math.round(n).toLocaleString('en-US')
+
+            // ── Entrance (settle) — as the card arrives ──
+            gsap.fromTo(card,
+                { yPercent: 16, scale: 0.94, autoAlpha: 0, filter: 'blur(8px)' },
+                { yPercent: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)', ease: 'power3.out', scrollTrigger: settle })
+            if (overlay) {
+                gsap.fromTo(overlay, { autoAlpha: 0.5 }, { autoAlpha: 1, ease: 'none', scrollTrigger: settle })
+            }
+            if (eyebrow) {
+                gsap.fromTo(eyebrow,
+                    { yPercent: 120, autoAlpha: 0, clipPath: 'inset(0% 0% 100% 0%)' },
+                    { yPercent: 0, autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)', ease: 'power3.out', scrollTrigger: settle })
+            }
+            if (figure) {
+                gsap.fromTo(figure,
+                    { yPercent: 70, scale: 0.65, rotateX: -75, autoAlpha: 0, transformOrigin: '0% 100%' },
+                    { yPercent: 0, scale: 1, rotateX: 0, autoAlpha: 1, ease: 'back.out(1.7)', scrollTrigger: settle })
+            }
+
+            // ── Hold — plays across the long range while the card is on screen ──
+            // One timeline so the Ken Burns zoom, the frame crossfades and the
+            // counter share the same clock and span the full hold.
+            const span = Math.max(frames.length, 2) // scroll units the hold fills
+            const holdTl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: hold })
+
+            if (wrap) holdTl.fromTo(wrap, { scale: 1.32 }, { scale: 1.06, duration: span }, 0)
+
+            // The photo visibly changes: each later frame fades up over the one
+            // beneath it, one after another, so the image swaps as you scroll.
+            if (frames.length > 1) {
+                gsap.set(frames.slice(1), { autoAlpha: 0 })
+                frames.slice(1).forEach((frame, i) => {
+                    holdTl.to(frame, { autoAlpha: 1, duration: 0.6, ease: 'power1.inOut' }, i + 0.7)
+                })
+            }
+
+            if (numEl) {
+                const proxy = { v: 0 }
+                holdTl.to(proxy, {
+                    v: 4700, snap: { v: 1 }, duration: span,
+                    onUpdate() { numEl.textContent = fmt(proxy.v) },
+                }, 0)
+            }
+        }
+
         // ── Desktop ─────────────────────────────────────────────────────────
         // The section rises with a layered parallax, sticks to the top, and
         // while it's held the heading brightens line by line, end to end.
@@ -390,6 +457,13 @@ const AboutUsSection = () => {
             // Wide window over the section's entrance so the sequenced timeline
             // is watchable as the section scrolls up, resolving as it pins.
             makeCardThree({ trigger: root, start: 'top 90%', end: 'top 10%' })
+            makeCardFour({
+                // Entrance as the card rises in, then the photo swap + count
+                // ride the full pinned hold (same range as the heading fill),
+                // so they play out while the card sits fixed in view.
+                settle: { trigger: root, start: 'top 76%', end: 'top 26%', scrub: true },
+                hold: { trigger: root, start: 'top top', end: '+=155%', scrub: true },
+            })
 
             ScrollTrigger.refresh()
             return () => {
@@ -423,6 +497,12 @@ const AboutUsSection = () => {
                 count: { trigger: statsRef.current, start: 'top 80%', end: 'bottom 35%', scrub: true },
             })
             makeCardThree({ trigger: statsRef.current, start: 'top 88%', end: 'top 22%' })
+            makeCardFour({
+                // No pin here, so the swap + count ride the cards' full pass
+                // through the viewport (same range as card 2's count).
+                settle: { trigger: statsRef.current, start: 'top 85%', end: 'top 45%', scrub: true },
+                hold: { trigger: statsRef.current, start: 'top 80%', end: 'bottom 35%', scrub: true },
+            })
 
             ScrollTrigger.refresh()
             return () => disposeFill()
@@ -620,19 +700,50 @@ const AboutUsSection = () => {
                         </div>
                     </div>
 
-                    {/* 4 · Image + number */}
-                    <div className="about-stat relative flex min-h-[11.5rem] flex-col overflow-hidden rounded-[var(--radius-card)] p-4 text-white lg:min-h-[13rem] lg:p-5">
-                        <Image
-                            src="/assets/images/hero/01.jpg"
-                            alt="Protected cultivation under the green house at our Bibirhut farm"
-                            fill
-                            sizes="(min-width:1024px) 25vw, 50vw"
-                            className="object-cover object-center"
-                        />
-                        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/10" />
+                    {/* 4 · Image + number. On scroll the card pops out of a
+                        blur, the image STACK slow-zooms while it crossfades
+                        through three frames (the changing-image swap), the
+                        gradient veil deepens, the eyebrow clip-rises and the
+                        area figure unfolds in 3D while the number counts to
+                        4,700 — see makeCardFour. The perspective powers the
+                        figure's unfold; the extra frames are opacity-0 by
+                        default so SSR / reduced motion shows the base photo. */}
+                    <div
+                        className="about-stat about-card-four relative flex min-h-[11.5rem] flex-col overflow-hidden rounded-[var(--radius-card)] p-4 text-white will-change-transform lg:min-h-[13rem] lg:p-5"
+                        style={{ perspective: '700px' }}
+                    >
+                        {/* Image stack — one wrapper so the Ken Burns zoom scales
+                            all frames together; each frame crossfades on scroll. */}
+                        <div aria-hidden className="about-c4-imgwrap absolute inset-0 will-change-transform">
+                            <Image
+                                src="/assets/images/hero/01.jpg"
+                                alt="Protected cultivation under the green house at our Bibirhut farm"
+                                fill
+                                sizes="(min-width:1024px) 25vw, 50vw"
+                                className="about-c4-img object-cover object-center"
+                            />
+                            <Image
+                                src="/assets/images/hero/03.jpg"
+                                alt=""
+                                fill
+                                sizes="(min-width:1024px) 25vw, 50vw"
+                                className="about-c4-img object-cover object-center opacity-0"
+                            />
+                            <Image
+                                src="/assets/images/hero/02.jpg"
+                                alt=""
+                                fill
+                                sizes="(min-width:1024px) 25vw, 50vw"
+                                className="about-c4-img object-cover object-center opacity-0"
+                            />
+                        </div>
+                        <div aria-hidden className="about-c4-overlay absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/10" />
                         <div className="relative">
-                            <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-white/75">Under Cover</span>
-                            <span className="mt-3 block text-[2.4rem] font-medium leading-none tracking-[-0.03em]">4,700 m²</span>
+                            <span className="about-c4-eyebrow block text-[0.7rem] uppercase tracking-[0.16em] text-white/75 will-change-transform">Under Cover</span>
+                            <span className="about-c4-figure mt-3 flex items-baseline gap-1 text-[2.4rem] font-medium leading-none tracking-[-0.03em] will-change-transform">
+                                <span className="about-c4-num">4,700</span>
+                                <span className="text-[1.6rem]">m²</span>
+                            </span>
                         </div>
                     </div>
                 </div>

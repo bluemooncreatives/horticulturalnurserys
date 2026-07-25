@@ -44,6 +44,26 @@ const REST = -100 / 3         // -33.33% → middle cell centred = readable lett
 // on scroll they roll in from opposite directions in a left-to-right cascade.
 const rollFrom = (i) => (i % 2 === 0 ? -200 / 3 : 0) // even → from below, odd → from above
 
+// Split a text element into per-word spans so a timeline can reveal them one
+// at a time (card 3's copy — words "focus in" on scroll). Idempotent: it reads
+// the aggregate textContent, so re-running on a breakpoint change re-splits
+// cleanly. Whitespace is kept as text nodes so wrapping is unaffected.
+const splitWords = (el) => {
+    const parts = el.textContent.split(/(\s+)/)
+    el.textContent = ''
+    const words = []
+    parts.forEach((part) => {
+        if (part === '') return
+        if (/^\s+$/.test(part)) { el.appendChild(document.createTextNode(part)); return }
+        const span = document.createElement('span')
+        span.className = 'about-c3-word inline-block will-change-transform'
+        span.textContent = part
+        el.appendChild(span)
+        words.push(span)
+    })
+    return words
+}
+
 // Group already-rendered word spans into visual lines by their layout top
 // (offsetTop is transform-invariant, so parallax/pin never skews it).
 const groupLines = (els) => {
@@ -248,6 +268,66 @@ const AboutUsSection = () => {
             }
         }
 
+        // Card 3 (the spread card). A layered "pop": the whole card lifts out
+        // of a soft blur, the copy focuses in word by word, an accent line
+        // wipes out, the label rises, and the figure unfolds toward the viewer
+        // with an overshoot while the number counts 0→50. All scrubbed, so it
+        // resolves on the same clock as the rest of the section.
+        const makeCardThree = ({ settle }) => {
+            const card = root.querySelector('.about-card-three')
+            if (!card) return
+            const copy = card.querySelector('.about-c3-copy')
+            const accent = card.querySelector('.about-c3-accent')
+            const label = card.querySelector('.about-c3-label')
+            const figure = card.querySelector('.about-c3-figure')
+            const numEl = card.querySelector('.about-c3-num')
+
+            // Whole card lifts and clears from a soft blur — the "pop".
+            gsap.fromTo(card,
+                { yPercent: 14, scale: 0.94, autoAlpha: 0, filter: 'blur(7px)' },
+                { yPercent: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)', ease: 'power3.out', scrollTrigger: settle }
+            )
+
+            // Copy: each word rises from below and sharpens — a focus-in cascade.
+            if (copy) {
+                const words = splitWords(copy)
+                gsap.fromTo(words,
+                    { yPercent: 110, autoAlpha: 0, filter: 'blur(4px)' },
+                    { yPercent: 0, autoAlpha: 1, filter: 'blur(0px)', ease: 'power3.out', stagger: 0.05, scrollTrigger: settle }
+                )
+            }
+
+            // Accent line wipes out from the left, cueing the metric.
+            if (accent) {
+                gsap.fromTo(accent, { scaleX: 0, transformOrigin: '0% 50%' },
+                    { scaleX: 1, ease: 'power2.out', scrollTrigger: settle })
+            }
+
+            // Label rises in under the line.
+            if (label) {
+                gsap.fromTo(label, { yPercent: 80, autoAlpha: 0 },
+                    { yPercent: 0, autoAlpha: 1, ease: 'power2.out', scrollTrigger: settle })
+            }
+
+            // Figure unfolds toward the viewer with a small overshoot (needs the
+            // perspective set on the card).
+            if (figure) {
+                gsap.fromTo(figure,
+                    { yPercent: 70, scale: 0.7, rotateX: -70, autoAlpha: 0, transformOrigin: '0% 100%' },
+                    { yPercent: 0, scale: 1, rotateX: 0, autoAlpha: 1, ease: 'back.out(1.7)', scrollTrigger: settle })
+            }
+
+            // The number counts 0→50 as the card settles.
+            if (numEl) {
+                const proxy = { v: 0 }
+                gsap.fromTo(proxy, { v: 0 }, {
+                    v: 50, ease: 'none', snap: { v: 1 },
+                    scrollTrigger: settle,
+                    onUpdate() { numEl.textContent = Math.round(proxy.v) },
+                })
+            }
+        }
+
         // ── Desktop ─────────────────────────────────────────────────────────
         // The section rises with a layered parallax, sticks to the top, and
         // while it's held the heading brightens line by line, end to end.
@@ -259,8 +339,8 @@ const AboutUsSection = () => {
             )
             gsap.fromTo(
                 statsRef.current,
-                { yPercent: 9, autoAlpha: 0.5 },
-                { yPercent: 0, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
+                { yPercent: 9, scale: 0.97, autoAlpha: 0.5 },
+                { yPercent: 0, scale: 1, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
             )
 
             // Pin the section for the hold (kept separate from the fill so the
@@ -281,6 +361,9 @@ const AboutUsSection = () => {
                 // moment the section sticks until it releases (same range that
                 // drives the heading fill), so it counts end to end on scroll.
                 count: { trigger: root, start: 'top top', end: '+=155%', scrub: true },
+            })
+            makeCardThree({
+                settle: { trigger: root, start: 'top 74%', end: 'top 24%', scrub: true },
             })
 
             ScrollTrigger.refresh()
@@ -313,6 +396,9 @@ const AboutUsSection = () => {
                 // the viewport — from just after they rise in to well past
                 // centre — for the same end-to-end climb.
                 count: { trigger: statsRef.current, start: 'top 80%', end: 'bottom 35%', scrub: true },
+            })
+            makeCardThree({
+                settle: { trigger: statsRef.current, start: 'top 82%', end: 'top 38%', scrub: true },
             })
 
             ScrollTrigger.refresh()
@@ -472,15 +558,26 @@ const AboutUsSection = () => {
                         </div>
                     </div>
 
-                    {/* 3 · Text top, figure bottom */}
-                    <div className="about-stat flex min-h-[11.5rem] flex-col justify-between rounded-[var(--radius-card)] border border-[var(--border)] bg-white p-4 lg:min-h-[13rem] lg:p-5">
-                        <p className="text-[0.92rem] leading-snug text-[var(--brand-ink)]">
+                    {/* 3 · Text top, figure bottom. On scroll the whole card
+                        pops up out of a blur, the copy focuses in word by word,
+                        an accent line wipes out and the metric unfolds in 3D
+                        while the number counts 0→50 — see makeCardThree. The
+                        perspective here powers the figure's 3D unfold. */}
+                    <div
+                        className="about-stat about-card-three flex min-h-[11.5rem] flex-col justify-between rounded-[var(--radius-card)] border border-[var(--border)] bg-white p-4 will-change-transform lg:min-h-[13rem] lg:p-5"
+                        style={{ perspective: '900px' }}
+                    >
+                        <p className="about-c3-copy text-[0.92rem] leading-snug text-[var(--brand-ink)]">
                             One potted plant at the Alipore counter or an entire township
                             landscape — both are grown on the same farm at Bibirhut.
                         </p>
                         <div className="mt-5">
-                            <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Nursery Spread</span>
-                            <span className="mt-1 block text-[1.9rem] font-medium leading-none tracking-[-0.02em] text-[var(--brand-ink)]">50 Bighas</span>
+                            <span aria-hidden className="about-c3-accent mb-2 block h-px w-10 origin-left bg-[var(--brand-primary)]" />
+                            <span className="about-c3-label block text-[0.7rem] uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Nursery Spread</span>
+                            <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.9rem] font-medium leading-none tracking-[-0.02em] text-[var(--brand-ink)] will-change-transform">
+                                <span className="about-c3-num">50</span>
+                                <span>Bighas</span>
+                            </span>
                         </div>
                     </div>
 

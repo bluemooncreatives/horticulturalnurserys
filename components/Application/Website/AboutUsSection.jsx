@@ -268,15 +268,18 @@ const AboutUsSection = () => {
             }
         }
 
-        // Card 3 (the spread card). Built as ONE scrubbed timeline spread over
-        // a generous scroll window so the beats play out in sequence and are
-        // actually watchable (the earlier version stacked every tween on the
-        // same short range, so it flashed in all at once). Sequence: the card
-        // pops out of a blur → the copy focuses in word by word → the image box
-        // apertures open (clip reveal) with the photo counter-zooming and a
-        // colour veil clearing → an accent line wipes → the label rises → the
-        // figure unfolds in 3D while the number counts 0→50.
-        const makeCardThree = ({ trigger, start, end }) => {
+        // Card 3 (the spread card). Split like cards 2 & 4 so the sequence is
+        // actually watchable: `settle` is the entrance pop as the card arrives
+        // (pre-pin); `hold` runs the sequenced content across the long range
+        // (the pinned hold on desktop) while the card sits fully in view — the
+        // copy focuses in word by word → the image box apertures open (clip
+        // reveal) with the photo counter-zooming and a colour veil clearing →
+        // an accent line wipes → the label rises → the figure unfolds in 3D
+        // while the number counts 0→50. Earlier the whole thing rode the
+        // section-entrance window, so the copy cascade finished while the card
+        // was still low on the screen / about to pin — it read as static by the
+        // time the card centred.
+        const makeCardThree = ({ settle, hold }) => {
             const card = root.querySelector('.about-card-three')
             if (!card) return
             const copy = card.querySelector('.about-c3-copy')
@@ -290,15 +293,17 @@ const AboutUsSection = () => {
             const numEl = card.querySelector('.about-c3-num')
             const proxy = { v: 0 }
 
+            // 1 · Entrance (settle) — the whole card lifts and clears from a soft
+            //     blur as it arrives, so it's present when the section pins.
+            gsap.fromTo(card,
+                { yPercent: 16, scale: 0.93, autoAlpha: 0, filter: 'blur(8px)' },
+                { yPercent: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)', ease: 'power3.out', scrollTrigger: settle })
+
+            // The sequenced content plays across the hold, one beat after another.
             const tl = gsap.timeline({
                 defaults: { ease: 'power3.out' },
-                scrollTrigger: { trigger, start, end, scrub: true },
+                scrollTrigger: hold,
             })
-
-            // 1 · The whole card lifts and clears from a soft blur — the "pop".
-            tl.fromTo(card,
-                { yPercent: 16, scale: 0.93, autoAlpha: 0, filter: 'blur(8px)' },
-                { yPercent: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)', duration: 1 }, 0)
 
             // 2 · Copy: each word rises from below and sharpens — focus-in cascade.
             if (words.length) {
@@ -456,7 +461,13 @@ const AboutUsSection = () => {
             })
             // Wide window over the section's entrance so the sequenced timeline
             // is watchable as the section scrolls up, resolving as it pins.
-            makeCardThree({ trigger: root, start: 'top 90%', end: 'top 10%' })
+            makeCardThree({
+                // Entrance as the card rises in, then the sequenced content
+                // (copy → image → figure/count) rides the full pinned hold, so
+                // it plays out while the card sits fixed and fully in view.
+                settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
+                hold: { trigger: root, start: 'top top', end: '+=155%', scrub: true },
+            })
             makeCardFour({
                 // Entrance as the card rises in, then the photo swap + count
                 // ride the full pinned hold (same range as the heading fill),
@@ -496,7 +507,12 @@ const AboutUsSection = () => {
                 // centre — for the same end-to-end climb.
                 count: { trigger: statsRef.current, start: 'top 80%', end: 'bottom 35%', scrub: true },
             })
-            makeCardThree({ trigger: statsRef.current, start: 'top 88%', end: 'top 22%' })
+            makeCardThree({
+                // No pin here, so the sequence rides the card's pass through
+                // the viewport (same shape as card 4 below).
+                settle: { trigger: statsRef.current, start: 'top 88%', end: 'top 48%', scrub: true },
+                hold: { trigger: statsRef.current, start: 'top 80%', end: 'bottom 35%', scrub: true },
+            })
             makeCardFour({
                 // No pin here, so the swap + count ride the cards' full pass
                 // through the viewport (same range as card 2's count).

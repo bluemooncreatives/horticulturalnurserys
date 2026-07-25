@@ -268,63 +268,88 @@ const AboutUsSection = () => {
             }
         }
 
-        // Card 3 (the spread card). A layered "pop": the whole card lifts out
-        // of a soft blur, the copy focuses in word by word, an accent line
-        // wipes out, the label rises, and the figure unfolds toward the viewer
-        // with an overshoot while the number counts 0→50. All scrubbed, so it
-        // resolves on the same clock as the rest of the section.
-        const makeCardThree = ({ settle }) => {
+        // Card 3 (the spread card). Built as ONE scrubbed timeline spread over
+        // a generous scroll window so the beats play out in sequence and are
+        // actually watchable (the earlier version stacked every tween on the
+        // same short range, so it flashed in all at once). Sequence: the card
+        // pops out of a blur → the copy focuses in word by word → the image box
+        // apertures open (clip reveal) with the photo counter-zooming and a
+        // colour veil clearing → an accent line wipes → the label rises → the
+        // figure unfolds in 3D while the number counts 0→50.
+        const makeCardThree = ({ trigger, start, end }) => {
             const card = root.querySelector('.about-card-three')
             if (!card) return
             const copy = card.querySelector('.about-c3-copy')
+            const words = copy ? splitWords(copy) : []
+            const imgWrap = card.querySelector('.about-c3-imgwrap')
+            const img = card.querySelector('.about-c3-img')
+            const veil = card.querySelector('.about-c3-veil')
             const accent = card.querySelector('.about-c3-accent')
             const label = card.querySelector('.about-c3-label')
             const figure = card.querySelector('.about-c3-figure')
             const numEl = card.querySelector('.about-c3-num')
+            const proxy = { v: 0 }
 
-            // Whole card lifts and clears from a soft blur — the "pop".
-            gsap.fromTo(card,
-                { yPercent: 14, scale: 0.94, autoAlpha: 0, filter: 'blur(7px)' },
-                { yPercent: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)', ease: 'power3.out', scrollTrigger: settle }
-            )
+            const tl = gsap.timeline({
+                defaults: { ease: 'power3.out' },
+                scrollTrigger: { trigger, start, end, scrub: true },
+            })
 
-            // Copy: each word rises from below and sharpens — a focus-in cascade.
-            if (copy) {
-                const words = splitWords(copy)
-                gsap.fromTo(words,
+            // 1 · The whole card lifts and clears from a soft blur — the "pop".
+            tl.fromTo(card,
+                { yPercent: 16, scale: 0.93, autoAlpha: 0, filter: 'blur(8px)' },
+                { yPercent: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)', duration: 1 }, 0)
+
+            // 2 · Copy: each word rises from below and sharpens — focus-in cascade.
+            if (words.length) {
+                tl.fromTo(words,
                     { yPercent: 110, autoAlpha: 0, filter: 'blur(4px)' },
-                    { yPercent: 0, autoAlpha: 1, filter: 'blur(0px)', ease: 'power3.out', stagger: 0.05, scrollTrigger: settle }
-                )
+                    { yPercent: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 1, stagger: 0.08 }, 0.25)
             }
 
-            // Accent line wipes out from the left, cueing the metric.
+            // 3 · Image box apertures open from the centre (clip-path keeps the
+            //     rounded corners via the fixed `round`), the photo counter-zooms
+            //     for depth, and the colour veil clears upward.
+            if (imgWrap) {
+                tl.fromTo(imgWrap,
+                    { clipPath: 'inset(50% 0% 50% 0% round 10px)' },
+                    { clipPath: 'inset(0% 0% 0% 0% round 10px)', duration: 1, ease: 'power4.inOut' }, 0.9)
+            }
+            if (img) {
+                tl.fromTo(img,
+                    { scale: 1.4, yPercent: -6 },
+                    { scale: 1.08, yPercent: 0, duration: 1.6, ease: 'power2.out' }, 0.9)
+            }
+            if (veil) {
+                tl.fromTo(veil,
+                    { autoAlpha: 1, yPercent: 0 },
+                    { autoAlpha: 0, yPercent: -14, duration: 0.9, ease: 'power2.out' }, 1.2)
+            }
+
+            // 4 · Accent line wipes out from the left, cueing the metric.
             if (accent) {
-                gsap.fromTo(accent, { scaleX: 0, transformOrigin: '0% 50%' },
-                    { scaleX: 1, ease: 'power2.out', scrollTrigger: settle })
+                tl.fromTo(accent, { scaleX: 0, transformOrigin: '0% 50%' },
+                    { scaleX: 1, duration: 0.5, ease: 'power2.out' }, 2.0)
             }
 
-            // Label rises in under the line.
+            // 5 · Label rises in under the line.
             if (label) {
-                gsap.fromTo(label, { yPercent: 80, autoAlpha: 0 },
-                    { yPercent: 0, autoAlpha: 1, ease: 'power2.out', scrollTrigger: settle })
+                tl.fromTo(label, { yPercent: 90, autoAlpha: 0 },
+                    { yPercent: 0, autoAlpha: 1, duration: 0.6 }, 2.15)
             }
 
-            // Figure unfolds toward the viewer with a small overshoot (needs the
-            // perspective set on the card).
+            // 6 · Figure unfolds toward the viewer with an overshoot (needs the
+            //     perspective set on the card) while the number counts 0→50.
             if (figure) {
-                gsap.fromTo(figure,
-                    { yPercent: 70, scale: 0.7, rotateX: -70, autoAlpha: 0, transformOrigin: '0% 100%' },
-                    { yPercent: 0, scale: 1, rotateX: 0, autoAlpha: 1, ease: 'back.out(1.7)', scrollTrigger: settle })
+                tl.fromTo(figure,
+                    { yPercent: 80, scale: 0.6, rotateX: -75, autoAlpha: 0, transformOrigin: '0% 100%' },
+                    { yPercent: 0, scale: 1, rotateX: 0, autoAlpha: 1, duration: 0.9, ease: 'back.out(1.7)' }, 2.3)
             }
-
-            // The number counts 0→50 as the card settles.
             if (numEl) {
-                const proxy = { v: 0 }
-                gsap.fromTo(proxy, { v: 0 }, {
-                    v: 50, ease: 'none', snap: { v: 1 },
-                    scrollTrigger: settle,
+                tl.to(proxy, {
+                    v: 50, snap: { v: 1 }, ease: 'none', duration: 1,
                     onUpdate() { numEl.textContent = Math.round(proxy.v) },
-                })
+                }, 2.3)
             }
         }
 
@@ -362,9 +387,9 @@ const AboutUsSection = () => {
                 // drives the heading fill), so it counts end to end on scroll.
                 count: { trigger: root, start: 'top top', end: '+=155%', scrub: true },
             })
-            makeCardThree({
-                settle: { trigger: root, start: 'top 74%', end: 'top 24%', scrub: true },
-            })
+            // Wide window over the section's entrance so the sequenced timeline
+            // is watchable as the section scrolls up, resolving as it pins.
+            makeCardThree({ trigger: root, start: 'top 90%', end: 'top 10%' })
 
             ScrollTrigger.refresh()
             return () => {
@@ -397,9 +422,7 @@ const AboutUsSection = () => {
                 // centre — for the same end-to-end climb.
                 count: { trigger: statsRef.current, start: 'top 80%', end: 'bottom 35%', scrub: true },
             })
-            makeCardThree({
-                settle: { trigger: statsRef.current, start: 'top 82%', end: 'top 38%', scrub: true },
-            })
+            makeCardThree({ trigger: statsRef.current, start: 'top 88%', end: 'top 22%' })
 
             ScrollTrigger.refresh()
             return () => disposeFill()
@@ -571,7 +594,23 @@ const AboutUsSection = () => {
                             One potted plant at the Alipore counter or an entire township
                             landscape — both are grown on the same farm at Bibirhut.
                         </p>
-                        <div className="mt-5">
+
+                        {/* Image box filling the gap. On scroll it apertures open
+                            (clip-path), the photo counter-zooms and a colour veil
+                            clears — see makeCardThree. The veil is opacity-0 by
+                            default so reduced-motion / no-JS shows the photo clean. */}
+                        <div className="about-c3-imgwrap relative my-4 h-16 shrink-0 overflow-hidden rounded-[10px] lg:h-24">
+                            <Image
+                                src="/assets/images/hero/02.jpg"
+                                alt="Seedlings raised on our farm at Bibirhut"
+                                fill
+                                sizes="(min-width:1024px) 25vw, 50vw"
+                                className="about-c3-img object-cover object-center will-change-transform"
+                            />
+                            <div aria-hidden className="about-c3-veil absolute inset-0 bg-[var(--brand-primary)] opacity-0 will-change-transform" />
+                        </div>
+
+                        <div className="mt-auto">
                             <span aria-hidden className="about-c3-accent mb-2 block h-px w-10 origin-left bg-[var(--brand-primary)]" />
                             <span className="about-c3-label block text-[0.7rem] uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Nursery Spread</span>
                             <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.9rem] font-medium leading-none tracking-[-0.02em] text-[var(--brand-ink)] will-change-transform">

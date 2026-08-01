@@ -271,7 +271,7 @@ const AboutUsSection = () => {
         // Card 3 (the spread card). Split like cards 2 & 4 so the sequence is
         // actually watchable: `settle` is the entrance pop as the card arrives
         // (pre-pin); `hold` runs the sequenced content across the long range
-        // (the pinned hold on desktop) while the card sits fully in view — the
+        // (the pinned hold) while the card sits fully in view — the
         // copy focuses in word by word → the image box apertures open (clip
         // reveal) with the photo counter-zooming and a colour veil clearing →
         // an accent line wipes → the label rises → the figure unfolds in 3D
@@ -362,7 +362,7 @@ const AboutUsSection = () => {
         // watchable: `settle` is the entrance as the card arrives (pre-pin) —
         // the card pops from a soft blur, the gradient veil deepens, the eyebrow
         // clip-rises and the area figure unfolds in 3D. `hold` runs over the
-        // long range (the pinned hold on desktop), while the card sits fully in
+        // long range (the pinned hold), while the card sits fully in
         // view: the image stack slow-zooms (Ken Burns) AND crossfades through
         // THREE frames in turn (the "changing images" — a live photo swap), and
         // the number counts 0 → 4,700 end to end. Earlier this was one short
@@ -425,10 +425,14 @@ const AboutUsSection = () => {
             }
         }
 
-        // ── Desktop ─────────────────────────────────────────────────────────
+        // ── All breakpoints ─────────────────────────────────────────────────
         // The section rises with a layered parallax, sticks to the top, and
         // while it's held the heading brightens line by line, end to end.
-        mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+        // Same pin-and-scrub lock on every screen size — mobile/tablet used to
+        // get an un-pinned "pass through" variant instead, which read as a
+        // glitchy double-exposure (the fill/roll timeline scrubbing against a
+        // section still sliding under the viewport rather than held still).
+        mm.add('(prefers-reduced-motion: no-preference)', () => {
             gsap.fromTo(
                 statementRef.current,
                 { yPercent: 20 },
@@ -483,47 +487,6 @@ const AboutUsSection = () => {
             }
         })
 
-        // ── Compact screens ─────────────────────────────────────────────────
-        // Same line-by-line brighten as the section passes, but no pin.
-        mm.add('(max-width: 1023px) and (prefers-reduced-motion: no-preference)', () => {
-            gsap.fromTo(
-                statementRef.current,
-                { yPercent: 10 },
-                { yPercent: 0, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top 55%', scrub: true } }
-            )
-
-            const disposeFill = makeLineFill({ trigger: statementRef.current, start: 'top 78%', end: 'bottom 42%', scrub: true })
-
-            makeCardOne({
-                pass: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
-                settle: { trigger: statsRef.current, start: 'top 90%', end: 'top 50%', scrub: true },
-                drift: 3,
-            })
-            makeCardTwo({
-                pass: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
-                settle: { trigger: statsRef.current, start: 'top 85%', end: 'top 45%', scrub: true },
-                // No pin here, so the count rides the cards' full pass through
-                // the viewport — from just after they rise in to well past
-                // centre — for the same end-to-end climb.
-                count: { trigger: statsRef.current, start: 'top 80%', end: 'bottom 35%', scrub: true },
-            })
-            makeCardThree({
-                // No pin here, so the sequence rides the card's pass through
-                // the viewport (same shape as card 4 below).
-                settle: { trigger: statsRef.current, start: 'top 88%', end: 'top 48%', scrub: true },
-                hold: { trigger: statsRef.current, start: 'top 80%', end: 'bottom 35%', scrub: true },
-            })
-            makeCardFour({
-                // No pin here, so the swap + count ride the cards' full pass
-                // through the viewport (same range as card 2's count).
-                settle: { trigger: statsRef.current, start: 'top 85%', end: 'top 45%', scrub: true },
-                hold: { trigger: statsRef.current, start: 'top 80%', end: 'bottom 35%', scrub: true },
-            })
-
-            ScrollTrigger.refresh()
-            return () => disposeFill()
-        })
-
         return () => mm.revert()
     }, [])
 
@@ -531,7 +494,7 @@ const AboutUsSection = () => {
         // No overlap at rest — the hero stays fully visible on load; the section
         // climbs over it on scroll. z-[2] keeps it above the hero as it rises.
         <section ref={rootRef} className="about-section relative z-[2] bg-[var(--background)]">
-            <div className="lumora-shell flex flex-col justify-center py-16 lg:min-h-svh lg:py-24">
+            <div className="lumora-shell flex min-h-svh flex-col justify-center py-10 lg:py-24">
 
                 {/* ── Statement (parallax layer A) ── */}
                 <div ref={statementRef} className="about-statement grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_1.85fr] lg:gap-8">
@@ -584,7 +547,7 @@ const AboutUsSection = () => {
                 </div>
 
                 {/* ── Stat cards (parallax layer B) ── */}
-                <div ref={statsRef} className="about-stats mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:mt-16 lg:grid-cols-4">
+                <div ref={statsRef} className="about-stats mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:mt-16 lg:grid-cols-4">
 
                     {/* 1 · Collaborator cluster — faded avatar rows top, big
                         faded count bottom (matches the reference cards). */}
@@ -624,7 +587,7 @@ const AboutUsSection = () => {
                             </p>
                             <p className="about-count mt-1 flex leading-[0.9] tracking-[-0.03em]" style={{ perspective: '600px' }}>
                                 <span className="about-count-num inline-flex items-end font-semibold will-change-transform">
-                                    <span className="about-count-value text-[2.2rem] text-[var(--brand-primary)] sm:text-[2.9rem] lg:text-[3.25rem]">50</span>
+                                    <span className="about-count-value text-[2.9rem] text-[var(--brand-primary)] lg:text-[3.25rem]">50</span>
                                     <span className="about-count-plus ml-0.5 inline-block text-[1.6rem] leading-none text-[var(--brand-primary)]">+</span>
                                 </span>
                             </p>
@@ -671,7 +634,7 @@ const AboutUsSection = () => {
                         {/* Big count, revealed in 3D (perspective on the wrapper) */}
                         <div className="relative" style={{ perspective: '600px' }}>
                             <p className="about-years flex items-start font-medium leading-none tracking-[-0.03em] will-change-transform">
-                                <span className="about-years-value text-[2.6rem] sm:text-[3.6rem] lg:text-[6rem]">35</span>
+                                <span className="about-years-value text-[3.6rem] lg:text-[6rem]">35</span>
                                 <span className="ml-0.5 text-[2rem] leading-none text-[var(--brand-lime)]">+</span>
                             </p>
                         </div>
@@ -709,7 +672,7 @@ const AboutUsSection = () => {
                         <div className="mt-auto">
                             <span aria-hidden className="about-c3-accent mb-2 block h-px w-10 origin-left bg-[var(--brand-primary)]" />
                             <span className="about-c3-label block text-[0.7rem] uppercase text-[var(--muted-foreground)]">Nursery Spread</span>
-                            <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.5rem] font-semibold leading-none text-[var(--brand-primary)] will-change-transform sm:text-[1.9rem]">
+                            <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.9rem] font-semibold leading-none text-[var(--brand-primary)] will-change-transform">
                                 <span className="about-c3-num">50</span>
                                 <span>Bighas</span>
                             </span>
@@ -756,9 +719,9 @@ const AboutUsSection = () => {
                         <div aria-hidden className="about-c4-overlay absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/10" />
                         <div className="relative">
                             <span className="about-c4-eyebrow block text-[0.8rem] uppercase text-white will-change-transform">Under Cover</span>
-                            <span className="about-c4-figure mt-3 flex items-baseline gap-1 text-[1.8rem] font-medium leading-none tracking-[-0.03em] will-change-transform sm:text-[2.4rem]">
+                            <span className="about-c4-figure mt-3 flex items-baseline gap-1 text-[2.4rem] font-medium leading-none tracking-[-0.03em] will-change-transform">
                                 <span className="about-c4-num">4,700</span>
-                                <span className="text-[1.2rem] sm:text-[1.6rem]">m²</span>
+                                <span className="text-[1.6rem]">m²</span>
                             </span>
                         </div>
                     </div>

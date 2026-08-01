@@ -222,11 +222,19 @@ const ServicesSection = () => {
                     })}
                 </div>
 
-                {/* CTA */}
+                {/* CTA — lime card with a solid circular arrow badge, matching
+                    the hero's floating product card (minus its writeup line). */}
                 <div className="relative mt-10 flex justify-center lg:mt-12">
-                    <Link href="/contact" className="pill pill-lime group">
-                        Let&apos;s Talk
-                        <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <Link
+                        href="/contact"
+                        className="group flex items-center gap-4 rounded-[var(--radius-3xl)] bg-[var(--brand-lime)] py-3 pl-6 pr-3 transition-colors hover:bg-[var(--brand-lime-hover)]"
+                    >
+                        <span className="text-[1rem] font-semibold text-[var(--brand-lime-ink)]">
+                            Let&apos;s Talk
+                        </span>
+                        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[var(--brand-primary)] text-white transition-transform duration-300 ease-out group-hover:rotate-45">
+                            <ArrowUpRight className="size-4" />
+                        </span>
                     </Link>
                 </div>
             </div>

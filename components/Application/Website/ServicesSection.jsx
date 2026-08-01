@@ -132,21 +132,21 @@ const ServicesSection = () => {
                 {/* header */}
                 <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                     <div>
-                        <span className="flex items-start gap-2 text-[0.8rem] font-semibold uppercase text-white/50 lg:pt-3">
+                        <span className="flex items-start gap-2 text-[0.8rem] font-semibold uppercase text-white lg:pt-3">
                             <span aria-hidden className="mt-1.5 size-1.5 rounded-full border border-current" />
                             Our Services
                         </span>
-                        <h2 className="mt-3 max-w-xl text-[clamp(1.8rem,3.8vw,3rem)] font-medium leading-[1.12] tracking-[-0.02em] text-white">
+                        <h2 className="mt-3 max-w-xl text-[clamp(1.8rem,3.8vw,3rem)] font-medium leading-[1.12] text-white">
                             Rooted In Craft, Grown Into Every Garden
                         </h2>
                     </div>
                     <div className="flex flex-col items-start gap-4 lg:items-end">
-                        <p className="max-w-sm text-[0.82rem] leading-relaxed text-white/45 lg:text-right">
+                        <p className="max-w-sm text-[0.85rem] leading-relaxed text-white lg:text-right">
                             Kolkata&apos;s landscaper since 1989 - 35+ years, 50 bighas of our own farm at Bibirhut and 4,700 m² under cover. From a single balcony pot to State Government and CPWD landscapes, one nursery carries every service below, start to finish.
                         </p>
                         <div className="flex flex-wrap gap-2 lg:justify-end">
                             {['Design', 'Nursery', 'Build', 'Maintain'].map((label) => (
-                                <span key={label} className="tag-chip text-white/70">{label}</span>
+                                <span key={label} className="tag-chip text-white/80">{label}</span>
                             ))}
                         </div>
                     </div>
@@ -157,7 +157,7 @@ const ServicesSection = () => {
                     {SERVICES.map((service, i) => {
                         const isOpen = openIndex === i
                         return (
-                            <div key={service.num} className="border-b border-white/10 last:border-b-0">
+                            <div key={service.num} className="border-b border-white/80 last:border-b-0">
                                 <button
                                     type="button"
                                     onClick={() => toggle(i)}
@@ -165,13 +165,13 @@ const ServicesSection = () => {
                                     className="group flex w-full items-start gap-4 py-7 text-left sm:gap-6 lg:gap-10 lg:py-9"
                                 >
                                     {/* number — pinned top-left, extra margin so it doesn't crowd the title */}
-                                    <span className="mr-4 w-6 shrink-0 pt-1 text-[0.7rem] font-medium tracking-[0.2em] text-white/30 sm:mr-8 sm:w-9 lg:mr-14 lg:pt-1.5">
+                                    <span className="mr-4 w-6 shrink-0 pt-1 text-[0.7rem] font-medium text-white/80 sm:mr-8 sm:w-9 lg:mr-14 lg:pt-1.5">
                                         [{service.num}]
                                     </span>
 
                                     {/* title + description stacked, tags reveal below on open */}
-                                    <span className="flex-1">
-                                        <span className="block text-[1.15rem] font-medium tracking-[-0.01em] text-white lg:text-[1.55rem]">
+                                    <span className="min-w-0 flex-1">
+                                        <span className="block text-[1.15rem] font-medium text-white lg:text-[1.55rem]">
                                             {service.title}
                                         </span>
                                         <span className="mt-2.5 block max-w-lg text-[0.82rem] leading-relaxed text-white/45 lg:max-w-xl">
@@ -184,23 +184,26 @@ const ServicesSection = () => {
                                         >
                                             <span className="flex flex-wrap gap-2 pt-5">
                                                 {service.tags.map((tag) => (
-                                                    <span key={tag} className="tag-chip text-white/70">{tag}</span>
+                                                    <span key={tag} className="tag-chip text-white/80">{tag}</span>
                                                 ))}
                                             </span>
                                         </span>
                                     </span>
 
-                                    {/* reference photos — vertically centred against the whole row, only on open */}
+                                    {/* reference photos — vertically centred against the whole row, only on
+                                        open. Hidden below sm: the row's fixed-width items (number badge +
+                                        two size-32/40 photos + toggle) already exceed a phone's content
+                                        width, so the photos would force the title/description off-row. */}
                                     <span
                                         ref={(el) => (imagesRefs.current[i] = el)}
-                                        className="self-center overflow-hidden"
+                                        className="hidden self-center overflow-hidden sm:block"
                                         style={i === 0 ? { width: 'auto', height: 'auto', opacity: 1 } : { width: 0, height: 0, opacity: 0 }}
                                     >
                                         <span className="flex items-center gap-5">
-                                            <span className="relative size-24 shrink-0 overflow-hidden rounded-full sm:size-32 lg:size-40">
+                                            <span className="relative size-32 shrink-0 overflow-hidden rounded-full lg:size-40">
                                                 <Image src={service.images[0]} alt="" fill sizes="160px" className="object-cover object-top" />
                                             </span>
-                                            <span className="relative size-24 shrink-0 overflow-hidden rounded-2xl sm:size-32 lg:size-40">
+                                            <span className="relative size-32 shrink-0 overflow-hidden rounded-2xl lg:size-40">
                                                 <Image src={service.images[1]} alt="" fill sizes="160px" className="object-cover" />
                                             </span>
                                         </span>

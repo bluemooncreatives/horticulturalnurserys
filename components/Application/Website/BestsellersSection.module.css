@@ -156,6 +156,13 @@
     transform: translateY(0);
 }
 
+@media (hover: none), (pointer: coarse) {
+    .cardButtons {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .viewBtn {
     display: flex;
     align-items: center;

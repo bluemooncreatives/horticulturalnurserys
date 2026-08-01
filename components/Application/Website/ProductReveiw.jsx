@@ -59,7 +59,7 @@ const ProductReveiw = ({ productId }) => {
                 <div className='flex justify-between flex-wrap items-center'>
                     <div className='md:w-1/2 w-full md:flex md:gap-10 md:mb-0 mb-5'>
                         <div className='md:w-[200px] w-full md:mb-0 mb-5'>
-                            <h4 className='text-center text-8xl font-semibold'>{reviewCount?.averageRating ?? '0.0'}</h4>
+                            <h4 className='text-center text-6xl font-semibold sm:text-7xl md:text-8xl'>{reviewCount?.averageRating ?? '0.0'}</h4>
                             <div className='flex justify-center gap-1 text-[var(--dark-red)]'>
                                 {Array.from({ length: 5 }).map((_, index) => (
                                     <Star

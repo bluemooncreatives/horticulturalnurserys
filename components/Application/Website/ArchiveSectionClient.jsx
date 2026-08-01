@@ -30,14 +30,22 @@ const ArchiveSectionClient = ({ title, writeup, columns, items = [] }) => {
         const rows = rowRefs.current.filter(Boolean)
         if (!rows.length) return
 
+        const intersecting = new Set()
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return
-                    const index = rows.indexOf(entry.target)
-                    const previewImage = items[index]?.previewImage
-                    if (previewImage) setPreviewSrc(previewImage)
+                    if (entry.isIntersecting) intersecting.add(entry.target)
+                    else intersecting.delete(entry.target)
                 })
+
+                const activeRow = rows.find((row) => intersecting.has(row))
+                if (!activeRow) {
+                    setPreviewSrc(null)
+                    return
+                }
+                const index = rows.indexOf(activeRow)
+                setPreviewSrc(items[index]?.previewImage || null)
             },
             { threshold: 0.5 }
         )

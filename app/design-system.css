@@ -770,7 +770,7 @@ body {
   /* Arithmetic has to live in calc(), not inside var() — `var(--a + var(--b))`
      is parsed as a single malformed custom-property name and kills the whole
      stylesheet with "Unexpected token Delim('+')". */
-  padding-inline: calc(var(--website-gutter) + var(--space-12));
+  padding-inline: calc(var(--website-gutter) + clamp(0rem, 4vw, var(--space-12)));
 }
 
 /* Pill button base */

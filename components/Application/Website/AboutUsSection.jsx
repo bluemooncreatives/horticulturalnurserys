@@ -624,7 +624,7 @@ const AboutUsSection = () => {
                             </p>
                             <p className="about-count mt-1 flex leading-[0.9] tracking-[-0.03em]" style={{ perspective: '600px' }}>
                                 <span className="about-count-num inline-flex items-end font-semibold will-change-transform">
-                                    <span className="about-count-value text-[2.9rem] text-[var(--brand-primary)] lg:text-[3.25rem]">50</span>
+                                    <span className="about-count-value text-[2.2rem] text-[var(--brand-primary)] sm:text-[2.9rem] lg:text-[3.25rem]">50</span>
                                     <span className="about-count-plus ml-0.5 inline-block text-[1.6rem] leading-none text-[var(--brand-primary)]">+</span>
                                 </span>
                             </p>
@@ -671,7 +671,7 @@ const AboutUsSection = () => {
                         {/* Big count, revealed in 3D (perspective on the wrapper) */}
                         <div className="relative" style={{ perspective: '600px' }}>
                             <p className="about-years flex items-start font-medium leading-none tracking-[-0.03em] will-change-transform">
-                                <span className="about-years-value text-[3.6rem] lg:text-[6rem]">35</span>
+                                <span className="about-years-value text-[2.6rem] sm:text-[3.6rem] lg:text-[6rem]">35</span>
                                 <span className="ml-0.5 text-[2rem] leading-none text-[var(--brand-lime)]">+</span>
                             </p>
                         </div>
@@ -709,7 +709,7 @@ const AboutUsSection = () => {
                         <div className="mt-auto">
                             <span aria-hidden className="about-c3-accent mb-2 block h-px w-10 origin-left bg-[var(--brand-primary)]" />
                             <span className="about-c3-label block text-[0.7rem] uppercase text-[var(--muted-foreground)]">Nursery Spread</span>
-                            <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.9rem] font-semibold leading-none text-[var(--brand-primary)] will-change-transform">
+                            <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.5rem] font-semibold leading-none text-[var(--brand-primary)] will-change-transform sm:text-[1.9rem]">
                                 <span className="about-c3-num">50</span>
                                 <span>Bighas</span>
                             </span>
@@ -756,9 +756,9 @@ const AboutUsSection = () => {
                         <div aria-hidden className="about-c4-overlay absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/10" />
                         <div className="relative">
                             <span className="about-c4-eyebrow block text-[0.8rem] uppercase text-white will-change-transform">Under Cover</span>
-                            <span className="about-c4-figure mt-3 flex items-baseline gap-1 text-[2.4rem] font-medium leading-none tracking-[-0.03em] will-change-transform">
+                            <span className="about-c4-figure mt-3 flex items-baseline gap-1 text-[1.8rem] font-medium leading-none tracking-[-0.03em] will-change-transform sm:text-[2.4rem]">
                                 <span className="about-c4-num">4,700</span>
-                                <span className="text-[1.6rem]">m²</span>
+                                <span className="text-[1.2rem] sm:text-[1.6rem]">m²</span>
                             </span>
                         </div>
                     </div>

@@ -119,7 +119,7 @@ const HeroSection = () => {
             {/* Two-line lockup: the trading name is far too long for a single
                 nowrap line, so the first word carries the display size and the
                 rest sits under it at roughly half scale. */}
-            <h1 className="hero-word font-wordmark text-[var(--brand-ink)] leading-[0.88] [font-weight:700]">
+            <h1 className="hero-word font-wordmark text-[var(--brand-ink)] leading-[0.88] [font-weight:700]!">
               {/* The upper clamp bound is what governs the dead space to the
                   right: below ~1370px the vw term wins and the headline tracks
                   the viewport, but once the cap binds the headline stops while
@@ -184,9 +184,10 @@ const HeroSection = () => {
           {/* Bottom inset matches the horizontal one at every breakpoint so the
               floating card sits the same distance from the card's bottom edge
               as it does from its right edge (was pb-6/pb-8 against px-8/px-11). */}
-          <div className="relative z-[2] flex items-end justify-between gap-4 px-5 pb-5 sm:px-8 sm:pb-8 lg:px-11 lg:pb-11">
-            {/* bottom-left: trusted-by + craft marks */}
-            <div className="hero-overlay">
+          <div className="relative z-[2] flex flex-col items-stretch gap-4 px-5 pb-5 sm:flex-row sm:items-end sm:justify-between sm:px-8 sm:pb-8 lg:px-11 lg:pb-11">
+            {/* bottom-left: trusted-by + craft marks — hidden on mobile, the
+                floating product card below is the only bottom-row content there */}
+            <div className="hero-overlay hidden sm:block">
               <p className="max-w-xs text-[0.72rem] leading-snug text-white/85 sm:text-[0.8rem]">
                 Entrusted with the Assembly House, National Library, Alipore Zoo
                 and Rabindra Sarobar.
@@ -208,7 +209,7 @@ const HeroSection = () => {
                 content are two independently rounded, independently
                 shadowed blocks stacked inside one wrapper, not a single
                 continuous card shape. */}
-            <div className="hero-overlay hidden w-64 shrink-0 flex-col gap-2 transition-transform hover:-translate-y-0.5 sm:flex">
+            <div className="hero-overlay flex w-full max-w-48 shrink-0 flex-col gap-1.5 transition-transform hover:-translate-y-0.5 sm:max-w-none sm:w-64 sm:gap-2">
               {/* Floating thumbnail — shows the *next* frame (i+1) and doubles
                   as the carousel control: clicking promotes it to the big
                   screen and rolls the thumbnail forward, resetting the 10s
@@ -287,7 +288,7 @@ const HeroSection = () => {
               <Link
                 href={WEBSITE_SHOP}
                 aria-label="Winter Seedlings — shop this season's seedlings"
-                className="group relative flex items-center gap-3 rounded-[var(--radius-3xl)] bg-white/95 px-4 py-3.5 text-left shadow-lg backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]/40 focus-visible:ring-offset-2"
+                className="group relative flex items-center gap-2 rounded-[var(--radius-3xl)] bg-white/95 px-3 py-2 text-left shadow-lg backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]/40 focus-visible:ring-offset-2 sm:gap-3 sm:px-4 sm:py-3.5"
               >
                 {/* Lime circular reveal — sweeps in from the left on hover. */}
                 <CircleReveal color="var(--brand-lime)" />
@@ -298,7 +299,7 @@ const HeroSection = () => {
                       bottom copy rolls into place, staggered left-to-right. */}
                   <span
                     aria-label={CARD_TITLE}
-                    className="flex text-[0.9rem] font-semibold leading-none text-[var(--brand-primary)]"
+                    className="flex text-[0.78rem] font-semibold leading-none text-[var(--brand-primary)] sm:text-[0.9rem]"
                   >
                     {CARD_TITLE.split("").map((ch, i) => (
                       <span
@@ -323,14 +324,14 @@ const HeroSection = () => {
                   </span>
                   {/* Description: gentler counterpart — colour deepens and the
                       line eases inward as the card is hovered. */}
-                  <p className="mt-1.5 text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)]">
+                  <p className="mt-1.5 hidden text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)] sm:block">
                     Hardy nursery-raised seedlings, ready to plant this season.
                   </p>
                 </div>
 
                 {/* Arrow circle: fill sweeps out from the centre while the
                     arrow un-rotates from 45° to horizontal. */}
-                <span className="relative z-10 grid size-10 shrink-0 place-items-center overflow-hidden rounded-full border border-[var(--brand-primary)]/30 text-[var(--brand-primary)] transition-colors duration-500 group-hover:border-[var(--brand-primary)] group-hover:text-white">
+                <span className="relative z-10 grid size-8 shrink-0 place-items-center overflow-hidden rounded-full border border-[var(--brand-primary)]/30 text-[var(--brand-primary)] transition-colors duration-500 group-hover:border-[var(--brand-primary)] group-hover:text-white sm:size-10">
                   <span
                     aria-hidden
                     className="absolute inset-0 scale-0 rounded-full bg-[var(--brand-primary)] transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:scale-100"
@@ -338,7 +339,7 @@ const HeroSection = () => {
                   <ArrowRight
                     aria-hidden
                     strokeWidth={2.2}
-                    className="relative size-4 -rotate-45 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:rotate-0"
+                    className="relative size-3.5 -rotate-45 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:rotate-0 sm:size-4"
                   />
                 </span>
               </Link>

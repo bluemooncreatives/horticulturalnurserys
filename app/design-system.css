@@ -765,7 +765,7 @@ body {
 
 /* Section shell — constrained, centred content with the fluid gutter */
 .lumora-shell {
-  width:         100%;
+  width: 100%;
   margin-inline: auto;
   /* Arithmetic has to live in calc(), not inside var() — `var(--a + var(--b))`
      is parsed as a single malformed custom-property name and kills the whole

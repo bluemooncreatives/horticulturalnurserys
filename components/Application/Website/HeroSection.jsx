@@ -119,7 +119,7 @@ const HeroSection = () => {
             {/* Two-line lockup: the trading name is far too long for a single
                 nowrap line, so the first word carries the display size and the
                 rest sits under it at roughly half scale. */}
-            <h1 className="hero-word font-wordmark text-[var(--brand-ink)] leading-[0.88] [font-weight:700]!">
+            <h1 className="hero-word font-wordmark text-[var(--brand-primary)] leading-[0.88]">
               {/* The upper clamp bound is what governs the dead space to the
                   right: below ~1370px the vw term wins and the headline tracks
                   the viewport, but once the cap binds the headline stops while
@@ -196,7 +196,7 @@ const HeroSection = () => {
                 {CRAFT_MARKS.map((mark) => (
                   <span
                     key={mark}
-                    className="hero-mark flex items-center gap-1.5 text-[0.66rem] font-medium tracking-wide text-white/70 sm:text-[0.72rem]"
+                    className="hero-mark flex items-center gap-1.5 text-[0.66rem] font-medium tracking-wide text-white/80 sm:text-[0.72rem]"
                   >
                     <span aria-hidden className="text-[var(--brand-lime)]">✦</span>
                     {mark}

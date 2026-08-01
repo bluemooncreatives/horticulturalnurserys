@@ -619,12 +619,12 @@ const AboutUsSection = () => {
                             unfolds in 3D, and the "+" punches in with an
                             overshoot. SSR / reduced motion paints 50+ in place. */}
                         <div>
-                            <p className="text-[0.7rem] uppercase text-[var(--brand-primary)] text-semibold">
+                            <p className="text-[0.8rem] uppercase text-[var(--brand-primary)] text-semibold">
                                 Projects Delivered
                             </p>
                             <p className="about-count mt-1 flex leading-[0.9] tracking-[-0.03em]" style={{ perspective: '600px' }}>
                                 <span className="about-count-num inline-flex items-end font-semibold will-change-transform">
-                                    <span className="about-count-value text-[2.9rem] text-[var(--brand-ink)] lg:text-[3.25rem]">50</span>
+                                    <span className="about-count-value text-[2.9rem] text-[var(--brand-primary)] lg:text-[3.25rem]">50</span>
                                     <span className="about-count-plus ml-0.5 inline-block text-[1.6rem] leading-none text-[var(--brand-primary)]">+</span>
                                 </span>
                             </p>
@@ -641,7 +641,7 @@ const AboutUsSection = () => {
 
                         {/* Top row — label left, spinning seal right */}
                         <div className="relative flex items-start justify-between gap-2">
-                            <span className="text-[0.7rem] uppercase text-white text-semibold">Years in the Field</span>
+                            <span className="text-[0.8rem] uppercase text-white text-semibold">Years in the Field</span>
                             <span aria-hidden className="about-seal relative flex size-[5rem] shrink-0 items-center justify-center rounded-full border border-white/15 lg:size-[5.8rem]">
                                 {/* Three concentric rings evenly spaced (~7.5
                                     viewBox units apart): outer border r≈50, text
@@ -688,7 +688,7 @@ const AboutUsSection = () => {
                     >
                         <p className="about-c3-copy text-[0.92rem] leading-snug text-[var(--brand-ink)]">
                             One potted plant at the Alipore counter or an entire township
-                            landscape — both are grown on the same farm at Bibirhut.
+                            landscape - both are grown on the same farm at Bibirhut.
                         </p>
 
                         {/* Image box filling the gap. On scroll it apertures open
@@ -708,8 +708,8 @@ const AboutUsSection = () => {
 
                         <div className="mt-auto">
                             <span aria-hidden className="about-c3-accent mb-2 block h-px w-10 origin-left bg-[var(--brand-primary)]" />
-                            <span className="about-c3-label block text-[0.7rem] uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Nursery Spread</span>
-                            <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.9rem] font-medium leading-none tracking-[-0.02em] text-[var(--brand-ink)] will-change-transform">
+                            <span className="about-c3-label block text-[0.7rem] uppercase text-[var(--muted-foreground)]">Nursery Spread</span>
+                            <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.9rem] font-semibold leading-none text-[var(--brand-primary)] will-change-transform">
                                 <span className="about-c3-num">50</span>
                                 <span>Bighas</span>
                             </span>
@@ -755,7 +755,7 @@ const AboutUsSection = () => {
                         </div>
                         <div aria-hidden className="about-c4-overlay absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/10" />
                         <div className="relative">
-                            <span className="about-c4-eyebrow block text-[0.7rem] uppercase tracking-[0.16em] text-white/75 will-change-transform">Under Cover</span>
+                            <span className="about-c4-eyebrow block text-[0.8rem] uppercase text-white will-change-transform">Under Cover</span>
                             <span className="about-c4-figure mt-3 flex items-baseline gap-1 text-[2.4rem] font-medium leading-none tracking-[-0.03em] will-change-transform">
                                 <span className="about-c4-num">4,700</span>
                                 <span className="text-[1.6rem]">m²</span>

@@ -2,8 +2,10 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Search as SearchIcon, ShoppingCart, ArrowUpRight } from "lucide-react"
 import { useSelector } from "react-redux"
+import logoMark from "@/public/assets/images/logo-horti.png"
 
 import { cn } from "@/lib/utils"
 import {
@@ -122,9 +124,15 @@ export default function Navbar({
         {/* ── Logo ── */}
         <Link
           href={logo.url}
-          className="shrink-0 text-lg text-[var(--brand-primary)] transition-opacity hover:opacity-70 sm:text-xl"
+          className="flex shrink-0 items-center gap-2 text-lg text-[var(--brand-primary)] transition-opacity hover:opacity-70 sm:text-xl"
           aria-label={logo.alt}
         >
+          <Image
+            src={logoMark}
+            alt=""
+            className="size-7 shrink-0 rounded-full sm:size-8"
+            priority
+          />
           <Wordmark title={logo.title} subtitle={logo.subtitle} />
         </Link>
 
@@ -222,7 +230,12 @@ export default function Navbar({
           className="flex w-[88%] max-w-md flex-col gap-0 border-l border-black/[0.06] bg-[var(--background)] p-0"
         >
           <SheetHeader className="flex-shrink-0 border-b border-black/[0.06] px-6 py-6">
-            <SheetTitle className="text-[1.7rem] text-[var(--brand-primary)]">
+            <SheetTitle className="flex items-center gap-2.5 text-[1.7rem] text-[var(--brand-primary)]">
+              <Image
+                src={logoMark}
+                alt=""
+                className="size-9 shrink-0 rounded-full"
+              />
               <Wordmark title={logo.title} subtitle={logo.subtitle} />
             </SheetTitle>
           </SheetHeader>

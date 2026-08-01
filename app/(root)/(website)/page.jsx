@@ -12,6 +12,7 @@ import Testimonial from '@/components/Application/Website/Testimonial'
 // parsing and hydration of the above-fold critical path.
 const InstagramReelsMarquee = dynamic(() => import('@/components/Application/Website/InstagramReelsMarquee'))
 const AboutUsSection = dynamic(() => import('@/components/Application/Website/AboutUsSection'))
+const ServicesSection = dynamic(() => import('@/components/Application/Website/ServicesSection'))
 const EditorialCardsSection = dynamic(() => import('@/components/Application/Website/EditorialCardsSection'))
 const BenefitsSection = dynamic(() => import('@/components/Application/Website/BenefitsSection'))
 const FAQSection = dynamic(() => import('@/components/Application/Website/FAQSection'))
@@ -49,6 +50,10 @@ const Home = () => {
                 About Company section. */}
             <LazyHydrate>
                 <FeaturedProduct />
+            </LazyHydrate>
+
+            <LazyHydrate>
+                <ServicesSection />
             </LazyHydrate>
 
             <LazyHydrate>

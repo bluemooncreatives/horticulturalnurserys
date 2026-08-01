@@ -14,7 +14,7 @@ const FAQS = [
     },
     {
         q: 'Where do your plants come from?',
-        a: 'From our own farm at Bibirhut, Ramdevpur in South 24 Parganas — roughly 50 bighas, with 2,500 sqm of polyshed, 2,000 sqm of green house and a 200 sqm fanpad house. We also import selected varieties from abroad for projects that call for them.',
+        a: 'From our own farm at Bibirhut, Ramdevpur in South 24 Parganas - roughly 50 bighas, with 2,500 sqm of polyshed, 2,000 sqm of green house and a 200 sqm fanpad house. We also import selected varieties from abroad for projects that call for them.',
     },
     {
         q: 'Will a plant from the nursery survive in my home or balcony?',

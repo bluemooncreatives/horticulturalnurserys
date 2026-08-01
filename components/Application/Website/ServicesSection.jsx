@@ -165,7 +165,7 @@ const ServicesSection = () => {
                                     className="group flex w-full items-start gap-4 py-7 text-left sm:gap-6 lg:gap-10 lg:py-9"
                                 >
                                     {/* number — pinned top-left, extra margin so it doesn't crowd the title */}
-                                    <span className="mr-2 w-6 shrink-0 pt-1 text-[0.7rem] font-medium tracking-[0.2em] text-white/30 sm:mr-4 sm:w-9 lg:mr-8 lg:pt-1.5">
+                                    <span className="mr-4 w-6 shrink-0 pt-1 text-[0.7rem] font-medium tracking-[0.2em] text-white/30 sm:mr-8 sm:w-9 lg:mr-14 lg:pt-1.5">
                                         [{service.num}]
                                     </span>
 

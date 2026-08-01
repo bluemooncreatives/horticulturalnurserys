@@ -172,6 +172,13 @@ const ServicesSection = () => {
     // photoRefs.current[i] = [{ wrap, inner, veil }, { wrap, inner, veil }] for that row
     const photoRefs = useRef([])
     const photoTimelines = useRef([])
+    // Mobile gets its own full-width photo row (rendered in-flow below the
+    // tags, edge to edge within the card) instead of the desktop pair hidden
+    // via `hidden sm:block` — same shapes/timeline machinery, separate refs
+    // so both can be measured and animated independently per breakpoint.
+    const mobileImagesRefs = useRef([])
+    const mobilePhotoRefs = useRef([])
+    const mobilePhotoTimelines = useRef([])
     const iconRefs = useRef([])
     const ringRefs = useRef([])
 
@@ -183,7 +190,7 @@ const ServicesSection = () => {
     // is driven purely by `toggle`, with nothing else touching these props.
     useEffect(() => {
         return () => {
-            ;[...tagsRefs.current, ...imagesRefs.current, ...iconRefs.current].forEach(
+            ;[...tagsRefs.current, ...imagesRefs.current, ...mobileImagesRefs.current, ...iconRefs.current].forEach(
                 (el) => el && gsap.killTweensOf(el)
             )
         }
@@ -201,9 +208,16 @@ const ServicesSection = () => {
             if (i === openIndex) tl.progress(1)
             return tl
         })
+        mobilePhotoTimelines.current = mobilePhotoRefs.current.map((photos, i) => {
+            const tl = buildPhotoTimeline(photos || [])
+            if (i === openIndex) tl.progress(1)
+            return tl
+        })
         return () => {
             photoTimelines.current.forEach((tl) => tl?.kill())
             photoTimelines.current = []
+            mobilePhotoTimelines.current.forEach((tl) => tl?.kill())
+            mobilePhotoTimelines.current = []
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -230,6 +244,12 @@ const ServicesSection = () => {
         photoRefs.current[i][pi][key] = el
     }
 
+    const setMobilePhotoRef = (i, pi, key) => (el) => {
+        if (!mobilePhotoRefs.current[i]) mobilePhotoRefs.current[i] = []
+        if (!mobilePhotoRefs.current[i][pi]) mobilePhotoRefs.current[i][pi] = {}
+        mobilePhotoRefs.current[i][pi][key] = el
+    }
+
     const toggle = (i) => {
         const opening = openIndex !== i
         const prevIndex = openIndex
@@ -239,12 +259,16 @@ const ServicesSection = () => {
         if (prevIndex !== null && prevIndex !== i) {
             animateDrawer(tagsRefs.current[prevIndex], false, ['height'])
             animateDrawer(imagesRefs.current[prevIndex], false, ['width', 'height'])
+            animateDrawer(mobileImagesRefs.current[prevIndex], false, ['height'])
             photoTimelines.current[prevIndex]?.reverse()
+            mobilePhotoTimelines.current[prevIndex]?.reverse()
         }
 
         animateDrawer(tagsRefs.current[i], opening, ['height'])
         animateDrawer(imagesRefs.current[i], opening, ['width', 'height'])
+        animateDrawer(mobileImagesRefs.current[i], opening, ['height'])
         photoTimelines.current[i]?.[opening ? 'play' : 'reverse']()
+        mobilePhotoTimelines.current[i]?.[opening ? 'play' : 'reverse']()
 
         const icon = iconRefs.current[i]
         if (icon) {
@@ -320,12 +344,49 @@ const ServicesSection = () => {
                                                 ))}
                                             </span>
                                         </span>
+
+                                        {/* mobile-only reference photos — same shapes/lime-veil reveal as
+                                            the desktop pair below, but stacked in-flow full width (edge to
+                                            edge within the card) instead of hidden, so nothing needs a
+                                            popup/overlay to be seen on a phone. */}
+                                        <span
+                                            ref={(el) => (mobileImagesRefs.current[i] = el)}
+                                            className="block overflow-hidden sm:hidden"
+                                            style={i === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
+                                        >
+                                            <span className="flex items-center gap-3 pt-5">
+                                                {service.images.map((src, pi) => (
+                                                    <span
+                                                        key={`m-${src}-${pi}`}
+                                                        ref={setMobilePhotoRef(i, pi, 'wrap')}
+                                                        className={`relative aspect-square w-full flex-1 overflow-hidden ${pi === 0 ? 'rounded-full' : 'rounded-2xl'}`}
+                                                    >
+                                                        <span ref={setMobilePhotoRef(i, pi, 'inner')} className="absolute inset-0">
+                                                            <Image
+                                                                src={src}
+                                                                alt=""
+                                                                fill
+                                                                sizes="50vw"
+                                                                className={pi === 0 ? 'object-cover object-top' : 'object-cover'}
+                                                            />
+                                                        </span>
+                                                        <span
+                                                            ref={setMobilePhotoRef(i, pi, 'veil')}
+                                                            aria-hidden
+                                                            className="pointer-events-none absolute inset-0 bg-[var(--brand-lime)]"
+                                                            style={i === 0 ? { opacity: 0 } : undefined}
+                                                        />
+                                                    </span>
+                                                ))}
+                                            </span>
+                                        </span>
                                     </span>
 
                                     {/* reference photos — vertically centred against the whole row, only on
                                         open. Hidden below sm: the row's fixed-width items (number badge +
                                         two size-32/40 photos + toggle) already exceed a phone's content
-                                        width, so the photos would force the title/description off-row. */}
+                                        width, so these would force the title/description off-row; the
+                                        mobile-only pair above (full width, in-flow) covers phones instead. */}
                                     <span
                                         ref={(el) => (imagesRefs.current[i] = el)}
                                         className="hidden self-center overflow-hidden sm:block"
@@ -363,17 +424,18 @@ const ServicesSection = () => {
                                     </span>
 
                                     {/* toggle — pinned top-right. Dashed ring spins slowly at rest;
-                                        the solid inner badge is what pops on click. Lime on hover,
-                                        matching the section's other lime accents (tags, CTA). */}
+                                        the solid inner badge is what pops on click. Lime on hover
+                                        (desktop) and while the row is open (mobile has no hover, so
+                                        `isOpen` is what carries the same lime accent on tap there). */}
                                     <span className="relative flex size-11 shrink-0 items-center justify-center">
                                         <span
                                             ref={(el) => (ringRefs.current[i] = el)}
                                             aria-hidden
-                                            className="absolute inset-0 rounded-full border border-dashed border-white/25 transition-colors group-hover:border-[var(--brand-lime)]/70"
+                                            className={`absolute inset-0 rounded-full border border-dashed transition-colors group-hover:border-[var(--brand-lime)]/70 ${isOpen ? 'border-[var(--brand-lime)]/70' : 'border-white/25'}`}
                                         />
                                         <span
                                             ref={(el) => (iconRefs.current[i] = el)}
-                                            className="relative flex size-7 items-center justify-center rounded-full bg-white/10 text-white transition-colors group-hover:bg-[var(--brand-lime)] group-hover:text-[var(--brand-lime-ink)]"
+                                            className={`relative flex size-7 items-center justify-center rounded-full transition-colors group-hover:bg-[var(--brand-lime)] group-hover:text-[var(--brand-lime-ink)] ${isOpen ? 'bg-[var(--brand-lime)] text-[var(--brand-lime-ink)]' : 'bg-white/10 text-white'}`}
                                         >
                                             {isOpen ? <Minus className="size-3.5" strokeWidth={1.75} /> : <Plus className="size-3.5" strokeWidth={1.75} />}
                                         </span>
@@ -389,7 +451,7 @@ const ServicesSection = () => {
                 <div className="relative mt-10 flex justify-center lg:mt-12">
                     <Link
                         href="/contact"
-                        className="group flex items-center gap-4 rounded-[var(--radius-3xl)] bg-[var(--brand-lime)] py-3 pl-6 pr-3 transition-colors hover:bg-[var(--brand-lime-hover)]"
+                        className="group flex items-center gap-4 rounded-[var(--radius-full)] bg-[var(--brand-lime)] py-3 pl-6 pr-3 transition-colors hover:bg-[var(--brand-lime-hover)]"
                     >
                         <span className="text-[1rem] font-semibold text-[var(--brand-lime-ink)]">
                             Let&apos;s Talk

@@ -807,7 +807,10 @@ body {
 .pill-ghost { background: transparent; color: var(--brand-primary); border: 1px solid color-mix(in srgb, var(--brand-primary) 22%, transparent); }
 .pill-ghost:hover { background: var(--brand-primary); color: var(--brand-white); border-color: var(--brand-primary); }
 
-/* Tag / filter chip — small pill, outlined by default */
+/* Tag / filter chip — small pill, outlined by default. Lime at rest, lifts
+   and brightens to the hover shade on hover — same colour/transform
+   transitions (`--transition-colors` + `--transition-transform`) already
+   used for the pill buttons and card hovers elsewhere in this file. */
 .tag-chip {
   display:         inline-flex;
   align-items:     center;
@@ -816,11 +819,16 @@ body {
   padding-inline:  0.85rem;
   border-radius:   var(--radius-pill);
   border:          1px solid color-mix(in srgb, currentColor 26%, transparent);
+  color:           var(--brand-lime);
   font-size:       var(--text-sm);
   font-weight:     var(--weight-regular);
   letter-spacing:  0.01em;
   white-space:     nowrap;
-  transition:      var(--transition-colors);
+  transition:      var(--transition-colors), var(--transition-transform);
+}
+.tag-chip:hover {
+  color:     var(--brand-lime-hover);
+  transform: translateY(-2px);
 }
 
 /* Dark rounded panel — the "Our Services" / footer container */

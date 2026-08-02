@@ -241,7 +241,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
             >
                 {(!categoriesReady || categories.length > 0) && (
                     <AccordionItem value="category" className="border-b border-border/60 py-1">
-                        <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-[15px] font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                        <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
                             <span className="flex items-center gap-2">
                                 By Category
                                 {selectedCategory.length > 0 && (
@@ -252,7 +252,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                             </span>
                             <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                         </AccordionTrigger>
-                        <AccordionContent className="pb-4">
+                        <AccordionContent className="px-2 pb-4">
                             {!categoriesReady ? (
                                 <ChipSkeletons />
                             ) : (
@@ -275,7 +275,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                 )}
 
                 <AccordionItem value="price" className="border-b border-border/60 py-1">
-                    <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-[15px] font-semibold text-foreground hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                    <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
                         <span className="flex items-center gap-2">
                             Price Range
                             {!priceIsDefault && (
@@ -286,7 +286,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                         </span>
                         <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                     </AccordionTrigger>
-                    <AccordionContent className="space-y-4 px-[2px] pb-4">
+                    <AccordionContent className="space-y-4 px-2 pb-4">
                         <div className="flex items-center justify-between gap-2">
                             <p className="text-[13px] font-semibold text-[var(--brand-primary)]">
                                 {priceFilter.minPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
@@ -334,7 +334,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
 
                 {(!colorsReady || colors.length > 0) && (
                     <AccordionItem value="color" className="border-b border-border/60 py-1">
-                        <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-[15px] font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                        <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
                             <span className="flex items-center gap-2">
                                 Color
                                 {selectedColor.length > 0 && (
@@ -345,7 +345,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                             </span>
                             <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                         </AccordionTrigger>
-                        <AccordionContent className="pb-4">
+                        <AccordionContent className="px-2 pb-4">
                             {!colorsReady ? (
                                 <ChipSkeletons count={6} />
                             ) : (
@@ -393,7 +393,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
 
                 {(!sizesReady || sizes.length > 0) && (
                     <AccordionItem value="size" className="border-b border-border/60 py-1">
-                        <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-[15px] font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                        <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
                             <span className="flex items-center gap-2">
                                 Size
                                 {selectedSize.length > 0 && (
@@ -404,7 +404,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                             </span>
                             <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                         </AccordionTrigger>
-                        <AccordionContent className="pb-4">
+                        <AccordionContent className="px-2 pb-4">
                             {!sizesReady ? (
                                 <ChipSkeletons count={5} />
                             ) : (

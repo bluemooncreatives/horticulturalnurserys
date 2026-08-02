@@ -20,7 +20,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import ProductBox from '@/components/Application/Website/ProductBox'
 import ProductBoxSkeleton from '@/components/Application/Website/ProductBoxSkeleton'
 import ShopPagination from '@/components/Application/Website/ShopPagination'
-import { BrandButton, BrandOutlineButton } from '@/components/Application/Website/BrandButton'
+import { BrandButton } from '@/components/Application/Website/BrandButton'
 import Link from 'next/link'
 import { PackageSearch, RotateCcw, SlidersHorizontal, Store } from 'lucide-react'
 
@@ -181,14 +181,16 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                     {!isDesktop && (
                         <Sheet open={isMobileFilter} onOpenChange={setIsMobileFilter}>
                             <SheetContent side='left' className="flex w-[86%] max-w-sm flex-col gap-0 bg-background p-0">
-                                {/* Header — matches the branded sheet chrome used across the site */}
-                                <SheetHeader className="flex-shrink-0 gap-0 border-b border-border/60 px-5 py-4 pr-12">
+                                {/* Header — matches the hamburger menu's sheet chrome (icon + title
+                                    stack, same title scale) so the two slide-out panels read as one
+                                    family of components. */}
+                                <SheetHeader className="flex-shrink-0 gap-0 border-b border-black/[0.06] px-5 py-4 pr-12">
                                     <div className="flex items-center gap-3">
                                         <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[var(--brand-cream)]/60 text-[var(--brand-primary)]">
                                             <SlidersHorizontal className="size-4" strokeWidth={1.75} />
                                         </span>
                                         <div className="min-w-0">
-                                            <SheetTitle className="font-header text-2xl leading-none tracking-wide text-[var(--brand-primary)]">
+                                            <SheetTitle className="text-[1.7rem] leading-none text-[var(--brand-primary)]">
                                                 Filter
                                             </SheetTitle>
                                             <SheetDescription className="mt-1 font-neue text-[13px] text-muted-foreground">
@@ -199,22 +201,28 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                                 </SheetHeader>
 
                                 {/* Scrollable filter body */}
-                                <div className="shop-filter-panel min-h-0 flex-1 overflow-y-auto px-5 py-5">
+                                <div className="shop-filter-panel min-h-0 flex-1 overflow-y-auto px-4 py-4">
                                     <Filter filters={initialFilters} showClearLink={false} showTitle={false} />
                                 </div>
 
-                                {/* Sticky action footer */}
-                                <div className="flex-shrink-0 border-t border-border/60 bg-background p-4">
-                                    <div className="grid grid-cols-2 gap-2.5">
-                                        <BrandOutlineButton asChild onClick={() => setIsMobileFilter(false)} className="text-[13px] tracking-normal">
-                                            <Link href={WEBSITE_SHOP}>Clear All</Link>
-                                        </BrandOutlineButton>
-                                        <BrandButton type="button" onClick={() => setIsMobileFilter(false)} className="text-[13px] tracking-normal">
-                                            {typeof resultCount === 'number'
-                                                ? `Show ${resultCount} ${resultCount === 1 ? 'item' : 'items'}`
-                                                : 'Show Results'}
-                                        </BrandButton>
-                                    </div>
+                                {/* Sticky action footer — one dominant full-width action (matches
+                                    the hamburger menu's pinned Cart bar) with Clear All demoted to a
+                                    small link above it, rather than two equal-weight buttons. */}
+                                <div className="flex-shrink-0 border-t border-black/[0.06] bg-background p-4">
+                                    {searchParams.size > 0 && (
+                                        <Link
+                                            href={WEBSITE_SHOP}
+                                            onClick={() => setIsMobileFilter(false)}
+                                            className="mb-2.5 block text-center font-neue text-[13px] font-semibold text-muted-foreground transition-colors hover:text-[var(--brand-primary)]"
+                                        >
+                                            Clear All Filters
+                                        </Link>
+                                    )}
+                                    <BrandButton type="button" onClick={() => setIsMobileFilter(false)} className="w-full text-[1rem] tracking-normal">
+                                        {typeof resultCount === 'number'
+                                            ? `Show ${resultCount} ${resultCount === 1 ? 'item' : 'items'}`
+                                            : 'Show Results'}
+                                    </BrandButton>
                                 </div>
                             </SheetContent>
                         </Sheet>

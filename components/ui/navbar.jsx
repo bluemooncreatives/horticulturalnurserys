@@ -240,20 +240,45 @@ export default function Navbar({
             </SheetTitle>
           </SheetHeader>
 
-          {/* Search + Cart — relocated here per the reference's single-menu model */}
-          <div className="grid flex-shrink-0 grid-cols-2 gap-2.5 border-b border-black/[0.06] px-4 py-4">
+          {/* Search — full-width bar (not a squeezed half-column button) so it
+              reads like an actual search field, matching the tap-target width
+              every other row in this sheet uses. */}
+          <div className="flex-shrink-0 border-b border-black/[0.06] px-4 py-4">
             <button
               type="button"
               onClick={() => openFromMenu(() => setOpenSearch(true))}
-              className="flex items-center justify-center gap-2 rounded-[var(--radius-2xl)] border border-[var(--border)] bg-white px-4 py-3 text-[0.9rem] font-medium text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
+              className="flex w-full items-center gap-3 rounded-[var(--radius-2xl)] border border-[var(--border)] bg-white px-4 py-3 text-left text-[0.95rem] text-[var(--muted-foreground)] transition-colors hover:border-[var(--brand-primary)]/30 hover:bg-[var(--secondary)]"
             >
-              <SearchIcon className="size-[1.05rem]" strokeWidth={1.75} />
-              Search
+              <SearchIcon className="size-[1.1rem] shrink-0 text-[var(--brand-primary)]" strokeWidth={1.75} />
+              <span className="flex-1 truncate">Search products…</span>
             </button>
+          </div>
+
+          {/* Primary navigation — the CTA rejoins the list here, since the
+              hamburger is the only entry point at this breakpoint. Sized to a
+              standard mobile menu scale (not the desktop display type) so four
+              items fit without excess whitespace between rows. */}
+          <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-2 py-2" aria-label="Menu">
+            {sheetMenu.map((item) => (
+              <SheetClose asChild key={item.title}>
+                <Link
+                  href={item.url}
+                  className="group flex items-center justify-between rounded-[var(--radius-2xl)] px-4 py-3 text-[1.05rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
+                >
+                  {item.title}
+                  <ArrowUpRight className="size-4 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                </Link>
+              </SheetClose>
+            ))}
+          </nav>
+
+          {/* Cart — pinned full-width at the bottom of the sheet, the one
+              action worth a persistent, always-in-reach placement here. */}
+          <div className="flex-shrink-0 border-t border-black/[0.06] bg-[var(--background)] p-4">
             <button
               type="button"
               onClick={() => openFromMenu(() => setOpenCart(true))}
-              className="relative flex items-center justify-center gap-2 rounded-[var(--radius-2xl)] bg-[var(--brand-primary)] px-4 py-3 text-[0.9rem] font-medium text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+              className="relative flex w-full items-center justify-center gap-2 rounded-[var(--radius-2xl)] bg-[var(--brand-primary)] px-4 py-3.5 text-[1rem] font-medium text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
             >
               <ShoppingCart className="size-[1.05rem]" strokeWidth={1.75} />
               Cart
@@ -264,22 +289,6 @@ export default function Navbar({
               )}
             </button>
           </div>
-
-          {/* Primary navigation — the CTA rejoins the list here, since the
-              hamburger is the only entry point at this breakpoint. */}
-          <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 py-4" aria-label="Menu">
-            {sheetMenu.map((item) => (
-              <SheetClose asChild key={item.title}>
-                <Link
-                  href={item.url}
-                  className="group flex items-center justify-between rounded-[var(--radius-2xl)] px-4 py-3.5 text-[1.6rem] font-medium tracking-[-0.02em] text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
-                >
-                  {item.title}
-                  <ArrowUpRight className="size-5 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
-                </Link>
-              </SheetClose>
-            ))}
-          </nav>
         </SheetContent>
       </Sheet>
 

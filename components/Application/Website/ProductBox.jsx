@@ -6,18 +6,13 @@ import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { WEBSITE_CART, WEBSITE_PRODUCT_DETAILS } from '@/routes/WebsiteRoute'
-import { ChevronLeft, ChevronRight, Eye, ShoppingBag, Star } from 'lucide-react'
-import { BrandButton, BrandOutlineButton } from '@/components/Application/Website/BrandButton'
+import { Check, ChevronLeft, ChevronRight, Crown, Eye, ShoppingBag, Sparkles } from 'lucide-react'
 import { addIntoCart } from '@/store/reducer/cartReducer'
 import { showToast } from '@/lib/showToast'
 
 const ProductBox = ({ product, priority = false }) => {
     const dispatch = useDispatch()
     const cartProducts = useSelector((store) => store.cartStore.products)
-
-    const rating = Number(product?.ratingAvg || 0)
-    const filledStars = Math.round(rating)
-    const ratingCount = Number(product?.ratingCount || 0)
 
     const variant = product?.defaultVariant
     const isInCart = variant
@@ -62,19 +57,52 @@ const ProductBox = ({ product, priority = false }) => {
     return (
         <div className='group relative flex flex-col overflow-hidden rounded-[var(--radius-3xl)] border border-border bg-white transition duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[var(--shadow-card-hover)]'>
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--product-card-bg)]">
-                {product?.isFreshlyArrived && (
-                    <span className="absolute right-3 top-3 z-20 rounded-full bg-[var(--brand-lime)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--brand-lime-ink)] shadow-sm">
-                        New
-                    </span>
-                )}
+                {/* Badges — top-left, stacked */}
+                <div className="absolute left-3 top-3 z-20 flex flex-col items-start gap-1.5">
+                    {product?.isBestseller && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-primary)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-white shadow-sm">
+                            <Crown className="size-3" />
+                            Best Seller
+                        </span>
+                    )}
+                    {product?.isFreshlyArrived && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-lime)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--brand-lime-ink)] shadow-sm">
+                            <Sparkles className="size-3" />
+                            New
+                        </span>
+                    )}
+                </div>
 
-                <Link
-                    href={WEBSITE_PRODUCT_DETAILS(product.slug)}
-                    aria-label={`View ${product?.name}`}
-                    className="absolute left-3 top-3 z-20 flex size-9 items-center justify-center rounded-full border border-border/40 bg-background/85 text-foreground/70 opacity-0 shadow-sm backdrop-blur-sm transition duration-200 hover:bg-background hover:text-foreground group-hover:opacity-100"
-                >
-                    <Eye className="size-4" />
-                </Link>
+                {/* Quick actions — top-right, always visible circular icon buttons */}
+                <div className="absolute right-3 top-3 z-20 flex flex-col items-end gap-2">
+                    <Link
+                        href={WEBSITE_PRODUCT_DETAILS(product.slug)}
+                        aria-label={`View ${product?.name}`}
+                        className="flex size-9 items-center justify-center rounded-full border border-border/40 bg-background/90 text-[var(--brand-primary)]/70 shadow-sm backdrop-blur-sm transition duration-200 hover:bg-background hover:text-[var(--brand-primary)]"
+                    >
+                        <Eye className="size-4" />
+                    </Link>
+
+                    {isInCart ? (
+                        <Link
+                            href={WEBSITE_CART}
+                            aria-label="Go to enquiry list"
+                            className="flex size-9 items-center justify-center rounded-full border border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white shadow-sm transition duration-200 hover:bg-[var(--brand-primary-hover)]"
+                        >
+                            <Check className="size-4" />
+                        </Link>
+                    ) : (
+                        <button
+                            type="button"
+                            aria-label={`Add ${product?.name} to enquiry`}
+                            disabled={!variant || isAdding}
+                            onClick={handleAddToCart}
+                            className="flex size-9 items-center justify-center rounded-full border border-border/40 bg-background/90 text-[var(--brand-primary)]/70 shadow-sm backdrop-blur-sm transition duration-200 hover:bg-background hover:text-[var(--brand-primary)] disabled:pointer-events-none disabled:opacity-50"
+                        >
+                            <ShoppingBag className="size-4" />
+                        </button>
+                    )}
+                </div>
 
                 <Link href={WEBSITE_PRODUCT_DETAILS(product.slug)} className="block h-full w-full">
                     <Image
@@ -95,7 +123,7 @@ const ProductBox = ({ product, priority = false }) => {
                             type="button"
                             aria-label="Previous image"
                             onClick={(e) => slideImage(e, -1)}
-                            className="absolute left-2 top-1/2 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border/40 bg-background/85 text-foreground/70 opacity-100 shadow-sm backdrop-blur-sm transition duration-200 hover:bg-background hover:text-foreground sm:opacity-0 sm:group-hover:opacity-100"
+                            className="absolute left-2 top-1/2 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border/40 bg-background/85 text-[var(--brand-primary)]/70 opacity-100 shadow-sm backdrop-blur-sm transition duration-200 hover:bg-background hover:text-[var(--brand-primary)] sm:opacity-0 sm:group-hover:opacity-100"
                         >
                             <ChevronLeft className="size-4" />
                         </button>
@@ -103,7 +131,7 @@ const ProductBox = ({ product, priority = false }) => {
                             type="button"
                             aria-label="Next image"
                             onClick={(e) => slideImage(e, 1)}
-                            className="absolute right-2 top-1/2 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border/40 bg-background/85 text-foreground/70 opacity-100 shadow-sm backdrop-blur-sm transition duration-200 hover:bg-background hover:text-foreground sm:opacity-0 sm:group-hover:opacity-100"
+                            className="absolute right-2 top-1/2 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border/40 bg-background/85 text-[var(--brand-primary)]/70 opacity-100 shadow-sm backdrop-blur-sm transition duration-200 hover:bg-background hover:text-[var(--brand-primary)] sm:opacity-0 sm:group-hover:opacity-100"
                         >
                             <ChevronRight className="size-4" />
                         </button>
@@ -112,7 +140,7 @@ const ProductBox = ({ product, priority = false }) => {
                             {images.map((_, index) => (
                                 <span
                                     key={index}
-                                    className={`size-1.5 rounded-full transition-colors ${index === imgIndex ? 'bg-[var(--dark-red)]' : 'bg-background/70'}`}
+                                    className={`size-1.5 rounded-full transition-colors ${index === imgIndex ? 'bg-[var(--brand-primary)]' : 'bg-background/70'}`}
                                 />
                             ))}
                         </div>
@@ -120,57 +148,17 @@ const ProductBox = ({ product, priority = false }) => {
                 )}
             </div>
 
-            <div className="flex flex-1 flex-col items-center gap-2 border-t border-border/60 px-3 py-3.5 text-center font-neue sm:gap-2 sm:px-4 sm:py-5">
-                <Link href={WEBSITE_PRODUCT_DETAILS(product.slug)} className="block w-full">
-                    <h4 title={product?.name} className="w-full truncate text-left text-[15px] font-semibold leading-[1.2] text-foreground transition-colors group-hover:text-[var(--dark-red)] sm:text-base">
-                        {product?.name}
-                    </h4>
-                </Link>
-
-                <div className='flex w-full flex-col items-center gap-1 sm:flex-row sm:justify-between sm:gap-2'>
-                    <div className="flex items-center gap-1">
-                        <div className="flex items-center gap-0.5">
-                            {Array.from({ length: 5 }).map((_, index) => (
-                                <Star
-                                    key={index}
-                                    className={`size-3 ${index < filledStars ? 'fill-[var(--dark-red)] text-[var(--dark-red)]' : 'text-foreground/20'}`}
-                                />
-                            ))}
-                        </div>
-                        <span className='text-[11px] text-muted-foreground'>({ratingCount})</span>
-                    </div>
-
-                    <div className='flex items-baseline gap-1.5 sm:gap-2'>
-                        <span className='text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--dark-red)]'>
-                            Price on enquiry
-                        </span>
-                    </div>
-                </div>
-
-                <div className="mt-1 grid w-full grid-cols-1 gap-2 sm:mt-0 sm:grid-cols-2">
-                    {isInCart ? (
-                        <BrandOutlineButton asChild className="text-[13px] tracking-normal sm:text-base">
-                            <Link href={WEBSITE_CART}>Go To Enquiry</Link>
-                        </BrandOutlineButton>
-                    ) : (
-                        <BrandOutlineButton
-                            type="button"
-                            disabled={!variant || isAdding}
-                            onClick={handleAddToCart}
-                            className="text-[13px] tracking-normal sm:text-base"
-                        >
-                            <ShoppingBag className="size-3.5" />
-                            Add To Enquiry
-                        </BrandOutlineButton>
-                    )}
-
-                    <BrandButton asChild className="text-[13px] tracking-normal sm:text-base">
-                        <Link href={WEBSITE_PRODUCT_DETAILS(product.slug)} aria-label={`View details: ${product?.name}`}>
-                            View Details
-                        </Link>
-                    </BrandButton>
-                </div>
-            </div>
+            <Link
+                href={WEBSITE_PRODUCT_DETAILS(product.slug)}
+                className="flex items-center justify-between gap-2 px-3 py-3 font-neue sm:px-4 sm:py-4"
+            >
+                <h4 title={product?.name} className="min-w-0 flex-1 truncate text-[15px] font-semibold leading-[1.2] text-[var(--brand-primary)] transition-colors group-hover:text-[var(--brand-primary-hover)] sm:text-base">
+                    {product?.name}
+                </h4>
+                <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--brand-primary)] sm:text-[12px]">
+                    On Enquiry
+                </span>
+            </Link>
         </div>
     )
 }

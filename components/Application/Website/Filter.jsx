@@ -1,17 +1,42 @@
 'use client'
-import { memo, useEffect, useId, useState } from 'react'
-import { Checkbox } from '@/components/ui/checkbox'
+import { memo, useEffect, useState } from 'react'
 import { Slider } from '@/components/ui/slider'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { WEBSITE_SHOP } from '@/routes/WebsiteRoute'
 import { Button } from '@/components/ui/button'
-import { BrandButton } from '@/components/Application/Website/BrandButton'
 import Link from 'next/link'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Minus, Plus, Crown, Sparkles } from 'lucide-react'
+import { Skeleton } from '@/components/ui/skeleton'
+import { ChevronDown, Crown, Sparkles, X } from 'lucide-react'
 import { resolveColorStyle } from '@/lib/colorMap'
-const Filter = ({ filters, showClearLink = true }) => {
-    const instanceId = useId()
+
+// Pulsing pill placeholders shown while a facet's options are still loading —
+// reads as "content incoming" rather than the dead "Loading..." text it replaces.
+const ChipSkeletons = ({ count = 4 }) => (
+    <div className="flex flex-wrap gap-2">
+        {Array.from({ length: count }).map((_, index) => (
+            <Skeleton key={index} className="h-8 w-20 rounded-full" />
+        ))}
+    </div>
+)
+
+// Quick-pick price bands shown as pills above the slider — jump straight to a
+// common range instead of dragging both handles.
+const PRICE_QUICK_PICKS = [
+    { label: 'Under ₹1,000', min: 0, max: 1000 },
+    { label: '₹1,000 – ₹2,000', min: 1000, max: 2000 },
+    { label: '₹2,000+', min: 2000, max: 3000 },
+]
+
+// Shared pill-chip look for the Category / Size facets — filled brand-green
+// when selected, outlined neutral otherwise.
+const chipClass = (active) =>
+    `inline-flex items-center rounded-full border px-3.5 py-1.5 text-[12px] font-semibold tracking-[0.02em] transition ${active
+        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
+        : 'border-border/70 bg-background text-[var(--brand-primary)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]'
+    }`
+
+const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
     const searchParams = useSearchParams()
 
     const [priceFilter, setPriceFilter] = useState({ minPrice: 0, maxPrice: 3000 })
@@ -147,29 +172,54 @@ const Filter = ({ filters, showClearLink = true }) => {
         router.push(`${WEBSITE_SHOP}?${urlSearchParams}`)
     }
 
+    // Quick-pick pills set both the slider state and the URL in one click.
+    const handlePriceQuickPick = (min, max) => {
+        setPriceFilter({ minPrice: min, maxPrice: max })
+        urlSearchParams.set('minPrice', min)
+        urlSearchParams.set('maxPrice', max)
+        router.push(`${WEBSITE_SHOP}?${urlSearchParams}`)
+    }
+
     const hasFilters = searchParams.size > 0
+    const priceIsDefault = priceFilter.minPrice === 0 && priceFilter.maxPrice === 3000
+    // Total count drives the "N Active" badge and the per-section counts below —
+    // lets someone scanning the sidebar see what's applied without opening every
+    // accordion first.
+    const activeFilterCount = selectedCategory.length + selectedColor.length + selectedSize.length
+        + (bestsellerOnly ? 1 : 0) + (freshlyArrivedOnly ? 1 : 0) + (priceIsDefault ? 0 : 1)
 
 
     return (
         <div className="space-y-6 text-sm font-neue">
-            {hasFilters && showClearLink && (
-                <Button type="button" variant="link" className="h-auto w-fit p-0 text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground" asChild>
-                    <Link href={WEBSITE_SHOP}>
-                        Clear Filters
-                    </Link>
-                </Button>
-            )}
+            <div className="flex items-center justify-between gap-3">
+                {showTitle && (
+                    <h3 className="flex items-center gap-2 font-header text-xl font-semibold tracking-tight text-[var(--brand-primary)]">
+                        Filter
+                        {activeFilterCount > 0 && (
+                            <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)] px-1.5 text-[11px] font-semibold text-white">
+                                {activeFilterCount}
+                            </span>
+                        )}
+                    </h3>
+                )}
+                {hasFilters && showClearLink && (
+                    <Button type="button" variant="link" className="h-auto w-fit gap-1 p-0 text-[11px] font-semibold uppercase text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]" asChild>
+                        <Link href={WEBSITE_SHOP}>
+                            <X className="size-3" />
+                            Clear All
+                        </Link>
+                    </Button>
+                )}
+            </div>
 
-            <div className="space-y-2.5">
+            <div className="flex flex-wrap gap-2">
                 <button
                     type="button"
                     onClick={handleBestsellerFilter}
                     aria-pressed={bestsellerOnly}
-                    className={`flex w-full items-center justify-center gap-2 border px-4 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] transition ${bestsellerOnly
-                        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
-                        : 'border-border/60 text-[var(--brand-ink)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]'}`}
+                    className={chipClass(bestsellerOnly) + ' gap-1.5'}
                 >
-                    <Crown className="size-4" />
+                    <Crown className="size-3.5" />
                     Bestsellers
                 </button>
 
@@ -177,190 +227,215 @@ const Filter = ({ filters, showClearLink = true }) => {
                     type="button"
                     onClick={handleFreshlyArrivedFilter}
                     aria-pressed={freshlyArrivedOnly}
-                    className={`flex w-full items-center justify-center gap-2 border px-4 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] transition ${freshlyArrivedOnly
-                        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
-                        : 'border-border/60 text-[var(--brand-ink)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]'}`}
+                    className={chipClass(freshlyArrivedOnly) + ' gap-1.5'}
                 >
-                    <Sparkles className="size-4" />
+                    <Sparkles className="size-3.5" />
                     Freshly Arrived
                 </button>
             </div>
 
             <Accordion
                 type="multiple"
-                defaultValue={['category', 'color', 'size', 'price']}
-                className="space-y-4"
+                defaultValue={['category', 'price', 'color', 'size']}
+                className="space-y-1"
             >
-                <AccordionItem value="category" className="border-b border-border/60">
-                    <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-base font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
-                        <span>Categories</span>
-                        <span className="relative flex size-4 items-center justify-center">
-                            <Plus className="absolute size-4 transition-all duration-200 group-data-[state=open]:rotate-90 group-data-[state=open]:opacity-0" />
-                            <Minus className="absolute size-4 opacity-0 transition-all duration-200 group-data-[state=open]:opacity-100" />
-                        </span>
-                    </AccordionTrigger>
-                    <AccordionContent className="pb-4">
-                        <ul className="space-y-2.5">
-                            {!categoriesReady && (
-                                <li className="px-2 py-1.5 text-[12px] text-muted-foreground">Loading categories...</li>
-                            )}
-                            {categoriesReady && categories.length === 0 && (
-                                <li className="px-2 py-1.5 text-[12px] text-muted-foreground">No categories available.</li>
-                            )}
-                            {categoriesReady && categories.map((category) => {
-                                const categoryId = `${instanceId}-category-${category._id}`
-                                const active = selectedCategory.includes(category.slug)
-                                return (
-                                    <li key={category._id}>
-                                        <label
-                                            htmlFor={categoryId}
-                                            className={`flex cursor-pointer items-center gap-3 px-1 py-1.5 text-[13px] transition ${active ? 'font-medium text-[var(--brand-primary-hover)]' : 'font-semibold text-[var(--brand-ink)] hover:text-[var(--brand-primary-hover)]'}`}
+                {(!categoriesReady || categories.length > 0) && (
+                    <AccordionItem value="category" className="border-b border-border/60 py-1">
+                        <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-[15px] font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                            <span className="flex items-center gap-2">
+                                By Category
+                                {selectedCategory.length > 0 && (
+                                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[11px] font-semibold text-[var(--brand-primary)]">
+                                        {selectedCategory.length}
+                                    </span>
+                                )}
+                            </span>
+                            <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4">
+                            {!categoriesReady ? (
+                                <ChipSkeletons />
+                            ) : (
+                                <div className="flex flex-wrap gap-2">
+                                    {categories.map((category) => (
+                                        <button
+                                            key={category._id}
+                                            type="button"
+                                            onClick={() => handleCategoryFilter(category.slug)}
+                                            aria-pressed={selectedCategory.includes(category.slug)}
+                                            className={chipClass(selectedCategory.includes(category.slug))}
                                         >
-                                            <Checkbox
-                                                id={categoryId}
-                                                onCheckedChange={() => handleCategoryFilter(category.slug)}
-                                                checked={selectedCategory.includes(category.slug)}
-                                            />
-                                            <span>{category.name}</span>
-                                        </label>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </AccordionContent>
-                </AccordionItem>
+                                            {category.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </AccordionContent>
+                    </AccordionItem>
+                )}
 
-                <AccordionItem value="color" className="border-b border-border/60">
-                    <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-base font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
-                        <span>Color</span>
-                        <span className="relative flex size-4 items-center justify-center">
-                            <Plus className="absolute size-4 transition-all duration-200 group-data-[state=open]:rotate-90 group-data-[state=open]:opacity-0" />
-                            <Minus className="absolute size-4 opacity-0 transition-all duration-200 group-data-[state=open]:opacity-100" />
+                <AccordionItem value="price" className="border-b border-border/60 py-1">
+                    <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-[15px] font-semibold text-foreground hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                        <span className="flex items-center gap-2">
+                            Price Range
+                            {!priceIsDefault && (
+                                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[11px] font-semibold text-[var(--brand-primary)]">
+                                    1
+                                </span>
+                            )}
                         </span>
+                        <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                     </AccordionTrigger>
-                    <AccordionContent className="pb-4">
-                        <ul className="space-y-2.5">
-                            {!colorsReady && (
-                                <li className="px-2 py-1.5 text-[12px] text-muted-foreground">Loading colors...</li>
+                    <AccordionContent className="space-y-4 px-[2px] pb-4">
+                        <div className="flex items-center justify-between gap-2">
+                            <p className="text-[13px] font-semibold text-[var(--brand-primary)]">
+                                {priceFilter.minPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
+                                {' – '}
+                                {priceFilter.maxPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
+                            </p>
+                            {!priceIsDefault && (
+                                <button
+                                    type="button"
+                                    onClick={() => handlePriceQuickPick(0, 3000)}
+                                    className="text-[11px] font-semibold uppercase transition hover:text-[var(--brand-primary)]"
+                                >
+                                    Reset
+                                </button>
                             )}
-                            {colorsReady && colors.length === 0 && (
-                                <li className="px-2 py-1.5 text-[12px] text-muted-foreground">No colors available.</li>
-                            )}
-                            {colorsReady && colors.map((colorItem, index) => {
-                                // Colors arrive as { name, hex }. Older cached payloads may still
-                                // be plain strings, so accept both shapes defensively.
-                                const colorName = typeof colorItem === 'string' ? colorItem : colorItem?.name
-                                const colorHex = typeof colorItem === 'string' ? '' : colorItem?.hex
-                                if (!colorName) return null
-                                // Index keeps the id unique even when colors differ only by case
-                                // (e.g. "Purple" vs "purple"), which would otherwise collide.
-                                const colorId = `${instanceId}-color-${index}`
-                                const active = selectedColor.includes(colorName)
-                                // Admin hex wins, then the curated dictionary / CSS name.
-                                // null => render a neutral "no swatch" placeholder.
-                                const swatchStyle = resolveColorStyle(colorName, colorHex)
-                                return (
-                                    <li key={`${colorName}-${index}`}>
-                                        <label
-                                            htmlFor={colorId}
-                                            className={`flex cursor-pointer items-center gap-3 px-1 py-1.5 text-[13px] transition ${active ? 'font-semibold text-[var(--brand-primary-hover)]' : 'font-semibold text-[var(--brand-ink)] hover:text-[var(--brand-primary-hover)]'}`}
-                                        >
-                                            <Checkbox
-                                                id={colorId}
-                                                onCheckedChange={() => handleColorFilter(colorName)}
-                                                checked={selectedColor.includes(colorName)}
-                                            />
-                                            {swatchStyle ? (
-                                                <span
-                                                    className="h-3.5 w-3.5 rounded-full border border-black/20"
-                                                    style={swatchStyle}
-                                                    aria-hidden
-                                                />
-                                            ) : (
-                                                <span
-                                                    className="h-3.5 w-3.5 rounded-full border border-black/20 bg-[repeating-linear-gradient(45deg,#e5e7eb,#e5e7eb_2px,#fff_2px,#fff_4px)]"
-                                                    aria-hidden
-                                                    title="No swatch color set"
-                                                />
-                                            )}
-                                            <span>{colorName}</span>
-                                        </label>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="size" className="border-b border-border/60">
-                    <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-base font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
-                        <span>Size</span>
-                        <span className="relative flex size-4 items-center justify-center">
-                            <Plus className="absolute size-4 transition-all duration-200 group-data-[state=open]:rotate-90 group-data-[state=open]:opacity-0" />
-                            <Minus className="absolute size-4 opacity-0 transition-all duration-200 group-data-[state=open]:opacity-100" />
-                        </span>
-                    </AccordionTrigger>
-                    <AccordionContent className="pb-4">
-                        <ul className="grid grid-cols-2 gap-2">
-                            {!sizesReady && (
-                                <li className="col-span-2 px-2 py-1.5 text-[12px] text-muted-foreground">Loading sizes...</li>
-                            )}
-                            {sizesReady && sizes.length === 0 && (
-                                <li className="col-span-2 px-2 py-1.5 text-[12px] text-muted-foreground">No sizes available.</li>
-                            )}
-                            {sizesReady && sizes.map((size, index) => {
-                                const sizeId = `${instanceId}-size-${index}`
-                                const active = selectedSize.includes(size)
-                                return (
-                                    <li key={`${size}-${index}`}>
-                                        <label
-                                            htmlFor={sizeId}
-                                            className={`flex cursor-pointer items-center gap-2 px-1 py-1.5 text-[13px] transition ${active ? 'font-semibold text-[var(--brand-primary-hover)]' : 'font-semibold text-[var(--brand-ink)] hover:text-[var(--brand-primary-hover)]'}`}
-                                        >
-                                            <Checkbox
-                                                id={sizeId}
-                                                onCheckedChange={() => handleSizeFilter(size)}
-                                                checked={selectedSize.includes(size)}
-                                            />
-                                            <span>{size}</span>
-                                        </label>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="price" className="border-b border-border/60">
-                    <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-base font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
-                        <span>Price</span>
-                        <span className="relative flex size-4 items-center justify-center">
-                            <Plus className="absolute size-4 transition-all duration-200 group-data-[state=open]:rotate-90 group-data-[state=open]:opacity-0" />
-                            <Minus className="absolute size-4 opacity-0 transition-all duration-200 group-data-[state=open]:opacity-100" />
-                        </span>
-                    </AccordionTrigger>
-                    <AccordionContent className="space-y-4 px-[10px] pb-4">
+                        </div>
                         <Slider
                             className="mt-0"
                             value={[priceFilter.minPrice, priceFilter.maxPrice]}
                             max={3000}
                             step={1}
                             onValueChange={handlePriceChange}
+                            onValueCommit={handlePriceFilter}
                         />
-                        <div className="grid grid-cols-2 gap-2 font-neue text-[11px] text-foreground/60">
-                            <div className="border border-border/60 px-2 py-2 text-center tracking-[0.04em]">
-                                {priceFilter.minPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
-                            </div>
-                            <div className="border border-border/60 px-2 py-2 text-center tracking-[0.04em]">
-                                {priceFilter.maxPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
+                        <div>
+                            <p className="mb-2 text-[15px] font-semibold text-[var(--brand-primary)]">Quick Picks</p>
+                            <div className="flex flex-wrap gap-2">
+                                {PRICE_QUICK_PICKS.map((pick) => {
+                                    const active = priceFilter.minPrice === pick.min && priceFilter.maxPrice === pick.max
+                                    return (
+                                        <button
+                                            key={pick.label}
+                                            type="button"
+                                            onClick={() => handlePriceQuickPick(pick.min, pick.max)}
+                                            className={chipClass(active)}
+                                        >
+                                            {pick.label}
+                                        </button>
+                                    )
+                                })}
                             </div>
                         </div>
-                        <BrandButton onClick={handlePriceFilter} type="button">
-                            Apply Filter
-                        </BrandButton>
                     </AccordionContent>
                 </AccordionItem>
+
+                {(!colorsReady || colors.length > 0) && (
+                    <AccordionItem value="color" className="border-b border-border/60 py-1">
+                        <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-[15px] font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                            <span className="flex items-center gap-2">
+                                Color
+                                {selectedColor.length > 0 && (
+                                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[11px] font-semibold text-[var(--brand-primary)]">
+                                        {selectedColor.length}
+                                    </span>
+                                )}
+                            </span>
+                            <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4">
+                            {!colorsReady ? (
+                                <ChipSkeletons count={6} />
+                            ) : (
+                            <div className="flex flex-wrap gap-3">
+                                {colors.map((colorItem, index) => {
+                                    // Colors arrive as { name, hex }. Older cached payloads may still
+                                    // be plain strings, so accept both shapes defensively.
+                                    const colorName = typeof colorItem === 'string' ? colorItem : colorItem?.name
+                                    const colorHex = typeof colorItem === 'string' ? '' : colorItem?.hex
+                                    if (!colorName) return null
+                                    const active = selectedColor.includes(colorName)
+                                    // Admin hex wins, then the curated dictionary / CSS name.
+                                    // null => render a neutral "no swatch" placeholder.
+                                    const swatchStyle = resolveColorStyle(colorName, colorHex)
+                                    return (
+                                        <button
+                                            key={`${colorName}-${index}`}
+                                            type="button"
+                                            onClick={() => handleColorFilter(colorName)}
+                                            aria-pressed={active}
+                                            title={colorName}
+                                            className={`flex size-9 items-center justify-center rounded-full border-2 transition ${active ? 'border-[var(--brand-primary)]' : 'border-transparent hover:border-border'}`}
+                                        >
+                                            {swatchStyle ? (
+                                                <span
+                                                    className="size-7 rounded-full border border-black/15"
+                                                    style={swatchStyle}
+                                                    aria-hidden
+                                                />
+                                            ) : (
+                                                <span
+                                                    className="size-7 rounded-full border border-black/15 bg-[repeating-linear-gradient(45deg,#e5e7eb,#e5e7eb_2px,#fff_2px,#fff_4px)]"
+                                                    aria-hidden
+                                                />
+                                            )}
+                                            <span className="sr-only">{colorName}</span>
+                                        </button>
+                                    )
+                                })}
+                            </div>
+                            )}
+                        </AccordionContent>
+                    </AccordionItem>
+                )}
+
+                {(!sizesReady || sizes.length > 0) && (
+                    <AccordionItem value="size" className="border-b border-border/60 py-1">
+                        <AccordionTrigger className="group flex w-full items-center justify-between py-2 text-[15px] font-semibold text-[var(--brand-primary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                            <span className="flex items-center gap-2">
+                                Size
+                                {selectedSize.length > 0 && (
+                                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[11px] font-semibold text-[var(--brand-primary)]">
+                                        {selectedSize.length}
+                                    </span>
+                                )}
+                            </span>
+                            <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4">
+                            {!sizesReady ? (
+                                <ChipSkeletons count={5} />
+                            ) : (
+                                <div className="flex flex-wrap gap-2">
+                                    {sizes.map((size, index) => (
+                                        <button
+                                            key={`${size}-${index}`}
+                                            type="button"
+                                            onClick={() => handleSizeFilter(size)}
+                                            aria-pressed={selectedSize.includes(size)}
+                                            className={chipClass(selectedSize.includes(size))}
+                                        >
+                                            {size}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </AccordionContent>
+                    </AccordionItem>
+                )}
             </Accordion>
+
+            {/* Loaded, but every facet came back empty — the accordions above are all
+                hidden, so say so explicitly rather than leaving a mysteriously bare
+                panel under Price Range. */}
+            {categoriesReady && colorsReady && sizesReady
+                && categories.length === 0 && colors.length === 0 && sizes.length === 0 && (
+                <p className="text-[12px] text-muted-foreground">
+                    More filters will appear here once products are added to the catalogue.
+                </p>
+            )}
         </div>
     )
 }

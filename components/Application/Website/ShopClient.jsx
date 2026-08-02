@@ -145,27 +145,26 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
 
     return (
         <div>
-            <section className="relative isolate h-[172px] overflow-hidden sm:h-[180px] lg:h-[280px]">
-                <div className="absolute inset-0 bg-[var(--brand-ink-soft)]" />
-                <div className="absolute inset-x-0 top-14 z-10 flex justify-center sm:top-5 lg:top-6">
+            <section className="relative isolate h-[105px] overflow-hidden sm:h-[120px] lg:h-[150px]">
+                <div className="absolute inset-0 bg-background" />
+                <div className="absolute inset-x-0 top-14 z-10 flex justify-center sm:top-12 lg:top-16">
                     <div
-                        className="pointer-events-none select-none font-neue font-semibold uppercase tracking-[0.02em] text-white/90"
+                        className="pointer-events-none select-none font-neue font-semibold uppercase tracking-[0.02em] text-[var(--brand-primary)]/90"
                         style={{
-                            fontSize: "clamp(7.5rem, 34vw, 30rem)",
+                            fontSize: "clamp(2.25rem, 8vw, 6.5rem)",
                             lineHeight: 0.78,
                             WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)",
                             maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)",
-                            textShadow: "0 12px 32px rgba(0,0,0,0.18)",
                         }}
                         aria-hidden
                     >
-                        Shop
+                        All Products
                     </div>
                 </div>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-16 bg-gradient-to-b from-transparent via-background/50 to-background sm:h-36" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-5 bg-gradient-to-b from-transparent via-background/50 to-background sm:h-7" />
             </section>
 
-            <section className='website-gutter bg-background pt-4 pb-10 sm:py-10 lg:py-14'>
+            <section className='website-gutter bg-background pt-2 pb-10 sm:pt-4 sm:pb-10 lg:pt-6 lg:pb-14'>
                 <div className="grid w-full gap-6 lg:grid-cols-[290px_1fr] lg:gap-8">
                     {/* The aside shell always renders (CSS-hidden below lg) so the
                         sidebar column is occupied from the server-rendered first
@@ -201,7 +200,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
 
                                 {/* Scrollable filter body */}
                                 <div className="shop-filter-panel min-h-0 flex-1 overflow-y-auto px-5 py-5">
-                                    <Filter filters={initialFilters} showClearLink={false} />
+                                    <Filter filters={initialFilters} showClearLink={false} showTitle={false} />
                                 </div>
 
                                 {/* Sticky action footer */}
@@ -222,7 +221,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                     )}
 
                     <div className='w-full'>
-                        <div>
+                        <div className="flex flex-col border-b pb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:pb-0">
                             <Sorting
                                 sorting={sorting}
                                 setSorting={setSorting}
@@ -258,7 +257,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                                 <div className="flex size-16 items-center justify-center rounded-full bg-[var(--brand-cream)]/50 text-[var(--brand-primary)]">
                                     <PackageSearch className="size-8" strokeWidth={1.5} />
                                 </div>
-                                <h3 className="font-neue mt-5 text-xl font-semibold">No Products Found</h3>
+                                <h3 className="font-neue mt-5 text-xl font-semibold text-[var(--brand-primary)]">No Products Found</h3>
                                 <p className="font-neue mt-2 max-w-sm text-sm text-muted-foreground">
                                     {searchParams.size > 0
                                         ? 'No products match your current filters. Try clearing them or browse the full collection.'

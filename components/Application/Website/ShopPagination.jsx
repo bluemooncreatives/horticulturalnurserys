@@ -51,7 +51,7 @@ const ShopPagination = ({ page, totalPages, onPageChange, disabled = false, sibl
     const cell =
         'inline-flex h-8 min-w-8 items-center justify-center rounded-sm border px-1.5 font-neue text-xs font-semibold transition-colors disabled:pointer-events-none disabled:opacity-40 sm:h-9 sm:min-w-9 sm:px-2 sm:text-[13px]'
     const idle =
-        'border-border/70 bg-background text-foreground hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]'
+        'border-border/70 bg-background text-[var(--brand-primary)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]'
 
     return (
         <nav role="navigation" aria-label="Pagination" className="flex items-center justify-center gap-1 sm:gap-1.5">

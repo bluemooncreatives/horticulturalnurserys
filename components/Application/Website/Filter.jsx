@@ -1,6 +1,5 @@
 'use client'
 import { memo, useEffect, useState } from 'react'
-import { Slider } from '@/components/ui/slider'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { WEBSITE_SHOP } from '@/routes/WebsiteRoute'
 import { Button } from '@/components/ui/button'
@@ -20,15 +19,7 @@ const ChipSkeletons = ({ count = 4 }) => (
     </div>
 )
 
-// Quick-pick price bands shown as pills above the slider — jump straight to a
-// common range instead of dragging both handles.
-const PRICE_QUICK_PICKS = [
-    { label: 'Under ₹1,000', min: 0, max: 1000 },
-    { label: '₹1,000 – ₹2,000', min: 1000, max: 2000 },
-    { label: '₹2,000+', min: 2000, max: 3000 },
-]
-
-// Shared pill-chip look for the Category / Size facets — filled brand-green
+// Shared pill-chip look for the Category facet — filled brand-green
 // when selected, outlined neutral otherwise.
 const chipClass = (active) =>
     `inline-flex items-center rounded-full border px-3.5 py-1.5 text-[12px] font-semibold tracking-[0.02em] transition ${active
@@ -39,10 +30,8 @@ const chipClass = (active) =>
 const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
     const searchParams = useSearchParams()
 
-    const [priceFilter, setPriceFilter] = useState({ minPrice: 0, maxPrice: 3000 })
     const [selectedCategory, setSelectedCategory] = useState([])
     const [selectedColor, setSelectedColor] = useState([])
-    const [selectedSize, setSelectedSize] = useState([])
     const [bestsellerOnly, setBestsellerOnly] = useState(false)
     const [freshlyArrivedOnly, setFreshlyArrivedOnly] = useState(false)
 
@@ -62,31 +51,11 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
 
         searchParams.get('color') ? setSelectedColor(searchParams.get('color').split(',')) : setSelectedColor([])
 
-        searchParams.get('size') ? setSelectedSize(searchParams.get('size').split(',')) : setSelectedSize([])
-
         setBestsellerOnly(['true', '1', 'yes'].includes((searchParams.get('bestseller') || '').toLowerCase()))
 
         setFreshlyArrivedOnly(['true', '1', 'yes'].includes((searchParams.get('freshlyArrived') || '').toLowerCase()))
 
-        const minPrice = parseInt(searchParams.get('minPrice'))
-        const maxPrice = parseInt(searchParams.get('maxPrice'))
-        const normalizedMin = Number.isFinite(minPrice) ? Math.max(0, Math.min(minPrice, 3000)) : 0
-        const normalizedMax = Number.isFinite(maxPrice) ? Math.max(normalizedMin, Math.min(maxPrice, 3000)) : 3000
-
-        setPriceFilter({
-            minPrice: normalizedMin,
-            maxPrice: normalizedMax,
-        })
-
     }, [searchParams])
-
-
-
-    const handlePriceChange = (value) => {
-        setPriceFilter({ minPrice: value[0], maxPrice: value[1] })
-    }
-
-
 
     const handleCategoryFilter = (categorySlug) => {
         let newSelectedCategory = [...selectedCategory]
@@ -115,22 +84,6 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
         setSelectedColor(newSelectedColor)
 
         newSelectedColor.length > 0 ? urlSearchParams.set('color', newSelectedColor.join(',')) : urlSearchParams.delete('color')
-
-        router.push(`${WEBSITE_SHOP}?${urlSearchParams}`)
-
-    }
-
-    const handleSizeFilter = (size) => {
-        let newSelectedSize = [...selectedSize]
-        if (newSelectedSize.includes(size)) {
-            newSelectedSize = newSelectedSize.filter(cat => cat !== size)
-        } else {
-            newSelectedSize.push(size)
-        }
-
-        setSelectedSize(newSelectedSize)
-
-        newSelectedSize.length > 0 ? urlSearchParams.set('size', newSelectedSize.join(',')) : urlSearchParams.delete('size')
 
         router.push(`${WEBSITE_SHOP}?${urlSearchParams}`)
 
@@ -166,27 +119,12 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
         router.push(`${WEBSITE_SHOP}?${urlSearchParams}`)
     }
 
-    const handlePriceFilter = () => {
-        urlSearchParams.set('minPrice', priceFilter.minPrice)
-        urlSearchParams.set('maxPrice', priceFilter.maxPrice)
-        router.push(`${WEBSITE_SHOP}?${urlSearchParams}`)
-    }
-
-    // Quick-pick pills set both the slider state and the URL in one click.
-    const handlePriceQuickPick = (min, max) => {
-        setPriceFilter({ minPrice: min, maxPrice: max })
-        urlSearchParams.set('minPrice', min)
-        urlSearchParams.set('maxPrice', max)
-        router.push(`${WEBSITE_SHOP}?${urlSearchParams}`)
-    }
-
     const hasFilters = searchParams.size > 0
-    const priceIsDefault = priceFilter.minPrice === 0 && priceFilter.maxPrice === 3000
     // Total count drives the "N Active" badge and the per-section counts below —
     // lets someone scanning the sidebar see what's applied without opening every
     // accordion first.
-    const activeFilterCount = selectedCategory.length + selectedColor.length + selectedSize.length
-        + (bestsellerOnly ? 1 : 0) + (freshlyArrivedOnly ? 1 : 0) + (priceIsDefault ? 0 : 1)
+    const activeFilterCount = selectedCategory.length + selectedColor.length
+        + (bestsellerOnly ? 1 : 0) + (freshlyArrivedOnly ? 1 : 0)
 
 
     return (
@@ -236,7 +174,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
 
             <Accordion
                 type="multiple"
-                defaultValue={['category', 'price', 'color', 'size']}
+                defaultValue={['category', 'color']}
                 className="space-y-1"
             >
                 {(!categoriesReady || categories.length > 0) && (
@@ -273,64 +211,6 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                         </AccordionContent>
                     </AccordionItem>
                 )}
-
-                <AccordionItem value="price" className="border-b border-border/60 py-1">
-                    <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
-                        <span className="flex items-center gap-2">
-                            Price Range
-                            {!priceIsDefault && (
-                                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[11px] font-semibold text-[var(--brand-primary)]">
-                                    1
-                                </span>
-                            )}
-                        </span>
-                        <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                    </AccordionTrigger>
-                    <AccordionContent className="space-y-4 px-2 pb-4">
-                        <div className="flex items-center justify-between gap-2">
-                            <p className="text-[13px] font-semibold text-[var(--brand-primary)]">
-                                {priceFilter.minPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
-                                {' – '}
-                                {priceFilter.maxPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}
-                            </p>
-                            {!priceIsDefault && (
-                                <button
-                                    type="button"
-                                    onClick={() => handlePriceQuickPick(0, 3000)}
-                                    className="text-[11px] font-semibold uppercase transition hover:text-[var(--brand-primary)]"
-                                >
-                                    Reset
-                                </button>
-                            )}
-                        </div>
-                        <Slider
-                            className="mt-0"
-                            value={[priceFilter.minPrice, priceFilter.maxPrice]}
-                            max={3000}
-                            step={1}
-                            onValueChange={handlePriceChange}
-                            onValueCommit={handlePriceFilter}
-                        />
-                        <div>
-                            <p className="mb-2 text-[15px] font-semibold text-[var(--brand-primary)]">Quick Picks</p>
-                            <div className="flex flex-wrap gap-2">
-                                {PRICE_QUICK_PICKS.map((pick) => {
-                                    const active = priceFilter.minPrice === pick.min && priceFilter.maxPrice === pick.max
-                                    return (
-                                        <button
-                                            key={pick.label}
-                                            type="button"
-                                            onClick={() => handlePriceQuickPick(pick.min, pick.max)}
-                                            className={chipClass(active)}
-                                        >
-                                            {pick.label}
-                                        </button>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    </AccordionContent>
-                </AccordionItem>
 
                 {(!colorsReady || colors.length > 0) && (
                     <AccordionItem value="color" className="border-b border-border/60 py-1">
@@ -391,45 +271,11 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                     </AccordionItem>
                 )}
 
-                {(!sizesReady || sizes.length > 0) && (
-                    <AccordionItem value="size" className="border-b border-border/60 py-1">
-                        <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
-                            <span className="flex items-center gap-2">
-                                Size
-                                {selectedSize.length > 0 && (
-                                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[11px] font-semibold text-[var(--brand-primary)]">
-                                        {selectedSize.length}
-                                    </span>
-                                )}
-                            </span>
-                            <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                        </AccordionTrigger>
-                        <AccordionContent className="px-2 pb-4">
-                            {!sizesReady ? (
-                                <ChipSkeletons count={5} />
-                            ) : (
-                                <div className="flex flex-wrap gap-2">
-                                    {sizes.map((size, index) => (
-                                        <button
-                                            key={`${size}-${index}`}
-                                            type="button"
-                                            onClick={() => handleSizeFilter(size)}
-                                            aria-pressed={selectedSize.includes(size)}
-                                            className={chipClass(selectedSize.includes(size))}
-                                        >
-                                            {size}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </AccordionContent>
-                    </AccordionItem>
-                )}
             </Accordion>
 
             {/* Loaded, but every facet came back empty — the accordions above are all
                 hidden, so say so explicitly rather than leaving a mysteriously bare
-                panel under Price Range. */}
+                filter panel. */}
             {categoriesReady && colorsReady && sizesReady
                 && categories.length === 0 && colors.length === 0 && sizes.length === 0 && (
                 <p className="text-[12px] text-muted-foreground">

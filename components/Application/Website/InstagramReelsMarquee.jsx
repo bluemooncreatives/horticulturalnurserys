@@ -16,13 +16,13 @@ const FacebookIcon = ({ className }) => (
 )
 
 const instagramVideos = [
-    "https://res.cloudinary.com/darrsi9y2/video/upload/v1773586807/VID-20260204-WA0385_bzffp6.mp4",
-    "https://res.cloudinary.com/darrsi9y2/video/upload/v1773586807/VID-20260223-WA0435_unfxuc.mp4",
-    "https://res.cloudinary.com/darrsi9y2/video/upload/v1773586807/VID-20260125-WA0610_nfqkfc.mp4",
-    "https://res.cloudinary.com/darrsi9y2/video/upload/v1773586807/VID-20260217-WA0033_nufjor.mp4",
-    "https://res.cloudinary.com/darrsi9y2/video/upload/v1773586808/VID-20260224-WA0146_iy2bkc.mp4",
-    "https://res.cloudinary.com/darrsi9y2/video/upload/v1773586807/VID-20260216-WA0140_c7yy8m.mp4",
-    "https://res.cloudinary.com/darrsi9y2/video/upload/v1773586809/VID-20260224-WA0147_tgwjvu.mp4",
+    "https://res.cloudinary.com/heog9fna/video/upload/v1787742327/VID_20260826_161818_pfd68n.mp4",
+    "https://res.cloudinary.com/heog9fna/video/upload/v1787742335/VID_20260826_162047_spc7xl.mp4",
+    "https://res.cloudinary.com/heog9fna/video/upload/v1787742319/VID_20260826_162318_fsvtln.mp4",
+    "https://res.cloudinary.com/heog9fna/video/upload/v1787742334/VID_20260826_162213_iq9di3.mp4",
+    "https://res.cloudinary.com/heog9fna/video/upload/v1787742326/VID_20230401_075906_jxmagb.mp4",
+    "https://res.cloudinary.com/heog9fna/video/upload/v1787742328/VID_20260826_162440_1_pgysih.mp4",
+    "https://res.cloudinary.com/heog9fna/video/upload/v1787742322/VID_20210919_005230_ki2gyc.mp4",
 ]
 
 const InstagramReelsMarquee = () => {

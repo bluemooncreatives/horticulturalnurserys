@@ -6,12 +6,12 @@ import ProductBox from "@/components/Application/Website/ProductBox";
 import styles from "./about-us.module.css";
 
 // ── Scroll-controlled middle image ──────────────────────────────────
-const SCROLL_IMAGE = "https://res.cloudinary.com/darrsi9y2/image/upload/v1781947528/qcbfdwai0pmvv97khlcw.jpg";
+const SCROLL_IMAGE = "https://res.cloudinary.com/heog9fna/image/upload/v1787744099/WhatsApp_Image_2026-08-26_at_4.57.12_PM_v9lbib.jpg";
 
 // Hero images (left thumb · center · right thumb)
-const HERO_LEFT_IMAGE = "https://res.cloudinary.com/darrsi9y2/image/upload/v1781947528/qcbfdwai0pmvv97khlcw.jpg";
-const HERO_CENTER_IMAGE = "https://res.cloudinary.com/darrsi9y2/image/upload/v1781945835/einxusjo1pubrtkgfddc.jpg";
-const HERO_RIGHT_IMAGE = "https://res.cloudinary.com/darrsi9y2/image/upload/v1783063101/WhatsApp_Image_2026-07-03_at_12.46.03_PM_uqte4t.jpg";
+const HERO_LEFT_IMAGE = "https://res.cloudinary.com/heog9fna/image/upload/v1787744100/WhatsApp_Image_2026-08-26_at_4.57.12_PM_2_uhcbcb.jpg";
+const HERO_CENTER_IMAGE = "https://res.cloudinary.com/heog9fna/image/upload/v1787744099/WhatsApp_Image_2026-08-26_at_4.57.12_PM_v9lbib.jpg";
+const HERO_RIGHT_IMAGE = "https://res.cloudinary.com/heog9fna/image/upload/v1787744100/WhatsApp_Image_2026-08-26_at_4.57.12_PM_1_cdnqow.jpg";
 
 // Brand-story paragraphs shown beneath the statement.
 const STORY = [

@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Search as SearchIcon, ShoppingCart, ArrowUpRight } from "lucide-react"
+import { Search as SearchIcon, ShoppingCart, ArrowUpRight, ChevronDown } from "lucide-react"
 import { useSelector } from "react-redux"
 import logoMark from "@/public/assets/images/logo-horti.png"
 
@@ -19,13 +19,31 @@ import Cart from "@/components/Application/Website/Cart"
 import GlobalSearch from "@/components/Application/Website/GlobalSearch"
 import RollingLink from "@/components/ui/RollingLink"
 import CircleReveal from "@/components/ui/CircleReveal"
+import NavMenuBar from "@/components/ui/NavDropdown"
 
 // `menu` holds only the centred links; the CTA is passed separately because it
 // renders as a button on the right of the bar. The slide-out sheet re-joins the
 // two so mobile still sees one complete list.
 const defaultMenu = [
   { title: "Home", url: "/" },
-  { title: "Shop", url: "/shop" },
+  {
+    title: "Shop",
+    url: "/shop",
+    children: [
+      { title: "Plants", url: "/shop/plants", icon: "🌿", desc: "Flowers, shrubs & trees" },
+      { title: "Pots",   url: "/shop/pots",   icon: "🏺", desc: "Planters & containers" },
+    ],
+  },
+  {
+    title: "Services",
+    url: "/services",
+    children: [
+      { title: "Landscape Development",        url: "/services/landscape-development", icon: "🌄", desc: "Parks, townships & estates" },
+      { title: "Garden Maintenance",           url: "/services/garden-maintenance",    icon: "✂️", desc: "AMC, pruning & aftercare"  },
+      { title: "Roof Garden Design",           url: "/services/roof-garden",           icon: "🏠", desc: "Geotextile & drain-cell systems" },
+      { title: "Vertical Garden Systems",      url: "/services/vertical-garden",       icon: "🌾", desc: "Living walls & trellises"  },
+    ],
+  },
   { title: "About", url: "/about-us" },
 ]
 
@@ -69,6 +87,8 @@ export default function Navbar({
   const [openCart, setOpenCart] = React.useState(false)
   const [scrolled, setScrolled] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
+  // Track which mobile accordion item is expanded
+  const [expandedMobile, setExpandedMobile] = React.useState(null)
 
   const rawCount = useSelector((store) => store.cartStore?.count ?? 0)
   const cartCount = mounted ? rawCount : 0
@@ -108,6 +128,8 @@ export default function Navbar({
     setTimeout(open, 80)
   }
 
+  const LINK_CLASS = "text-[0.95rem] font-semibold tracking-[0.01em] text-[var(--brand-primary)]"
+
   return (
     <div
       className={cn(
@@ -142,22 +164,8 @@ export default function Navbar({
             would sit off-centre relative to the viewport. The wrapper ignores
             pointer events so it never covers the logo or the buttons. */}
         <div className="pointer-events-none absolute inset-0 hidden items-center justify-center lg:flex">
-          <div className="pointer-events-auto flex items-center gap-7 xl:gap-10">
-            {menu.map((item, index) => (
-              <React.Fragment key={item.title}>
-                <RollingLink
-                  href={item.url}
-                  className="text-[0.95rem] font-semibold tracking-[0.01em] text-[var(--brand-primary)]"
-                >
-                  {item.title}
-                </RollingLink>
-                {index < menu.length - 1 && (
-                  <span aria-hidden="true" className="select-none text-[0.85rem] font-light text-[var(--muted-foreground)]/40">
-                    +
-                  </span>
-                )}
-              </React.Fragment>
-            ))}
+          <div className="pointer-events-auto flex items-center">
+            <NavMenuBar menu={menu} linkClassName={LINK_CLASS} />
           </div>
         </div>
 
@@ -254,22 +262,85 @@ export default function Navbar({
             </button>
           </div>
 
-          {/* Primary navigation — the CTA rejoins the list here, since the
-              hamburger is the only entry point at this breakpoint. Sized to a
-              standard mobile menu scale (not the desktop display type) so four
-              items fit without excess whitespace between rows. */}
+          {/* Primary navigation — items with children expand inline on mobile. */}
           <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-2 py-2" aria-label="Menu">
-            {sheetMenu.map((item) => (
-              <SheetClose asChild key={item.title}>
-                <Link
-                  href={item.url}
-                  className="group flex items-center justify-between rounded-[var(--radius-2xl)] px-4 py-3 text-[1.05rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
-                >
-                  {item.title}
-                  <ArrowUpRight className="size-4 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
-                </Link>
-              </SheetClose>
-            ))}
+            {sheetMenu.map((item) => {
+              const hasChildren = item.children?.length > 0
+              const isExpanded  = expandedMobile === item.title
+
+              if (hasChildren) {
+                return (
+                  <div key={item.title}>
+                    {/* Accordion trigger row */}
+                    <button
+                      type="button"
+                      onClick={() => setExpandedMobile(isExpanded ? null : item.title)}
+                      className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-4 py-3 text-[1.05rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
+                      aria-expanded={isExpanded}
+                    >
+                      {item.title}
+                      <ChevronDown
+                        className={cn(
+                          "size-4 text-[var(--muted-foreground)] transition-transform duration-300",
+                          isExpanded && "rotate-180"
+                        )}
+                      />
+                    </button>
+
+                    {/* Collapsible sub-items */}
+                    <div
+                      className={cn(
+                        "overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)]",
+                        isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                      )}
+                    >
+                      {/* Parent page link at the top */}
+                      <SheetClose asChild>
+                        <Link
+                          href={item.url}
+                          className="group mx-2 mb-0.5 flex items-center gap-2 rounded-[var(--radius-xl)] px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-widest text-[var(--brand-primary)]/60 transition-colors hover:text-[var(--brand-primary)]"
+                        >
+                          View all {item.title} →
+                        </Link>
+                      </SheetClose>
+
+                      {item.children.map((child) => (
+                        <SheetClose asChild key={child.url}>
+                          <Link
+                            href={child.url}
+                            className="group mx-2 mb-0.5 flex items-center gap-3 rounded-[var(--radius-2xl)] px-3 py-2.5 text-[0.95rem] font-medium text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
+                          >
+                            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[var(--secondary)] text-base transition-colors group-hover:bg-[var(--brand-primary)]/10">
+                              {child.icon}
+                            </span>
+                            <span className="flex flex-col">
+                              <span className="leading-tight">{child.title}</span>
+                              {child.desc && (
+                                <span className="text-[0.72rem] text-[var(--muted-foreground)]">{child.desc}</span>
+                              )}
+                            </span>
+                            <ArrowUpRight className="ml-auto size-4 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                          </Link>
+                        </SheetClose>
+                      ))}
+                    </div>
+                  </div>
+                )
+              }
+
+              // Plain link (no children)
+              return (
+                <SheetClose asChild key={item.title}>
+                  <Link
+                    href={item.url}
+                    className="group flex items-center justify-between rounded-[var(--radius-2xl)] px-4 py-3 text-[1.05rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
+                  >
+                    {item.title}
+                    <ArrowUpRight className="size-4 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                  </Link>
+                </SheetClose>
+              )
+            })}
           </nav>
 
           {/* Cart — pinned full-width at the bottom of the sheet, the one

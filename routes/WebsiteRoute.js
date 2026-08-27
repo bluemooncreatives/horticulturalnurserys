@@ -5,6 +5,9 @@ export const WEBSITE_LOGIN = "/admin/login"
 export const WEBSITE_REGISTER = "/admin/login"
 
 export const WEBSITE_SHOP = "/shop"
+// Shop sub-category pages
+export const WEBSITE_SHOP_PLANTS = "/shop/plants"
+export const WEBSITE_SHOP_POTS   = "/shop/pots"
 
 export const WEBSITE_PRODUCT_DETAILS = (slug) => slug ? `/product/${slug}` : '/product'
 
@@ -13,3 +16,10 @@ export const WEBSITE_PRODUCT_DETAILS = (slug) => slug ? `/product/${slug}` : '/p
 // page; WEBSITE_ENQUIRY is the submit form (what used to be checkout).
 export const WEBSITE_CART = "/cart"
 export const WEBSITE_ENQUIRY = "/enquiry"
+
+// ── Services pages ──────────────────────────────────────────────────────────
+export const WEBSITE_SERVICES                = "/services"
+export const WEBSITE_SERVICES_LANDSCAPE      = "/services/landscape-development"
+export const WEBSITE_SERVICES_MAINTENANCE    = "/services/garden-maintenance"
+export const WEBSITE_SERVICES_ROOF_GARDEN    = "/services/roof-garden"
+export const WEBSITE_SERVICES_VERTICAL_GARDEN = "/services/vertical-garden"

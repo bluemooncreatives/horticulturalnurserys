@@ -94,7 +94,7 @@ const FAQSection = () => {
     const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i))
 
     return (
-        <section className="website-gutter bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
+        <section className="lumora-shell bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
 
             {/* section header */}
             <div className="mb-4 flex items-end justify-between lg:mb-6">

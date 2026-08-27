@@ -2,7 +2,7 @@
 .section {
     width: 100%;
     background: var(--background);
-    padding: clamp(1.25rem, 2.5vw, 2rem) var(--website-gutter) clamp(2rem, 4vw, 3.5rem);
+    padding: clamp(1.25rem, 2.5vw, 2rem) calc(var(--website-gutter) + clamp(0rem, 4vw, var(--space-12))) clamp(2rem, 4vw, 3.5rem);
     overflow-x: clip;
 }
 

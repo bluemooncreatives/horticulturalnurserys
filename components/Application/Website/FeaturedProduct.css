@@ -5,7 +5,7 @@
 
 .fp-container {
     margin: 0 auto;
-    padding: 0 var(--website-gutter);
+    padding: 0 calc(var(--website-gutter) + clamp(0rem, 4vw, var(--space-12)));
 }
 
 /* Row layout: 3 items per row */

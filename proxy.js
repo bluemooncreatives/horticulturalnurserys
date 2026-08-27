@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import { jwtVerify } from "jose/jwt/verify"
 import { ADMIN_DASHBOARD, ADMIN_LOGIN } from "./routes/AdminPanelRoute"
 
-export async function middleware(request) {
+export async function proxy(request) {
     try {
         const pathname = request.nextUrl.pathname
         const isAdminRoute = pathname.startsWith('/admin')

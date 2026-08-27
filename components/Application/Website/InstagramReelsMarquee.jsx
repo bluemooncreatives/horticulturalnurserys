@@ -51,7 +51,7 @@ const InstagramReelsMarquee = () => {
     }, [])
 
     return (
-        <section className="relative overflow-hidden bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
+        <section className="relative overflow-hidden bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-0">
             <div className="website-gutter relative z-20 mb-6 flex items-center justify-between gap-6">
                 <h2 className="text-left text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)] z-50">
                     From the Field

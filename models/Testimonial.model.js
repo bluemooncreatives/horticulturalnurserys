@@ -32,6 +32,13 @@ const testimonialSchema = new mongoose.Schema({
         default: 5,
     },
 
+    // Reviewer role / property location (e.g. "Terrace Garden · Salt Lake")
+    role: {
+        type: String,
+        trim: true,
+        default: 'Verified Client · Kolkata',
+    },
+
     // Lets the admin hide a testimonial from the storefront without deleting
     // it. Only active (and non-deleted) entries are served to the homepage.
     isActive: {

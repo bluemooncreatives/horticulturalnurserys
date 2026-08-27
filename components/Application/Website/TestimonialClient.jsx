@@ -1,102 +1,180 @@
 'use client'
 
-import Link from 'next/link'
-import { Star, ArrowUpRight, Quote } from 'lucide-react'
+import { useRef } from 'react'
+import gsap from 'gsap'
+import { RevealLines } from '@/components/ui/reveal'
 
-import { WEBSITE_SHOP } from '@/routes/WebsiteRoute'
+/* ────────────────────────────────────────────────────────────────
+   TestimonialCard — Baseline Three-Up Quote Card.
+   • Soft surface card (#F5F5F7)
+   • Large brand quote glyph “
+   • Blockquote with relaxed leading
+   • Hairline rule with author name and role/location
+   • Spring hover lift interaction (y: -8px)
+   ──────────────────────────────────────────────────────────────── */
 
-const clampRating = (rating) => Math.max(0, Math.min(5, Math.round(Number(rating) || 0)))
+function TestimonialCard({ item, index }) {
+  const cardRef = useRef(null)
+  const quoteRef = useRef(null)
 
-const Stars = ({ rating, className = '' }) => (
-    <div className={`flex gap-0.5 ${className}`}>
-        {Array.from({ length: 5 }).map((_, i) => (
-            <Star
-                key={i}
-                className={`size-3.5 ${i < rating ? 'fill-amber-400 text-amber-400' : 'fill-current text-current opacity-20'}`}
-            />
-        ))}
+  const onMouseEnter = () => {
+    const card = cardRef.current
+    const quote = quoteRef.current
+    if (!card) return
+    gsap.to(card, {
+      y: -8,
+      duration: 0.35,
+      ease: 'power2.out',
+      boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.09)',
+    })
+    if (quote) {
+      gsap.to(quote, { scale: 1.15, duration: 0.3, ease: 'power2.out' })
+    }
+  }
+
+  const onMouseLeave = () => {
+    const card = cardRef.current
+    const quote = quoteRef.current
+    if (!card) return
+    gsap.to(card, {
+      y: 0,
+      duration: 0.45,
+      ease: 'power3.out',
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)',
+    })
+    if (quote) {
+      gsap.to(quote, { scale: 1, duration: 0.4, ease: 'power3.out' })
+    }
+  }
+
+  const quoteText = item.quote || item.review || ''
+  const roleText =
+    item.role ||
+    (item.rating ? `${item.rating}★ Verified Client` : 'Verified Client · Kolkata')
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className="group relative flex h-full w-[320px] shrink-0 flex-col justify-between rounded-2xl bg-[#F5F5F7] p-7 transition-colors duration-200 select-none sm:w-[380px] sm:p-8 lg:w-[420px]"
+      style={{ willChange: 'transform, box-shadow' }}
+    >
+      <div>
+        <span
+          ref={quoteRef}
+          aria-hidden
+          className="inline-block text-4xl font-serif leading-none text-[var(--brand-primary)] opacity-85 select-none sm:text-5xl"
+        >
+          &ldquo;
+        </span>
+        <blockquote className="mt-4 text-[1rem] font-normal leading-relaxed text-[#111111] sm:text-[1.08rem]">
+          {quoteText}
+        </blockquote>
+      </div>
+
+      <figcaption className="mt-7 border-t border-black/[0.08] pt-4">
+        <span className="block text-[0.95rem] font-semibold text-[#111111]">
+          {item.name}
+        </span>
+        <span className="mt-0.5 block text-[0.825rem] font-normal text-black/50">
+          {roleText}
+        </span>
+      </figcaption>
     </div>
-)
-
-const TestimonialClient = ({ testimonials = [] }) => {
-    // Cap the grid so a large review set doesn't create an unwieldy wall.
-    const cards = testimonials.slice(0, 8)
-
-    const avg = testimonials.length
-        ? (testimonials.reduce((s, t) => s + (Number(t.rating) || 0), 0) / testimonials.length)
-        : 0
-    const avgLabel = avg ? avg.toFixed(1) : '5.0'
-
-    if (!cards.length) return null
-
-    return (
-        <section className="lumora-shell py-16 lg:py-24">
-
-            {/* ── Header ── */}
-            <div className="voices-head mb-8 flex flex-col gap-4 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">
-                <div>
-                    <span className="eyebrow flex items-center gap-2">
-                        <span aria-hidden className="h-px w-6 bg-current opacity-40" />
-                        Testimonials
-                    </span>
-                    <h2 className="mt-3 text-[clamp(1.8rem,4.4vw,3.2rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
-                        From Our Gardens
-                    </h2>
-                </div>
-                <p className="max-w-sm text-[0.9rem] leading-relaxed text-[var(--muted-foreground)]">
-                    Notes from the people whose terraces, courtyards and campuses we have planted.
-                </p>
-            </div>
-
-            {/* ── Rating tile + card grid ── */}
-            <div className="flex flex-col gap-3 lg:flex-row lg:gap-4">
-
-                {/* Black average-rating tile */}
-                <div className="flex shrink-0 flex-col justify-between rounded-[var(--radius-card)] bg-[var(--brand-ink-soft)] p-6 text-white lg:w-[300px] lg:p-7">
-                    <div>
-                        <span className="eyebrow text-white/40">Customer Rating</span>
-                        <p className="mt-5 flex items-end gap-1 leading-none">
-                            <span className="text-[3.5rem] font-medium tracking-[-0.02em]">{avgLabel}</span>
-                            <span className="mb-1.5 text-xl text-white/40">/ 5</span>
-                        </p>
-                        <Stars rating={clampRating(avg)} className="mt-3 text-white" />
-                        <p className="mt-5 text-[0.85rem] leading-relaxed text-white/50">
-                            Homes, farm houses and public grounds across West Bengal — planted once, tended season after season.
-                        </p>
-                    </div>
-                    <Link href={WEBSITE_SHOP} className="pill pill-lime group mt-8 self-start">
-                        Browse &amp; Review
-                        <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
-                </div>
-
-                {/* Masonry card grid */}
-                <div className="voices-grid flex-1 gap-3 sm:columns-2 sm:gap-4 [column-fill:_balance] xl:columns-3">
-                    {cards.map((item, i) => {
-                        const rating = clampRating(item.rating)
-                        return (
-                            <figure
-                                key={`${item.name}-${i}`}
-                                className="voices-card mb-3 break-inside-avoid rounded-[var(--radius-card)] border border-[var(--border)] bg-white p-6 sm:mb-4"
-                            >
-                                <Quote className="size-6 rotate-180 text-[var(--brand-primary)]/15" />
-                                <blockquote className="mt-3 text-[0.95rem] leading-relaxed text-[var(--brand-primary)]">
-                                    {item.review}
-                                </blockquote>
-                                <figcaption className="mt-5 flex items-center justify-between gap-3 border-t border-[var(--border)] pt-4">
-                                    <div className="min-w-0">
-                                        <p className="truncate text-[0.9rem] font-medium text-[var(--brand-primary)]">{item.name}</p>
-                                        <p className="text-[0.72rem] uppercase tracking-[0.14em] text-[var(--muted-foreground)]">Verified Client</p>
-                                    </div>
-                                    <Stars rating={rating} className="shrink-0 text-[var(--brand-primary)]" />
-                                </figcaption>
-                            </figure>
-                        )
-                    })}
-                </div>
-            </div>
-        </section>
-    )
+  )
 }
 
-export default TestimonialClient
+/* ────────────────────────────────────────────────────────────────
+   TestimonialClient — Infinite Loop Marquee (Left to Right)
+   • Dot eyebrow: • WHAT CLIENTS SAY
+   • Masked line reveal heading: "Loved by / our garden owners"
+   • Infinite auto-scrolling track (left to right)
+   • Seamless loop with pause on hover
+   • Edge fade gradients for polished entry/exit
+   ──────────────────────────────────────────────────────────────── */
+
+export default function TestimonialClient({ testimonials = [] }) {
+  if (!testimonials.length) return null
+
+  // Ensure there are enough items for a seamless 50% loop
+  const baseItems = testimonials.length < 6
+    ? [...testimonials, ...testimonials, ...testimonials]
+    : testimonials
+
+  // 2 sets of baseItems for the 0% -> -50% (or -50% -> 0%) seamless infinite translation
+  const trackItems = [...baseItems, ...baseItems]
+
+  return (
+    <section
+      id="testimonials"
+      aria-labelledby="testimonials-title"
+      className="overflow-hidden pt-12 sm:pt-14 pb-12 sm:pb-14"
+    >
+      {/* ── Centralized Eyebrow + Header ── */}
+      <div className="website-gutter mx-auto max-w flex flex-col items-center text-center">
+        <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-black/50">
+          <span
+            aria-hidden
+            className="size-1.5 shrink-0 rounded-full bg-[var(--brand-primary)]"
+          />
+          What clients say
+        </span>
+
+        <h2
+          id="testimonials-title"
+          className="mt-4 font-neue text-4xl font-medium leading-[0.95] tracking-tight text-[#111111] sm:text-5xl lg:text-[3.6rem] text-center"
+        >
+          <RevealLines items={['Loved by', 'our garden owners']} className="text-center" />
+        </h2>
+      </div>
+
+      {/* ── Infinite auto-scrolling marquee (Left to Right) ── */}
+      <div className="testimonial-marquee-wrapper relative mt-12 w-full overflow-hidden sm:mt-14">
+        {/* Soft edge fade masks on both sides */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent sm:w-28" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent sm:w-28" />
+
+        {/* Moving track */}
+        <div className="testimonial-track flex w-max items-stretch gap-5 pt-2 pb-6 pl-5">
+          {trackItems.map((item, index) => (
+            <TestimonialCard
+              key={`${item.name}-${index}`}
+              item={item}
+              index={index}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* ── Keyframes for infinite left-to-right motion ── */}
+      <style jsx>{`
+        .testimonial-track {
+          animation: testimonial-ltr 45s linear infinite;
+          will-change: transform;
+        }
+
+        .testimonial-marquee-wrapper:hover .testimonial-track {
+          animation-play-state: paused;
+        }
+
+        /* Left to Right: start at -50% and travel to 0% */
+        @keyframes testimonial-ltr {
+          0% {
+            transform: translate3d(-50%, 0, 0);
+          }
+          100% {
+            transform: translate3d(0%, 0, 0);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .testimonial-track {
+            animation: none;
+            overflow-x: auto;
+          }
+        }
+      `}</style>
+    </section>
+  )
+}

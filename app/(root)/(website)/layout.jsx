@@ -1,5 +1,6 @@
 import Footer from '@/components/Application/Website/Footer'
 import Header from '@/components/Application/Website/Header'
+import LoaderProvider from '@/components/Application/Website/LoaderProvider'
 import { getFooterCategories } from '@/lib/services/categoryService'
 
 const Layout = async ({ children }) => {
@@ -7,11 +8,13 @@ const Layout = async ({ children }) => {
 
     return (
         <div className='font-neue overflow-x-hidden'>
-            <Header />
-            <main id="main-content" className='relative min-h-screen bg-background'>
-                {children}
-            </main>
-            <Footer categoryLinks={footerCategories} />
+            <LoaderProvider>
+                <Header />
+                <main id="main-content" className='relative min-h-screen bg-background'>
+                    {children}
+                </main>
+                <Footer categoryLinks={footerCategories} />
+            </LoaderProvider>
         </div>
     )
 }

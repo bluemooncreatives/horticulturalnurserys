@@ -9,6 +9,22 @@ import CircleReveal from "@/components/ui/CircleReveal";
 import CrossfadeImage from "@/components/ui/CrossfadeImage";
 import CircleWipeImage from "@/components/ui/CircleWipeImage";
 import useHeroCarousel from "@/components/ui/useHeroCarousel";
+import { RevealLines, RevealUp } from "@/components/ui/reveal";
+import { useLoader } from "@/components/Application/Website/LoaderProvider";
+
+// Entrance cascade timings, ms — mirrors the Baseline hero's staggered
+// reveal (headline first, then the surrounding cards), tuned to this hero's
+// four content groups instead of Baseline's two.
+const REVEAL = {
+  titleStagger: 130,
+  titleDuration: 1000,
+  tagDelay: 420,
+  tagDuration: 820,
+  trustDelay: 560,
+  trustDuration: 820,
+  cardDelay: 760,
+  cardDuration: 780,
+};
 
 // Product-card title, split into characters so each glyph can roll
 // independently with a staggered delay on hover (see the card button below).
@@ -48,6 +64,9 @@ const RING_C = 2 * Math.PI * RING_R;
 
 const HeroSection = () => {
   const ringRef = useRef(null);
+  // Gates every entrance reveal below: the curtain lifts, then the hero
+  // cascades in — nothing pops in behind it or before it.
+  const { ready } = useLoader();
 
   // Paint the thumbnail's countdown ring straight from the carousel clock's
   // 0→1 progress — one tween drives both the auto-advance and this ring, so
@@ -127,13 +146,20 @@ const HeroSection = () => {
                   lines scaling far enough that the gap stays tight on wide
                   screens. The second line's cap is held at ~0.49x the first so
                   the longer string never out-measures it. */}
-              <span className="block whitespace-nowrap text-[clamp(1.9rem,9.4vw,11.2rem)]">
-                Horticultural
-              </span>
-              <span className="block whitespace-nowrap text-[clamp(0.95rem,4.65vw,5.5rem)]">
-                Development Centre
-                <sup className="relative top-[0.12em] ml-[0.05em] align-top text-[0.26em] font-normal leading-none opacity-80">®</sup>
-              </span>
+              <RevealLines
+                play={ready}
+                stagger={REVEAL.titleStagger}
+                duration={REVEAL.titleDuration}
+                items={[
+                  <span key="line-1" className="block whitespace-nowrap text-[clamp(1.9rem,9.4vw,11.2rem)]">
+                    Horticultural
+                  </span>,
+                  <span key="line-2" className="block whitespace-nowrap text-[clamp(0.95rem,4.65vw,5.5rem)]">
+                    Development Centre
+                    <sup className="relative top-[0.12em] ml-[0.05em] align-top text-[0.26em] font-normal leading-none opacity-80">®</sup>
+                  </span>,
+                ]}
+              />
             </h1>
 
             {/* This column is pinned to the right padding edge, so its own width
@@ -141,7 +167,12 @@ const HeroSection = () => {
                 closes the gap against the headline, not the grid gap. It steps
                 up with the viewport because the headline is nowrap at ~68vw and
                 would otherwise be squeezed past its min-content at 1024-1280. */}
-            <div className="hero-tag w-full max-w-md lg:w-[16rem] lg:pt-3 xl:w-[18rem] 2xl:w-[20rem]">
+            <RevealUp
+              play={ready}
+              delay={REVEAL.tagDelay}
+              duration={REVEAL.tagDuration}
+              className="hero-tag w-full max-w-md lg:w-[16rem] lg:pt-3 xl:w-[18rem] 2xl:w-[20rem]"
+            >
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2.5">
                   {/* "Up next" preview — the two frames queued behind the big
@@ -177,7 +208,7 @@ const HeroSection = () => {
                 and an Alipore counter that stocks every plant, tool and input a
                 garden needs under one roof.
               </p>
-            </div>
+            </RevealUp>
           </div>
 
           {/* Bottom region: trust strip + floating card (overlaid) */}
@@ -187,7 +218,12 @@ const HeroSection = () => {
           <div className="relative z-[2] flex flex-col items-stretch gap-4 px-5 pb-5 sm:flex-row sm:items-end sm:justify-between sm:px-8 sm:pb-8 lg:px-11 lg:pb-11">
             {/* bottom-left: trusted-by + craft marks — hidden on mobile, the
                 floating product card below is the only bottom-row content there */}
-            <div className="hero-overlay hidden sm:block">
+            <RevealUp
+              play={ready}
+              delay={REVEAL.trustDelay}
+              duration={REVEAL.trustDuration}
+              className="hero-overlay hidden sm:block"
+            >
               <p className="max-w-xs text-[0.72rem] leading-snug text-white/85 sm:text-[0.8rem]">
                 Entrusted with the Assembly House, National Library, Alipore Zoo
                 and Rabindra Sarobar.
@@ -203,13 +239,22 @@ const HeroSection = () => {
                   </span>
                 ))}
               </div>
-            </div>
+            </RevealUp>
 
             {/* bottom-right: floating vertical product card — image and
                 content are two independently rounded, independently
                 shadowed blocks stacked inside one wrapper, not a single
-                continuous card shape. */}
-            <div className="hero-overlay flex w-full max-w-48 shrink-0 flex-col gap-1.5 transition-transform hover:-translate-y-0.5 sm:max-w-none sm:w-64 sm:gap-2">
+                continuous card shape. Popped in with a slight overshoot
+                ease so it reads as a distinct card landing, not text
+                settling. */}
+            <RevealUp
+              play={ready}
+              delay={REVEAL.cardDelay}
+              duration={REVEAL.cardDuration}
+              distance={28}
+              ease="var(--ease-pop)"
+              className="hero-overlay flex w-full max-w-48 shrink-0 flex-col gap-1.5 transition-transform hover:-translate-y-0.5 sm:max-w-none sm:w-64 sm:gap-2"
+            >
               {/* Floating thumbnail — shows the *next* frame (i+1) and doubles
                   as the carousel control: clicking promotes it to the big
                   screen and rolls the thumbnail forward, resetting the 10s
@@ -343,7 +388,7 @@ const HeroSection = () => {
                   />
                 </span>
               </Link>
-            </div>
+            </RevealUp>
           </div>
         </div>
       </div>

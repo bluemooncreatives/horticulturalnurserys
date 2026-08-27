@@ -369,6 +369,9 @@
   --ease-in-out:      cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring:      cubic-bezier(0.071, 0.505, 0.192, 1);
   --ease-out-circ:    cubic-bezier(0.075, 0.82, 0.165, 1);  /* arrow direction flip */
+  --ease-out-expo:    cubic-bezier(0.16, 1, 0.3, 1);        /* text-reveal masks — fast start, long soft settle */
+  --ease-out-quart:   cubic-bezier(0.25, 1, 0.5, 1);        /* panel fade-ups — gentler settle than expo */
+  --ease-pop:         cubic-bezier(0.34, 1.56, 0.64, 1);    /* card/badge entrances — slight overshoot */
 
   /* ── Composed transitions ── */
   --transition-colors:   color var(--duration-fast) var(--ease-in-out),
@@ -848,4 +851,66 @@ body {
   border-radius:   var(--radius-pill);
   border:          1px solid color-mix(in srgb, currentColor 26%, transparent);
   transition:      var(--transition-colors), transform var(--duration-normal) var(--ease-out);
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   23. ENTRANCE REVEAL PRIMITIVES
+   Ported from the Baseline template's hero-entrance system: a masked
+   line/word reveal for text (`.rv-*`) and a fade-up panel reveal for
+   cards/badges (`.rv-up*`). Structural classes (rv-line, rv-inner, rv-up)
+   are always present so content is visible with no JS/CSS; only the
+   `-play` state class is toggled once the reveal should fire, driven
+   declaratively off React state (see components/ui/reveal.jsx) rather
+   than an imperative class write — there's no replay case in this app
+   (each hero mounts once), so the simpler render-driven toggle is enough.
+   ──────────────────────────────────────────────────────────────── */
+
+/* Masked line/word reveal — an overflow-hidden box around an inner span
+   that slides up from 115% and fades in. Used for headline lines. */
+.rv-line {
+  display:        block;
+  overflow:       hidden;
+  padding-bottom: 0.14em;
+}
+
+.rv-inner {
+  display:            inline-block;
+  will-change:        transform, opacity;
+  transform:          translate3d(0, 115%, 0);
+  opacity:            0;
+  transition-property: transform, opacity;
+  transition-duration: var(--rv-duration, 950ms);
+  transition-timing-function: var(--rv-ease, var(--ease-out-expo));
+  transition-delay:   var(--rv-delay, 0ms);
+}
+
+.rv-play .rv-inner {
+  transform: translate3d(0, 0, 0);
+  opacity:   1;
+}
+
+/* Fade-up panel reveal — no mask, just opacity + a soft rise. Used for the
+   hero's smaller components (badge rows, trust strip, floating cards). */
+.rv-up {
+  opacity:             0;
+  transform:           translate3d(0, var(--rv-up-distance, 22px), 0);
+  will-change:         transform, opacity;
+  transition-property: transform, opacity;
+  transition-duration: var(--rv-up-duration, 850ms);
+  transition-timing-function: var(--rv-up-ease, var(--ease-out-quart));
+  transition-delay:   var(--rv-up-delay, 0ms);
+}
+
+.rv-up-play {
+  opacity:   1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-inner,
+  .rv-up {
+    transition-duration: 1ms !important;
+    transition-delay:    0ms !important;
+  }
 }

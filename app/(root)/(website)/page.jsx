@@ -46,18 +46,17 @@ const Home = () => {
                 <AboutUsSection />
             </LazyHydrate>
 
-            {/* Featured ("freshly arrived") products — sits directly under the
-                About Company section. */}
+            <LazyHydrate>
+                <BestsellersSection />
+            </LazyHydrate>
+
+            {/* Featured ("freshly arrived") products */}
             <LazyHydrate>
                 <FeaturedProduct />
             </LazyHydrate>
 
             <LazyHydrate>
                 <ServicesSection />
-            </LazyHydrate>
-
-            <LazyHydrate>
-                <BestsellersSection />
             </LazyHydrate>
 
             {/* The gallery's styled-jsx CSS is client-only (no SSR registry), so

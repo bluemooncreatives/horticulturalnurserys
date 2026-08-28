@@ -6,22 +6,31 @@ export const metadata = {
     'Garden development and landscaping for residential and commercial sites, garden maintenance, roof garden design and vertical garden systems — Horticultural Development Centre, Kolkata.',
 }
 
-const HERO_STATS = [
-  { label: 'Landscaping since', value: '1989'                     },
-  { label: 'Service lines',     value: 'Four, end to end'         },
-  { label: 'Own farm',          value: '50 bighas, Bibirhut'      },
-  { label: 'Approved by',       value: 'State Govt. & CPWD'       },
-]
-
-const APPROACH = {
-  lead: `Every project starts the same way — a horticulturist on your site, reading light, soil, drainage and how the space will actually be used. Only then do we draw a plan and put a number to it.`,
-  body: [
-    `We work on residential and commercial sites alike, from a single balcony to township grounds of several acres. The design follows the brief you give us; the site decides what will actually survive in it. Nothing is built off a template.`,
-    `The same team carries a project from first visit to handover — qualified horticulturists, licensed landscape architects and our own field crew. No subcontracted labour arriving halfway through with no memory of what was agreed.`,
-    `Plants and materials come off our own 50-bigha farm at Bibirhut, so we know how every specimen was raised and hardened before it reaches your site. That is the difference between a garden that establishes in its first season and one that spends two years catching up.`,
-    `And once it is built, we can keep it. Annual maintenance contracts cover gardens we have made and gardens we have not, using the same organic and inorganic inputs we stock at the Alipore counter.`,
-  ],
+// Hero bento — two photos flanking an accent card over a dark card.
+const BENTO = {
+  images: ['/assets/images/hero/01.jpg', '/assets/images/hero/03.jpg'],
+  accent: {
+    caption: 'Designing, planting and maintaining gardens across Kolkata and West Bengal, without a break.',
+    figure: '35+',
+  },
+  dark: {
+    figure: '50',
+    caption: 'Bighas of our own farm at Bibirhut — 4,700 m² of it under cover, so nothing arrives with unknown growing conditions behind it.',
+  },
 }
+
+// Rendered as a pinned, word-by-word colour fill — keep it to a few sentences
+// so the whole statement resolves within one screen-lock.
+const APPROACH = {
+  lead: 'Every project starts with a horticulturist on your site, reading light, soil and drainage. Only then do we draw a plan and put a number to it. The design follows the brief you give us; the site decides what will actually survive in it — and the same team carries the work from first visit through to aftercare.',
+}
+
+const STATS = [
+  { value: '1989',   label: 'Growing and landscaping without a break'   },
+  { value: '50',     label: 'Bighas of our own farm at Bibirhut'        },
+  { value: '4,700',  label: 'Square metres under cover'                 },
+  { value: 'CPWD',   label: 'Approved vendor, with the State Government'},
+]
 
 const PROCESS = [
   {
@@ -42,64 +51,49 @@ const PROCESS = [
   },
 ]
 
-const FOUNDATIONS = [
-  {
-    figure: '50 bighas',
-    title: 'Our own growing ground',
-    desc: 'A farm at Bibirhut, Ramdevpur with 2,500 sqm of polyshed, 2,000 sqm of greenhouse and a 200 sqm fan-pad house. No middleman, and no unknown growing conditions.',
-  },
-  {
-    figure: 'Since 1989',
-    title: 'One team, start to finish',
-    desc: 'Qualified horticulturists, licensed landscape architects and our own field crew — the same people from the first site visit through to aftercare.',
-  },
-  {
-    figure: 'CPWD',
-    title: 'Cleared for public works',
-    desc: 'Approved-vendor status with the West Bengal State Government and CPWD: parks, lake fronts, zoo and library grounds, IT campuses and tourist lodges.',
-  },
-]
+const CREDENTIALS = {
+  heading: 'Cleared for public works, not just private gardens',
+  desc: 'Approved-vendor status with the West Bengal State Government and CPWD means the same crew that builds a private garden is cleared to work on public ground — under its tendering, documentation and inspection regime.',
+  projects: [
+    'Public parks',
+    'Lake-front promenades',
+    'Zoo grounds',
+    'Library grounds',
+    'IT park campuses',
+    'Government tourist lodges',
+    'Heritage gardens',
+    'Township landscapes',
+  ],
+}
 
 const SERVICES = [
   {
     num: '01',
     title: 'Landscape Development',
     slug: 'landscape-development',
-    tagline: 'Garden development, residential & commercial',
-    desc: 'Full-spectrum garden development and landscaping — site survey, planting plan, costing and build, for homes and commercial sites alike. Lawns in Selection-I, Mexican or Doob grass; garden structures and statuary in FRP, iron or Astroturf. Township gardens, government parks, IT campus grounds, lake fronts and tourist lodges, as an approved vendor for State Government and CPWD projects.',
-    tags: ['Residential & Commercial', 'Site Survey', 'Planting Plans', 'Lawn Laying', 'Township Scale', 'CPWD Credentials'],
-    images: ['/assets/images/hero/01.jpg', '/assets/images/hero/02.jpg'],
-    accent: '#C9F24E',
+    image: '/assets/images/hero/01.jpg',
+    short: 'Site survey, planting plan, costing and build — for homes and commercial grounds alike, at any scale.',
   },
   {
     num: '02',
-    title: 'Garden Maintenance & Aftercare',
+    title: 'Garden Maintenance',
     slug: 'garden-maintenance',
-    tagline: 'Alive through every season',
-    desc: `Annual maintenance contracts (AMC) for gardens we've built and those we haven't. Pruning, feeding, pest management, lawn upkeep and seasonal replanting by our own field teams — using the same organic and inorganic inputs we stock at the counter.`,
-    tags: ['Annual Contracts', 'Pruning', 'Pest Control', 'Seasonal Replanting'],
-    images: ['/assets/images/hero/02.jpg', '/assets/images/hero/03.jpg'],
-    accent: '#A5B33D',
+    image: '/assets/images/hero/02.jpg',
+    short: 'Annual contracts covering pruning, feeding, pest control, lawn upkeep and seasonal replanting.',
   },
   {
     num: '03',
     title: 'Roof Garden Design',
     slug: 'roof-garden',
-    tagline: 'Protecting your slab, transforming your sky',
-    desc: 'Specialist roof garden systems layered with geotextile net and drain cell to protect the structural slab. Planted with lightweight growing media, shade-tolerant species and weather-proof planters — turning rooftops into usable, beautiful green space.',
-    tags: ['Geotextile Layer', 'Drain Cell', 'Lightweight Media', 'Weather-proof'],
-    images: ['/assets/images/hero/03.jpg', '/assets/images/hero/01.jpg'],
-    accent: '#356B38',
+    image: '/assets/images/hero/03.jpg',
+    short: 'Geotextile and drain-cell systems that protect the slab while turning a rooftop into usable green space.',
   },
   {
     num: '04',
     title: 'Vertical Garden Systems',
     slug: 'vertical-garden',
-    tagline: 'Walls that breathe',
-    desc: 'Modular living-wall and trellis systems for interiors, building facades and boundary screens. Custom-designed for the available light, irrigation source and plant species — from dense tropical moss walls to open climber frames with seasonal flowering.',
-    tags: ['Living Walls', 'Trellis Systems', 'Facade Planting', 'Interior Installations'],
-    images: ['/assets/images/hero/02.jpg', '/assets/images/hero/01.jpg'],
-    accent: '#C9F24E',
+    image: '/assets/images/hero/02.jpg',
+    short: 'Modular living walls and trellises for interiors, facades and boundary screens, built to the available light.',
   },
 ]
 
@@ -107,10 +101,11 @@ export default function ServicesPage() {
   return (
     <ServicesContent
       services={SERVICES}
-      heroStats={HERO_STATS}
+      bento={BENTO}
       approach={APPROACH}
+      stats={STATS}
       process={PROCESS}
-      foundations={FOUNDATIONS}
+      credentials={CREDENTIALS}
     />
   )
 }

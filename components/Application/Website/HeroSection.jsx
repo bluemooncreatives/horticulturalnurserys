@@ -86,7 +86,7 @@ const HeroSection = () => {
   const smallIndex = (index + 1) % HERO_IMAGES.length;
 
   return (
-    <section className="website-gutter pt-[2.75rem] sm:pt-[3.5rem]">
+    <section className="website-gutter pt-[2.75rem] pb-[clamp(2rem,4vw,3.5rem)] sm:pt-[3.5rem]">
       <div className="mx-auto max-w">
         {/* ── Framed hero card — image fills the whole card, content overlaid ── */}
         <div className="hero-frame relative flex min-h-[calc(100svh_-_2.75rem)] flex-col justify-between overflow-hidden rounded-[var(--radius-section)] bg-[var(--background)] sm:min-h-[calc(100svh_-_3.5rem)]">

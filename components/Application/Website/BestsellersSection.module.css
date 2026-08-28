@@ -130,7 +130,9 @@
 }
 
 .productPrice {
-    margin: 0 0 0.75rem;
+    /* No trailing margin — the section's own bottom padding is the gap to the
+       next section, so a margin here would read as extra, uneven space. */
+    margin: 0;
     font-size: clamp(0.82rem, 0.95vw, 0.9rem);
     font-weight: 600;
     color: var(--brand-ink-soft);

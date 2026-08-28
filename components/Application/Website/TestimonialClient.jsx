@@ -136,7 +136,7 @@ export default function TestimonialClient({ testimonials = [] }) {
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent sm:w-28" />
 
         {/* Moving track */}
-        <div className="testimonial-track flex w-max items-stretch gap-5 pt-2 pb-6 pl-5">
+        <div className="testimonial-track flex w-max items-stretch gap-5 pt-2 pl-5">
           {trackItems.map((item, index) => (
             <TestimonialCard
               key={`${item.name}-${index}`}

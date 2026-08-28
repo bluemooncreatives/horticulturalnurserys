@@ -51,7 +51,7 @@ const Footer = ({ categoryLinks = [] }) => {
     const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
     return (
-        <footer className="website-gutter pt-6 pb-4" aria-label="Site footer">
+        <footer className="website-gutter pt-[clamp(1.25rem,2.5vw,2rem)] pb-4" aria-label="Site footer">
             <div className="dark-panel relative overflow-hidden px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
 
                 {/* ── Top: wordmark + copyright mark ── */}

@@ -109,7 +109,7 @@ export default function TestimonialClient({ testimonials = [] }) {
     <section
       id="testimonials"
       aria-labelledby="testimonials-title"
-      className="overflow-hidden pt-12 sm:pt-14 pb-12 sm:pb-14"
+      className="overflow-hidden pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]"
     >
       {/* ── Centralized Eyebrow + Header ── */}
       <div className="website-gutter mx-auto max-w flex flex-col items-center text-center">

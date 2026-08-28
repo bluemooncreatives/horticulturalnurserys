@@ -1,6 +1,6 @@
 /* Portfolio-style Featured Products Grid */
 .fp-section {
-    padding: clamp(2.25rem, 4vw, 3.75rem) 0 clamp(1.25rem, 2vw, 1.75rem);
+    padding: clamp(1.25rem, 2.5vw, 2rem) 0 clamp(2rem, 4vw, 3.5rem);
 }
 
 .fp-container {
@@ -205,10 +205,6 @@
 
     .fp-container {
         padding: 0 var(--website-gutter);
-    }
-
-    .fp-section {
-        padding: 2rem 0 1.5rem;
     }
 
     .fp-project-title h3 {

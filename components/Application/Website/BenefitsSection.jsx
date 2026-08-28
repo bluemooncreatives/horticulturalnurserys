@@ -14,7 +14,7 @@ const BENEFITS = [
 
 const BenefitsSection = () => {
     return (
-        <section className="lumora-shell py-8 lg:py-10">
+        <section className="lumora-shell pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
             <div className="dark-panel relative overflow-hidden p-8 lg:p-14">
 
                 {/* watermark */}

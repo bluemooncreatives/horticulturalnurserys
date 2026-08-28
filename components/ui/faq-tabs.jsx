@@ -17,7 +17,6 @@ import { cn } from '@/lib/utils'
 //     primary/muted scale, so it re-skins with the rest of the platform.
 //
 // Props:
-//   eyebrow    — small uppercase label above the heading
 //   title      — section heading
 //   meta       — optional right-aligned caption on the header row
 //   categories — { key: 'Label' } — tab order follows key order
@@ -50,7 +49,7 @@ export const FAQ = ({
             {/* section header — same shape as every other section on the page */}
             <div className="mb-4 flex items-end justify-between lg:mb-6">
                 <div>
-                    <h2 className="mt-3 text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
+                    <h2 className="text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
                         {title}
                     </h2>
                 </div>

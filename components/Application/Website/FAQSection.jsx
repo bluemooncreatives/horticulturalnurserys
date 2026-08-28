@@ -73,7 +73,6 @@ const FAQ_DATA = {
 
 const FAQSection = () => (
     <FAQ
-        eyebrow="Got Questions?"
         title="Frequently Asked"
         categories={CATEGORIES}
         faqData={FAQ_DATA}

@@ -23,7 +23,6 @@ import { cn } from '@/lib/utils'
 //   categories — { key: 'Label' } — tab order follows key order
 //   faqData    — { key: [{ question, answer }] } — keyed to `categories`
 export const FAQ = ({
-    eyebrow = 'Got Questions?',
     title = 'Frequently Asked',
     meta,
     categories = {},
@@ -51,10 +50,6 @@ export const FAQ = ({
             {/* section header — same shape as every other section on the page */}
             <div className="mb-4 flex items-end justify-between lg:mb-6">
                 <div>
-                    <span className="eyebrow flex items-center gap-2">
-                        <span aria-hidden className="h-px w-6 bg-current opacity-40" />
-                        {eyebrow}
-                    </span>
                     <h2 className="mt-3 text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
                         {title}
                     </h2>
@@ -93,13 +88,17 @@ export const FAQ = ({
                         >
                             <span className="relative z-10">{categories[key]}</span>
                             {/* brand fill slides up into place — the CSS equivalent
-                                of the reference's y:100%→0% motion element */}
+                                of the reference's y:100%→0% motion element.
+                                Parked at 100%+2px rather than a flat 100%: at exactly
+                                its own height, subpixel rounding against the rounded
+                                overflow clip leaves a hairline of fill showing along
+                                the bottom edge of the inactive pills. */}
                             <span
                                 aria-hidden
                                 className={cn(
                                     'absolute inset-0 z-0 bg-[var(--brand-primary)]',
                                     'transition-transform duration-500 ease-[var(--ease-out-expo)]',
-                                    active ? 'translate-y-0' : 'translate-y-full'
+                                    active ? 'translate-y-0' : 'translate-y-[calc(100%+2px)]'
                                 )}
                             />
                         </button>

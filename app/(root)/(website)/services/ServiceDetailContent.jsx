@@ -13,7 +13,7 @@ if (typeof window !== 'undefined') {
 }
 
 /* ────────────────────────────────────────────────────────────────
-   ServiceDetailContent — shared layout for every /services/* page.
+   ServiceDetailContent - shared layout for every /services/* page.
 
    Props:
      service = {
@@ -45,7 +45,7 @@ function RevealLabel({ children }) {
   )
 }
 
-// Glyph-roll heading — CSS-only stagger
+// Glyph-roll heading - CSS-only stagger
 const RollHeading = ({ text, className = '' }) => {
   let gi = 0
   return (

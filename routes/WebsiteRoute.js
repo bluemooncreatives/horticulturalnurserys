@@ -1,6 +1,6 @@
 export const WEBSITE_HOME = "/"
 // Kept as aliases so any lingering "login/register" link lands on the sole
-// authenticated surface — the admin panel. There is no customer auth.
+// authenticated surface - the admin panel. There is no customer auth.
 export const WEBSITE_LOGIN = "/admin/login"
 export const WEBSITE_REGISTER = "/admin/login"
 

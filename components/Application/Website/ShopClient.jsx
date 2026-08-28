@@ -103,7 +103,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
         queryKey: ['products', sorting, searchParamString, page, pageSize],
         queryFn: () => fetchProduct(page),
         // Reuse the server-rendered first page so the initial paint needs no
-        // refetch — but only when the client wants the same size the server
+        // refetch - but only when the client wants the same size the server
         // rendered (desktop 9). Mobile (10) fetches its own first page.
         initialData: (page === 0 && isInitialQuery && pageSize === DESKTOP_PAGE_SIZE)
             ? { products: initialProducts, total: initialTotal, totalPages: initialTotalPages, page: 0 }
@@ -168,7 +168,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                 <div className="grid w-full gap-6 lg:grid-cols-[290px_1fr] lg:gap-8">
                     {/* The aside shell always renders (CSS-hidden below lg) so the
                         sidebar column is occupied from the server-rendered first
-                        paint — if it only mounted after hydration (isDesktop flips
+                        paint - if it only mounted after hydration (isDesktop flips
                         in an effect), the product grid would start in the 290px
                         column and jump right when the aside appeared, a large CLS.
                         Filter itself still mounts only on desktop so mobile never
@@ -181,7 +181,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                     {!isDesktop && (
                         <Sheet open={isMobileFilter} onOpenChange={setIsMobileFilter}>
                             <SheetContent side='left' className="flex w-[86%] max-w-sm flex-col gap-0 bg-background p-0">
-                                {/* Header — matches the hamburger menu's sheet chrome (icon + title
+                                {/* Header - matches the hamburger menu's sheet chrome (icon + title
                                     stack, same title scale) so the two slide-out panels read as one
                                     family of components. */}
                                 <SheetHeader className="flex-shrink-0 gap-0 border-b border-black/[0.06] px-5 py-4 pr-12">
@@ -205,7 +205,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                                     <Filter filters={initialFilters} showClearLink={false} showTitle={false} />
                                 </div>
 
-                                {/* Sticky action footer — one dominant full-width action (matches
+                                {/* Sticky action footer - one dominant full-width action (matches
                                     the hamburger menu's pinned Cart bar) with Clear All demoted to a
                                     small link above it, rather than two equal-weight buttons. */}
                                 <div className="flex-shrink-0 border-t border-black/[0.06] bg-background p-4">
@@ -239,7 +239,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                             />
                         </div>
 
-                        {/* Scroll anchor — page changes bring this back into view. */}
+                        {/* Scroll anchor - page changes bring this back into view. */}
                         <div ref={gridTopRef} className="scroll-mt-24" />
 
                         {error ? (

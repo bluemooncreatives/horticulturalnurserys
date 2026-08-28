@@ -59,7 +59,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="font-sans">
       <head>
         {/* Cloudinary serves product images, about-us photos and Instagram videos,
-            but all of it is below the fold — the homepage LCP is a local /assets hero.
+            but all of it is below the fold - the homepage LCP is a local /assets hero.
             A full preconnect (TCP + TLS) therefore sits unused during the critical
             window (Lighthouse: "Unused preconnect"), so we only warm DNS here. The
             socket is established lazily when the first below-the-fold Image/video loads. */}
@@ -70,7 +70,7 @@ export default function RootLayout({ children }) {
             on auth/checkout and other hero-text pages; it's 20 KB and swaps
             late without a preload, which tanks Speed Index.
             Medium (weight 600) is used by the LCP "Shop" heading.
-            Book (weight 400) is the primary body font — preloaded so it's
+            Book (weight 400) is the primary body font - preloaded so it's
             ready before below-the-fold content renders. */}
         <link rel="preload" href="/assets/font/Felixti.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/assets/font/PPNeueMontreal-Medium.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />

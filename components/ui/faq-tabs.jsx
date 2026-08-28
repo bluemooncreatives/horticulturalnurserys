@@ -4,7 +4,7 @@ import { useId, useState } from 'react'
 import { Plus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-// Tabbed FAQ — a category switcher above an accordion list.
+// Tabbed FAQ - a category switcher above an accordion list.
 //
 // Adapted from a framer-motion reference to this codebase's conventions:
 //   • No framer-motion. This project standardises on GSAP and is hydration-
@@ -17,10 +17,10 @@ import { cn } from '@/lib/utils'
 //     primary/muted scale, so it re-skins with the rest of the platform.
 //
 // Props:
-//   title      — section heading
-//   meta       — optional right-aligned caption on the header row
-//   categories — { key: 'Label' } — tab order follows key order
-//   faqData    — { key: [{ question, answer }] } — keyed to `categories`
+//   title      - section heading
+//   meta       - optional right-aligned caption on the header row
+//   categories - { key: 'Label' } - tab order follows key order
+//   faqData    - { key: [{ question, answer }] } - keyed to `categories`
 export const FAQ = ({
     title = 'Frequently Asked',
     meta,
@@ -46,7 +46,7 @@ export const FAQ = ({
             )}
             {...props}
         >
-            {/* section header — same shape as every other section on the page */}
+            {/* section header - same shape as every other section on the page */}
             <div className="mb-4 flex items-end justify-between lg:mb-6">
                 <div>
                     <h2 className="text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
@@ -86,7 +86,7 @@ export const FAQ = ({
                             )}
                         >
                             <span className="relative z-10">{categories[key]}</span>
-                            {/* brand fill slides up into place — the CSS equivalent
+                            {/* brand fill slides up into place - the CSS equivalent
                                 of the reference's y:100%→0% motion element.
                                 Parked at 100%+2px rather than a flat 100%: at exactly
                                 its own height, subpixel rounding against the rounded
@@ -105,7 +105,7 @@ export const FAQ = ({
                 })}
             </div>
 
-            {/* answers — `key` on the panel restarts the enter animation per tab */}
+            {/* answers - `key` on the panel restarts the enter animation per tab */}
             <div
                 key={selected}
                 role="tabpanel"
@@ -118,7 +118,7 @@ export const FAQ = ({
                 ))}
             </div>
 
-            {/* optional footer slot — e.g. a "still have a question?" line */}
+            {/* optional footer slot - e.g. a "still have a question?" line */}
             {children}
         </section>
     )
@@ -158,7 +158,7 @@ const FAQItem = ({ faq }) => {
                 />
             </button>
 
-            {/* grid-rows trick — no fixed max-height, no JS measurement */}
+            {/* grid-rows trick - no fixed max-height, no JS measurement */}
             <div
                 className="grid transition-[grid-template-rows] duration-300 ease-in-out"
                 style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}

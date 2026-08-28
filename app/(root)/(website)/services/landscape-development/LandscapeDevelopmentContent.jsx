@@ -34,7 +34,7 @@ const STEP_ICONS = [ClipboardList, PencilRuler, Calculator, Hammer]
    left rule and no left padding) changes with the breakpoint. Spelled out per
    index rather than composed from conditions: every pair here is a base class
    plus a responsive override of the SAME property, which Tailwind always emits
-   in that order — composing them from separate conditions produced competing
+   in that order - composing them from separate conditions produced competing
    `border-l` / `border-l-0` utilities whose winner depended on stylesheet
    order rather than on intent. */
 const STAT_CELL_EDGES = [
@@ -93,7 +93,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           />
         </div>
 
-        {/* Layered scrims — vertical for legibility, radial for accent warmth */}
+        {/* Layered scrims - vertical for legibility, radial for accent warmth */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E0D] via-[#0B1E0D]/60 to-[#0B1E0D]/15" />
         <div
           aria-hidden
@@ -101,7 +101,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           style={{ background: `radial-gradient(ellipse at 15% 90%, ${service.accent} 0%, transparent 62%)` }}
         />
 
-        {/* Back link — pinned to the top of the hero */}
+        {/* Back link - pinned to the top of the hero */}
         <div className="lumora-shell absolute inset-x-0 top-0 z-10 pt-8">
           <Link
             href="/services"
@@ -123,7 +123,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           </RevealUp>
 
           {/* Each line gets its own .rv-line box, so the masked reveal cascades
-              and nothing depends on a width constraint to force the break —
+              and nothing depends on a width constraint to force the break -
               .rv-line is overflow-hidden, so any wrap driven by a max-width
               gets clipped horizontally rather than wrapped. */}
           <div className="ld-hero-title">
@@ -144,7 +144,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           </RevealUp>
         </div>
 
-        {/* Stat rail — sits on the hero's lower edge */}
+        {/* Stat rail - sits on the hero's lower edge */}
         <div className="relative z-10 border-t border-white/15">
           <div className="lumora-shell">
             <dl className="grid grid-cols-2 lg:grid-cols-4">
@@ -166,7 +166,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           </div>
         </div>
 
-        {/* Scoped type for the masked hero reveal — kept off the global
+        {/* Scoped type for the masked hero reveal - kept off the global
             .rv-inner so every other reveal on the page keeps its own sizing. */}
         <style>{`
           .ld-hero-title .rv-inner {
@@ -304,7 +304,7 @@ export default function LandscapeDevelopmentContent({ service }) {
         </div>
       </section>
 
-      {/* ══ Lawns — dark band ══════════════════════════════════ */}
+      {/* ══ Lawns - dark band ══════════════════════════════════ */}
       <section className="bg-[var(--brand-ink-soft)] py-16 lg:py-24">
         <div className="lumora-shell">
           <SectionLabel tone="dark">Lawns</SectionLabel>
@@ -375,7 +375,7 @@ export default function LandscapeDevelopmentContent({ service }) {
               delay={100}
               className="mt-6 max-w-md text-[0.92rem] leading-[1.85] text-[var(--muted-foreground)]"
             >
-              Pergolas, screens, edging, water features, planters and statuary — fabricated to your
+              Pergolas, screens, edging, water features, planters and statuary - fabricated to your
               choice of material, weighed against exposure, upkeep and budget before anything is
               ordered.
             </RevealUp>
@@ -457,7 +457,7 @@ export default function LandscapeDevelopmentContent({ service }) {
         </div>
       </section>
 
-      {/* ══ Credentials — dark band ════════════════════════════ */}
+      {/* ══ Credentials - dark band ════════════════════════════ */}
       <section className="relative overflow-hidden bg-[var(--brand-ink-soft)] py-16 lg:py-24">
         <div
           aria-hidden

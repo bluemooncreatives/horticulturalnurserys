@@ -20,7 +20,7 @@ const FAQSection = dynamic(() => import('@/components/Application/Website/FAQSec
 export const metadata = {
     title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
     description:
-        'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance by qualified horticulturists, plus ornamental plants, seasonal flowers, lawn grass, manure, pots, garden implements and roof-garden materials — buy online or at our Alipore counter.',
+        'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance by qualified horticulturists, plus ornamental plants, seasonal flowers, lawn grass, manure, pots, garden implements and roof-garden materials - buy online or at our Alipore counter.',
     openGraph: {
         title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
         description:

@@ -20,7 +20,7 @@ const breadcrumbData = [
 ]
 
 const formatPrice = (price) =>
-  typeof price === 'number' ? `₹${price.toLocaleString('en-IN')}` : '—'
+  typeof price === 'number' ? `₹${price.toLocaleString('en-IN')}` : '-'
 
 const ShowBestseller = () => {
   const [bestsellers, setBestsellers] = useState([])

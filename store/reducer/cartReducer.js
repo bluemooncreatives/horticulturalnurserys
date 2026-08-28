@@ -27,7 +27,7 @@ export const cartReducer = createSlice({
             )
 
             if (existingProduct < 0) {
-                // New line — store the clamped quantity.
+                // New line - store the clamped quantity.
                 state.products.push({ ...payload, qty: addQty })
                 state.count = state.products.length
             } else {

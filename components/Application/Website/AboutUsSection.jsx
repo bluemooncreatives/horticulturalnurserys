@@ -7,7 +7,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 // Collaborator cluster (card 1). Two OVERFLOWING rows of faces so the
-// side-fade mask always has faces behind its soft edges — the cluster reads
+// side-fade mask always has faces behind its soft edges - the cluster reads
 // as a continuous, larger set than the card can show. Row B is image-offset
 // so the two rows never mirror each other. Only 01/02/03 exist on disk, so we
 // cycle them.
@@ -36,7 +36,7 @@ const HEADING =
 // is a fixed-height mask over a THREE-cell column of the SAME letter
 // [copy · copy · copy]; sliding the column one cell rolls the glyph vertically
 // while a letter is always in the window (never blank). Here the roll isn't
-// hover-driven — it's tied to the section's scrub, so each line rolls into
+// hover-driven - it's tied to the section's scrub, so each line rolls into
 // place as it's scrolled to (see makeLineFill).
 const CELL = '1.3em'          // mask + cell height; clears descenders (g, y, p)
 const REST = -100 / 3         // -33.33% → middle cell centred = readable letter
@@ -45,7 +45,7 @@ const REST = -100 / 3         // -33.33% → middle cell centred = readable lett
 const rollFrom = (i) => (i % 2 === 0 ? -200 / 3 : 0) // even → from below, odd → from above
 
 // Split a text element into per-word spans so a timeline can reveal them one
-// at a time (card 3's copy — words "focus in" on scroll). Idempotent: it reads
+// at a time (card 3's copy - words "focus in" on scroll). Idempotent: it reads
 // the aggregate textContent, so re-running on a breakpoint change re-splits
 // cleanly. Whitespace is kept as text nodes so wrapping is unaffected.
 const splitWords = (el) => {
@@ -82,8 +82,8 @@ const groupLines = (els) => {
 
 const AboutUsSection = () => {
     const rootRef = useRef(null)        // section: pin target + scroll driver
-    const statementRef = useRef(null)   // eyebrow + heading — parallax layer A
-    const statsRef = useRef(null)       // stat cards — parallax layer B
+    const statementRef = useRef(null)   // eyebrow + heading - parallax layer A
+    const statsRef = useRef(null)       // stat cards - parallax layer B
 
     useEffect(() => {
         const root = rootRef.current
@@ -111,7 +111,7 @@ const AboutUsSection = () => {
 
                 // One scrub, one clock: for every visual line we (a) brighten it
                 // 50%→full and (b) roll its glyphs from rolled-out into place,
-                // staggered left-to-right — so lines resolve one after another as
+                // staggered left-to-right - so lines resolve one after another as
                 // the pinned section is scrolled, never all at once.
                 let g = 0 // running glyph index → stable alternating roll direction
                 lines.forEach((lineWords, li) => {
@@ -120,7 +120,7 @@ const AboutUsSection = () => {
 
                     // Columns in this line, in reading order. Drive a numeric proxy
                     // → CSS translateY(%) (gsap's yPercent basis is wrong for these
-                    // nested overflow-clipped columns — same note as in RollingLink).
+                    // nested overflow-clipped columns - same note as in RollingLink).
                     const cols = lineWords.flatMap((w) =>
                         Array.from(w.querySelectorAll('[data-roll-col]'))
                     )
@@ -203,7 +203,7 @@ const AboutUsSection = () => {
                 { yPercent: 0, scale: 1, rotateX: 0, opacity: 1, ease: 'power3.out', scrollTrigger: settle }
             )
 
-            // The "+" lands last with an overshoot — a small punctuation punch.
+            // The "+" lands last with an overshoot - a small punctuation punch.
             if (plusEl) {
                 gsap.fromTo(
                     plusEl,
@@ -213,10 +213,10 @@ const AboutUsSection = () => {
             }
         }
 
-        // Card 2 (the dark seal card). `pass` drives the always-on motion — the
-        // ink fill fading in and the seal spinning — across the whole time the
-        // section is on screen; `settle` drives the one-shot reveal — seal pop
-        // and the 3D number rise — as the card arrives; `count` runs the 0→35
+        // Card 2 (the dark seal card). `pass` drives the always-on motion - the
+        // ink fill fading in and the seal spinning - across the whole time the
+        // section is on screen; `settle` drives the one-shot reveal - seal pop
+        // and the 3D number rise - as the card arrives; `count` runs the 0→35
         // tick end to end, tied to the full scroll range so the figure climbs
         // the entire time the section is scrolled rather than snapping up on
         // entry.
@@ -229,7 +229,7 @@ const AboutUsSection = () => {
             const yearsWrap = root.querySelector('.about-years')
             const yearsEl = root.querySelector('.about-years-value')
 
-            // Background transparency fades in — the ink fill deepens as the
+            // Background transparency fades in - the ink fill deepens as the
             // card is scrolled into place.
             if (bg) {
                 gsap.fromTo(bg, { autoAlpha: 0 }, { autoAlpha: 1, ease: 'none',
@@ -237,7 +237,7 @@ const AboutUsSection = () => {
             }
 
             // Seal: dashed ring and its circular caption orbit one way, the
-            // icon counter-rotates so it stays upright — a live, machined-badge
+            // icon counter-rotates so it stays upright - a live, machined-badge
             // feel tied to scroll. Ring + text spin together, from the same
             // centre, so the caption tracks the dashes.
             if (ring) gsap.fromTo(ring, { rotate: 0 }, { rotate: 360, ease: 'none', scrollTrigger: pass })
@@ -250,7 +250,7 @@ const AboutUsSection = () => {
 
             // The figure rises and unfolds toward the viewer on `settle` (a
             // quick reveal as the card arrives), then the value ticks 0→35 on
-            // `count` — a separate, longer scroll range so the number climbs
+            // `count` - a separate, longer scroll range so the number climbs
             // end to end while the section is scrolled, not in a burst on entry.
             if (yearsEl && yearsWrap) {
                 gsap.fromTo(
@@ -271,13 +271,13 @@ const AboutUsSection = () => {
         // Card 3 (the spread card). Split like cards 2 & 4 so the sequence is
         // actually watchable: `settle` is the entrance pop as the card arrives
         // (pre-pin); `hold` runs the sequenced content across the long range
-        // (the pinned hold) while the card sits fully in view — the
+        // (the pinned hold) while the card sits fully in view - the
         // copy focuses in word by word → the image box apertures open (clip
         // reveal) with the photo counter-zooming and a colour veil clearing →
         // an accent line wipes → the label rises → the figure unfolds in 3D
         // while the number counts 0→50. Earlier the whole thing rode the
         // section-entrance window, so the copy cascade finished while the card
-        // was still low on the screen / about to pin — it read as static by the
+        // was still low on the screen / about to pin - it read as static by the
         // time the card centred.
         const makeCardThree = ({ settle, hold }) => {
             const card = root.querySelector('.about-card-three')
@@ -293,7 +293,7 @@ const AboutUsSection = () => {
             const numEl = card.querySelector('.about-c3-num')
             const proxy = { v: 0 }
 
-            // 1 · Entrance (settle) — the whole card lifts and clears from a soft
+            // 1 · Entrance (settle) - the whole card lifts and clears from a soft
             //     blur as it arrives, so it's present when the section pins.
             gsap.fromTo(card,
                 { yPercent: 16, scale: 0.93, autoAlpha: 0, filter: 'blur(8px)' },
@@ -305,7 +305,7 @@ const AboutUsSection = () => {
                 scrollTrigger: hold,
             })
 
-            // 2 · Copy: each word rises from below and sharpens — focus-in cascade.
+            // 2 · Copy: each word rises from below and sharpens - focus-in cascade.
             if (words.length) {
                 tl.fromTo(words,
                     { yPercent: 110, autoAlpha: 0, filter: 'blur(4px)' },
@@ -359,15 +359,15 @@ const AboutUsSection = () => {
         }
 
         // Card 4 (the photo card). Split like card 2 so the payoff is actually
-        // watchable: `settle` is the entrance as the card arrives (pre-pin) —
+        // watchable: `settle` is the entrance as the card arrives (pre-pin) -
         // the card pops from a soft blur, the gradient veil deepens, the eyebrow
         // clip-rises and the area figure unfolds in 3D. `hold` runs over the
         // long range (the pinned hold), while the card sits fully in
         // view: the image stack slow-zooms (Ken Burns) AND crossfades through
-        // THREE frames in turn (the "changing images" — a live photo swap), and
+        // THREE frames in turn (the "changing images" - a live photo swap), and
         // the number counts 0 → 4,700 end to end. Earlier this was one short
         // window keyed to the section entrance, so every beat finished while the
-        // card was still near the bottom of the screen / about to pin — nothing
+        // card was still near the bottom of the screen / about to pin - nothing
         // was left to see once it settled. SSR / reduced motion paints the base
         // frame + "4,700 m²" in place.
         const makeCardFour = ({ settle, hold }) => {
@@ -381,7 +381,7 @@ const AboutUsSection = () => {
             const numEl = card.querySelector('.about-c4-num')
             const fmt = (n) => Math.round(n).toLocaleString('en-US')
 
-            // ── Entrance (settle) — as the card arrives ──
+            // ── Entrance (settle) - as the card arrives ──
             gsap.fromTo(card,
                 { yPercent: 16, scale: 0.94, autoAlpha: 0, filter: 'blur(8px)' },
                 { yPercent: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)', ease: 'power3.out', scrollTrigger: settle })
@@ -399,7 +399,7 @@ const AboutUsSection = () => {
                     { yPercent: 0, scale: 1, rotateX: 0, autoAlpha: 1, ease: 'back.out(1.7)', scrollTrigger: settle })
             }
 
-            // ── Hold — plays across the long range while the card is on screen ──
+            // ── Hold - plays across the long range while the card is on screen ──
             // One timeline so the Ken Burns zoom, the frame crossfades and the
             // counter share the same clock and span the full hold.
             const span = Math.max(frames.length, 2) // scroll units the hold fills
@@ -428,7 +428,7 @@ const AboutUsSection = () => {
         // ── All breakpoints ─────────────────────────────────────────────────
         // The section rises with a layered parallax, sticks to the top, and
         // while it's held the heading brightens line by line, end to end.
-        // Same pin-and-scrub lock on every screen size — mobile/tablet used to
+        // Same pin-and-scrub lock on every screen size - mobile/tablet used to
         // get an un-pinned "pass through" variant instead, which read as a
         // glitchy double-exposure (the fill/roll timeline scrubbing against a
         // section still sliding under the viewport rather than held still).
@@ -458,7 +458,7 @@ const AboutUsSection = () => {
             makeCardTwo({
                 pass: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
                 settle: { trigger: root, start: 'top 78%', end: 'top 28%', scrub: true },
-                // 0→35 spans the full pinned hold — the number climbs from the
+                // 0→35 spans the full pinned hold - the number climbs from the
                 // moment the section sticks until it releases (same range that
                 // drives the heading fill), so it counts end to end on scroll.
                 count: { trigger: root, start: 'top top', end: '+=155%', scrub: true },
@@ -491,17 +491,17 @@ const AboutUsSection = () => {
     }, [])
 
     return (
-        // No overlap at rest — the hero stays fully visible on load; the section
+        // No overlap at rest - the hero stays fully visible on load; the section
         // climbs over it on scroll. z-[2] keeps it above the hero as it rises.
         <section ref={rootRef} className="about-section relative z-[2] bg-[var(--background)]">
-            {/* min-h-svh is required by the ScrollTrigger pin — a pinned element
+            {/* min-h-svh is required by the ScrollTrigger pin - a pinned element
                 shorter than the viewport leaves a dead band beneath it while held.
                 Because the content is shorter than a viewport, that surplus height
                 has to go somewhere: justify-center keeps the statement and the stat
                 cards visually grouped (justify-between instead pushes them apart and
                 opens a void through the middle). The cost is that this section's
                 gaps to its neighbours are larger than the 32/56 rhythm every other
-                section follows — a deliberate trade, not an oversight. */}
+                section follows - a deliberate trade, not an oversight. */}
             <div className="lumora-shell flex min-h-svh flex-col justify-center py-10 lg:py-24">
 
                 {/* ── Statement (parallax layer A) ── */}
@@ -514,7 +514,7 @@ const AboutUsSection = () => {
                         of tripled glyph columns (RollingLink's mask technique); on
                         scroll the pinned section brightens AND rolls the heading
                         into place, one visual line after another. Words stay inline
-                        so they wrap naturally — line grouping reads their offsetTop.
+                        so they wrap naturally - line grouping reads their offsetTop.
                         A real space between words keeps line breaks possible. */}
                     <h2 className="max-w text-[clamp(1.5rem,3.4vw,2.35rem)] font-medium leading-[1.28] tracking-[-0.01em] text-[var(--brand-primary)]">
                         {HEADING.split(' ').flatMap((word, wi) => [
@@ -557,7 +557,7 @@ const AboutUsSection = () => {
                 {/* ── Stat cards (parallax layer B) ── */}
                 <div ref={statsRef} className="about-stats mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:mt-16 lg:grid-cols-4">
 
-                    {/* 1 · Collaborator cluster — faded avatar rows top, big
+                    {/* 1 · Collaborator cluster - faded avatar rows top, big
                         faded count bottom (matches the reference cards). */}
                     <div className="about-stat relative flex min-h-[11.5rem] flex-col justify-between gap-4 overflow-hidden rounded-[var(--radius-card)] border border-[var(--border)] bg-white p-4 lg:min-h-[13rem] lg:p-5">
 
@@ -605,12 +605,12 @@ const AboutUsSection = () => {
                     {/* 2 · Dark number + seal. The ink fill is its own layer so
                         it can fade in on scroll; the seal spins (dashed ring +
                         circular caption one way, the icon the other) and the
-                        figure counts 0→35 while it rises in 3D — see makeCardTwo. */}
+                        figure counts 0→35 while it rises in 3D - see makeCardTwo. */}
                     <div className="about-stat relative flex min-h-[11.5rem] flex-col justify-between overflow-hidden rounded-[var(--radius-card)] p-4 text-white lg:min-h-[13rem] lg:p-5">
-                        {/* Ink fill layer — starts transparent, fades in on scroll */}
+                        {/* Ink fill layer - starts transparent, fades in on scroll */}
                         <div aria-hidden className="about-card-two-bg absolute inset-0 bg-[var(--brand-ink-soft)]" />
 
-                        {/* Top row — label left, spinning seal right */}
+                        {/* Top row - label left, spinning seal right */}
                         <div className="relative flex items-start justify-between gap-2">
                             <span className="text-[0.8rem] uppercase text-white text-semibold">Years in the Field</span>
                             <span aria-hidden className="about-seal relative flex size-[5rem] shrink-0 items-center justify-center rounded-full border border-white/15 lg:size-[5.8rem]">
@@ -618,7 +618,7 @@ const AboutUsSection = () => {
                                     viewBox units apart): outer border r≈50, text
                                     centred at r=42.5, dashed ring at r=35 (inset-3). */}
                                 <span className="about-seal-ring absolute inset-3 rounded-full border border-dashed border-white" />
-                                {/* Caption wrapping the seal — SVG text centred on a
+                                {/* Caption wrapping the seal - SVG text centred on a
                                     circle path (r=42.5), the middle ring. Spins with
                                     the dashed ring on scroll. */}
                                 <svg className="about-seal-text absolute inset-0 size-full" viewBox="0 0 100 100">
@@ -628,7 +628,7 @@ const AboutUsSection = () => {
                                     {/* textLength = full path circumference (2π·42.5 ≈ 267)
                                         with lengthAdjust="spacing" makes the caption fill the
                                         whole circle, so the spacing is uniform end to end and
-                                        the two "·" gaps match the seam gap — no big empty arc.
+                                        the two "·" gaps match the seam gap - no big empty arc.
                                         dominantBaseline centres the glyphs on the ring so the
                                         text band sits midway between the other two rings. */}
                                     <text className="fill-white" dominantBaseline="central" style={{ fontSize: '9px' }}>
@@ -651,7 +651,7 @@ const AboutUsSection = () => {
                     {/* 3 · Text top, figure bottom. On scroll the whole card
                         pops up out of a blur, the copy focuses in word by word,
                         an accent line wipes out and the metric unfolds in 3D
-                        while the number counts 0→50 — see makeCardThree. The
+                        while the number counts 0→50 - see makeCardThree. The
                         perspective here powers the figure's 3D unfold. */}
                     <div
                         className="about-stat about-card-three flex min-h-[11.5rem] flex-col justify-between rounded-[var(--radius-card)] border border-[var(--border)] bg-white p-4 will-change-transform lg:min-h-[13rem] lg:p-5"
@@ -664,7 +664,7 @@ const AboutUsSection = () => {
 
                         {/* Image box filling the gap. On scroll it apertures open
                             (clip-path), the photo counter-zooms and a colour veil
-                            clears — see makeCardThree. The veil is opacity-0 by
+                            clears - see makeCardThree. The veil is opacity-0 by
                             default so reduced-motion / no-JS shows the photo clean. */}
                         <div className="about-c3-imgwrap relative my-4 h-16 shrink-0 overflow-hidden rounded-[10px] lg:h-24">
                             <Image
@@ -692,14 +692,14 @@ const AboutUsSection = () => {
                         through three frames (the changing-image swap), the
                         gradient veil deepens, the eyebrow clip-rises and the
                         area figure unfolds in 3D while the number counts to
-                        4,700 — see makeCardFour. The perspective powers the
+                        4,700 - see makeCardFour. The perspective powers the
                         figure's unfold; the extra frames are opacity-0 by
                         default so SSR / reduced motion shows the base photo. */}
                     <div
                         className="about-stat about-card-four relative flex min-h-[11.5rem] flex-col overflow-hidden rounded-[var(--radius-card)] p-4 text-white will-change-transform lg:min-h-[13rem] lg:p-5"
                         style={{ perspective: '700px' }}
                     >
-                        {/* Image stack — one wrapper so the Ken Burns zoom scales
+                        {/* Image stack - one wrapper so the Ken Burns zoom scales
                             all frames together; each frame crossfades on scroll. */}
                         <div aria-hidden className="about-c4-imgwrap absolute inset-0 will-change-transform">
                             <Image

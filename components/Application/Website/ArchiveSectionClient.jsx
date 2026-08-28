@@ -9,9 +9,9 @@ import styles from './CategoryArchiveSection.module.css'
 // section (and any future archive with the same shape: an id/href/name/image).
 //
 // Props:
-//   title    — section heading
-//   writeup  — intro paragraph
-//   items    — [{ id, href, name, previewImage, alt }]
+//   title    - section heading
+//   writeup  - intro paragraph
+//   items    - [{ id, href, name, previewImage, alt }]
 const ArchiveSectionClient = ({ title, writeup, items = [] }) => {
     return (
         <section className={styles.section}>

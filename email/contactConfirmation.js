@@ -14,7 +14,7 @@ import {
  * Auto-acknowledgement sent to the visitor who submitted the contact form.
  * Confirms we received the message and gives them a reference number to quote
  * in any follow-up. Every interpolated field is user-supplied, so all of it is
- * escaped. This is a best-effort send — the query is already persisted, so a
+ * escaped. This is a best-effort send - the query is already persisted, so a
  * mail failure must never block the submission.
  *
  * @param {object} data
@@ -46,7 +46,7 @@ export const contactConfirmation = ({ ticketId, name, subject, message }) => {
 ${eyebrow("Message received")}
 ${heading("Thanks for reaching out")}
 ${paragraph(`Hi ${firstName(name)},`)}
-${paragraph("We've received your message and our team will get back to you as soon as possible. Please keep the reference number below for any follow-up — just reply to this email and we'll pick up right where you left off.")}
+${paragraph("We've received your message and our team will get back to you as soon as possible. Please keep the reference number below for any follow-up - just reply to this email and we'll pick up right where you left off.")}
 ${refCard}
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="border-top:1px solid ${BRAND.border};padding-top:8px;margin-top:8px;">
   ${subject ? detail("Subject", subject) : ""}
@@ -54,7 +54,7 @@ ${refCard}
 </table>`;
 
     return emailShell({
-        preheader: `We've received your message — reference ${ticketId}.`,
+        preheader: `We've received your message - reference ${ticketId}.`,
         title: "We've received your message",
         bodyHtml,
     });

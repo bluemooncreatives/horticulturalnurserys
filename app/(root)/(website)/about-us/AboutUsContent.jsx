@@ -16,8 +16,8 @@ const HERO_RIGHT_IMAGE = "https://res.cloudinary.com/heog9fna/image/upload/v1787
 // Brand-story paragraphs shown beneath the statement.
 const STORY = [
   "Horticultural Development Centre began in Kolkata as a plant nursery, opened in 1990 by a small group of people who had spent their working lives in horticulture. The idea was modest: grow good planting material properly, and sell it honestly. Everything since has grown out of that one decision.",
-  "The nursery came first, and it is still the foundation. Our farm at Bibirhut, Ramdevpur in South 24 Parganas runs to roughly fifty bighas, developed scientifically over the years — 2,500 sqm of polyshed house, 2,000 sqm of green house and a 200 sqm fanpad house, served by sprinkler, fogger and drip irrigation. It exists to propagate and produce plants and grasses suited to tropical and subtropical conditions, and to send out material that establishes rather than merely survives the journey.",
-  "Landscaping followed naturally. Our qualified horticulturists and skilled field staff design, execute and maintain gardens, and we have built credentials in parks, gardens and beautification work under State Government departments, CPWD and private clients across the country. Alongside it we run a showroom and sale counter at Alipore — the one place in West Bengal where plants, seeds, pots, hanging baskets, nutrients, plant protection chemicals, garden implements and every accessory sit under one roof.",
+  "The nursery came first, and it is still the foundation. Our farm at Bibirhut, Ramdevpur in South 24 Parganas runs to roughly fifty bighas, developed scientifically over the years - 2,500 sqm of polyshed house, 2,000 sqm of green house and a 200 sqm fanpad house, served by sprinkler, fogger and drip irrigation. It exists to propagate and produce plants and grasses suited to tropical and subtropical conditions, and to send out material that establishes rather than merely survives the journey.",
+  "Landscaping followed naturally. Our qualified horticulturists and skilled field staff design, execute and maintain gardens, and we have built credentials in parks, gardens and beautification work under State Government departments, CPWD and private clients across the country. Alongside it we run a showroom and sale counter at Alipore - the one place in West Bengal where plants, seeds, pots, hanging baskets, nutrients, plant protection chemicals, garden implements and every accessory sit under one roof.",
 ];
 
 // The people behind the organisation. `reverse` flips the image/text order.
@@ -28,7 +28,7 @@ const PEOPLE = [
     image: HERO_CENTER_IMAGE,
     bio: [
       "Landscaping in Kolkata is rarely a matter of taste alone. The soil is heavy, the monsoon is unforgiving, and a terrace has only so much load to give. What survives here is what was chosen with those things in mind.",
-      "That conviction is why we kept the nursery rather than becoming a trading house. When a plant is raised on our own farm we know its age, its hardening, and what it will do in its second year — none of which can be guaranteed from a bought-in consignment.",
+      "That conviction is why we kept the nursery rather than becoming a trading house. When a plant is raised on our own farm we know its age, its hardening, and what it will do in its second year - none of which can be guaranteed from a bought-in consignment.",
       "It is also why we invested early in protected cultivation and modern irrigation. Polyshed, green house and fanpad structures with sprinkler, fogger and drip systems let us hold quality through the seasons that would otherwise dictate what we could offer.",
       "We import selected varieties from abroad for projects that call for them, and we stay on afterwards to maintain what we plant. A garden handed over and forgotten is not a finished project.",
     ],
@@ -39,10 +39,10 @@ const PEOPLE = [
     image: HERO_RIGHT_IMAGE,
     reverse: true,
     bio: [
-      "Every project is read on site before it is drawn. Light hours, drainage, soil, wind, load and how the space will actually be used decide the planting plan — not a catalogue picked in an office.",
+      "Every project is read on site before it is drawn. Light hours, drainage, soil, wind, load and how the space will actually be used decide the planting plan - not a catalogue picked in an office.",
       "Our team covers the full arc: survey and design, soil preparation and planting, lawn laying, roof-garden waterproofing with geotextile and drain cell, and the irrigation that keeps it all alive.",
       "The field staff who plant a garden are the ones who come back to it. Pruning, feeding, pest control, lawn upkeep and seasonal replanting run on a schedule, which is how a garden still looks considered in its fifth year.",
-      "That combination — designing, growing and maintaining under one house — is what allowed us to work on the Assembly House, the National Library, Alipore Zoo, Rabindra Sarobar, IT parks at Krishnanagar and Malda, tourist lodges, township landscapes and a great many private gardens.",
+      "That combination - designing, growing and maintaining under one house - is what allowed us to work on the Assembly House, the National Library, Alipore Zoo, Rabindra Sarobar, IT parks at Krishnanagar and Malda, tourist lodges, township landscapes and a great many private gardens.",
     ],
   },
 ];
@@ -137,7 +137,7 @@ const AboutUsContent = ({ products = [] }) => {
               Qualified horticulturists, and field staff who come back.
             </h2>
             <p className={styles.peopleIntro}>
-              Behind every garden we build is one house doing all of it — raising
+              Behind every garden we build is one house doing all of it - raising
               the plants at Bibirhut, surveying and designing the site, executing
               the work, and returning season after season to maintain it. Nothing
               is subcontracted out and then forgotten.
@@ -172,7 +172,7 @@ const AboutUsContent = ({ products = [] }) => {
             </article>
           ))}
 
-          {/* CTA — shared website button for consistent styling */}
+          {/* CTA - shared website button for consistent styling */}
           <div className={styles.ctaWrap}>
             <ShopAllButton
               label="Request a site visit"

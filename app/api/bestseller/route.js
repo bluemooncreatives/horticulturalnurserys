@@ -24,7 +24,7 @@ const sanitizeIds = (rawIds) => {
     return valid
 }
 
-// GET — current bestsellers in their configured order (admin panel list)
+// GET - current bestsellers in their configured order (admin panel list)
 export async function GET() {
     try {
         const auth = await isAuthenticated('admin')
@@ -46,7 +46,7 @@ export async function GET() {
     }
 }
 
-// POST — add one or more products to the bestseller list.
+// POST - add one or more products to the bestseller list.
 // Idempotent: already-bestseller and already-deleted ids are ignored, and new
 // entries are appended after the current highest rank.
 export async function POST(request) {
@@ -104,7 +104,7 @@ export async function POST(request) {
     }
 }
 
-// PUT — persist a new display order. Body: { order: [id, id, ...] }.
+// PUT - persist a new display order. Body: { order: [id, id, ...] }.
 // Any id that is not a current bestseller is silently skipped.
 export async function PUT(request) {
     try {
@@ -136,7 +136,7 @@ export async function PUT(request) {
     }
 }
 
-// DELETE — remove one or more products from the bestseller list.
+// DELETE - remove one or more products from the bestseller list.
 export async function DELETE(request) {
     try {
         const auth = await isAuthenticated('admin')

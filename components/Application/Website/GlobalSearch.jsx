@@ -113,7 +113,7 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
             try {
                 window.localStorage.setItem(RECENT_KEY, JSON.stringify(next))
             } catch {
-                /* storage unavailable (private mode / quota) — non-fatal */
+                /* storage unavailable (private mode / quota) - non-fatal */
             }
             return next
         })

@@ -3,9 +3,9 @@ import { getDefaultShopProducts, getShopFilters, getShopProducts } from '@/lib/s
 import WebsiteBreadcrumb from '@/components/Application/Website/WebsiteBreadcrumb'
 
 export const metadata = {
-  title: 'Plants — Shop',
+  title: 'Plants - Shop',
   description:
-    'Browse our full range of nursery plants — seasonal flowers, ornamental shrubs, specimen trees and select imported varieties, all grown on our 50-bigha farm at Bibirhut.',
+    'Browse our full range of nursery plants - seasonal flowers, ornamental shrubs, specimen trees and select imported varieties, all grown on our 50-bigha farm at Bibirhut.',
 }
 
 const PlantsPage = async ({ searchParams }) => {

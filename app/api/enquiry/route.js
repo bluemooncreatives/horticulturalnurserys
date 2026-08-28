@@ -17,7 +17,7 @@ const clampQty = (value) => {
 }
 
 // Public: submit a product enquiry (the cart → enquiry flow). No customer auth
-// exists on this site by design, so this endpoint is intentionally open — it is
+// exists on this site by design, so this endpoint is intentionally open - it is
 // hardened with strict validation, a honeypot and a hard cap on line items.
 export async function POST(request) {
   try {
@@ -33,7 +33,7 @@ export async function POST(request) {
       country,
       message,
       products,
-      company, // honeypot — real users never see or fill this
+      company, // honeypot - real users never see or fill this
     } = body
 
     // Honeypot: a filled hidden field means a bot. Return a benign success so the
@@ -147,13 +147,13 @@ export async function POST(request) {
     // must not break the customer-facing flow.
     await Promise.allSettled([
       sendMail(
-        `New Product Enquiry [${ticketId}] — from ${payload.name}`,
+        `New Product Enquiry [${ticketId}] - from ${payload.name}`,
         process.env.NODEMAILER_EMAIL,
         enquiryNotification(emailPayload),
         { replyTo: payload.email }
       ),
       sendMail(
-        `We've received your enquiry — Ref ${ticketId}`,
+        `We've received your enquiry - Ref ${ticketId}`,
         payload.email,
         enquiryConfirmation(emailPayload)
       ),

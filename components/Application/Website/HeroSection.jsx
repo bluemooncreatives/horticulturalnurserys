@@ -12,7 +12,7 @@ import useHeroCarousel from "@/components/ui/useHeroCarousel";
 import { RevealLines, RevealUp } from "@/components/ui/reveal";
 import { useLoader } from "@/components/Application/Website/LoaderProvider";
 
-// Entrance cascade timings, ms — mirrors the Baseline hero's staggered
+// Entrance cascade timings, ms - mirrors the Baseline hero's staggered
 // reveal (headline first, then the surrounding cards), tuned to this hero's
 // four content groups instead of Baseline's two.
 const REVEAL = {
@@ -30,7 +30,7 @@ const REVEAL = {
 // independently with a staggered delay on hover (see the card button below).
 const CARD_TITLE = "Winter Seedlings®";
 
-// Horticultural credentials shown as the "trusted by" mark row — adapts the
+// Horticultural credentials shown as the "trusted by" mark row - adapts the
 // reference's client-logo strip to the nursery's field capabilities.
 const CRAFT_MARKS = [
   "Landscape Design",
@@ -65,11 +65,11 @@ const RING_C = 2 * Math.PI * RING_R;
 const HeroSection = () => {
   const ringRef = useRef(null);
   // Gates every entrance reveal below: the curtain lifts, then the hero
-  // cascades in — nothing pops in behind it or before it.
+  // cascades in - nothing pops in behind it or before it.
   const { ready } = useLoader();
 
   // Paint the thumbnail's countdown ring straight from the carousel clock's
-  // 0→1 progress — one tween drives both the auto-advance and this ring, so
+  // 0→1 progress - one tween drives both the auto-advance and this ring, so
   // the ring always reflects exactly how long until the next change.
   const onProgress = useCallback((p) => {
     const ring = ringRef.current;
@@ -88,14 +88,14 @@ const HeroSection = () => {
   return (
     <section className="website-gutter pt-[2.75rem] pb-[clamp(2rem,4vw,3.5rem)] sm:pt-[3.5rem]">
       <div className="mx-auto max-w">
-        {/* ── Framed hero card — image fills the whole card, content overlaid ── */}
+        {/* ── Framed hero card - image fills the whole card, content overlaid ── */}
         <div className="hero-frame relative flex min-h-[calc(100svh_-_2.75rem)] flex-col justify-between overflow-hidden rounded-[var(--radius-section)] bg-[var(--background)] sm:min-h-[calc(100svh_-_3.5rem)]">
 
-          {/* Full-bleed background — the hero frames cross-fade here (frame i).
+          {/* Full-bleed background - the hero frames cross-fade here (frame i).
               Advanced GSAP fade in / fade out: the incoming (top) frame fades
               up while sliding in from the LEFT (enterX) with a subtle scale +
               de-blur; the outgoing (bottom) frame holds its position and only
-              fades (stillOutgoing) — it never shifts. A slow Ken Burns drift
+              fades (stillOutgoing) - it never shifts. A slow Ken Burns drift
               keeps the resting frame alive. It keeps the base stacking layer,
               so the washes and content below still sit on top. */}
           <CrossfadeImage
@@ -163,7 +163,7 @@ const HeroSection = () => {
             </h1>
 
             {/* This column is pinned to the right padding edge, so its own width
-                is what sets the empty space to its left — widening it is what
+                is what sets the empty space to its left - widening it is what
                 closes the gap against the headline, not the grid gap. It steps
                 up with the viewport because the headline is nowrap at ~68vw and
                 would otherwise be squeezed past its min-content at 1024-1280. */}
@@ -175,7 +175,7 @@ const HeroSection = () => {
             >
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2.5">
-                  {/* "Up next" preview — the two frames queued behind the big
+                  {/* "Up next" preview - the two frames queued behind the big
                       screen (i+1, i+2). On each advance they circular-wipe to
                       their new frame: the incoming blooms in from the right
                       while the outgoing slides off to the left. A small stagger
@@ -216,7 +216,7 @@ const HeroSection = () => {
               floating card sits the same distance from the card's bottom edge
               as it does from its right edge (was pb-6/pb-8 against px-8/px-11). */}
           <div className="relative z-[2] flex flex-col items-stretch gap-4 px-5 pb-5 sm:flex-row sm:items-end sm:justify-between sm:px-8 sm:pb-8 lg:px-11 lg:pb-11">
-            {/* bottom-left: trusted-by + craft marks — hidden on mobile, the
+            {/* bottom-left: trusted-by + craft marks - hidden on mobile, the
                 floating product card below is the only bottom-row content there */}
             <RevealUp
               play={ready}
@@ -241,7 +241,7 @@ const HeroSection = () => {
               </div>
             </RevealUp>
 
-            {/* bottom-right: floating vertical product card — image and
+            {/* bottom-right: floating vertical product card - image and
                 content are two independently rounded, independently
                 shadowed blocks stacked inside one wrapper, not a single
                 continuous card shape. Popped in with a slight overshoot
@@ -255,7 +255,7 @@ const HeroSection = () => {
               ease="var(--ease-pop)"
               className="hero-overlay flex w-full max-w-48 shrink-0 flex-col gap-1.5 transition-transform hover:-translate-y-0.5 sm:max-w-none sm:w-64 sm:gap-2"
             >
-              {/* Floating thumbnail — shows the *next* frame (i+1) and doubles
+              {/* Floating thumbnail - shows the *next* frame (i+1) and doubles
                   as the carousel control: clicking promotes it to the big
                   screen and rolls the thumbnail forward, resetting the 10s
                   clock. It's a real <button> (was a shop link); the shop CTA
@@ -267,7 +267,7 @@ const HeroSection = () => {
                 onMouseLeave={resume}
                 onFocus={pause}
                 onBlur={resume}
-                aria-label={`Feature the next garden view — now showing ${smallIndex + 1} of ${HERO_IMAGES.length}`}
+                aria-label={`Feature the next garden view - now showing ${smallIndex + 1} of ${HERO_IMAGES.length}`}
                 className="group relative block aspect-[16/11] w-full cursor-pointer overflow-hidden rounded-[var(--radius-3xl)] shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-lime)] focus-visible:ring-offset-2"
               >
                 {/* Zoom wrapper: hover adds a little scale on top of the GSAP
@@ -297,7 +297,7 @@ const HeroSection = () => {
                   className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-black/35 to-transparent"
                 />
 
-                {/* Countdown ring — sweeps as the 10s clock runs, resets on advance. */}
+                {/* Countdown ring - sweeps as the 10s clock runs, resets on advance. */}
                 <span
                   aria-hidden
                   className="pointer-events-none absolute right-2.5 top-2.5 z-10 size-4"
@@ -319,7 +319,7 @@ const HeroSection = () => {
                   </svg>
                 </span>
 
-                {/* Hover affordance — signals the box is an interactive control. */}
+                {/* Hover affordance - signals the box is an interactive control. */}
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex translate-y-full items-center justify-center gap-1.5 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2.5 pt-6 text-[0.66rem] font-medium text-white opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
                   <ArrowLeftRight aria-hidden className="size-3.5" />
                   Click to feature
@@ -332,10 +332,10 @@ const HeroSection = () => {
                   circle fills while the arrow rotates 45° → 0°. */}
               <Link
                 href={WEBSITE_SHOP}
-                aria-label="Winter Seedlings — shop this season's seedlings"
+                aria-label="Winter Seedlings - shop this season's seedlings"
                 className="group relative flex items-center gap-2 rounded-[var(--radius-3xl)] bg-white/95 px-3 py-2 text-left shadow-lg backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]/40 focus-visible:ring-offset-2 sm:gap-3 sm:px-4 sm:py-3.5"
               >
-                {/* Lime circular reveal — sweeps in from the left on hover. */}
+                {/* Lime circular reveal - sweeps in from the left on hover. */}
                 <CircleReveal color="var(--brand-lime)" />
 
                 <div className="relative z-10 min-w-0 flex-1">
@@ -367,7 +367,7 @@ const HeroSection = () => {
                       </span>
                     ))}
                   </span>
-                  {/* Description: gentler counterpart — colour deepens and the
+                  {/* Description: gentler counterpart - colour deepens and the
                       line eases inward as the card is hovered. */}
                   <p className="mt-1.5 hidden text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)] sm:block">
                     Hardy nursery-raised seedlings, ready to plant this season.

@@ -3,7 +3,7 @@
 import { FAQ } from '@/components/ui/faq-tabs'
 
 // The three groups the section header used to advertise as a static caption
-// ("Plants · Landscaping · Supplies") — now navigable tabs instead.
+// ("Plants · Landscaping · Supplies") - now navigable tabs instead.
 const CATEGORIES = {
     landscaping: 'Landscaping',
     nursery: 'Plants & Nursery',
@@ -14,7 +14,7 @@ const FAQ_DATA = {
     landscaping: [
         {
             question: 'Do you take up landscaping projects, or only sell plants?',
-            answer: 'Both. Our horticulturists design, execute and maintain gardens for residences, farm houses, institutions and government bodies — and the same nursery supplies the plants and materials for it. You can hire us for the whole garden or simply buy a pot at the counter.',
+            answer: 'Both. Our horticulturists design, execute and maintain gardens for residences, farm houses, institutions and government bodies - and the same nursery supplies the plants and materials for it. You can hire us for the whole garden or simply buy a pot at the counter.',
         },
         {
             question: 'How does a landscaping project usually start?',
@@ -26,7 +26,7 @@ const FAQ_DATA = {
         },
         {
             question: 'Do you handle garden maintenance after handover?',
-            answer: 'Yes. We take annual maintenance for gardens we have built and for existing gardens too — regular pruning, feeding, pest control, lawn upkeep and seasonal replanting by our own field staff.',
+            answer: 'Yes. We take annual maintenance for gardens we have built and for existing gardens too - regular pruning, feeding, pest control, lawn upkeep and seasonal replanting by our own field staff.',
         },
         {
             question: 'Can you take on government or institutional work?',
@@ -40,7 +40,7 @@ const FAQ_DATA = {
         },
         {
             question: 'Will a plant from the nursery survive in my home or balcony?',
-            answer: 'That depends on light more than anything else. Tell us how many hours of direct sun the spot gets and we will point you to the right group — shade-loving indoor plants, hanging varieties, or full-sun shrubs and ornamental trees.',
+            answer: 'That depends on light more than anything else. Tell us how many hours of direct sun the spot gets and we will point you to the right group - shade-loving indoor plants, hanging varieties, or full-sun shrubs and ornamental trees.',
         },
         {
             question: 'When are seasonal flowers available?',
@@ -58,7 +58,7 @@ const FAQ_DATA = {
         },
         {
             question: 'What kind of pots and planters do you stock?',
-            answer: 'Earthen pots including general, mazla / chali and bonsai shapes, plus LLDPE and fibre pots — general, decorative, decorative planters, hanging pots and vertical / biowall systems for green walls.',
+            answer: 'Earthen pots including general, mazla / chali and bonsai shapes, plus LLDPE and fibre pots - general, decorative, decorative planters, hanging pots and vertical / biowall systems for green walls.',
         },
         {
             question: 'Do you sell garden tools and soil media?',

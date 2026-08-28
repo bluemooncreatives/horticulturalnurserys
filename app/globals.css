@@ -67,7 +67,7 @@
 
 /* Metrics-adjusted fallback for the swap-loaded body weights (400/500/600).
    With plain `font-display: swap`, text paints in Arial and reflows when
-   PP Neue Montreal arrives — on slow connections that swap lands after the
+   PP Neue Montreal arrives - on slow connections that swap lands after the
    page is painted and shifts every text block (the intermittent CLS ~0.25
    Lighthouse flags on /shop). These faces render Arial scaled to PP Neue
    Montreal's exact proportions (values computed from the woff2 metrics, the
@@ -168,7 +168,7 @@
 }
 
 /* ────────────────────────────────────────────────────────────────
-   BASE LAYER — default element styles
+   BASE LAYER - default element styles
    ──────────────────────────────────────────────────────────────── */
 @layer base {
   * {

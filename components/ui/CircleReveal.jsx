@@ -4,11 +4,11 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 
 /* ────────────────────────────────────────────────────────────────
-   CircleReveal — reusable GSAP circular background reveal.
+   CircleReveal - reusable GSAP circular background reveal.
 
    Drop it in as a child of any `position: relative` container; it binds
    to that container's hover/focus and sweeps a filled circle out from
-   `originX/originY` (default left-centre) until it covers the whole box —
+   `originX/originY` (default left-centre) until it covers the whole box -
    reading as a left-to-right circular wipe of `color`.
 
    The radius is driven by a numeric proxy written into `clip-path` on

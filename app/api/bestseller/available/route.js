@@ -3,7 +3,7 @@ import { connectDB } from "@/lib/databaseConnection"
 import { catchError, response } from "@/lib/helperFunction"
 import ProductModel from "@/models/Product.model"
 
-// GET — products eligible to be added as bestsellers: active and not already
+// GET - products eligible to be added as bestsellers: active and not already
 // flagged. Optional ?q= filters by name for the picker's search box.
 export async function GET(request) {
     try {

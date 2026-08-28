@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 
-/* Common dial codes. Add more here as needed — parsing always matches the
+/* Common dial codes. Add more here as needed - parsing always matches the
    longest prefix first so overlapping codes (e.g. +1 vs +91) stay correct. */
 export const DIAL_CODES = [
     { code: "+91", country: "India" },
@@ -48,7 +48,7 @@ function splitValue(value) {
  * the input simply gets extra left padding to make room.
  *
  * `value` is the full string ("+919876543210") and `onChange` receives the same
- * combined string — drop-in compatible with react-hook-form `field.onChange`.
+ * combined string - drop-in compatible with react-hook-form `field.onChange`.
  *
  * @param {boolean} native  render a plain <input> instead of the shadcn Input
  * @param {string}  codeOffset  left padding of the code selector
@@ -68,7 +68,7 @@ function PhoneInput({
     const { dial, local } = splitValue(value);
 
     // Measure the rendered code+caret so the input's left padding always clears
-    // it exactly — no magic numbers, works for any code length (+1 … +880).
+    // it exactly - no magic numbers, works for any code length (+1 … +880).
     const codeRef = useRef(null);
     const [codeWidth, setCodeWidth] = useState(null);
     useEffect(() => {

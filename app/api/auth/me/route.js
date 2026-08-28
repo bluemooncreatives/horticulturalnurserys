@@ -6,14 +6,14 @@ import UserModel from "@/models/User.model";
 /**
  * Returns the currently signed-in user (custom-JWT OR Google/NextAuth session),
  * for either role. Used to hydrate the client auth store on every load so the
- * navbar / dashboard sidebar show the real name + avatar reliably — including for
+ * navbar / dashboard sidebar show the real name + avatar reliably - including for
  * Google users and across full-page refreshes (Redux auth is not persisted).
  */
 export async function GET(request) {
     try {
         await connectDB()
 
-        // Accept either role — the same store backs the website nav and the admin nav.
+        // Accept either role - the same store backs the website nav and the admin nav.
         let auth = await isAuthenticated('user', request)
         if (!auth.isAuth) {
             auth = await isAuthenticated('admin', request)

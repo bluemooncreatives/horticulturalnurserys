@@ -6,7 +6,7 @@
     overflow-x: clip;
 }
 
-/* ── Inner: flex ROW — sidebar | track ───────────────────────────── */
+/* ── Inner: flex ROW - sidebar | track ───────────────────────────── */
 .inner {
     display: flex;
     flex-direction: row;
@@ -130,7 +130,7 @@
 }
 
 .productPrice {
-    /* No trailing margin — the section's own bottom padding is the gap to the
+    /* No trailing margin - the section's own bottom padding is the gap to the
        next section, so a margin here would read as extra, uneven space. */
     margin: 0;
     font-size: clamp(0.82rem, 0.95vw, 0.9rem);
@@ -138,7 +138,7 @@
     color: var(--brand-ink-soft);
 }
 
-/* ── Card buttons — overlaid bottom-right of image ───────────────── */
+/* ── Card buttons - overlaid bottom-right of image ───────────────── */
 .cardButtons {
     position: absolute;
     bottom: 0.6rem;

@@ -83,7 +83,7 @@ const ContactPage = () => {
 
           {ticketId ? (
             <div className={styles.successPanel} role="status" aria-live="polite">
-              <h2 className={styles.successTitle}>Thanks — we've received your message.</h2>
+              <h2 className={styles.successTitle}>Thanks - we've received your message.</h2>
               <p className={styles.successText}>
                 Our team will get back to you soon. We've also emailed you a copy.
                 Please keep your reference number for any follow-up.
@@ -191,7 +191,7 @@ const ContactPage = () => {
                 name="message"
                 required
                 rows={6}
-                placeholder="Tell us about the site — terrace, courtyard, campus — or the plants and materials you need."
+                placeholder="Tell us about the site - terrace, courtyard, campus - or the plants and materials you need."
                 value={form.message}
                 onChange={handleChange}
                 className={`${styles.input} ${styles.textarea}`}

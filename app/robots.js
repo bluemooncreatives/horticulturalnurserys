@@ -7,7 +7,7 @@ export default function robots() {
                 userAgent: '*',
                 allow: '/',
                 // Keep crawlers out of the admin panel, API routes and the personal
-                // enquiry list/form — they're either auth-gated or meaningless in
+                // enquiry list/form - they're either auth-gated or meaningless in
                 // search results.
                 disallow: [
                     '/admin',

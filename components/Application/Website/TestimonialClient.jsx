@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { RevealLines } from '@/components/ui/reveal'
 
 /* ────────────────────────────────────────────────────────────────
-   TestimonialCard — Baseline Three-Up Quote Card.
+   TestimonialCard - Baseline Three-Up Quote Card.
    • Soft surface card (#F5F5F7)
    • Large brand quote glyph “
    • Blockquote with relaxed leading
@@ -86,7 +86,7 @@ function TestimonialCard({ item, index }) {
 }
 
 /* ────────────────────────────────────────────────────────────────
-   TestimonialClient — Infinite Loop Marquee (Left to Right)
+   TestimonialClient - Infinite Loop Marquee (Left to Right)
    • Dot eyebrow: • WHAT CLIENTS SAY
    • Masked line reveal heading: "Loved by / our garden owners"
    • Infinite auto-scrolling track (left to right)

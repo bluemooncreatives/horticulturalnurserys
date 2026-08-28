@@ -48,7 +48,7 @@ const MAX_QTY = MAX_CART_QTY
 
 // Non-blocking pending indicator for variant <Link>s. Rendered as a child of a
 // Link, it reads that link's navigation status and overlays a small spinner on
-// just the clicked swatch/size while the new variant loads — so the rest of the
+// just the clicked swatch/size while the new variant loads - so the rest of the
 // page stays interactive instead of being hidden behind a fullscreen loader.
 const NavSpinner = () => {
     const { pending } = useLinkStatus()
@@ -100,8 +100,8 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
     }, [variant?._id])
 
     // The live cart line for the *currently selected* variant (or null). Derived
-    // straight from the store so add / increase / decrease / remove anywhere —
-    // including the cart page — is always reflected here without local state to
+    // straight from the store so add / increase / decrease / remove anywhere -
+    // including the cart page - is always reflected here without local state to
     // keep in sync. Keyed by variantId, so switching color/size re-evaluates.
     const cartLine = useMemo(
         () => cartStore.products.find(
@@ -170,7 +170,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
     const isCombo = (color, size) => optionSet.has(`${normalizeColor(color)}|${size}`)
 
     // When switching color, keep the current size if that combo exists,
-    // otherwise land on the first available size for the new color — so a
+    // otherwise land on the first available size for the new color - so a
     // color click never dead-ends on a non-existent combination.
     const sizeForColor = (color) => {
         const c = normalizeColor(color)
@@ -252,7 +252,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
 
                             <div className="group relative flex-1">
                                 <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-lg)] border border-border/60 bg-[var(--product-card-bg)]">
-                                    {/* fetchPriority must be passed explicitly — in Next 15
+                                    {/* fetchPriority must be passed explicitly - in Next 15
                                         `priority` alone emits the preload but not
                                         fetchpriority="high", so the LCP request still queued
                                         behind fonts/JS on throttled connections. */}
@@ -405,7 +405,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                             return (
                                                 <span
                                                     key={size}
-                                                    title={`${size} — unavailable in ${variant?.color}`}
+                                                    title={`${size} - unavailable in ${variant?.color}`}
                                                     className="relative min-w-[44px] cursor-not-allowed select-none rounded-[var(--radius-sm)] border border-border/50 px-3.5 py-2 text-center text-sm text-foreground/30"
                                                 >
                                                     <span className="line-through">{size}</span>
@@ -571,7 +571,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                     </div>
                     <dl className="w-full divide-y divide-border/50">
                         {[
-                            { label: 'Step 1', text: 'Add the plants and supplies you need to your enquiry list — no account required.' },
+                            { label: 'Step 1', text: 'Add the plants and supplies you need to your enquiry list - no account required.' },
                             { label: 'Step 2', text: 'Submit the enquiry with your contact details and the quantities you want.' },
                             { label: 'Step 3', text: 'Our team gets back to you with availability and pricing for your requirement.' },
                             { label: 'Step 4', text: 'We arrange delivery or nursery pickup once the details are confirmed.' },

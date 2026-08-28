@@ -32,7 +32,7 @@ export async function GET(request) {
             matchQuery = { deletedAt: { $ne: null } }
         }
 
-        // Global search — escape so special chars don't build an invalid regex
+        // Global search - escape so special chars don't build an invalid regex
         if (globalFilter) {
             const safeGlobalFilter = escapeRegex(globalFilter)
             matchQuery["$or"] = [

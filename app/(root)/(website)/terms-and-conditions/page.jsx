@@ -70,7 +70,7 @@ const TermsAndConditions = () => {
                 {/* Section 3 */}
                 <Section number="3" title="Products, Pricing & Availability">
                     <ul className='list-disc ps-6 space-y-2'>
-                        <li>All plants, materials and services listed on this Website are subject to availability. Living stock is seasonal — seedlings of winter flowers are generally available August to December and seeds of summer flowers February to May — and we reserve the right to withdraw any item without prior notice.</li>
+                        <li>All plants, materials and services listed on this Website are subject to availability. Living stock is seasonal - seedlings of winter flowers are generally available August to December and seeds of summer flowers February to May - and we reserve the right to withdraw any item without prior notice.</li>
                         <li>Prices are listed in Indian Rupees (INR) and are inclusive of applicable taxes unless stated otherwise.</li>
                         <li><strong>Living material varies.</strong> Plants are grown, not manufactured. Height, spread, canopy shape, leaf colour, flowering stage and pot finish will differ from the photographs shown, and will continue to change after delivery. Such natural variation is not a defect.</li>
                         <li>Landscaping, garden development, maintenance and consultancy are quoted separately after a site survey. Any indicative figure shown on this Website is not a binding quotation.</li>
@@ -116,8 +116,8 @@ const TermsAndConditions = () => {
                 {/* Section 7 */}
                 <Section number="7" title="Returns, Refunds & Exchanges">
                     <ul className='list-disc ps-6 space-y-2'>
-                        <li><strong>Non-living goods</strong> — pots, planters, implements, geotextile net, drain cell, pebbles and sealed packs of manure, seed or chemicals — may be returned within <strong>7 days</strong> of delivery if unused and in original, unopened condition.</li>
-                        <li><strong>Living material</strong> — plants, seedlings, grass and saplings — cannot be returned once it has left our custody, because its condition depends entirely on the care it receives thereafter. Please raise any claim for material that arrives dead, broken or visibly diseased within <strong>24 hours</strong> of delivery, with photographs; we will replace it or refund it.</li>
+                        <li><strong>Non-living goods</strong> - pots, planters, implements, geotextile net, drain cell, pebbles and sealed packs of manure, seed or chemicals - may be returned within <strong>7 days</strong> of delivery if unused and in original, unopened condition.</li>
+                        <li><strong>Living material</strong> - plants, seedlings, grass and saplings - cannot be returned once it has left our custody, because its condition depends entirely on the care it receives thereafter. Please raise any claim for material that arrives dead, broken or visibly diseased within <strong>24 hours</strong> of delivery, with photographs; we will replace it or refund it.</li>
                         <li>We do not guarantee that a plant will survive, flower or fruit after delivery. Establishment depends on watering, light, drainage, feeding and pest control at your site, which are outside our control. Plants installed and maintained by us under a maintenance contract are covered by the terms of that contract instead.</li>
                         <li>Seed and seedling germination rates vary with sowing time, medium and weather and are not warranted.</li>
                         <li>To raise a claim, contact us at <a href="mailto:horticulturaldc@gmail.com" className='text-[var(--dark-red-2)] underline underline-offset-2'>horticulturaldc@gmail.com</a> with your order number and photographs.</li>
@@ -135,7 +135,7 @@ const TermsAndConditions = () => {
                 {/* Section 8 */}
                 <Section number="8" title="Intellectual Property">
                     <ul className='list-disc ps-6 space-y-2'>
-                        <li>All content on this Website — including but not limited to text, graphics, logos, photographs, designs, product names, and software — is the exclusive property of Horticultural Development Centre and is protected under applicable Indian and international copyright, trademark, and intellectual property laws.</li>
+                        <li>All content on this Website - including but not limited to text, graphics, logos, photographs, designs, product names, and software - is the exclusive property of Horticultural Development Centre and is protected under applicable Indian and international copyright, trademark, and intellectual property laws.</li>
                         <li>You may not reproduce, distribute, modify, create derivative works from, publicly display, or commercially exploit any content without our prior written consent.</li>
                         <li>Limited, non-exclusive, non-transferable permission is granted to access and use this Website for personal, non-commercial shopping purposes only.</li>
                         <li>Any unauthorized use may result in legal action under the Copyright Act 1957 (India) and equivalent international statutes.</li>

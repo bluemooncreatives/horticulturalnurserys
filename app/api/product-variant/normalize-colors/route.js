@@ -8,7 +8,7 @@ import ProductVariantModel from "@/models/ProductVariant.model"
 // One-time (idempotent) migration: rewrites every existing variant's `color`
 // to its canonical form so legacy free-text rows ("purple", "EMERALD",
 // "Navy  Blue") collapse to the same value the write-path now enforces.
-// Admin-only. Safe to run repeatedly — already-canonical rows are skipped, and
+// Admin-only. Safe to run repeatedly - already-canonical rows are skipped, and
 // it never touches `sku`, so it can't create duplicate-key conflicts.
 export async function POST() {
     try {

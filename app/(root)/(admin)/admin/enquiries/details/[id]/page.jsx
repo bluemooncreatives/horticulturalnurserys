@@ -185,7 +185,7 @@ const EnquiryDetail = ({ params }) => {
               <Textarea
                 value={adminNote}
                 onChange={(e) => setAdminNote(e.target.value)}
-                placeholder="Add a private note — quoted amount, call outcome, follow-up date…"
+                placeholder="Add a private note - quoted amount, call outcome, follow-up date…"
                 className="min-h-[90px]"
                 maxLength={2000}
               />

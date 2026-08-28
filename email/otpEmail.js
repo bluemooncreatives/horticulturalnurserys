@@ -12,7 +12,7 @@ import {
 
 /**
  * One-time-password email. The same code block serves both login 2FA and the
- * password-reset flow — `purpose` only changes the copy so the recipient knows
+ * password-reset flow - `purpose` only changes the copy so the recipient knows
  * which action they are confirming (previously this template always said
  * "Email Verification", which was wrong for a login code).
  *
@@ -45,7 +45,7 @@ export const otpEmail = (otp, opts = {}) => {
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top:8px;">
   <tr>
     <td style="border-top:1px solid ${BRAND.border};padding-top:20px;font-family:${FONT_BODY};font-size:13px;line-height:21px;color:${BRAND.muted};">
-      This code expires in <strong style="color:${BRAND.ink};">10 minutes</strong> and can be used once. If you didn't request this, you can safely ignore this email${isReset ? "" : " — your account is still secure"}.
+      This code expires in <strong style="color:${BRAND.ink};">10 minutes</strong> and can be used once. If you didn't request this, you can safely ignore this email${isReset ? "" : " - your account is still secure"}.
     </td>
   </tr>
 </table>`;

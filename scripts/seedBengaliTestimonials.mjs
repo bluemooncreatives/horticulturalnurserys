@@ -95,7 +95,7 @@ const BENGALI_TESTIMONIALS = [
         role: "Villa Landscape · Rajarhat Township",
         rating: 5,
         sortOrder: 8,
-        review: "Comprehensive service under one single roof — site design, soil enrichment, plant supply from their own farm, and scheduled maintenance. The team takes immense pride in their work.",
+        review: "Comprehensive service under one single roof - site design, soil enrichment, plant supply from their own farm, and scheduled maintenance. The team takes immense pride in their work.",
     },
     {
         name: "Kakoli Ghoshal",

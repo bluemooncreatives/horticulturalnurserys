@@ -21,12 +21,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { RevealLines, RevealUp } from '@/components/ui/reveal'
 
 /* ────────────────────────────────────────────────────────────────
-   ServicesContent — the /services index.
+   ServicesContent - the /services index.
 
    Structure follows the supplied wireframe: centred hero over a
    photo/stat bento, chip-led bands, a split services section with a
    2×2 card grid, and a header-left / action-right process block.
-   Palette stays on this codebase's tokens — the reference's blue
+   Palette stays on this codebase's tokens - the reference's blue
    accent maps to --brand-primary, its dark card to --brand-ink-soft.
 
    Content arrives as props from page.jsx so the data stays in the
@@ -45,7 +45,7 @@ const SERVICE_ICONS = {
 
 /* ── Primitives ──────────────────────────────────────────────── */
 
-// Small outlined eyebrow chip — the wireframe's EXPERTISE / SERVICES pill.
+// Small outlined eyebrow chip - the wireframe's EXPERTISE / SERVICES pill.
 function Chip({ children, tone = 'light', className = '' }) {
   const skin =
     tone === 'dark'
@@ -91,7 +91,7 @@ function ScrollFillStatement({ chip, text }) {
     if (!root) return
     gsap.registerPlugin(ScrollTrigger)
 
-    // Resolve the tokens to concrete values — GSAP cannot interpolate between
+    // Resolve the tokens to concrete values - GSAP cannot interpolate between
     // two `var(...)` strings, it needs the computed colours.
     const tokens = getComputedStyle(document.documentElement)
     const dim = tokens.getPropertyValue('--muted-foreground').trim() || '#6B6B6B'
@@ -107,7 +107,7 @@ function ScrollFillStatement({ chip, text }) {
       const targets = gsap.utils.toArray('.sv-fill-word')
       if (!targets.length) return
 
-      // Reduced motion gets the finished state and no pin — locking the
+      // Reduced motion gets the finished state and no pin - locking the
       // viewport is precisely the effect that setting asks us to drop.
       if (reduced) {
         gsap.set(targets, { color: deep })
@@ -133,7 +133,7 @@ function ScrollFillStatement({ chip, text }) {
     }, root)
 
     // Pin distance is derived from the element's height, which moves once the
-    // display face swaps in — recompute rather than pin against fallback metrics.
+    // display face swaps in - recompute rather than pin against fallback metrics.
     let disposed = false
     document.fonts?.ready?.then(() => {
       if (!disposed) ScrollTrigger.refresh()
@@ -190,7 +190,7 @@ export default function ServicesContent({
   return (
     <main className="min-h-screen bg-[var(--background)]">
 
-      {/* ══ Hero — centred headline over a photo/stat bento ════ */}
+      {/* ══ Hero - centred headline over a photo/stat bento ════ */}
       <section className="lumora-shell pb-16 pt-32 lg:pb-24 lg:pt-40">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
           <div className="sv-hero-title">
@@ -207,7 +207,7 @@ export default function ServicesContent({
             delay={260}
             className="mt-6 max-w-xl text-[0.92rem] leading-[1.8] text-[var(--muted-foreground)]"
           >
-            From a single balcony to a township-scale landscape — designed, planted and maintained
+            From a single balcony to a township-scale landscape - designed, planted and maintained
             by qualified horticulturists across Kolkata and West Bengal.
           </RevealUp>
 
@@ -234,7 +234,7 @@ export default function ServicesContent({
             />
           </RevealUp>
 
-          {/* Middle column — the accent card over the dark card */}
+          {/* Middle column - the accent card over the dark card */}
           <div className="flex flex-col gap-4 lg:gap-5">
             <RevealUp
               delay={160}
@@ -275,8 +275,8 @@ export default function ServicesContent({
           </RevealUp>
         </div>
 
-        {/* Scoped to this hero so the global .rv-inner rule — and every other
-            masked reveal on the page — keeps its own sizing. One .rv-line per
+        {/* Scoped to this hero so the global .rv-inner rule - and every other
+            masked reveal on the page - keeps its own sizing. One .rv-line per
             rendered line: .rv-line is overflow-hidden, so a wrap driven by a
             max-width would be clipped horizontally rather than wrapped. */}
         <style>{`
@@ -292,14 +292,14 @@ export default function ServicesContent({
         `}</style>
       </section>
 
-      {/* ══ Approach — centred statement + stat row ════════════ */}
+      {/* ══ Approach - centred statement + stat row ════════════ */}
       <section className="bg-[var(--card)] pb-16 lg:pb-24">
         <ScrollFillStatement chip="Our approach" text={approach.lead} />
 
         <div className="lumora-shell">
           <dl className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
             {/* col-reverse so the figure reads above its label visually while
-                the DOM keeps dt-before-dd — the label is announced once, as the
+                the DOM keeps dt-before-dd - the label is announced once, as the
                 term for its value, rather than twice via a hidden copy. */}
             {stats.map((stat, i) => (
               <RevealUp
@@ -319,7 +319,7 @@ export default function ServicesContent({
         </div>
       </section>
 
-      {/* ══ Services — copy left, 2×2 card grid right ══════════ */}
+      {/* ══ Services - copy left, 2×2 card grid right ══════════ */}
       <section className="lumora-shell py-16 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           {/* Left rail */}
@@ -339,7 +339,7 @@ export default function ServicesContent({
               delay={130}
               className="mt-5 max-w-sm text-[0.88rem] leading-[1.8] text-[var(--muted-foreground)]"
             >
-              Four service lines, all carried by one nursery — from the first site survey through
+              Four service lines, all carried by one nursery - from the first site survey through
               planting, construction and the aftercare that keeps it alive.
             </RevealUp>
             <RevealUp delay={190} className="mt-9">
@@ -347,7 +347,7 @@ export default function ServicesContent({
             </RevealUp>
           </div>
 
-          {/* Card grid — first card carries the accent fill */}
+          {/* Card grid - first card carries the accent fill */}
           <div className="grid gap-4 sm:grid-cols-2 lg:gap-5">
             {services.map((service, i) => {
               const Icon = SERVICE_ICONS[service.slug] ?? Sprout
@@ -424,7 +424,7 @@ export default function ServicesContent({
         </div>
       </section>
 
-      {/* ══ Process — heading left, action right ═══════════════ */}
+      {/* ══ Process - heading left, action right ═══════════════ */}
       <section className="bg-[var(--card)] py-16 lg:py-24">
         <div className="lumora-shell">
           <RevealUp>
@@ -437,7 +437,7 @@ export default function ServicesContent({
               delay={70}
               className="max-w-xl font-neue text-[clamp(1.6rem,3.6vw,2.6rem)] font-medium leading-[1.1] tracking-[-0.03em] text-[var(--brand-primary)]"
             >
-              How every project runs — four steps, in order
+              How every project runs - four steps, in order
             </RevealUp>
             <RevealUp delay={130} className="shrink-0">
               <PrimaryButton href="/contact">Start a project</PrimaryButton>
@@ -475,7 +475,7 @@ export default function ServicesContent({
         </div>
       </section>
 
-      {/* ══ Credentials — dark band, heading left, action right ═ */}
+      {/* ══ Credentials - dark band, heading left, action right ═ */}
       <section className="lumora-shell py-16 lg:py-24">
         <div className="relative overflow-hidden rounded-[var(--radius-4xl)] bg-[var(--brand-ink-soft)] px-8 py-14 lg:px-14 lg:py-16">
           <div
@@ -531,7 +531,7 @@ export default function ServicesContent({
         </div>
       </section>
 
-      {/* ══ CTA — centred, mirroring the hero ══════════════════ */}
+      {/* ══ CTA - centred, mirroring the hero ══════════════════ */}
       <section className="lumora-shell pb-20 lg:pb-28">
         <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
           <RevealUp>
@@ -549,7 +549,7 @@ export default function ServicesContent({
             delay={130}
             className="mt-5 max-w-md text-[0.9rem] leading-[1.8] text-[var(--muted-foreground)]"
           >
-            Every project starts with a site visit and a conversation — no obligation, just honest
+            Every project starts with a site visit and a conversation - no obligation, just honest
             advice from qualified horticulturists.
           </RevealUp>
           <RevealUp delay={190} className="mt-9 flex flex-wrap items-center justify-center gap-3">

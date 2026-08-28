@@ -14,7 +14,7 @@ const ProductVariantSchema = new mongoose.Schema({
         trim: true,
         // Authoritative normalization point: runs on every assignment
         // (`new Model({color})` and `doc.color = x`), so the create and update
-        // routes — which both persist via `document.save()` — can never store a
+        // routes - which both persist via `document.save()` - can never store a
         // non-canonical color. Keeps the shop filter & product page free of
         // case/whitespace duplicates regardless of what the admin types.
         set: normalizeColor,

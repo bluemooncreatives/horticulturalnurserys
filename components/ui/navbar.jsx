@@ -197,7 +197,7 @@ export default function Navbar({
             )}
           </button>
 
-          {/* CTA — takes the slot the hamburger used to occupy on desktop.
+          {/* CTA - takes the slot the hamburger used to occupy on desktop.
               Wrapper owns the desktop-only visibility so it doesn't collide
               with RollingLink's own inline-flex display. */}
           {cta && (
@@ -213,7 +213,7 @@ export default function Navbar({
             </span>
           )}
 
-          {/* ── Hamburger — two-line mark, mobile only (menu incl. search + cart) ── */}
+          {/* ── Hamburger - two-line mark, mobile only (menu incl. search + cart) ── */}
           <button
             type="button"
             onClick={() => setOpenMenu(true)}
@@ -248,7 +248,7 @@ export default function Navbar({
             </SheetTitle>
           </SheetHeader>
 
-          {/* Search — full-width bar (not a squeezed half-column button) so it
+          {/* Search - full-width bar (not a squeezed half-column button) so it
               reads like an actual search field, matching the tap-target width
               every other row in this sheet uses. */}
           <div className="flex-shrink-0 border-b border-black/[0.06] px-4 py-4">
@@ -262,7 +262,7 @@ export default function Navbar({
             </button>
           </div>
 
-          {/* Primary navigation — items with children expand inline on mobile. */}
+          {/* Primary navigation - items with children expand inline on mobile. */}
           <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-2 py-2" aria-label="Menu">
             {sheetMenu.map((item) => {
               const hasChildren = item.children?.length > 0
@@ -343,7 +343,7 @@ export default function Navbar({
             })}
           </nav>
 
-          {/* Cart — pinned full-width at the bottom of the sheet, the one
+          {/* Cart - pinned full-width at the bottom of the sheet, the one
               action worth a persistent, always-in-reach placement here. */}
           <div className="flex-shrink-0 border-t border-black/[0.06] bg-[var(--background)] p-4">
             <button

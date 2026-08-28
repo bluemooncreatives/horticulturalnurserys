@@ -14,7 +14,7 @@ import {
  * Auto-acknowledgement sent to the customer who submitted a product enquiry.
  * Confirms we received it and gives them a reference number to quote in any
  * follow-up. Every interpolated field is customer-supplied, so all of it is
- * escaped. Best-effort send — the enquiry is already persisted, so a mail
+ * escaped. Best-effort send - the enquiry is already persisted, so a mail
  * failure must never block the submission.
  *
  * Deliberately price-free: the customer is told the team will get back with
@@ -49,7 +49,7 @@ export const enquiryConfirmation = ({ ticketId, name, products = [] }) => {
 ${eyebrow("Enquiry received")}
 ${heading("Thanks for your enquiry")}
 ${paragraph(`Hi ${firstName(name)},`)}
-${paragraph("We've received your enquiry and our team will get back to you shortly with availability and pricing for the items below. Please keep the reference number handy — just reply to this email and we'll pick up right where you left off.")}
+${paragraph("We've received your enquiry and our team will get back to you shortly with availability and pricing for the items below. Please keep the reference number handy - just reply to this email and we'll pick up right where you left off.")}
 ${refCard}
 
 <p style="margin:8px 0 8px;font-family:${FONT_BODY};font-size:10px;font-weight:bold;letter-spacing:0;text-transform:uppercase;color:${BRAND.muted};">Products you enquired about (${products.length})</p>
@@ -58,7 +58,7 @@ ${refCard}
 </table>`;
 
     return emailShell({
-        preheader: `We've received your enquiry — reference ${ticketId}.`,
+        preheader: `We've received your enquiry - reference ${ticketId}.`,
         title: "We've received your enquiry",
         bodyHtml,
     });

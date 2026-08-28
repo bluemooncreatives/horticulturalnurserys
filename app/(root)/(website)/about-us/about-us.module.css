@@ -1,11 +1,11 @@
 /* ================================================================
-   ABOUT US — dark editorial layout (August-style)
+   ABOUT US - dark editorial layout (August-style)
    Scoped, page-local theme. Brand tokens still drive the footer/
    header; this page introduces a local dark surface + lime accent.
    ================================================================ */
 
 .page {
-  /* Local page palette — mapped to the global homepage design tokens */
+  /* Local page palette - mapped to the global homepage design tokens */
   --about-bg:          var(--background);        /* white page surface        */
   --about-fg:          var(--foreground);        /* near-black headings        */
   --about-muted:       var(--text-body);         /* #4a4a4a body copy          */
@@ -13,7 +13,7 @@
   --about-accent:      var(--brand-primary-hover); /* crimson brand accent     */
   --about-accent-soft: color-mix(in srgb, var(--brand-primary-hover) 14%, transparent);
 
-  /* Section rhythm — identical to the homepage section padding so the gap
+  /* Section rhythm - identical to the homepage section padding so the gap
      between blocks matches every other page. (homepage: top clamp(1.25,2.5vw,2),
      bottom clamp(2,4vw,3.5); --about-gap = the two combined.) */
   --about-section-pt: clamp(1.25rem, 2.5vw, 2rem);
@@ -24,7 +24,7 @@
   z-index: 1;                 /* sit above the sticky footer reveal */
   background: var(--about-bg);
   color: var(--about-fg);
-  overflow: clip;             /* contain the giant headline — no h-scroll */
+  overflow: clip;             /* contain the giant headline - no h-scroll */
   /* Clear the fixed site header */
   padding-top: clamp(7rem, 12vw, 10rem);
   padding-bottom: var(--about-section-pb);
@@ -32,7 +32,7 @@
 
 .inner {
   width: 100%;
-  max-width: none;   /* full-bleed — no auto-centering side margin */
+  max-width: none;   /* full-bleed - no auto-centering side margin */
   margin: 0;
   padding-left: var(--website-gutter);
   padding-right: var(--website-gutter);
@@ -74,7 +74,7 @@
 .flankRight { right: 4%; }
 .flankImage :global(img) { object-fit: cover; }
 
-/* The giant masked headline — overlaps the bottom of the center image */
+/* The giant masked headline - overlaps the bottom of the center image */
 .headlineMask {
   position: relative;
   z-index: 3;

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // Defers React hydration of below-fold sections until they approach the
 // viewport. The server-rendered HTML stays visible (and indexable) the whole
-// time — during hydration React sees a `dangerouslySetInnerHTML` node and
+// time - during hydration React sees a `dangerouslySetInnerHTML` node and
 // skips reconciling its children, leaving the server markup untouched. When
 // the observer fires, the real children render and their client islands mount.
 // This breaks the single multi-second hydration task (the main TBT/TTI cost)

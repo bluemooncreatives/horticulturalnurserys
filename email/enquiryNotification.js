@@ -15,7 +15,7 @@ import {
  * by hostile input. The Reply CTA deep-links to the customer's email; the route
  * also sets Reply-To so a plain "Reply" works.
  *
- * NOTE: enquiries carry NO pricing — this is a lead, not an order. The email
+ * NOTE: enquiries carry NO pricing - this is a lead, not an order. The email
  * lists what the customer wants and how many, and the team quotes separately.
  */
 export const enquiryNotification = ({
@@ -64,7 +64,7 @@ ${heading("New enquiry received")}
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top:8px;">
   ${ticketId ? row("Reference", esc(ticketId)) : ""}
   ${row("From", `${esc(name)} &nbsp;·&nbsp; <a href="mailto:${esc(email)}" style="color:${BRAND.crimson};">${esc(email)}</a>`)}
-  ${row("Mobile", esc(phone) || "—")}
+  ${row("Mobile", esc(phone) || "-")}
   ${row("Location", location)}
   ${message ? row("Note", esc(message)) : ""}
 </table>

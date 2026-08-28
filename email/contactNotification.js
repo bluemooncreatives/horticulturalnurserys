@@ -30,7 +30,7 @@ ${heading("New message received")}
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top:8px;">
   ${ticketId ? row("Reference", esc(ticketId)) : ""}
   ${row("From", `${esc(name)} &nbsp;·&nbsp; <a href="mailto:${esc(email)}" style="color:${BRAND.crimson};">${esc(email)}</a>`)}
-  ${row("Mobile", esc(phone) || "—")}
+  ${row("Mobile", esc(phone) || "-")}
   ${row("Address", esc(address) || "(Not provided)")}
   ${row("Subject", esc(subject) || "(No subject)")}
   ${row("Message", esc(message))}

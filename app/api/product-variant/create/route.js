@@ -88,7 +88,7 @@ export async function POST(request) {
 
         await newProductVariant.save()
 
-        // A new variant can introduce a new colour/size — refresh the shop filter
+        // A new variant can introduce a new colour/size - refresh the shop filter
         // list and the homepage "Shop by Colour" section.
         revalidateTag('storefront-shop-filters')
         revalidateTag('storefront-home-colors')

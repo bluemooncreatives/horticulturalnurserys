@@ -1,12 +1,12 @@
 import ServicesContent from './ServicesContent'
 
 export const metadata = {
-  title: 'Services — Horticultural Development Centre',
+  title: 'Services - Horticultural Development Centre',
   description:
-    'Garden development and landscaping for residential and commercial sites, garden maintenance, roof garden design and vertical garden systems — Horticultural Development Centre, Kolkata.',
+    'Garden development and landscaping for residential and commercial sites, garden maintenance, roof garden design and vertical garden systems - Horticultural Development Centre, Kolkata.',
 }
 
-// Hero bento — two photos flanking an accent card over a dark card.
+// Hero bento - two photos flanking an accent card over a dark card.
 const BENTO = {
   images: ['/assets/images/hero/01.jpg', '/assets/images/hero/03.jpg'],
   accent: {
@@ -15,14 +15,14 @@ const BENTO = {
   },
   dark: {
     figure: '50',
-    caption: 'Bighas of our own farm at Bibirhut — 4,700 m² of it under cover, so nothing arrives with unknown growing conditions behind it.',
+    caption: 'Bighas of our own farm at Bibirhut - 4,700 m² of it under cover, so nothing arrives with unknown growing conditions behind it.',
   },
 }
 
-// Rendered as a pinned, word-by-word colour fill — keep it to a few sentences
+// Rendered as a pinned, word-by-word colour fill - keep it to a few sentences
 // so the whole statement resolves within one screen-lock.
 const APPROACH = {
-  lead: 'Every project starts with a horticulturist on your site, reading light, soil and drainage. Only then do we draw a plan and put a number to it. The design follows the brief you give us; the site decides what will actually survive in it — and the same team carries the work from first visit through to aftercare.',
+  lead: 'Every project starts with a horticulturist on your site, reading light, soil and drainage. Only then do we draw a plan and put a number to it. The design follows the brief you give us; the site decides what will actually survive in it - and the same team carries the work from first visit through to aftercare.',
 }
 
 const STATS = [
@@ -35,7 +35,7 @@ const STATS = [
 const PROCESS = [
   {
     title: 'Site visit',
-    desc: 'A horticulturist walks the site and reads light, soil, drainage and circulation — then listens to how you actually want to use the space.',
+    desc: 'A horticulturist walks the site and reads light, soil, drainage and circulation - then listens to how you actually want to use the space.',
   },
   {
     title: 'Planting plan',
@@ -47,13 +47,13 @@ const PROCESS = [
   },
   {
     title: 'Build & handover',
-    desc: 'Our own field crew executes the plan, then hands over with watering, mowing and feeding schedules — and an AMC if you want us to keep it.',
+    desc: 'Our own field crew executes the plan, then hands over with watering, mowing and feeding schedules - and an AMC if you want us to keep it.',
   },
 ]
 
 const CREDENTIALS = {
   heading: 'Cleared for public works, not just private gardens',
-  desc: 'Approved-vendor status with the West Bengal State Government and CPWD means the same crew that builds a private garden is cleared to work on public ground — under its tendering, documentation and inspection regime.',
+  desc: 'Approved-vendor status with the West Bengal State Government and CPWD means the same crew that builds a private garden is cleared to work on public ground - under its tendering, documentation and inspection regime.',
   projects: [
     'Public parks',
     'Lake-front promenades',
@@ -72,7 +72,7 @@ const SERVICES = [
     title: 'Landscape Development',
     slug: 'landscape-development',
     image: '/assets/images/hero/01.jpg',
-    short: 'Site survey, planting plan, costing and build — for homes and commercial grounds alike, at any scale.',
+    short: 'Site survey, planting plan, costing and build - for homes and commercial grounds alike, at any scale.',
   },
   {
     num: '02',

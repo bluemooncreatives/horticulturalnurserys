@@ -22,7 +22,7 @@ const breadcrumbData = [
 ]
 
 const formatPrice = (price) =>
-  typeof price === 'number' ? `₹${price.toLocaleString('en-IN')}` : '—'
+  typeof price === 'number' ? `₹${price.toLocaleString('en-IN')}` : '-'
 
 const ShowFreshlyArrived = () => {
   const [items, setItems] = useState([])
@@ -145,7 +145,7 @@ const ShowFreshlyArrived = () => {
           <Info className="mt-0.5 size-4 shrink-0" />
           <p>
             This section always displays {MIN_REQUIRED} products. You currently have{' '}
-            <strong>{items.length}</strong> — until you reach {MIN_REQUIRED}, the remaining slots are
+            <strong>{items.length}</strong> - until you reach {MIN_REQUIRED}, the remaining slots are
             filled automatically with your most recent products.
           </p>
         </div>

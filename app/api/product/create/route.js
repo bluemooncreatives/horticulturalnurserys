@@ -60,7 +60,7 @@ export async function POST(request) {
         await newProduct.save()
 
         // The Freshly Arrived section tops up with the newest products, so a new
-        // product can change what it shows — refresh that cache.
+        // product can change what it shows - refresh that cache.
         revalidateTag('storefront-freshly-arrived-products')
         // A new product changes its category's product count and may become the
         // representative image for the homepage "Categories" section.

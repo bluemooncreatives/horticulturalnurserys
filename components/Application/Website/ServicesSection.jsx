@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Plus, Minus, ArrowUpRight } from 'lucide-react'
 import gsap from 'gsap'
 
-// Row title, hover-rolled — same glyph-roll technique as the hero's
+// Row title, hover-rolled - same glyph-roll technique as the hero's
 // "Winter Seedlings" card title (stacked duplicate slides up into place),
 // but split word-then-character like the About section's heading so long
 // titles still wrap at word boundaries instead of splitting mid-word. The
@@ -43,7 +43,7 @@ const RollTitle = ({ text, className = '' }) => {
     )
 }
 
-// One nursery, four services — the same shape as BenefitsSection's "how we
+// One nursery, four services - the same shape as BenefitsSection's "how we
 // work" list, but expandable: each row hides its tags + reference photos
 // behind the +/- drawer, matching the accordion reference. Images are drawn
 // from the only stock we have (hero/01-03), reused across rows.
@@ -79,9 +79,9 @@ const SERVICES = [
 ]
 
 // Animate one drawer open/closed along one or more dimensions (['height']
-// for the tag list, ['width', 'height'] for the image pair — it needs both,
+// for the tag list, ['width', 'height'] for the image pair - it needs both,
 // otherwise the wrapper keeps reserving its full image height even while
-// collapsed to zero width) — GSAP measures the natural size via a momentary
+// collapsed to zero width) - GSAP measures the natural size via a momentary
 // `auto` set, then tweens from/to 0 against that number, since neither CSS
 // nor GSAP can tween directly to/from `auto`.
 const animateDrawer = (el, opening, dimensions) => {
@@ -113,18 +113,18 @@ const animateDrawer = (el, opening, dimensions) => {
     }
 }
 
-// The two reference photos get their own built-once GSAP timeline — played
+// The two reference photos get their own built-once GSAP timeline - played
 // forward on open, reversed (not re-tweened) on close, so the close is a
 // true mirror of the open rather than a second, separately-tuned animation.
 // Each photo layers three things on the same clock:
-//   · wrap   — a clip-path iris: a horizontal band widens open (like a
+//   · wrap   - a clip-path iris: a horizontal band widens open (like a
 //              camera aperture) instead of the whole shape just fading in.
 //              The rounding is matched per-shape so the mid-transition band
 //              still reads as "this photo", not a generic rectangle.
-//   · inner  — counter-zoom (starts zoomed in, settles to 1) so the photo
+//   · inner  - counter-zoom (starts zoomed in, settles to 1) so the photo
 //              itself has depth as the iris opens, the way the About
 //              section's card photos counter-zoom under their clip reveal.
-//   · veil   — a lime wash that flashes in and clears, tying the reveal to
+//   · veil   - a lime wash that flashes in and clears, tying the reveal to
 //              the section's lime accent (ring hover, tags, CTA) instead of
 //              a plain fade.
 // The two photos are staggered so the second begins its iris just as the
@@ -174,7 +174,7 @@ const ServicesSection = () => {
     const photoTimelines = useRef([])
     // Mobile gets its own full-width photo row (rendered in-flow below the
     // tags, edge to edge within the card) instead of the desktop pair hidden
-    // via `hidden sm:block` — same shapes/timeline machinery, separate refs
+    // via `hidden sm:block` - same shapes/timeline machinery, separate refs
     // so both can be measured and animated independently per breakpoint.
     const mobileImagesRefs = useRef([])
     const mobilePhotoRefs = useRef([])
@@ -184,7 +184,7 @@ const ServicesSection = () => {
 
     // Row 0's open state is baked into the JSX below via a plain inline
     // `style` (not set here) so the server-rendered HTML is already correct
-    // — otherwise there'd be a flash of every row's tags/photos expanded
+    // - otherwise there'd be a flash of every row's tags/photos expanded
     // before this effect ever gets to run on the client. This effect only
     // needs to clean up GSAP tweens on unmount; every open/close afterwards
     // is driven purely by `toggle`, with nothing else touching these props.
@@ -197,7 +197,7 @@ const ServicesSection = () => {
     }, [])
 
     // Build each row's photo timeline exactly once, synchronously before
-    // paint (useLayoutEffect, not useEffect) — the timeline's first `fromTo`
+    // paint (useLayoutEffect, not useEffect) - the timeline's first `fromTo`
     // applies its "from" state the instant it's created, so row 0 (already
     // open server-side) needs to be jumped straight to the timeline's end
     // before the browser ever paints, or its photos would flash closed-then-
@@ -222,7 +222,7 @@ const ServicesSection = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // Dashed ring around each toggle — a slow, ambient spin (echoes the About
+    // Dashed ring around each toggle - a slow, ambient spin (echoes the About
     // section's seal ring) so the row markers feel alive even at rest, not
     // just on click. Independent of the toggle's own pop/rotate tween below
     // (that one lands on the inner badge, not this ring), so the two motions
@@ -235,7 +235,7 @@ const ServicesSection = () => {
         return () => tweens.forEach((t) => t.kill())
     }, [])
 
-    // Curried setter for the three per-photo refs (wrap/inner/veil) — keeps
+    // Curried setter for the three per-photo refs (wrap/inner/veil) - keeps
     // the JSX below to one ref prop per element instead of an inline object-
     // merging callback repeated six times per row.
     const setPhotoRef = (i, pi, key) => (el) => {
@@ -319,7 +319,7 @@ const ServicesSection = () => {
                                     aria-expanded={isOpen}
                                     className="group flex w-full items-start gap-4 py-7 text-left sm:gap-6 lg:gap-10 lg:py-9"
                                 >
-                                    {/* number — pinned top-left, extra margin so it doesn't crowd the title */}
+                                    {/* number - pinned top-left, extra margin so it doesn't crowd the title */}
                                     <span className="mr-4 w-6 shrink-0 pt-1 text-[0.7rem] font-medium text-white/80 sm:mr-8 sm:w-9 lg:mr-14 lg:pt-1.5">
                                         [{service.num}]
                                     </span>
@@ -345,7 +345,7 @@ const ServicesSection = () => {
                                             </span>
                                         </span>
 
-                                        {/* mobile-only reference photos — same shapes/lime-veil reveal as
+                                        {/* mobile-only reference photos - same shapes/lime-veil reveal as
                                             the desktop pair below, but stacked in-flow full width (edge to
                                             edge within the card) instead of hidden, so nothing needs a
                                             popup/overlay to be seen on a phone. */}
@@ -382,7 +382,7 @@ const ServicesSection = () => {
                                         </span>
                                     </span>
 
-                                    {/* reference photos — vertically centred against the whole row, only on
+                                    {/* reference photos - vertically centred against the whole row, only on
                                         open. Hidden below sm: the row's fixed-width items (number badge +
                                         two size-32/40 photos + toggle) already exceed a phone's content
                                         width, so these would force the title/description off-row; the
@@ -413,7 +413,7 @@ const ServicesSection = () => {
                                                         aria-hidden
                                                         className="pointer-events-none absolute inset-0 bg-[var(--brand-lime)]"
                                                         // Row 0 renders open server-side, before the timeline's
-                                                        // own opacity:0 end-state has a chance to apply — without
+                                                        // own opacity:0 end-state has a chance to apply - without
                                                         // this the lime veil would flash solid over its photos
                                                         // for a frame (or permanently with JS disabled).
                                                         style={i === 0 ? { opacity: 0 } : undefined}
@@ -423,7 +423,7 @@ const ServicesSection = () => {
                                         </span>
                                     </span>
 
-                                    {/* toggle — pinned top-right. Dashed ring spins slowly at rest;
+                                    {/* toggle - pinned top-right. Dashed ring spins slowly at rest;
                                         the solid inner badge is what pops on click. Lime on hover
                                         (desktop) and while the row is open (mobile has no hover, so
                                         `isOpen` is what carries the same lime accent on tap there). */}
@@ -446,7 +446,7 @@ const ServicesSection = () => {
                     })}
                 </div>
 
-                {/* CTA — lime card with a solid circular arrow badge, matching
+                {/* CTA - lime card with a solid circular arrow badge, matching
                     the hero's floating product card (minus its writeup line). */}
                 <div className="relative mt-10 flex justify-center lg:mt-12">
                     <Link

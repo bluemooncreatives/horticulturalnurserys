@@ -1,5 +1,5 @@
 /* ================================================================
-   HORTICULTURAL DEVELOPMENT CENTRE — EMAIL DESIGN SYSTEM (shared)
+   HORTICULTURAL DEVELOPMENT CENTRE - EMAIL DESIGN SYSTEM (shared)
    Single source of truth for every transactional email.
    Email clients strip <style> custom-properties and external fonts,
    so every value here is a literal inline-able constant and every
@@ -42,7 +42,7 @@ export const BRAND_TAGLINE = "Landscaping & nursery · Kolkata since 1989";
 
 /**
  * Resolve the public site origin for absolute links inside emails.
- * Emails are opened off-site, so every link MUST be absolute — a missing
+ * Emails are opened off-site, so every link MUST be absolute - a missing
  * env var would otherwise produce dead "/contact" links. Falls back to the
  * production domain so links never break even if the var is unset.
  */
@@ -71,7 +71,7 @@ export const esc = (value) => {
 };
 
 /**
- * First name only, for a warmer greeting. Returns RAW text (not escaped) — it
+ * First name only, for a warmer greeting. Returns RAW text (not escaped) - it
  * is always interpolated through an escaping helper (heading/paragraph), so
  * escaping here too would double-encode names containing special characters.
  * Safe on empty/undefined.

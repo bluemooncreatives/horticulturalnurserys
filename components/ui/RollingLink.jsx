@@ -5,12 +5,12 @@ import Link from "next/link";
 import gsap from "gsap";
 
 /* ────────────────────────────────────────────────────────────────
-   RollingText / RollingLink — reusable animated text link with GSAP.
+   RollingText / RollingLink - reusable animated text link with GSAP.
 
    Each glyph is a fixed-height mask (overflow-hidden) holding a THREE-
    cell vertical column of the SAME glyph: [duplicate · base · duplicate].
    At rest every column shows its MIDDLE cell (one uniform offset for all
-   letters) so the base reads exactly like normal text — no zigzag, no
+   letters) so the base reads exactly like normal text - no zigzag, no
    drift. On hover the column slides one cell:
      • even glyphs slide UP   → reveal the bottom cell (roll in from below)
      • odd  glyphs slide DOWN → reveal the top cell   (roll in from above)
@@ -132,7 +132,7 @@ export const RollingText = forwardRef(function RollingText(
       {/* Optional background layer (e.g. a CircleReveal fill), behind glyphs. */}
       {background}
 
-      {/* Decorative tripled glyphs — the real label lives in aria-label. */}
+      {/* Decorative tripled glyphs - the real label lives in aria-label. */}
       <span aria-hidden className="relative z-10 inline-flex items-center">
         {chars.map((ch, i) =>
           ch === " " ? (
@@ -162,7 +162,7 @@ export const RollingText = forwardRef(function RollingText(
         )}
       </span>
 
-      {/* Underline — inherits link colour via bg-current. */}
+      {/* Underline - inherits link colour via bg-current. */}
       {underline && (
         <span
           data-roll-underline

@@ -1,8 +1,8 @@
 /* ================================================================
-   HORTICULTURAL DEVELOPMENT CENTRE — GLOBAL DESIGN SYSTEM
+   HORTICULTURAL DEVELOPMENT CENTRE - GLOBAL DESIGN SYSTEM
    Single source of truth for every design token on the platform.
    Imported by globals.css before any Tailwind at-rules.
-   No Tailwind directives here — pure CSS custom properties.
+   No Tailwind directives here - pure CSS custom properties.
    ================================================================ */
 
 
@@ -17,23 +17,23 @@
      sections and borders. The name is kept so every component that reads
      --brand-primary / --dark-red re-skins automatically. The green is dark
      enough (~12:1 on white) to double as brand text as well as a CTA fill. */
-  --brand-primary:       #1D4020;   /* forest green — logo, CTAs, borders, text */
-  --brand-primary-hover: #2C5E30;   /* lifted green — hover / active states      */
+  --brand-primary:       #1D4020;   /* forest green - logo, CTAs, borders, text */
+  --brand-primary-hover: #2C5E30;   /* lifted green - hover / active states      */
 
   /* Neutral palette */
-  --brand-ink:       #000000;   /* true black — wordmark & pure-black text       */
+  --brand-ink:       #000000;   /* true black - wordmark & pure-black text       */
   --brand-ink-soft:  #16311A;   /* deep-forest section fill (services, footer)   */
-  --brand-white:     #FFFFFF;   /* pure white — card surfaces                    */
-  --brand-cream:     #F1F0EC;   /* off-white — secondary fills (was warm cream)  */
+  --brand-white:     #FFFFFF;   /* pure white - card surfaces                    */
+  --brand-cream:     #F1F0EC;   /* off-white - secondary fills (was warm cream)  */
 
   /* ── Lime accent (the bright pop) ── */
-  --brand-lime:       #C9F24E;   /* chartreuse accent — highlights, key CTAs     */
-  --brand-lime-hover: #D6F86F;   /* lifted lime — hover                          */
+  --brand-lime:       #C9F24E;   /* chartreuse accent - highlights, key CTAs     */
+  --brand-lime-hover: #D6F86F;   /* lifted lime - hover                          */
   --brand-lime-ink:   #16311A;   /* deep-forest ink used ON lime surfaces        */
 
-  /* ── Olive accent (secondary / support — moss green) ── */
-  --brand-olive:       #A5B33D;   /* moss-olive — secondary accents, tags        */
-  --brand-olive-hover: #B4C24C;   /* lifted olive — hover                        */
+  /* ── Olive accent (secondary / support - moss green) ── */
+  --brand-olive:       #A5B33D;   /* moss-olive - secondary accents, tags        */
+  --brand-olive-hover: #B4C24C;   /* lifted olive - hover                        */
   --brand-olive-ink:   #16311A;   /* deep-forest ink used ON olive surfaces      */
 
   /* Dark-panel gradient range (auth panel + decorative highlights) */
@@ -44,7 +44,7 @@
      section accents etc. resolve to the new light-grey surface. */
   --brand-warm-bg: #EFEEEA;
 
-  /* Body copy — muted grey (Lumóra's secondary text) */
+  /* Body copy - muted grey (Lumóra's secondary text) */
   --text-body: #6B6B6B;
 
   /* ── Legacy aliases (kept for backward-compat with existing components) ── */
@@ -58,7 +58,7 @@
 
 
 /* ────────────────────────────────────────────────────────────────
-   2. SEMANTIC COLORS — Light Mode
+   2. SEMANTIC COLORS - Light Mode
    These map to shadcn/ui component roles.
    ──────────────────────────────────────────────────────────────── */
 :root {
@@ -84,7 +84,7 @@
 
 
 /* ────────────────────────────────────────────────────────────────
-   3. SEMANTIC COLORS — Dark Mode
+   3. SEMANTIC COLORS - Dark Mode
    ──────────────────────────────────────────────────────────────── */
 .dark {
   --background:           oklch(0.145 0 0);
@@ -259,11 +259,11 @@
    8. LAYOUT TOKENS
    ──────────────────────────────────────────────────────────────── */
 :root {
-  /* Fluid horizontal gutter — 12px on mobile, up to 32px on desktop */
+  /* Fluid horizontal gutter - 12px on mobile, up to 32px on desktop */
   --website-gutter:     clamp(0.75rem, 1.5vw, 2rem);
   /* Max content width */
   --website-content-max: 1280px;
-  /* Admin shell — base of the whole radius scale (see section 9) */
+  /* Admin shell - base of the whole radius scale (see section 9) */
   --admin-shell-radius:  4px;
   /* Sidebar widths */
   --sidebar-width:       16rem;
@@ -283,8 +283,8 @@
    Every value below is roughly 40-50% of what it was, keeping the
    relative steps intact so the hierarchy still reads. Tailwind's
    rounded-sm…rounded-4xl utilities are mapped to these in
-   globals.css, so changing them here re-skins the whole platform —
-   website and admin — with no per-component edits.
+   globals.css, so changing them here re-skins the whole platform -
+   website and admin - with no per-component edits.
 
    Deliberately NOT reduced:
      --radius-full  true circles (avatars, icon buttons, dots, badges)
@@ -294,12 +294,12 @@
    To flatten those too, give them a fixed value (e.g. 8px).
    ──────────────────────────────────────────────────────────────── */
 :root {
-  --radius:    var(--admin-shell-radius);              /* 4px — admin/shadcn base */
+  --radius:    var(--admin-shell-radius);              /* 4px - admin/shadcn base */
   --radius-sm: max(0px, calc(var(--radius) - 2px));    /* 2px  */
   --radius-md: max(0px, calc(var(--radius) - 1px));    /* 3px  */
   --radius-lg: var(--radius);                          /* 4px  */
   --radius-xl: calc(var(--radius) + 1px);              /* 5px  */
-  /* Upper scale — tightened from the original 16/24/32 */
+  /* Upper scale - tightened from the original 16/24/32 */
   --radius-2xl: 0.375rem;     /* 6px   small cards / inputs                     */
   --radius-3xl: 0.5rem;       /* 8px   product & content cards                  */
   --radius-4xl: 0.625rem;     /* 10px  hero image, dark sections, big panels    */
@@ -369,9 +369,9 @@
   --ease-in-out:      cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring:      cubic-bezier(0.071, 0.505, 0.192, 1);
   --ease-out-circ:    cubic-bezier(0.075, 0.82, 0.165, 1);  /* arrow direction flip */
-  --ease-out-expo:    cubic-bezier(0.16, 1, 0.3, 1);        /* text-reveal masks — fast start, long soft settle */
-  --ease-out-quart:   cubic-bezier(0.25, 1, 0.5, 1);        /* panel fade-ups — gentler settle than expo */
-  --ease-pop:         cubic-bezier(0.34, 1.56, 0.64, 1);    /* card/badge entrances — slight overshoot */
+  --ease-out-expo:    cubic-bezier(0.16, 1, 0.3, 1);        /* text-reveal masks - fast start, long soft settle */
+  --ease-out-quart:   cubic-bezier(0.25, 1, 0.5, 1);        /* panel fade-ups - gentler settle than expo */
+  --ease-pop:         cubic-bezier(0.34, 1.56, 0.64, 1);    /* card/badge entrances - slight overshoot */
 
   /* ── Composed transitions ── */
   --transition-colors:   color var(--duration-fast) var(--ease-in-out),
@@ -431,7 +431,7 @@
   --input-py:      0.25rem;
 
   /* ── Website form fields (checkout, contact, etc.) ── */
-  --form-field-height:        2.25rem;   /* 36px — slightly taller than admin inputs */
+  --form-field-height:        2.25rem;   /* 36px - slightly taller than admin inputs */
   --form-field-px:            0.75rem;   /* 12px horizontal padding                  */
   --form-field-py:            0.5rem;    /*  8px vertical padding                    */
   --form-field-radius:        var(--radius-sm);                           /* 4px      */
@@ -493,12 +493,12 @@
   letter-spacing: -0.02em;
 }
 
-/* Body font — PP Neue Montreal */
+/* Body font - PP Neue Montreal */
 .font-neue {
   font-family: var(--font-body);
 }
 
-/* Big brand wordmark — heavy, very tight, optical-sized */
+/* Big brand wordmark - heavy, very tight, optical-sized */
 .font-wordmark {
   font-family:    var(--font-body);
   font-weight:    var(--weight-medium);
@@ -506,7 +506,7 @@
   line-height:    0.9;
 }
 
-/* Uppercase micro-label — the "ABOUT COMPANY" / "OUR SERVICES" eyebrows.
+/* Uppercase micro-label - the "ABOUT COMPANY" / "OUR SERVICES" eyebrows.
    Pair with a small leading dash or [] bracket in markup. */
 .eyebrow {
   font-family:     var(--font-body);
@@ -572,7 +572,7 @@
 .thin-scrollbar::-webkit-scrollbar-thumb    { background-color: var(--brand-primary-hover); border-radius: var(--radius-full); }
 .thin-scrollbar::-webkit-scrollbar-thumb:hover { background-color: var(--brand-primary-hover); }
 
-/* Neutral scrollbar for filter panel — overrides global brand scrollbar */
+/* Neutral scrollbar for filter panel - overrides global brand scrollbar */
 .shop-filter-panel,
 .shop-filter-panel * {
   scrollbar-width: thin;
@@ -592,7 +592,7 @@
   border-radius:    var(--radius-full);
 }
 
-/* Search command palette list — visible neutral scrollbar.
+/* Search command palette list - visible neutral scrollbar.
    Class specificity beats the 1px global brand scrollbar so the modal's
    result list is actually grabbable/scrollable. */
 .command-scroll {
@@ -618,7 +618,7 @@
    17. PAGE LAYOUT BASE
    ──────────────────────────────────────────────────────────────── */
 html {
-  overflow-x: clip;  /* clip, not hidden — does NOT create a scroll container,
+  overflow-x: clip;  /* clip, not hidden - does NOT create a scroll container,
                         so Radix remove-scroll has nothing to pad-compensate */
 }
 body {
@@ -630,7 +630,7 @@ body {
    19. EFFECT UTILITIES
    ──────────────────────────────────────────────────────────────── */
 
-/* Bottom-fade gradient overlay — requires position:relative on parent */
+/* Bottom-fade gradient overlay - requires position:relative on parent */
 .faded-bottom::after {
   content:        '';
   pointer-events: none;
@@ -653,8 +653,8 @@ body {
    20. WEBSITE FORM FIELD
    Reusable class for every text input / textarea on the public-
    facing website (checkout, contact, coupon, etc.).
-   Built from the brand button token set — same border colour,
-   same focus ring, same radius — but adapted for text entry:
+   Built from the brand button token set - same border colour,
+   same focus ring, same radius - but adapted for text entry:
    • no hover fill-colour (keeps background transparent on hover)
    • placeholder inherits brand colour at reduced opacity
    • typed text uses foreground so it is always legible
@@ -705,7 +705,7 @@ body {
   box-shadow:   0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
 }
 
-/* Textarea extension — overrides the fixed height from .form-field */
+/* Textarea extension - overrides the fixed height from .form-field */
 .form-field-area {
   height:       auto;
   min-height:   5rem;
@@ -766,11 +766,11 @@ body {
    pill buttons, tag chips, section shell, dark rounded panels.
    ──────────────────────────────────────────────────────────────── */
 
-/* Section shell — constrained, centred content with the fluid gutter */
+/* Section shell - constrained, centred content with the fluid gutter */
 .lumora-shell {
   width: 100%;
   margin-inline: auto;
-  /* Arithmetic has to live in calc(), not inside var() — `var(--a + var(--b))`
+  /* Arithmetic has to live in calc(), not inside var() - `var(--a + var(--b))`
      is parsed as a single malformed custom-property name and kills the whole
      stylesheet with "Unexpected token Delim('+')". */
   padding-inline: calc(var(--website-gutter) + clamp(0rem, 4vw, var(--space-12)));
@@ -810,8 +810,8 @@ body {
 .pill-ghost { background: transparent; color: var(--brand-primary); border: 1px solid color-mix(in srgb, var(--brand-primary) 22%, transparent); }
 .pill-ghost:hover { background: var(--brand-primary); color: var(--brand-white); border-color: var(--brand-primary); }
 
-/* Tag / filter chip — small pill, outlined by default. Lime at rest, lifts
-   and brightens to the hover shade on hover — same colour/transform
+/* Tag / filter chip - small pill, outlined by default. Lime at rest, lifts
+   and brightens to the hover shade on hover - same colour/transform
    transitions (`--transition-colors` + `--transition-transform`) already
    used for the pill buttons and card hovers elsewhere in this file. */
 .tag-chip {
@@ -834,7 +834,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* Dark rounded panel — the "Our Services" / footer container */
+/* Dark rounded panel - the "Our Services" / footer container */
 .dark-panel {
   background:     var(--brand-ink-soft);
   color:          var(--brand-white);
@@ -862,11 +862,11 @@ body {
    are always present so content is visible with no JS/CSS; only the
    `-play` state class is toggled once the reveal should fire, driven
    declaratively off React state (see components/ui/reveal.jsx) rather
-   than an imperative class write — there's no replay case in this app
+   than an imperative class write - there's no replay case in this app
    (each hero mounts once), so the simpler render-driven toggle is enough.
    ──────────────────────────────────────────────────────────────── */
 
-/* Masked line/word reveal — an overflow-hidden box around an inner span
+/* Masked line/word reveal - an overflow-hidden box around an inner span
    that slides up from 115% and fades in. Used for headline lines. */
 .rv-line {
   display:        block;
@@ -890,7 +890,7 @@ body {
   opacity:   1;
 }
 
-/* Fade-up panel reveal — no mask, just opacity + a soft rise. Used for the
+/* Fade-up panel reveal - no mask, just opacity + a soft rise. Used for the
    hero's smaller components (badge rows, trust strip, floating cards). */
 .rv-up {
   opacity:             0;

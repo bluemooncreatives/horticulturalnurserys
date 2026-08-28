@@ -57,7 +57,7 @@ const ProductBox = ({ product, priority = false }) => {
     return (
         <div className='group relative flex flex-col overflow-hidden rounded-[var(--radius-3xl)] border border-border bg-white transition duration-300 hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-[var(--shadow-card-hover)]'>
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--product-card-bg)]">
-                {/* Badges — top-left, stacked */}
+                {/* Badges - top-left, stacked */}
                 <div className="absolute left-3 top-3 z-20 flex flex-col items-start gap-1.5">
                     {product?.isBestseller && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-primary)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-white shadow-sm">
@@ -73,7 +73,7 @@ const ProductBox = ({ product, priority = false }) => {
                     )}
                 </div>
 
-                {/* Quick actions — top-right, always visible circular icon buttons */}
+                {/* Quick actions - top-right, always visible circular icon buttons */}
                 <div className="absolute right-3 top-3 z-20 flex flex-col items-end gap-2">
                     <Link
                         href={WEBSITE_PRODUCT_DETAILS(product.slug)}

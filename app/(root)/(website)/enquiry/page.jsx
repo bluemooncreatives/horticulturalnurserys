@@ -27,7 +27,7 @@ import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 
 const breadCrumb = { title: 'Enquiry' }
 
-// Optional contact/location fields — the enquiry model favours low friction, so
+// Optional contact/location fields - the enquiry model favours low friction, so
 // only name/email/phone are required. `company` is a honeypot (bots fill it).
 const enquiryFormSchema = zSchema
     .pick({ name: true, email: true, phone: true })
@@ -168,7 +168,7 @@ const Enquiry = () => {
                         <Form {...form}>
                             <form id="enquiry-form" onSubmit={form.handleSubmit(submitEnquiry)}>
 
-                                {/* Honeypot — visually hidden, ignored by humans */}
+                                {/* Honeypot - visually hidden, ignored by humans */}
                                 <div aria-hidden className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
                                     <input tabIndex={-1} autoComplete="off" {...form.register('company')} />
                                 </div>
@@ -239,7 +239,7 @@ const Enquiry = () => {
                                     )} />
                                     <FormField control={form.control} name="message" render={({ field }) => (
                                         <FormItem className="sm:col-span-2">
-                                            <FormControl><Textarea placeholder="Add a note (optional) — timeline, quantities, special requirements, etc." className="form-field form-field-area" {...field} /></FormControl>
+                                            <FormControl><Textarea placeholder="Add a note (optional) - timeline, quantities, special requirements, etc." className="form-field form-field-area" {...field} /></FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )} />

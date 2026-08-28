@@ -5,14 +5,14 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 /*
  * Hero banner with a giant watermark title (used on /my-account, /orders, …).
  *
- * The title is *measured* and scaled so it always spans the full banner width —
+ * The title is *measured* and scaled so it always spans the full banner width -
  * short words ("Orders") and long words ("Dashboard") both fill edge-to-edge,
  * instead of a fixed `vw` size that only fills for one word length. The scale is
  * capped at MAX_FONT_PX so short words don't explode on wide desktop screens
  * (there it keeps the previous 18rem watermark size).
  */
 
-const MAX_FONT_PX = 288   // 18rem — previous desktop cap; keeps the watermark look on wide screens
+const MAX_FONT_PX = 288   // 18rem - previous desktop cap; keeps the watermark look on wide screens
 const FILL = 0.95         // fill 95% of the banner width, leaving a small side gutter
 
 // Pre-hydration / SSR fallback size so the title isn't tiny before JS measures it.
@@ -28,7 +28,7 @@ const WebsiteBreadcrumb = ({ props }) => {
         const text = textRef.current
         if (!box || !text || !box.clientWidth) return
         // Measure the title's natural width at a fixed reference size (kept
-        // transient — set, read, restore within one frame so it never paints),
+        // transient - set, read, restore within one frame so it never paints),
         // then scale so that width becomes (banner width × FILL), capped at
         // MAX_FONT_PX. Storing the result in state keeps React the owner of the
         // inline font-size so a later re-render can't reset it.
@@ -44,7 +44,7 @@ const WebsiteBreadcrumb = ({ props }) => {
         fit()
         const ro = new ResizeObserver(fit)
         if (boxRef.current) ro.observe(boxRef.current)
-        // The brand webfont has different metrics than the fallback — re-fit once
+        // The brand webfont has different metrics than the fallback - re-fit once
         // it has loaded so the measurement is accurate.
         if (typeof document !== 'undefined' && document.fonts?.ready) {
             document.fonts.ready.then(fit)
@@ -57,7 +57,7 @@ const WebsiteBreadcrumb = ({ props }) => {
             {/* Brand background */}
             <div className="absolute inset-0 bg-[var(--brand-ink-soft)]" />
 
-            {/* Watermark title — measured + scaled to fill the banner width. On
+            {/* Watermark title - measured + scaled to fill the banner width. On
                 mobile it sits below the fixed header so it isn't clipped by it. */}
             <div
                 ref={boxRef}

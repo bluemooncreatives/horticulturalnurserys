@@ -5,7 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 
 /* ────────────────────────────────────────────────────────────────
-   CrossfadeImage — reusable, advanced GSAP image cross-dissolve.
+   CrossfadeImage - reusable, advanced GSAP image cross-dissolve.
 
    Give it the full set of `images` and the `activeIndex` that should be
    showing; whenever that index changes it plays a layered transition
@@ -26,7 +26,7 @@ import gsap from "gsap";
      A/B buffer, and the browser de-dupes repeated URLs.
    • Transitions are interruption-safe: each run kills the prior tweens on
      every layer and re-targets, and the incoming layer only re-seeds its
-     `from` (scale/blur) when it was actually hidden — so a rapid click
+     `from` (scale/blur) when it was actually hidden - so a rapid click
      mid-dissolve eases from where it is instead of snapping.
    • `isolation: isolate` traps the internal z-index so the stack can never
      paint above sibling overlays/content that sit on top of it.
@@ -57,7 +57,7 @@ export default function CrossfadeImage({
   kenBurnsScale = 1.06,
   kenBurnsDuration = 7,
   enterX = 0, // incoming slides in from this xPercent (negative = from the left)
-  stillOutgoing = false, // when true the outgoing frame holds position — pure fade, no shift/scale/blur
+  stillOutgoing = false, // when true the outgoing frame holds position - pure fade, no shift/scale/blur
 }) {
   const layerRefs = useRef([]);
   const current = useRef(activeIndex);
@@ -116,7 +116,7 @@ export default function CrossfadeImage({
       gsap.killTweensOf(el);
 
       if (i === to) {
-        // Incoming — dissolve up, settle scale, de-blur, optional slide-in
+        // Incoming - dissolve up, settle scale, de-blur, optional slide-in
         // from `enterX`, then hand off to Ken Burns.
         gsap.set(el, { zIndex: 2 });
         if (reduce) {
@@ -140,7 +140,7 @@ export default function CrossfadeImage({
           return;
         }
         if (stillOutgoing) {
-          // Outgoing holds its position — pure fade out, no shift/scale/blur.
+          // Outgoing holds its position - pure fade out, no shift/scale/blur.
           // Fades over the full duration so it stays put beneath the incoming
           // until the new frame has slid fully into place.
           gsap.to(el, {
@@ -150,7 +150,7 @@ export default function CrossfadeImage({
             onComplete: () => gsap.set(el, { zIndex: 0, xPercent: 0, scale: 1, filter: "blur(0px)" }),
           });
         } else {
-          // Default outgoing — dissolve down with a touch of push-in + soft blur.
+          // Default outgoing - dissolve down with a touch of push-in + soft blur.
           gsap.to(el, {
             opacity: 0,
             scale: "+=0.06",

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 // One IntersectionObserver per unique (rootMargin, threshold) pair, shared
-// across every element that asks for it — cheaper than a new observer per
+// across every element that asks for it - cheaper than a new observer per
 // revealed element once a page has a couple dozen of them.
 const registries = new Map();
 

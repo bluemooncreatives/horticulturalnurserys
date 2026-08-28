@@ -5,23 +5,23 @@ import Image from "next/image";
 import gsap from "gsap";
 
 /* ────────────────────────────────────────────────────────────────
-   CircleWipeImage — reusable directional circular-wipe between frames.
+   CircleWipeImage - reusable directional circular-wipe between frames.
 
    Drop it into any round (or any) `overflow-hidden` box. Give it the full
    `images` set and the `activeIndex` to show; whenever that index changes
    it plays a two-part swap:
 
      • incoming   revealed by a circular clip-path that grows from the
-                  right edge (originX/originY) — so the new frame "blooms
-                  in from the right" — while easing a small slide + scale
+                  right edge (originX/originY) - so the new frame "blooms
+                  in from the right" - while easing a small slide + scale
                   down to rest.
-     • outgoing   slides off to the left and fades — so the old frame
+     • outgoing   slides off to the left and fades - so the old frame
                   "vanishes from right to left" as the reveal eats it.
 
    Implementation notes
    ────────────────────
    • clip-path strings can't be tweened, so the incoming radius is driven
-     off the SAME tween's eased ratio (`this.ratio`) in onUpdate — one
+     off the SAME tween's eased ratio (`this.ratio`) in onUpdate - one
      tween per layer, so `killTweensOf(el)` cleans up transform AND clip
      together, keeping rapid advances interruption-safe.
    • All frames are mounted up-front (no load flash); only opacity/z sit in
@@ -103,7 +103,7 @@ export default function CircleWipeImage({
       gsap.killTweensOf(el);
 
       if (i === to) {
-        // Incoming — circular reveal from the right + settle in.
+        // Incoming - circular reveal from the right + settle in.
         gsap.set(el, { zIndex: 2, opacity: 1 });
         const end = maxRadius(el);
         if (reduce) {
@@ -128,7 +128,7 @@ export default function CircleWipeImage({
           }
         );
       } else if (i === from) {
-        // Outgoing — slide off to the left and fade.
+        // Outgoing - slide off to the left and fade.
         if (reduce) {
           gsap.set(el, { opacity: 0, zIndex: 0 });
           return;

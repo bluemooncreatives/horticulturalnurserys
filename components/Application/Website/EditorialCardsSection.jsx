@@ -9,7 +9,7 @@ const CARDS = [
     {
         num: '01',
         heading: 'Our Story',
-        description: 'A nursery started in 1990 that grew into a landscaping house — parks, lakes, townships and institutional grounds across West Bengal.',
+        description: 'A nursery started in 1990 that grew into a landscaping house - parks, lakes, townships and institutional grounds across West Bengal.',
         cta: 'Read More',
         href: '/about-us',
         image: '/assets/images/hero/01.jpg',
@@ -27,7 +27,7 @@ const CARDS = [
     {
         num: '03',
         heading: 'Plan a Garden',
-        description: 'Tell us about the site — terrace, courtyard, campus or township — and our horticulturists will come and see it.',
+        description: 'Tell us about the site - terrace, courtyard, campus or township - and our horticulturists will come and see it.',
         cta: 'Request a Site Visit',
         href: '/contact',
         image: '/assets/images/hero/01.jpg',
@@ -76,7 +76,7 @@ const EditorialCardsSection = () => {
                         {/* gradient overlay */}
                         <div className={`absolute inset-0 ${card.overlay} transition-opacity duration-500`} />
 
-                        {/* content — bottom anchored */}
+                        {/* content - bottom anchored */}
                         <div className="absolute inset-x-0 bottom-0 p-6 lg:p-7">
 
                             {/* number tag */}

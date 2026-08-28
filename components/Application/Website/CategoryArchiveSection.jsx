@@ -40,8 +40,8 @@ const CategoryArchiveSection = async () => {
     // render an empty archive on the live storefront.
     if (categoryItems.length === 0 && colorItems.length === 0) return null
 
-    // Interleave categories and colours into one continuous list — Category,
-    // Colour, Category, Colour … — with any leftover from the longer list
+    // Interleave categories and colours into one continuous list - Category,
+    // Colour, Category, Colour … - with any leftover from the longer list
     // appended at the end.
     const items = []
     const max = Math.max(categoryItems.length, colorItems.length)

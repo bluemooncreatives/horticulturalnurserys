@@ -63,7 +63,7 @@ const Footer = ({ categoryLinks = [] }) => {
                         </span>
                     </h2>
                     <div className="shrink-0 sm:text-right">
-                        <p className="text-sm text-white/55">© 20 — 26°</p>
+                        <p className="text-sm text-white/55">© 20 - 26°</p>
                         <span aria-hidden className="mt-3 block h-px w-24 bg-white/25 sm:ml-auto" />
                     </div>
                 </div>

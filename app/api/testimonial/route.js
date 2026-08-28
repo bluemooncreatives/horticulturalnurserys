@@ -23,7 +23,7 @@ const sanitizeIds = (rawIds) => {
     return valid
 }
 
-// GET — every non-deleted testimonial in display order (admin panel list).
+// GET - every non-deleted testimonial in display order (admin panel list).
 // Includes inactive ones so the admin can see/toggle hidden entries.
 export async function GET() {
     try {
@@ -45,7 +45,7 @@ export async function GET() {
     }
 }
 
-// POST — create a new testimonial. Appended after the current highest rank so
+// POST - create a new testimonial. Appended after the current highest rank so
 // existing order is preserved.
 export async function POST(request) {
     try {
@@ -67,7 +67,7 @@ export async function POST(request) {
 
         const { name, review, testimonialRating } = validate.data
 
-        // Server owns the sort order — a client-supplied value is never trusted.
+        // Server owns the sort order - a client-supplied value is never trusted.
         const last = await TestimonialModel.findOne({ deletedAt: null })
             .sort({ sortOrder: -1 })
             .select('sortOrder')
@@ -88,7 +88,7 @@ export async function POST(request) {
     }
 }
 
-// PUT — persist a new display order. Body: { order: [id, id, ...] }.
+// PUT - persist a new display order. Body: { order: [id, id, ...] }.
 // Any id that is not a current testimonial is silently skipped.
 export async function PUT(request) {
     try {
@@ -120,7 +120,7 @@ export async function PUT(request) {
     }
 }
 
-// DELETE — soft-delete one or more testimonials. Body: { ids: [id, ...] }.
+// DELETE - soft-delete one or more testimonials. Body: { ids: [id, ...] }.
 export async function DELETE(request) {
     try {
         const auth = await isAuthenticated('admin')

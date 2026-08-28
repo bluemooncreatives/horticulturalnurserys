@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 /* ────────────────────────────────────────────────────────────────
-   useHeroCarousel — reusable auto-advancing index driver.
+   useHeroCarousel - reusable auto-advancing index driver.
 
    ONE GSAP tween is the single source of truth for timing: it runs for
    `interval` seconds, reports its 0→1 fraction through `onProgress` every

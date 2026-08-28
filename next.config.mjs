@@ -2,7 +2,7 @@
 // Content-Security-Policy scoped to the third parties this app actually uses:
 // Cloudinary images (res.cloudinary.com) and the Cloudinary Upload Widget used in
 // the admin Media section. The widget injects a script from and renders inside an
-// iframe on upload-widget.cloudinary.com, and uploads go to api.cloudinary.com —
+// iframe on upload-widget.cloudinary.com, and uploads go to api.cloudinary.com -
 // all three must be whitelisted or the "Upload Media" button does nothing. There
 // is no payment gateway: this is a catalogue + enquiry site, so no Razorpay hosts.
 // 'unsafe-inline' is required for Next.js' inline bootstrap/hydration scripts and
@@ -67,7 +67,7 @@ const nextConfig = {
                 headers: securityHeaders,
             },
             {
-                // Cache custom fonts for 1 year — they're content-addressed filenames
+                // Cache custom fonts for 1 year - they're content-addressed filenames
                 source: '/assets/font/:path*',
                 headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
             },

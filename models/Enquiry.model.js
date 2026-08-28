@@ -7,12 +7,12 @@ export const enquiryStatus = Object.freeze([
   'new',        // just submitted, not yet actioned
   'contacted',  // admin has reached out to the customer
   'quoted',     // a price/quote has been shared
-  'closed',     // resolved — won, lost, or abandoned
+  'closed',     // resolved - won, lost, or abandoned
 ])
 
 // A single line on an enquiry. Deliberately price-free: this site is a
 // catalogue + enquiry workflow, not a store, so an enquiry captures WHAT and
-// HOW MANY the customer wants — the admin quotes the price out-of-band. All
+// HOW MANY the customer wants - the admin quotes the price out-of-band. All
 // display fields (name/size/color) are a server-verified snapshot taken at
 // submit time so the enquiry stays readable even if the product later changes
 // or is deleted.
@@ -57,7 +57,7 @@ const enquirySchema = new mongoose.Schema(
       trim: true,
       maxlength: 20,
     },
-    // Delivery-ish details are all OPTIONAL — the enquiry model favours low
+    // Delivery-ish details are all OPTIONAL - the enquiry model favours low
     // friction; the admin collects exact fulfilment details when following up.
     address: { type: String, trim: true, maxlength: 300, default: '' },
     city: { type: String, trim: true, maxlength: 100, default: '' },

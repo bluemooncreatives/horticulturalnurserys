@@ -73,7 +73,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    // Saved "default" shipping address — a convenience copy used to prefill
+    // Saved "default" shipping address - a convenience copy used to prefill
     // checkout. The authoritative shipping address for any order is the
     // denormalised snapshot stored on that Order, never this live record.
     address: {

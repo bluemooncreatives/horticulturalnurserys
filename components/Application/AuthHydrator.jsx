@@ -7,7 +7,7 @@ import { login, logout } from '@/store/reducer/authReducer'
 /**
  * Resolves the signed-in user from the server once on app load and mirrors it into
  * the Redux auth store. This is what makes the navbar / dashboard sidebar show the
- * real name + avatar reliably — Redux `authStore` is intentionally NOT persisted,
+ * real name + avatar reliably - Redux `authStore` is intentionally NOT persisted,
  * and Google sign-in never dispatched `login` on the client, so without this the
  * client believed nobody was logged in after every refresh.
  */

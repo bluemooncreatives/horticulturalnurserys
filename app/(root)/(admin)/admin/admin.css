@@ -1,4 +1,4 @@
-/* Admin-only theme overrides — imported only by the admin layout,
+/* Admin-only theme overrides - imported only by the admin layout,
    not loaded on website pages. */
 .admin-theme {
   --radius: 0.3rem;
@@ -82,7 +82,7 @@
   --font-mono: JetBrains Mono, monospace;
 }
 
-/* Radix UI Collapsible animation — used by the admin sidebar */
+/* Radix UI Collapsible animation - used by the admin sidebar */
 .CollapsibleContent {
   overflow: hidden;
 }

@@ -91,7 +91,7 @@ const InstagramReelsMarquee = () => {
                                 aria-hidden="true"
                                 className="h-full w-full object-cover"
                             >
-                                <track kind="captions" src="/assets/captions/empty.vtt" srcLang="en" label="No captions — decorative video" />
+                                <track kind="captions" src="/assets/captions/empty.vtt" srcLang="en" label="No captions - decorative video" />
                             </video>
                         </div>
                     ))}

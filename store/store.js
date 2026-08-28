@@ -7,7 +7,7 @@ import authReducer from "./reducer/authReducer";
 import cartReducer from "./reducer/cartReducer";
 
 // redux-persist's default storage logs "failed to create sync storage, falling
-// back to noop storage" whenever it's evaluated on the server — Next.js executes
+// back to noop storage" whenever it's evaluated on the server - Next.js executes
 // this module during SSR, where there is no window/localStorage. Resolve storage
 // explicitly per environment: real localStorage in the browser, a silent noop on
 // the server. This keeps client-side persistence working and removes the warning.

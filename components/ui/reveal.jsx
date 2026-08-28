@@ -10,11 +10,11 @@ import { useInView } from "@/hooks/useInView";
  * Both accept `play` to externally gate the reveal (the page loader gates
  * the hero); when `play` is omitted they fire the first time they scroll
  * into view. The `-play` state class is a direct function of render state,
- * not an imperative DOM write — correct here because every reveal in this
+ * not an imperative DOM write - correct here because every reveal in this
  * app fires once per mount, so there's no replay case to guard against.
  */
 
-/** Line-by-line masked reveal — each item slides up out of an overflow-hidden box. */
+/** Line-by-line masked reveal - each item slides up out of an overflow-hidden box. */
 export function RevealLines({
   items,
   play,
@@ -48,7 +48,7 @@ export function RevealLines({
   );
 }
 
-/** Fade-and-rise panel reveal — for cards, badges and other block content. */
+/** Fade-and-rise panel reveal - for cards, badges and other block content. */
 export function RevealUp({
   children,
   play,

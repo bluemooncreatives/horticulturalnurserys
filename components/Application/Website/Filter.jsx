@@ -9,7 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ChevronDown, Crown, Sparkles, X } from 'lucide-react'
 import { resolveColorStyle } from '@/lib/colorMap'
 
-// Pulsing pill placeholders shown while a facet's options are still loading —
+// Pulsing pill placeholders shown while a facet's options are still loading -
 // reads as "content incoming" rather than the dead "Loading..." text it replaces.
 const ChipSkeletons = ({ count = 4 }) => (
     <div className="flex flex-wrap gap-2">
@@ -19,7 +19,7 @@ const ChipSkeletons = ({ count = 4 }) => (
     </div>
 )
 
-// Shared pill-chip look for the Category facet — filled brand-green
+// Shared pill-chip look for the Category facet - filled brand-green
 // when selected, outlined neutral otherwise.
 const chipClass = (active) =>
     `inline-flex items-center rounded-full border px-3.5 py-1.5 text-[12px] font-semibold tracking-[0.02em] transition ${active
@@ -120,7 +120,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
     }
 
     const hasFilters = searchParams.size > 0
-    // Total count drives the "N Active" badge and the per-section counts below —
+    // Total count drives the "N Active" badge and the per-section counts below -
     // lets someone scanning the sidebar see what's applied without opening every
     // accordion first.
     const activeFilterCount = selectedCategory.length + selectedColor.length
@@ -273,7 +273,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
 
             </Accordion>
 
-            {/* Loaded, but every facet came back empty — the accordions above are all
+            {/* Loaded, but every facet came back empty - the accordions above are all
                 hidden, so say so explicitly rather than leaving a mysteriously bare
                 filter panel. */}
             {categoriesReady && colorsReady && sizesReady

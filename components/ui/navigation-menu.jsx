@@ -87,7 +87,7 @@ function NavigationMenuContent({
         "group-data-[viewport=false]/navigation-menu:mt-1.5",
         "group-data-[viewport=false]/navigation-menu:overflow-hidden",
         "group-data-[viewport=false]/navigation-menu:rounded-lg",
-        // NOTE: bg/ring/shadow intentionally omitted — callers supply their own
+        // NOTE: bg/ring/shadow intentionally omitted - callers supply their own
         "group-data-[viewport=false]/navigation-menu:duration-300",
         // Motion animations (slide in/out)
         "data-[motion=from-end]:slide-in-from-right-52",

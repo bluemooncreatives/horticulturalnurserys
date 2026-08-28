@@ -143,7 +143,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                     )}
 
                     <p className="mt-2.5 rounded-lg bg-muted/40 px-3 py-2 text-center text-[11.5px] font-medium text-muted-foreground">
-                        No payment now — submit the list and our team will share pricing.
+                        No payment now - submit the list and our team will share pricing.
                     </p>
 
                     {/* Action buttons */}

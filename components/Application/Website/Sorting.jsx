@@ -13,7 +13,7 @@ import { SlidersHorizontal } from 'lucide-react'
 const Sorting = ({ sorting, setSorting, mobileFilterOpen, setMobileFilterOpen, resultCount }) => {
     return (
         <div className='flex flex-wrap items-center gap-2.5 font-neue sm:py-3 lg:justify-end'>
-            {/* Filter trigger — mobile/tablet only. Matches the sort dropdown's
+            {/* Filter trigger - mobile/tablet only. Matches the sort dropdown's
                 exact style (height, border, radius, brand text) so the two sit
                 on one row as a consistent pair; hidden on desktop where the
                 filter lives in the sticky sidebar. */}

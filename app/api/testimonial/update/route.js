@@ -7,7 +7,7 @@ import { zSchema } from "@/lib/zodSchema"
 import { TESTIMONIALS_TAG } from "@/lib/services/testimonialService"
 import TestimonialModel from "@/models/Testimonial.model"
 
-// PUT — update a single testimonial. Supports two intents from one endpoint:
+// PUT - update a single testimonial. Supports two intents from one endpoint:
 //   • Full edit: { _id, name, review, testimonialRating }
 //   • Quick active toggle: { _id, isActive }
 // Only the fields present in the payload are applied, so the toggle never has
@@ -29,12 +29,12 @@ export async function PUT(request) {
 
         const update = {}
 
-        // Active toggle (boolean only — ignore anything non-boolean).
+        // Active toggle (boolean only - ignore anything non-boolean).
         if (typeof payload.isActive === 'boolean') {
             update.isActive = payload.isActive
         }
 
-        // Content edit — validate the editable fields together so a partial
+        // Content edit - validate the editable fields together so a partial
         // edit can't slip past the schema.
         const hasContent =
             payload.name !== undefined ||

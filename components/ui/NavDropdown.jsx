@@ -24,7 +24,7 @@ import {
 import RollingLink, { RollingText } from "@/components/ui/RollingLink"
 
 /* ────────────────────────────────────────────────────────────────
-   NavMenuBar — desktop centre-nav.
+   NavMenuBar - desktop centre-nav.
    • All 4 items (Home, Shop, Services, About) share the EXACT
      same GSAP character roll animation + underline wipe.
    • Clicking Shop navigates to /shop.
@@ -45,7 +45,7 @@ const ICON_MAP = {
   "/services/vertical-garden":       Layers,
 }
 
-// Single dropdown item — clean outline icon + non-wrapping title
+// Single dropdown item - clean outline icon + non-wrapping title
 function DropdownItem({ item }) {
   const Icon = ICON_MAP[item.url]
   return (

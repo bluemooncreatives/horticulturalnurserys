@@ -6,7 +6,7 @@ import { Ruler, Sprout, Store, CalendarCheck, ArrowUpRight } from 'lucide-react'
 import { WEBSITE_SHOP } from '@/routes/WebsiteRoute'
 
 const BENEFITS = [
-    { num: '01', Icon: Ruler, title: 'Survey & Design', description: 'Qualified horticulturists read your site — light, soil, drainage — before a single plant is chosen.' },
+    { num: '01', Icon: Ruler, title: 'Survey & Design', description: 'Qualified horticulturists read your site - light, soil, drainage - before a single plant is chosen.' },
     { num: '02', Icon: Sprout, title: 'Grown, Not Traded', description: 'Stock comes off our own farm at Bibirhut, hardened under shade and ready to establish.' },
     { num: '03', Icon: Store, title: 'Everything One Roof', description: 'Plants, manure, pots, implements, pebbles and roof-garden materials from a single counter.' },
     { num: '04', Icon: CalendarCheck, title: 'Season Maintenance', description: 'Pruning, feeding, pest control and replanting on a schedule, so a garden holds its first-year look.' },
@@ -34,7 +34,7 @@ const BenefitsSection = () => {
                         </h2>
                     </div>
                     <p className="max-w-xs text-[0.82rem] leading-relaxed text-white/45">
-                        Landscaping, nursery and supply sit in one house — so nothing is
+                        Landscaping, nursery and supply sit in one house - so nothing is
                         handed off and nothing gets lost between them.
                     </p>
                 </div>

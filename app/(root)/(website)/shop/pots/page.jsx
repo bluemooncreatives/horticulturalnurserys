@@ -3,9 +3,9 @@ import { getShopFilters, getShopProducts } from '@/lib/services/shopService'
 import WebsiteBreadcrumb from '@/components/Application/Website/WebsiteBreadcrumb'
 
 export const metadata = {
-  title: 'Pots — Shop',
+  title: 'Pots - Shop',
   description:
-    'Browse our collection of planters, pots and containers — terracotta, glazed ceramic, fibreglass and resin, sized from windowsill to statement specimen.',
+    'Browse our collection of planters, pots and containers - terracotta, glazed ceramic, fibreglass and resin, sized from windowsill to statement specimen.',
 }
 
 const PotsPage = async ({ searchParams }) => {

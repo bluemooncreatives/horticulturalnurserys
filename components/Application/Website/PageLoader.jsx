@@ -5,7 +5,7 @@ import Image from 'next/image'
 import logoMark from '@/public/assets/images/logo-horti.png'
 
 // Curtain durations, ms. Completion itself is driven by real page-load
-// signals (see the effect below) — these only bound how long that takes to
+// signals (see the effect below) - these only bound how long that takes to
 // *feel* like: a floor so the brand mark isn't a flash, a ceiling so a slow
 // network never strands the visitor behind it.
 const MIN_VISIBLE_MS = 900
@@ -20,7 +20,7 @@ const EXIT_MS = 700
  *    progress floors,
  *  - the growing Resource Timing entry count fills the gap between them,
  *  - the curtain only lifts once `window.load` fires (all eagerly-requested
- *    assets — fonts, priority images — are in), clamped to [min, max].
+ *    assets - fonts, priority images - are in), clamped to [min, max].
  * Lazy below-the-fold images are unaffected: they haven't been requested
  * yet, so they never block `load`.
  */
@@ -60,7 +60,7 @@ export default function PageLoader({ onComplete }) {
 
     const poll = () => {
       const loaded = performance.getEntriesByType('resource').length
-      // Asymptotic climb toward 92%: fast at first, never quite arriving —
+      // Asymptotic climb toward 92%: fast at first, never quite arriving -
       // the last stretch is reserved for the real `load` signal.
       bump(Math.min(55 + 35 * (1 - Math.exp(-loaded / 12)), 92))
       if (!finished) rafId = requestAnimationFrame(poll)

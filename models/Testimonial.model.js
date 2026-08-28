@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 /**
- * Testimonial — admin-authored "Customer Reviews" shown in the homepage
+ * Testimonial - admin-authored "Customer Reviews" shown in the homepage
  * "What They Say" section. This is deliberately separate from the product
  * Review model (Review.model.js): those are user-generated and tied to a
  * product + user, whereas testimonials are curated marketing content the

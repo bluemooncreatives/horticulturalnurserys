@@ -36,7 +36,7 @@ export default async function sitemap() {
             priority: 0.8,
         }))
     } catch (error) {
-        // A database hiccup shouldn't take the whole sitemap down —
+        // A database hiccup shouldn't take the whole sitemap down -
         // serve the static pages and let the next revalidation retry.
         console.error('sitemap: failed to load products', error)
     }

@@ -13,7 +13,7 @@ import {
   WEBSITE_SERVICES_VERTICAL_GARDEN,
 } from '@/routes/WebsiteRoute'
 
-// Centred links only — Contact renders as the right-hand button (and rejoins
+// Centred links only - Contact renders as the right-hand button (and rejoins
 // this list inside the mobile menu sheet).
 // Items with a `children` array render as hover dropdowns on desktop and
 // as collapsible accordions on mobile.
@@ -53,7 +53,7 @@ const Header = () => {
           url: WEBSITE_HOME,
           title: 'Horticultural',
           subtitle: 'Development Centre',
-          alt: 'Horticultural Development Centre — landscaping and plant nursery, Kolkata',
+          alt: 'Horticultural Development Centre - landscaping and plant nursery, Kolkata',
         }}
         menu={menu}
         cta={cta}

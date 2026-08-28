@@ -42,11 +42,7 @@ const EditorialCardsSection = () => {
             {/* section header */}
             <div className="mb-4 flex items-end justify-between lg:mb-6">
                 <div>
-                    <span className="eyebrow flex items-center gap-2">
-                        <span aria-hidden className="h-px w-6 bg-current opacity-40" />
-                        Explore More
-                    </span>
-                    <h2 className="mt-3 text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
+                    <h2 className="text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
                         Three Ways In
                     </h2>
                 </div>

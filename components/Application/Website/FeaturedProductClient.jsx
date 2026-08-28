@@ -12,10 +12,11 @@ import ShopAllButton from '@/components/Application/Website/ShopAllButton'
 const sizePattern = ['lg', 'sm', 'lg', 'sm', 'lg', 'lg', 'lg', 'lg', 'sm']
 
 const FeaturedProductClient = ({ products = [] }) => {
-    // Build rows of 3 products
+    // Build rows of 3 products, capped at 2 rows
     const renderProductRows = useCallback(() => {
         const rows = []
-        for (let i = 0; i < products.length; i += 3) {
+        const maxProducts = Math.min(products.length, 6)
+        for (let i = 0; i < maxProducts; i += 3) {
             const rowProducts = products.slice(i, i + 3)
             rows.push(
                 <div className="fp-row" key={i}>
@@ -30,6 +31,7 @@ const FeaturedProductClient = ({ products = [] }) => {
                                         alt={product?.name || 'Product'}
                                         className="object-cover object-center"
                                         sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw"
+                                        priority={i === 0 && index === 0}
                                     />
                                     <span className="fp-tag">Featured</span>
                                     <span className="fp-arrow">
@@ -66,16 +68,12 @@ const FeaturedProductClient = ({ products = [] }) => {
             <div className="fp-container">
                 <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                        <span className="eyebrow flex items-center gap-2">
-                            <span aria-hidden className="h-px w-6 bg-current opacity-40" />
-                            Selected Stock
-                        </span>
-                        <h2 className="mt-3 text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
-                            In Season Right Now
+                        <h2 className="text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
+                            In Stock, Ready to Ship
                         </h2>
                     </div>
                     <p className="max-w-xs text-[0.85rem] leading-relaxed text-[var(--muted-foreground)]">
-                        What is ready at the farm and moving fastest off the Alipore counter.
+                        A live snapshot of what's on hand at Alipore right now.
                     </p>
                 </div>
                 {renderProductRows()}

@@ -38,7 +38,7 @@ const defaultMenu = [
     title: "Services",
     url: "/services",
     children: [
-      { title: "Landscape Development",        url: "/services/landscape-development", icon: "🌄", desc: "Parks, townships & estates" },
+      { title: "Landscape Development",        url: "/services/landscape-development", icon: "🌄", desc: "Gardens, lawns, parks & townships" },
       { title: "Garden Maintenance",           url: "/services/garden-maintenance",    icon: "✂️", desc: "AMC, pruning & aftercare"  },
       { title: "Roof Garden Design",           url: "/services/roof-garden",           icon: "🏠", desc: "Geotextile & drain-cell systems" },
       { title: "Vertical Garden Systems",      url: "/services/vertical-garden",       icon: "🌾", desc: "Living walls & trellises"  },

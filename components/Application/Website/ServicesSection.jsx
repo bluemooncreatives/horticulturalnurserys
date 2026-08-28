@@ -65,8 +65,8 @@ const SERVICES = [
     {
         num: '03',
         title: 'Landscape Execution',
-        description: 'From a roof garden - laid with geotextile net and drain cell to protect the slab - to Mexican, shade or blade grass lawns and township-scale landscapes. We also hold credentials for State Government and CPWD work: parks, lake fronts, zoo and library grounds, IT parks and tourist lodges.',
-        tags: ['Roof Gardens', 'Lawns', 'Township Scale'],
+        description: 'Garden development for residential and commercial sites alike - from a roof garden, laid with geotextile net and drain cell to protect the slab, to Selection-I, Mexican or Doob grass lawns and township-scale landscapes. We furnish the space with structures and statuary in FRP, iron or Astroturf too. We also hold credentials for State Government and CPWD work: parks, lake fronts, zoo and library grounds, IT parks and tourist lodges.',
+        tags: ['Roof Gardens', 'Lawns', 'Structures & Statuary', 'Township Scale'],
         images: ['/assets/images/hero/03.jpg', '/assets/images/hero/01.jpg'],
     },
     {

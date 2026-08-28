@@ -1,57 +1,37 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, ClipboardList, PencilRuler, Calculator, Hammer } from 'lucide-react'
 import gsap from 'gsap'
 import { RevealLines, RevealUp } from '@/components/ui/reveal'
+import { SectionHeading, SectionLabel } from './SectionHeader'
 
-// ── Service data ─────────────────────────────────────────────────────────────
-const SERVICES = [
-  {
-    num: '01',
-    title: 'Landscape Development',
-    slug: 'landscape-development',
-    tagline: 'From concept to canopy',
-    desc: 'Full-spectrum outdoor landscape execution — site survey, planting plan, costing and build. Township gardens, government parks, IT campus grounds, lake fronts and tourist lodges. Approved vendor for State Government and CPWD projects.',
-    tags: ['Site Survey', 'Planting Plans', 'Township Scale', 'CPWD Credentials'],
-    images: ['/assets/images/hero/01.jpg', '/assets/images/hero/02.jpg'],
-    accent: '#C9F24E',
-  },
-  {
-    num: '02',
-    title: 'Garden Maintenance & Aftercare',
-    slug: 'garden-maintenance',
-    tagline: 'Alive through every season',
-    desc: `Annual maintenance contracts (AMC) for gardens we've built and those we haven't. Pruning, feeding, pest management, lawn upkeep and seasonal replanting by our own field teams — using the same organic and inorganic inputs we stock at the counter.`,
-    tags: ['Annual Contracts', 'Pruning', 'Pest Control', 'Seasonal Replanting'],
-    images: ['/assets/images/hero/02.jpg', '/assets/images/hero/03.jpg'],
-    accent: '#A5B33D',
-  },
-  {
-    num: '03',
-    title: 'Roof Garden Design',
-    slug: 'roof-garden',
-    tagline: 'Protecting your slab, transforming your sky',
-    desc: 'Specialist roof garden systems layered with geotextile net and drain cell to protect the structural slab. Planted with lightweight growing media, shade-tolerant species and weather-proof planters — turning rooftops into usable, beautiful green space.',
-    tags: ['Geotextile Layer', 'Drain Cell', 'Lightweight Media', 'Weather-proof'],
-    images: ['/assets/images/hero/03.jpg', '/assets/images/hero/01.jpg'],
-    accent: '#356B38',
-  },
-  {
-    num: '04',
-    title: 'Vertical Garden Systems',
-    slug: 'vertical-garden',
-    tagline: 'Walls that breathe',
-    desc: 'Modular living-wall and trellis systems for interiors, building facades and boundary screens. Custom-designed for the available light, irrigation source and plant species — from dense tropical moss walls to open climber frames with seasonal flowering.',
-    tags: ['Living Walls', 'Trellis Systems', 'Facade Planting', 'Interior Installations'],
-    images: ['/assets/images/hero/02.jpg', '/assets/images/hero/01.jpg'],
-    accent: '#C9F24E',
-  },
+/* ────────────────────────────────────────────────────────────────
+   ServicesContent — the /services index.
+
+   Layout: hero + stat rail → approach → card grid (one feature card
+   over a row of three) → shared process → what backs the work → CTA.
+   All content arrives as props from page.jsx so the data stays in the
+   server component, matching the service detail pages.
+   ──────────────────────────────────────────────────────────────── */
+
+const STEP_ICONS = [ClipboardList, PencilRuler, Calculator, Hammer]
+
+/* Hero stat rail cell edges, indexed by position. 2-up on mobile, 4-up from
+   lg, so which cells start a row changes with the breakpoint. Spelled out per
+   index so every pair is a base class plus a responsive override of the SAME
+   property — composing them from conditions yields competing border-l /
+   border-l-0 utilities whose winner depends on stylesheet order. */
+const STAT_CELL_EDGES = [
+  'px-5 pl-0 lg:px-6 lg:pl-0',
+  'border-l px-5 lg:px-6',
+  'border-t px-5 pl-0 lg:border-l lg:border-t-0 lg:px-6',
+  'border-l border-t px-5 lg:border-t-0 lg:px-6',
 ]
 
-// ── Glyph-roll title (CSS-only, consistent with ServicesSection) ──────────────
+/* ── Glyph-roll title (CSS-only) ─────────────────────────────── */
 const RollTitle = ({ text, className = '' }) => {
   let gi = 0
   return (
@@ -84,40 +64,51 @@ const RollTitle = ({ text, className = '' }) => {
   )
 }
 
-// ── Service card ─────────────────────────────────────────────────────────────
-function ServiceCard({ service, index }) {
-  const cardRef = useRef(null)
-  const imgRef  = useRef(null)
+/* ── Service card ────────────────────────────────────────────── */
+function ServiceCard({ service, index, feature = false }) {
+  const imgRef = useRef(null)
+  const tweenRef = useRef(null)
+  const cycleRef = useRef(null)
   const [activeImg, setActiveImg] = useState(0)
-  const imgTween = useRef(null)
 
-  // On hover: scale & brighten the image panel
-  const onEnter = () => {
+  // Both timers are owned by refs and cleared on unmount — the hover handler
+  // previously left a bare setTimeout running, which fired a state update
+  // after navigation if you moved off the card fast enough.
+  useEffect(() => {
+    return () => {
+      tweenRef.current?.kill()
+      clearTimeout(cycleRef.current)
+    }
+  }, [])
+
+  const onEnter = useCallback(() => {
     const img = imgRef.current
     if (!img) return
-    imgTween.current?.kill()
-    imgTween.current = gsap.to(img, { scale: 1.06, duration: 0.7, ease: 'power2.out' })
-    // Cycle the image after a short pause for visual interest
-    setTimeout(() => setActiveImg((p) => (p + 1) % service.images.length), 300)
-  }
-  const onLeave = () => {
+    tweenRef.current?.kill()
+    tweenRef.current = gsap.to(img, { scale: 1.06, duration: 0.7, ease: 'power2.out' })
+    clearTimeout(cycleRef.current)
+    cycleRef.current = setTimeout(
+      () => setActiveImg((p) => (p + 1) % service.images.length),
+      300
+    )
+  }, [service.images.length])
+
+  const onLeave = useCallback(() => {
     const img = imgRef.current
     if (!img) return
-    imgTween.current?.kill()
-    imgTween.current = gsap.to(img, { scale: 1, duration: 0.55, ease: 'power3.out' })
-  }
-
-  const isEven = index % 2 === 0
+    tweenRef.current?.kill()
+    tweenRef.current = gsap.to(img, { scale: 1, duration: 0.55, ease: 'power3.out' })
+    clearTimeout(cycleRef.current)
+  }, [])
 
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="group relative block overflow-hidden rounded-2xl bg-[var(--brand-ink-soft)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-lime)]"
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      ref={cardRef}
+      className="group relative block overflow-hidden rounded-[var(--radius-4xl)] bg-[var(--brand-ink-soft)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-lime)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
     >
-      {/* ── Background image ── */}
+      {/* Background image stack */}
       <div className="absolute inset-0 overflow-hidden">
         <div ref={imgRef} className="absolute inset-0 will-change-transform">
           {service.images.map((src, i) => (
@@ -126,57 +117,65 @@ function ServiceCard({ service, index }) {
               src={src}
               alt=""
               fill
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes={feature ? '100vw' : '(max-width: 1024px) 100vw, 33vw'}
+              quality={82}
               className="object-cover transition-opacity duration-700"
               style={{ opacity: i === activeImg ? 1 : 0 }}
-              priority={index < 2}
+              priority={index === 0 && i === 0}
             />
           ))}
         </div>
-        {/* Deep scrim so text is always legible */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E0D]/95 via-[#0B1E0D]/60 to-[#0B1E0D]/20" />
-        {/* Accent colour tint on hover */}
+
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E0D]/95 via-[#0B1E0D]/55 to-[#0B1E0D]/15" />
         <div
-          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-[0.12]"
+          aria-hidden
+          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-[0.14]"
           style={{ background: service.accent }}
         />
       </div>
 
-      {/* ── Content ── */}
-      <div className="relative z-10 flex h-full min-h-[420px] flex-col justify-between p-8 md:p-10 lg:min-h-[480px]">
-        {/* Top row: number + arrow */}
+      {/* Content */}
+      <div
+        className={`relative z-10 flex flex-col justify-between p-8 md:p-10 ${
+          feature ? 'min-h-[480px] lg:min-h-[560px]' : 'min-h-[400px] lg:min-h-[460px]'
+        }`}
+      >
         <div className="flex items-start justify-between">
-          <span className="font-neue text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-white/40">
+          <span className="font-neue text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-white/45">
             {service.num}
           </span>
-          <span
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/50 transition-all duration-300 group-hover:border-[var(--brand-lime)] group-hover:text-[var(--brand-lime)] group-hover:rotate-45"
-          >
+          <span className="flex size-9 items-center justify-center rounded-[var(--radius-full)] border border-white/20 text-white/50 transition-all duration-300 group-hover:rotate-45 group-hover:border-[var(--brand-lime)] group-hover:text-[var(--brand-lime)]">
             <ArrowUpRight className="size-4" strokeWidth={1.5} />
           </span>
         </div>
 
-        {/* Bottom: tagline, title, tags */}
-        <div className="flex flex-col gap-3">
-          <p className="text-[0.75rem] font-medium uppercase tracking-[0.18em] text-white/40 transition-colors duration-300 group-hover:text-[var(--brand-lime)]/70">
+        <div className={`flex flex-col gap-3 ${feature ? 'max-w-2xl' : ''}`}>
+          <p className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-white/45 transition-colors duration-300 group-hover:text-[var(--brand-lime)]/80">
             {service.tagline}
           </p>
 
           <RollTitle
             text={service.title}
-            className="block text-[1.7rem] font-semibold leading-[1.1] tracking-[-0.02em] text-white md:text-[2rem]"
+            className={`block font-neue font-medium leading-[1.06] tracking-[-0.025em] text-white ${
+              feature ? 'text-[clamp(1.9rem,4.5vw,3.1rem)]' : 'text-[1.55rem] md:text-[1.75rem]'
+            }`}
           />
 
-          <p className="mt-1 line-clamp-2 text-[0.85rem] leading-relaxed text-white/50">
+          <span aria-hidden className="mt-1 h-px w-9 bg-[var(--brand-lime)] transition-all duration-400 group-hover:w-16" />
+
+          <p
+            className={`mt-1 text-[0.86rem] leading-[1.75] text-white/55 ${
+              feature ? '' : 'line-clamp-3'
+            }`}
+          >
             {service.desc}
           </p>
 
-          {/* Tags */}
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {service.tags.map((tag) => (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {(feature ? service.tags : service.tags.slice(0, 3)).map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-white/15 px-3 py-0.5 text-[0.68rem] font-medium uppercase tracking-[0.12em] text-white/50 transition-colors duration-300 group-hover:border-white/25 group-hover:text-white/70"
+                className="rounded-[var(--radius-pill)] border border-white/15 px-3 py-1 text-[0.68rem] font-medium uppercase tracking-[0.12em] text-white/50 transition-colors duration-300 group-hover:border-white/30 group-hover:text-white/75"
               >
                 {tag}
               </span>
@@ -188,76 +187,244 @@ function ServiceCard({ service, index }) {
   )
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
-export default function ServicesContent() {
+/* ── Page ────────────────────────────────────────────────────── */
+export default function ServicesContent({ services, heroStats, approach, process, foundations }) {
+  const [feature, ...rest] = services
+
   return (
     <main className="min-h-screen bg-[var(--background)]">
-      {/* ── Hero banner ── */}
-      <section className="relative flex min-h-[44vh] items-end overflow-hidden bg-[var(--brand-ink-soft)] pt-28 pb-12 lg:min-h-[52vh] lg:pb-16">
-        {/* Decorative background grid */}
+
+      {/* ══ Hero ═══════════════════════════════════════════════ */}
+      <section className="relative flex min-h-[62vh] flex-col justify-end overflow-hidden bg-[var(--brand-ink-soft)] pt-32">
+        {/* Blueprint grid */}
         <div
           aria-hidden
-          className="absolute inset-0 opacity-[0.04]"
+          className="absolute inset-0 opacity-[0.045]"
           style={{
-            backgroundImage: 'linear-gradient(var(--brand-lime) 1px, transparent 1px), linear-gradient(90deg, var(--brand-lime) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
+            backgroundImage:
+              'linear-gradient(var(--brand-lime) 1px, transparent 1px), linear-gradient(90deg, var(--brand-lime) 1px, transparent 1px)',
+            backgroundSize: '64px 64px',
           }}
         />
         {/* Soft radial glow */}
         <div
           aria-hidden
-          className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-10"
+          className="pointer-events-none absolute left-[12%] top-1/2 size-[640px] -translate-y-1/2 rounded-full opacity-[0.13]"
           style={{ background: 'radial-gradient(circle, var(--brand-lime) 0%, transparent 70%)' }}
         />
-        <div className="website-gutter relative z-10 w-full">
-          {/* Label */}
-          <RevealUp as="p" delay={0} className="mb-4 text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-[var(--brand-lime)]/70">
+
+        <div className="lumora-shell relative z-10 w-full pb-10 lg:pb-12">
+          <RevealUp
+            as="p"
+            className="mb-4 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[var(--brand-lime)]"
+          >
             What we do
           </RevealUp>
-          <RevealLines
-            items={['Our Services']}
-            delay={60}
-            stagger={0}
-            duration={1100}
-            className="block"
-          />
-          <style>{`.rv-line { overflow: hidden } .rv-inner { font-family: var(--font-neue); font-size: clamp(2.8rem,7vw,6rem); font-weight: 600; line-height: 0.95; letter-spacing: -0.03em; color: white; }`}</style>
-          <RevealUp as="p" delay={280} className="mt-5 max-w-xl text-[0.95rem] leading-relaxed text-white/50">
-            From a single balcony to a township-scale landscape — we design, plant and maintain green spaces across Kolkata and West Bengal.
+
+          {/* One .rv-line per rendered line — .rv-line is overflow-hidden, so a
+              wrap driven by a max-width would be clipped rather than wrapped. */}
+          <div className="sv-hero-title">
+            <RevealLines items={['Our', 'Services']} delay={60} stagger={90} duration={1050} />
+          </div>
+
+          <RevealUp as="p" delay={300} className="mt-5 max-w-xl text-[0.98rem] leading-relaxed text-white/60">
+            From a single balcony to a township-scale landscape — we design, plant and maintain
+            green spaces across Kolkata and West Bengal.
           </RevealUp>
         </div>
+
+        {/* Stat rail */}
+        <div className="relative z-10 border-t border-white/15">
+          <div className="lumora-shell">
+            <dl className="grid grid-cols-2 lg:grid-cols-4">
+              {heroStats.map((stat, i) => (
+                <RevealUp
+                  key={stat.label}
+                  delay={360 + i * 70}
+                  className={`border-white/10 py-5 lg:py-6 ${STAT_CELL_EDGES[i % 4]}`}
+                >
+                  <dt className="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-white/40">
+                    {stat.label}
+                  </dt>
+                  <dd className="mt-1.5 font-neue text-[clamp(1.05rem,2vw,1.4rem)] font-medium leading-tight tracking-[-0.01em] text-white">
+                    {stat.value}
+                  </dd>
+                </RevealUp>
+              ))}
+            </dl>
+          </div>
+        </div>
+
+        {/* Scoped to this hero so the global .rv-inner rule — and every other
+            masked reveal on the page — keeps its own sizing. */}
+        <style>{`
+          .sv-hero-title .rv-inner {
+            font-family: var(--font-neue);
+            font-size: clamp(2.8rem, 7.5vw, 6rem);
+            font-weight: 600;
+            line-height: 0.94;
+            letter-spacing: -0.035em;
+            color: #fff;
+          }
+        `}</style>
       </section>
 
-      {/* ── Cards grid ── */}
-      <section className="website-gutter py-12 lg:py-20">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
-          {SERVICES.map((service, i) => (
-            <RevealUp key={service.slug} delay={i * 90} distance={28}>
-              <ServiceCard service={service} index={i} />
+      {/* ══ Approach ═══════════════════════════════════════════ */}
+      <section className="lumora-shell py-16 lg:py-24">
+        <SectionLabel>Our approach</SectionLabel>
+
+        <RevealUp
+          as="p"
+          delay={80}
+          className="mt-8 max-w-4xl font-neue text-[clamp(1.25rem,2.6vw,2rem)] font-medium leading-[1.32] tracking-[-0.02em] text-[var(--brand-primary)]"
+        >
+          {approach.lead}
+        </RevealUp>
+
+        <div className="mt-12 grid gap-x-14 gap-y-6 lg:grid-cols-2">
+          {approach.body.map((para, i) => (
+            <RevealUp
+              key={i}
+              as="p"
+              delay={120 + i * 60}
+              className="text-[0.92rem] leading-[1.85] text-[var(--muted-foreground)]"
+            >
+              {para}
             </RevealUp>
           ))}
         </div>
       </section>
 
-      {/* ── CTA strip ── */}
-      <section className="website-gutter pb-20">
-        <div className="flex flex-col items-center gap-6 rounded-2xl bg-[var(--brand-ink-soft)] px-8 py-12 text-center lg:py-16">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-[var(--brand-lime)]/70">
-            Ready to start?
-          </p>
-          <h2 className="font-neue text-[clamp(1.6rem,4vw,2.8rem)] font-semibold leading-tight tracking-[-0.02em] text-white">
-            Let's build your green space.
-          </h2>
-          <p className="max-w-md text-[0.9rem] leading-relaxed text-white/50">
-            Every project starts with a site visit and a conversation. No obligation, just honest advice from qualified horticulturists.
-          </p>
-          <Link
-            href="/contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-[var(--brand-lime)] px-8 py-3 text-[0.9rem] font-semibold text-[var(--brand-lime-ink)] transition-all duration-300 hover:bg-[var(--brand-lime-hover)] hover:shadow-lg hover:shadow-[var(--brand-lime)]/20"
-          >
-            Get in touch
-            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45" />
-          </Link>
+      {/* ══ Service cards ══════════════════════════════════════ */}
+      <section className="lumora-shell pb-16 lg:pb-24">
+        <SectionLabel>Four service lines</SectionLabel>
+        <SectionHeading className="mt-6 max-w-2xl">
+          One nursery carries all of them, start to finish.
+        </SectionHeading>
+
+        <div className="mt-12 grid gap-4 lg:grid-cols-3 lg:gap-5">
+          <RevealUp distance={28} className="lg:col-span-3">
+            <ServiceCard service={feature} index={0} feature />
+          </RevealUp>
+
+          {rest.map((service, i) => (
+            <RevealUp key={service.slug} delay={90 + i * 90} distance={28}>
+              <ServiceCard service={service} index={i + 1} />
+            </RevealUp>
+          ))}
+        </div>
+      </section>
+
+      {/* ══ Process ════════════════════════════════════════════ */}
+      <section className="lumora-shell pb-16 lg:pb-24">
+        <SectionLabel>How every project runs</SectionLabel>
+        <SectionHeading className="mt-6 max-w-2xl">
+          Four steps, in order. Nothing skipped.
+        </SectionHeading>
+
+        <ol className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-4xl)] bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-4">
+          {process.map((step, i) => {
+            const Icon = STEP_ICONS[i % STEP_ICONS.length]
+            return (
+              <RevealUp
+                key={step.title}
+                as="li"
+                delay={80 + i * 90}
+                className="group flex flex-col gap-4 bg-[var(--brand-white)] p-7 transition-colors duration-300 hover:bg-[var(--secondary)] lg:p-8"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="flex size-10 items-center justify-center rounded-[var(--radius-full)] bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] transition-colors duration-300 group-hover:bg-[var(--brand-lime)] group-hover:text-[var(--brand-lime-ink)]">
+                    <Icon className="size-[1.05rem]" strokeWidth={1.6} />
+                  </span>
+                  <span className="font-neue text-[1.6rem] font-medium leading-none text-[var(--brand-primary)]/15">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <h3 className="text-[1.02rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)]">
+                  {step.title}
+                </h3>
+                <p className="text-[0.84rem] leading-[1.7] text-[var(--muted-foreground)]">
+                  {step.desc}
+                </p>
+              </RevealUp>
+            )
+          })}
+        </ol>
+      </section>
+
+      {/* ══ What backs the work — dark band ════════════════════ */}
+      <section className="relative overflow-hidden bg-[var(--brand-ink-soft)] py-16 lg:py-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            background: 'radial-gradient(ellipse at 85% 10%, var(--brand-lime) 0%, transparent 55%)',
+          }}
+        />
+        <div className="lumora-shell relative">
+          <SectionLabel tone="dark">What backs the work</SectionLabel>
+          <SectionHeading tone="dark" className="mt-6 max-w-3xl">
+            Every service above runs off the same farm, the same crew and the same credentials.
+          </SectionHeading>
+
+          <div className="mt-12 grid gap-4 md:grid-cols-3 lg:gap-5">
+            {foundations.map((item, i) => (
+              <RevealUp
+                key={item.title}
+                delay={80 + i * 90}
+                className="group flex flex-col gap-5 rounded-[var(--radius-4xl)] border border-white/10 bg-white/[0.035] p-7 transition-all duration-300 hover:border-[var(--brand-lime)]/40 hover:bg-white/[0.07] lg:p-8"
+              >
+                <span className="font-neue text-[clamp(1.9rem,3.6vw,2.6rem)] font-medium leading-none tracking-[-0.03em] text-[var(--brand-lime)]">
+                  {item.figure}
+                </span>
+                <h3 className="font-neue text-[1.15rem] font-medium tracking-[-0.02em] text-white">
+                  {item.title}
+                </h3>
+                <p className="text-[0.86rem] leading-[1.75] text-white/55">{item.desc}</p>
+              </RevealUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ CTA ════════════════════════════════════════════════ */}
+      <section className="lumora-shell py-16 lg:py-24">
+        <div className="relative overflow-hidden rounded-[var(--radius-4xl)] bg-[var(--brand-ink-soft)] px-8 py-14 lg:px-16 lg:py-20">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.09]"
+            style={{
+              background: 'radial-gradient(ellipse at 10% 100%, var(--brand-lime) 0%, transparent 60%)',
+            }}
+          />
+          <div className="relative flex flex-col items-start gap-6 lg:max-w-2xl">
+            <RevealUp
+              as="p"
+              className="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[var(--brand-lime)]"
+            >
+              Ready to start?
+            </RevealUp>
+            <RevealUp
+              as="h2"
+              delay={70}
+              className="font-neue text-[clamp(1.7rem,4.5vw,3rem)] font-medium leading-[1.05] tracking-[-0.03em] text-white"
+            >
+              Let&apos;s build your green space.
+            </RevealUp>
+            <RevealUp as="p" delay={140} className="max-w-md text-[0.92rem] leading-[1.8] text-white/50">
+              Every project starts with a site visit and a conversation — no obligation, just honest
+              advice from qualified horticulturists.
+            </RevealUp>
+            <RevealUp delay={200}>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-[var(--brand-lime)] px-7 py-3.5 text-[0.88rem] font-semibold text-[var(--brand-lime-ink)] transition-all duration-300 hover:bg-[var(--brand-lime-hover)] hover:shadow-[0_12px_36px_-10px_rgba(201,242,78,0.45)]"
+              >
+                Get in touch
+                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45" />
+              </Link>
+            </RevealUp>
+          </div>
         </div>
       </section>
     </main>

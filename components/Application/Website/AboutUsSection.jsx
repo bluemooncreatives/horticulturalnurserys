@@ -30,7 +30,14 @@ const SEAL_TEXT = ' YEARS IN THE FIELD · ROOTED IN EXPERIENCE · '
 // per-word spans so the scroll timeline can brighten it a line at a time; the
 // words are grouped into visual lines at runtime from their measured position.
 const HEADING =
-    'A garden is not decorated, but / grown into place - which is why we raise our own plants, design the space they will live in, and stay on to maintain it long after the handover.'
+    "Kolkata's leading landscaper since 1989 - we raise our own plants on our farm at Bibirhut, / design and build the space they will live in, and stay on to maintain it long after the handover."
+
+// A short line naming a few flagship projects, set under the heading. Kept
+// separate from HEADING so it isn't run through the per-glyph roll animation
+// (a long comma list would make the roll cascade unreadable) - it fades in
+// with the rest of the statement layer instead.
+const NOTABLE_PROJECTS =
+    'Trusted for landscapes at Alipore Zoo, National Library, Rabindra Sarobar Lake, Krishnanagar IT Park and more.'
 
 // Glyph-roll geometry, borrowed from components/ui/RollingLink.jsx. Each glyph
 // is a fixed-height mask over a THREE-cell column of the SAME letter
@@ -249,7 +256,7 @@ const AboutUsSection = () => {
             }
 
             // The figure rises and unfolds toward the viewer on `settle` (a
-            // quick reveal as the card arrives), then the value ticks 0→35 on
+            // quick reveal as the card arrives), then the value ticks 0→37 on
             // `count` - a separate, longer scroll range so the number climbs
             // end to end while the section is scrolled, not in a burst on entry.
             if (yearsEl && yearsWrap) {
@@ -261,7 +268,7 @@ const AboutUsSection = () => {
 
                 const proxy = { v: 0 }
                 gsap.fromTo(proxy, { v: 0 }, {
-                    v: 35, ease: 'none', snap: { v: 1 },
+                    v: 37, ease: 'none', snap: { v: 1 },
                     scrollTrigger: count ?? settle,
                     onUpdate() { yearsEl.textContent = Math.round(proxy.v) },
                 })
@@ -516,6 +523,7 @@ const AboutUsSection = () => {
                         into place, one visual line after another. Words stay inline
                         so they wrap naturally - line grouping reads their offsetTop.
                         A real space between words keeps line breaks possible. */}
+                    <div>
                     <h2 className="max-w text-[clamp(1.5rem,3.4vw,2.35rem)] font-medium leading-[1.28] tracking-[-0.01em] text-[var(--brand-primary)]">
                         {HEADING.split(' ').flatMap((word, wi) => [
                             <span
@@ -552,6 +560,10 @@ const AboutUsSection = () => {
                             ' ',
                         ])}
                     </h2>
+                    <p className="mt-3 text-[0.85rem] text-[var(--muted-foreground)]">
+                        {NOTABLE_PROJECTS}
+                    </p>
+                    </div>
                 </div>
 
                 {/* ── Stat cards (parallax layer B) ── */}
@@ -642,7 +654,7 @@ const AboutUsSection = () => {
                         {/* Big count, revealed in 3D (perspective on the wrapper) */}
                         <div className="relative" style={{ perspective: '600px' }}>
                             <p className="about-years flex items-start font-medium leading-none tracking-[-0.03em] will-change-transform">
-                                <span className="about-years-value text-[3.6rem] lg:text-[6rem]">35</span>
+                                <span className="about-years-value text-[3.6rem] lg:text-[6rem]">37</span>
                                 <span className="ml-0.5 text-[2rem] leading-none text-[var(--brand-lime)]">+</span>
                             </p>
                         </div>

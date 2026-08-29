@@ -46,9 +46,6 @@ export const metadata = {
       'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance, plus a 50-bigha nursery and an Alipore outlet stocking everything a garden needs.',
     images: ['/assets/images/hero/01.jpg'],
   },
-  icons: {
-    icon: '/favicon.ico',
-  },
   other: {
     'theme-color': '#F4F3F1',
   },

@@ -11,7 +11,7 @@ const BENTO = {
   images: ['/assets/images/hero/01.jpg', '/assets/images/hero/03.jpg'],
   accent: {
     caption: 'Designing, planting and maintaining gardens across Kolkata and West Bengal, without a break.',
-    figure: '35+',
+    figure: '37+',
   },
   dark: {
     figure: '50',
@@ -26,7 +26,7 @@ const APPROACH = {
 }
 
 const STATS = [
-  { value: '1989',   label: 'Growing and landscaping without a break'   },
+  { value: 'Since 1989', label: 'Growing and landscaping without a break' },
   { value: '50',     label: 'Bighas of our own farm at Bibirhut'        },
   { value: '4,700',  label: 'Square metres under cover'                 },
   { value: 'CPWD',   label: 'Approved vendor, with the State Government'},

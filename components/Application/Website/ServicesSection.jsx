@@ -297,7 +297,7 @@ const ServicesSection = () => {
                     </div>
                     <div className="flex flex-col items-start gap-4 lg:items-end">
                         <p className="max-w-sm text-[0.85rem] leading-relaxed text-white lg:text-right">
-                            Kolkata&apos;s landscaper since 1989 - 35+ years, 50 bighas of our own farm at Bibirhut and 4,700 m² under cover. From a single balcony pot to State Government and CPWD landscapes, one nursery carries every service below, start to finish.
+                            Kolkata&apos;s landscaper since 1989 - 37+ years, 50 bighas of our own farm at Bibirhut and 4,700 m² under cover. From a single balcony pot to State Government and CPWD landscapes, one nursery carries every service below, start to finish.
                         </p>
                         <div className="flex flex-wrap gap-2 lg:justify-end">
                             {['Design', 'Nursery', 'Build', 'Maintain'].map((label) => (

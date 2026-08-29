@@ -11,6 +11,7 @@ import CircleWipeImage from "@/components/ui/CircleWipeImage";
 import useHeroCarousel from "@/components/ui/useHeroCarousel";
 import { RevealLines, RevealUp } from "@/components/ui/reveal";
 import { useLoader } from "@/components/Application/Website/LoaderProvider";
+import { NURSERY_BIGHAS, OPERATING_SINCE_YEAR, FLAGSHIP_PROJECTS } from "@/lib/companyInfo";
 
 // Entrance cascade timings, ms - mirrors the Baseline hero's staggered
 // reveal (headline first, then the surrounding cards), tuned to this hero's
@@ -34,7 +35,7 @@ const CARD_TITLE = "Winter Seedlings®";
 // reference's client-logo strip to the nursery's field capabilities.
 const CRAFT_MARKS = [
   "Landscape Design",
-  "50-Bigha Nursery",
+  `${NURSERY_BIGHAS}-Bigha Nursery`,
   "Green & Polyshed Houses",
   "Drip · Fogger · Sprinkler",
   "Imported Plants",
@@ -199,12 +200,12 @@ const HeroSection = () => {
                 </div>
                 <span aria-hidden className="h-px w-6 bg-black/25" />
                 <span className="text-[0.8rem] font-medium uppercase text-[var(--muted-foreground)]">
-                  [ Kolkata · Since 1989 ]
+                  [ Kolkata · Since {OPERATING_SINCE_YEAR} ]
                 </span>
               </div>
               <p className="mt-3.5 text-justify text-[0.88rem] leading-[1.4] text-[var(--brand-primary)]">
                 Qualified horticulturists designing, building and maintaining
-                gardens across West Bengal - backed by our own 50-bigha nursery
+                gardens across West Bengal - backed by our own {NURSERY_BIGHAS}-bigha nursery
                 and an Alipore counter that stocks every plant, tool and input a
                 garden needs under one roof.
               </p>

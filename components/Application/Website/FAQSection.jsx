@@ -1,6 +1,7 @@
 'use client'
 
 import { FAQ } from '@/components/ui/faq-tabs'
+import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM } from '@/lib/companyInfo'
 
 // The three groups the section header used to advertise as a static caption
 // ("Plants · Landscaping · Supplies") - now navigable tabs instead.
@@ -36,7 +37,7 @@ const FAQ_DATA = {
     nursery: [
         {
             question: 'Where do your plants come from?',
-            answer: 'From our own farm at Bibirhut, Ramdevpur in South 24 Parganas - roughly 50 bighas, with 2,500 sqm of polyshed, 2,000 sqm of green house and a 200 sqm fanpad house. We also import selected varieties from abroad for projects that call for them.',
+            answer: `From our own farm at Bibirhut, Ramdevpur in South 24 Parganas - roughly ${NURSERY_BIGHAS} bighas, with ${POLYSHED_SQM.toLocaleString('en-US')} sqm of polyshed, ${GREEN_HOUSE_SQM.toLocaleString('en-US')} sqm of green house and a ${FANPAD_SQM} sqm fanpad house. We also import selected varieties from abroad for projects that call for them.`,
         },
         {
             question: 'Will a plant from the nursery survive in my home or balcony?',

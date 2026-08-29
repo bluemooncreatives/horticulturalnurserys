@@ -5,6 +5,7 @@ import { TbTopologyStar3 } from 'react-icons/tb'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { NURSERY_BIGHAS, UNDER_COVER_SQM, yearsInBusiness } from '@/lib/companyInfo'
 
 // Collaborator cluster (card 1). Two OVERFLOWING rows of faces so the
 // side-fade mask always has faces behind its soft edges - the cluster reads
@@ -194,9 +195,11 @@ const AboutUsSection = () => {
 
             // The counter: a scrubbed proxy drives 0→50, snapped to whole
             // numbers, written straight into the value node.
+            // Distinct from the nursery-spread card's own "50" (bighas) below -
+            // a coincidentally identical digit there read like a copy-paste.
             const proxy = { v: 0 }
             gsap.fromTo(proxy, { v: 0 }, {
-                v: 50, ease: 'none', snap: { v: 1 },
+                v: 100, ease: 'none', snap: { v: 1 },
                 scrollTrigger: settle,
                 onUpdate() { countEl.textContent = Math.round(proxy.v) },
             })
@@ -268,7 +271,7 @@ const AboutUsSection = () => {
 
                 const proxy = { v: 0 }
                 gsap.fromTo(proxy, { v: 0 }, {
-                    v: 37, ease: 'none', snap: { v: 1 },
+                    v: yearsInBusiness(), ease: 'none', snap: { v: 1 },
                     scrollTrigger: count ?? settle,
                     onUpdate() { yearsEl.textContent = Math.round(proxy.v) },
                 })
@@ -359,7 +362,7 @@ const AboutUsSection = () => {
             }
             if (numEl) {
                 tl.to(proxy, {
-                    v: 50, snap: { v: 1 }, ease: 'none', duration: 1,
+                    v: NURSERY_BIGHAS, snap: { v: 1 }, ease: 'none', duration: 1,
                     onUpdate() { numEl.textContent = Math.round(proxy.v) },
                 }, 2.3)
             }
@@ -426,7 +429,7 @@ const AboutUsSection = () => {
             if (numEl) {
                 const proxy = { v: 0 }
                 holdTl.to(proxy, {
-                    v: 4700, snap: { v: 1 }, duration: span,
+                    v: UNDER_COVER_SQM, snap: { v: 1 }, duration: span,
                     onUpdate() { numEl.textContent = fmt(proxy.v) },
                 }, 0)
             }
@@ -607,7 +610,7 @@ const AboutUsSection = () => {
                             </p>
                             <p className="about-count mt-1 flex leading-[0.9] tracking-[-0.03em]" style={{ perspective: '600px' }}>
                                 <span className="about-count-num inline-flex items-end font-semibold will-change-transform">
-                                    <span className="about-count-value text-[2.9rem] text-[var(--brand-primary)] lg:text-[3.25rem]">50</span>
+                                    <span className="about-count-value text-[2.9rem] text-[var(--brand-primary)] lg:text-[3.25rem]">100</span>
                                     <span className="about-count-plus ml-0.5 inline-block text-[1.6rem] leading-none text-[var(--brand-primary)]">+</span>
                                 </span>
                             </p>
@@ -654,7 +657,7 @@ const AboutUsSection = () => {
                         {/* Big count, revealed in 3D (perspective on the wrapper) */}
                         <div className="relative" style={{ perspective: '600px' }}>
                             <p className="about-years flex items-start font-medium leading-none tracking-[-0.03em] will-change-transform">
-                                <span className="about-years-value text-[3.6rem] lg:text-[6rem]">37</span>
+                                <span className="about-years-value text-[3.6rem] lg:text-[6rem]">{yearsInBusiness()}</span>
                                 <span className="ml-0.5 text-[2rem] leading-none text-[var(--brand-lime)]">+</span>
                             </p>
                         </div>
@@ -693,7 +696,7 @@ const AboutUsSection = () => {
                             <span aria-hidden className="about-c3-accent mb-2 block h-px w-10 origin-left bg-[var(--brand-primary)]" />
                             <span className="about-c3-label block text-[0.8rem] uppercase text-[var(--muted-foreground)]">Nursery Spread</span>
                             <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.9rem] font-semibold leading-none text-[var(--brand-primary)] will-change-transform">
-                                <span className="about-c3-num">50</span>
+                                <span className="about-c3-num">{NURSERY_BIGHAS}</span>
                                 <span>Bighas</span>
                             </span>
                         </div>
@@ -740,7 +743,7 @@ const AboutUsSection = () => {
                         <div className="relative">
                             <span className="about-c4-eyebrow block text-[0.8rem] uppercase text-white will-change-transform">Under Cover</span>
                             <span className="about-c4-figure mt-3 flex items-baseline gap-1 text-[2.4rem] font-medium leading-none tracking-[-0.03em] will-change-transform">
-                                <span className="about-c4-num">4,700</span>
+                                <span className="about-c4-num">{UNDER_COVER_SQM.toLocaleString('en-US')}</span>
                                 <span className="text-[1.6rem]">m²</span>
                             </span>
                         </div>

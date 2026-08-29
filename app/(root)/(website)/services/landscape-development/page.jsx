@@ -1,4 +1,5 @@
 import LandscapeDevelopmentContent from './LandscapeDevelopmentContent'
+import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM, OPERATING_SINCE_YEAR } from '@/lib/companyInfo'
 
 export const metadata = {
   title: 'Garden Development & Landscaping - Services',
@@ -20,7 +21,7 @@ const SERVICE = {
 
   // Hero stat rail
   stats: [
-    { label: 'Since',        value: '1989'                     },
+    { label: 'Since',        value: `${OPERATING_SINCE_YEAR}`   },
     { label: 'We work for',  value: 'Residential & commercial' },
     { label: 'Project scale',value: 'Balcony to township'      },
     { label: 'Approved by',  value: 'State Govt. & CPWD'       },
@@ -177,13 +178,13 @@ const SERVICE = {
   },
 
   farm: {
-    heading: 'A 50-bigha farm at Bibirhut, and no middleman between it and your site.',
+    heading: `A ${NURSERY_BIGHAS}-bigha farm at Bibirhut, and no middleman between it and your site.`,
     desc: 'Plants and designing material come off our own ground at Ramdevpur. We know how every specimen was raised, fed and hardened - so nothing arrives on site with unknown growing conditions behind it.',
     figures: [
-      { label: 'Own farm',   value: '50',    note: 'bighas at Bibirhut, Ramdevpur' },
-      { label: 'Polyshed',   value: '2,500', note: 'sqm under poly cover'          },
-      { label: 'Greenhouse', value: '2,000', note: 'sqm of controlled growing'     },
-      { label: 'Fan-pad',    value: '200',   note: 'sqm climate-controlled house'  },
+      { label: 'Own farm',   value: `${NURSERY_BIGHAS}`, note: 'bighas at Bibirhut, Ramdevpur' },
+      { label: 'Polyshed',   value: POLYSHED_SQM.toLocaleString('en-US'), note: 'sqm under poly cover' },
+      { label: 'Greenhouse', value: GREEN_HOUSE_SQM.toLocaleString('en-US'), note: 'sqm of controlled growing' },
+      { label: 'Fan-pad',    value: `${FANPAD_SQM}`, note: 'sqm climate-controlled house' },
     ],
   },
 

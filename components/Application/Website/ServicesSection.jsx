@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Plus, Minus, ArrowUpRight } from 'lucide-react'
 import gsap from 'gsap'
+import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM, UNDER_COVER_SQM, yearsInBusiness } from '@/lib/companyInfo'
 
 // Row title, hover-rolled - same glyph-roll technique as the hero's
 // "Winter Seedlings" card title (stacked duplicate slides up into place),
@@ -58,7 +59,7 @@ const SERVICES = [
     {
         num: '02',
         title: 'Nursery & Plant Supply',
-        description: 'Grown on our own 50-bigha farm at Bibirhut, Ramdevpur - 2,500 sqm of polyshed, 2,000 sqm of green house and a 200 sqm fanpad house. Seasonal flowers, shrubs, ornamental trees and select imported varieties, hardened before they ever leave the farm.',
+        description: `Grown on our own ${NURSERY_BIGHAS}-bigha farm at Bibirhut, Ramdevpur - ${POLYSHED_SQM.toLocaleString('en-US')} sqm of polyshed, ${GREEN_HOUSE_SQM.toLocaleString('en-US')} sqm of green house and a ${FANPAD_SQM} sqm fanpad house. Seasonal flowers, shrubs, ornamental trees and select imported varieties, hardened before they ever leave the farm.`,
         tags: ['Own Farm Stock', 'Seasonal Flowers', 'Imported Varieties'],
         images: ['/assets/images/hero/02.jpg', '/assets/images/hero/03.jpg'],
     },
@@ -297,7 +298,7 @@ const ServicesSection = () => {
                     </div>
                     <div className="flex flex-col items-start gap-4 lg:items-end">
                         <p className="max-w-sm text-[0.85rem] leading-relaxed text-white lg:text-right">
-                            Kolkata&apos;s landscaper since 1989 - 37+ years, 50 bighas of our own farm at Bibirhut and 4,700 m² under cover. From a single balcony pot to State Government and CPWD landscapes, one nursery carries every service below, start to finish.
+                            Kolkata&apos;s landscaper since 1989 - {yearsInBusiness()}+ years, {NURSERY_BIGHAS} bighas of our own farm at Bibirhut and {UNDER_COVER_SQM.toLocaleString('en-US')} m² under cover. From a single balcony pot to State Government and CPWD landscapes, one nursery carries every service below, start to finish.
                         </p>
                         <div className="flex flex-wrap gap-2 lg:justify-end">
                             {['Design', 'Nursery', 'Build', 'Maintain'].map((label) => (

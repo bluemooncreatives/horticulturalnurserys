@@ -1,4 +1,5 @@
 import ServicesContent from './ServicesContent'
+import { NURSERY_BIGHAS, UNDER_COVER_SQM, OPERATING_SINCE_YEAR, yearsInBusiness } from '@/lib/companyInfo'
 
 export const metadata = {
   title: 'Services - Horticultural Development Centre',
@@ -11,11 +12,11 @@ const BENTO = {
   images: ['/assets/images/hero/01.jpg', '/assets/images/hero/03.jpg'],
   accent: {
     caption: 'Designing, planting and maintaining gardens across Kolkata and West Bengal, without a break.',
-    figure: '37+',
+    figure: `${yearsInBusiness()}+`,
   },
   dark: {
-    figure: '50',
-    caption: 'Bighas of our own farm at Bibirhut - 4,700 m² of it under cover, so nothing arrives with unknown growing conditions behind it.',
+    figure: `${NURSERY_BIGHAS}`,
+    caption: `Bighas of our own farm at Bibirhut - ${UNDER_COVER_SQM.toLocaleString('en-US')} m² of it under cover, so nothing arrives with unknown growing conditions behind it.`,
   },
 }
 
@@ -26,10 +27,10 @@ const APPROACH = {
 }
 
 const STATS = [
-  { value: 'Since 1989', label: 'Growing and landscaping without a break' },
-  { value: '50',     label: 'Bighas of our own farm at Bibirhut'        },
-  { value: '4,700',  label: 'Square metres under cover'                 },
-  { value: 'CPWD',   label: 'Approved vendor, with the State Government'},
+  { value: `Since ${OPERATING_SINCE_YEAR}`, label: 'Growing and landscaping without a break' },
+  { value: `${NURSERY_BIGHAS}`, label: 'Bighas of our own farm at Bibirhut' },
+  { value: UNDER_COVER_SQM.toLocaleString('en-US'), label: 'Square metres under cover' },
+  { value: 'CPWD', label: 'Approved vendor, with the State Government' },
 ]
 
 const PROCESS = [

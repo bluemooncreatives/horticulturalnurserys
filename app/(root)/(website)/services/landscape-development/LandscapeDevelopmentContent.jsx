@@ -219,7 +219,6 @@ export default function LandscapeDevelopmentContent({ service }) {
 
       {/* ══ Process ════════════════════════════════════════════ */}
       <section className="lumora-shell pb-16 lg:pb-24">
-        <SectionLabel>How we work</SectionLabel>
         <SectionHeading className="mt-6 max-w-2xl">
           Four steps, in order. Nothing skipped.
         </SectionHeading>

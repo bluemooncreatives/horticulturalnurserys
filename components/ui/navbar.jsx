@@ -206,7 +206,7 @@ export default function Navbar({
                 href={cta.url}
                 underline={false}
                 background={<CircleReveal color="var(--brand-lime)" />}
-                className="h-8 items-center justify-center overflow-hidden rounded-full bg-[var(--brand-primary)] px-6 text-[0.85rem] font-medium tracking-[0.01em] text-white transition-colors duration-500 hover:text-[var(--brand-primary)]"
+                className="h-8 items-center justify-center overflow-hidden rounded-full bg-[var(--brand-primary-deep)] px-6 text-[0.85rem] font-medium tracking-[0.01em] text-white transition-colors duration-500 hover:text-[var(--brand-primary-deep)]"
               >
                 {cta.title}
               </RollingLink>

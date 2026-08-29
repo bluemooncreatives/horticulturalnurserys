@@ -25,10 +25,6 @@ const BenefitsSection = () => {
                 {/* header */}
                 <div className="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                        <span className="eyebrow flex items-center gap-2 text-white/50">
-                            <span aria-hidden className="h-px w-6 bg-current opacity-50" />
-                            How We Work
-                        </span>
                         <h2 className="mt-3 max-w-xl text-[clamp(1.7rem,3.6vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.02em] text-white">
                             From First Survey To Season After Season
                         </h2>
@@ -53,7 +49,7 @@ const BenefitsSection = () => {
                                 <span className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04]">
                                     <item.Icon className="size-[18px] text-[var(--brand-lime)]" strokeWidth={1.6} />
                                 </span>
-                                <span className="text-[0.8rem] font-medium tracking-[0.2em] text-white/30">[{item.num}]</span>
+                                <span className="text-[0.8rem] font-medium text-white/30">[{item.num}]</span>
                             </div>
                             <h3 className="text-[1.05rem] font-medium tracking-[-0.01em] text-white">{item.title}</h3>
                             <p className="mt-2.5 text-[0.82rem] leading-relaxed text-white/45">{item.description}</p>

@@ -77,7 +77,7 @@ const FAQSection = () => (
         categories={CATEGORIES}
         faqData={FAQ_DATA}
     >
-        <p className="mt-10 text-center text-[0.78rem] text-muted-foreground lg:mt-12">
+        <p className="mt-10 text-center text-[0.8rem] text-muted-foreground lg:mt-12">
             Still have a question?{' '}
             <a
                 href="/contact"

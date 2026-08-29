@@ -53,7 +53,7 @@ const BenefitsSection = () => {
                                 <span className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04]">
                                     <item.Icon className="size-[18px] text-[var(--brand-lime)]" strokeWidth={1.6} />
                                 </span>
-                                <span className="text-[0.7rem] font-medium tracking-[0.2em] text-white/30">[{item.num}]</span>
+                                <span className="text-[0.8rem] font-medium tracking-[0.2em] text-white/30">[{item.num}]</span>
                             </div>
                             <h3 className="text-[1.05rem] font-medium tracking-[-0.01em] text-white">{item.title}</h3>
                             <p className="mt-2.5 text-[0.82rem] leading-relaxed text-white/45">{item.description}</p>

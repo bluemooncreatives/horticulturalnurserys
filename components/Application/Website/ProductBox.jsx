@@ -60,13 +60,13 @@ const ProductBox = ({ product, priority = false }) => {
                 {/* Badges - top-left, stacked */}
                 <div className="absolute left-3 top-3 z-20 flex flex-col items-start gap-1.5">
                     {product?.isBestseller && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-primary)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-white shadow-sm">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-primary)] px-2.5 py-1 text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-white shadow-sm">
                             <Crown className="size-3" />
                             Best Seller
                         </span>
                     )}
                     {product?.isFreshlyArrived && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-lime)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--brand-lime-ink)] shadow-sm">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-lime)] px-2.5 py-1 text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-[var(--brand-lime-ink)] shadow-sm">
                             <Sparkles className="size-3" />
                             New
                         </span>
@@ -155,7 +155,7 @@ const ProductBox = ({ product, priority = false }) => {
                 <h4 title={product?.name} className="min-w-0 flex-1 truncate text-[15px] font-semibold leading-[1.2] text-[var(--brand-primary)] transition-colors group-hover:text-[var(--brand-primary-hover)] sm:text-base">
                     {product?.name}
                 </h4>
-                <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--brand-primary)] sm:text-[12px]">
+                <span className="shrink-0 text-[0.8rem] font-semibold uppercase tracking-[0.06em] text-[var(--brand-primary)] sm:text-[0.8rem]">
                     On Enquiry
                 </span>
             </Link>

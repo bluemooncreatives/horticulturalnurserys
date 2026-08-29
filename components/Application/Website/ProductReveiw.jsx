@@ -117,7 +117,7 @@ const ProductReveiw = ({ productId }) => {
                         ))}
 
                         {hasNextPage &&
-                            <ButtonLoading text="Load More" type="button" loading={isFetching} onClick={fetchNextPage} variant="brand" className="h-10 text-[11px] font-semibold uppercase tracking-[0.2em]" />
+                            <ButtonLoading text="Load More" type="button" loading={isFetching} onClick={fetchNextPage} variant="brand" className="h-10 text-[0.8rem] font-semibold uppercase tracking-[0.2em]" />
                         }
 
                     </div>

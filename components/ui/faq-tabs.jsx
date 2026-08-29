@@ -54,7 +54,7 @@ export const FAQ = ({
                     </h2>
                 </div>
                 {meta && (
-                    <span className="hidden text-[0.68rem] font-semibold uppercase text-muted-foreground sm:block">
+                    <span className="hidden text-[0.8rem] font-semibold uppercase text-muted-foreground sm:block">
                         {meta}
                     </span>
                 )}
@@ -78,7 +78,7 @@ export const FAQ = ({
                             onClick={() => setSelected(key)}
                             className={cn(
                                 'relative overflow-hidden rounded-[var(--radius-pill)] border px-4 py-2',
-                                'text-[0.68rem] font-semibold uppercase tracking-[0.12em]',
+                                'text-[0.8rem] font-semibold uppercase tracking-[0.12em]',
                                 'transition-colors duration-300',
                                 active
                                     ? 'border-[var(--brand-primary)] text-white'

@@ -191,7 +191,7 @@ export default function Navbar({
           >
             <ShoppingCart className="size-[1.15rem]" strokeWidth={1.75} />
             {cartCount > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full bg-[var(--brand-primary)] px-1 text-[10px] font-semibold tabular-nums text-white ring-2 ring-[var(--background)]">
+              <span className="absolute -right-0.5 -top-0.5 flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full bg-[var(--brand-primary)] px-1 text-[0.8rem] font-semibold tabular-nums text-white ring-2 ring-[var(--background)]">
                 {cartCount}
               </span>
             )}
@@ -316,7 +316,7 @@ export default function Navbar({
                             <span className="flex flex-col">
                               <span className="leading-tight">{child.title}</span>
                               {child.desc && (
-                                <span className="text-[0.72rem] text-[var(--muted-foreground)]">{child.desc}</span>
+                                <span className="text-[0.8rem] text-[var(--muted-foreground)]">{child.desc}</span>
                               )}
                             </span>
                             <ArrowUpRight className="ml-auto size-4 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
@@ -354,7 +354,7 @@ export default function Navbar({
               <ShoppingCart className="size-[1.05rem]" strokeWidth={1.75} />
               Cart
               {cartCount > 0 && (
-                <span className="ml-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-lime)] px-1 text-[10px] font-semibold tabular-nums text-[var(--brand-lime-ink)]">
+                <span className="ml-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-lime)] px-1 text-[0.8rem] font-semibold tabular-nums text-[var(--brand-lime-ink)]">
                   {cartCount}
                 </span>
               )}

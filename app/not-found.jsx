@@ -1,8 +1,28 @@
 import Link from 'next/link'
+import {
+    WEBSITE_HOME,
+    WEBSITE_SHOP_PLANTS,
+    WEBSITE_SHOP_POTS,
+    WEBSITE_SERVICES,
+    WEBSITE_ENQUIRY,
+} from '@/routes/WebsiteRoute'
+
+export const metadata = {
+    title: 'Page Not Found',
+    description: "This URL doesn't exist. Head back to the homepage or explore our collections.",
+    robots: { index: false, follow: true },
+}
 
 // Rendered for routes that don't match any page in the app.
 // Runs inside app/layout.jsx (GlobalProvider + LenisProvider) but outside
 // the website layout, so the header/footer are not present here.
+const quickLinks = [
+    { title: 'Shop Plants', url: WEBSITE_SHOP_PLANTS },
+    { title: 'Shop Pots', url: WEBSITE_SHOP_POTS },
+    { title: 'Our Services', url: WEBSITE_SERVICES },
+    { title: 'Send an Enquiry', url: WEBSITE_ENQUIRY },
+]
+
 export default function GlobalNotFound() {
     return (
         <div className="relative flex min-h-screen flex-col items-center justify-center px-6 text-center font-neue">
@@ -23,18 +43,30 @@ export default function GlobalNotFound() {
                 </p>
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
                     <Link
-                        href="/"
+                        href={WEBSITE_HOME}
                         className="border border-[var(--dark-red)] px-8 py-3 text-sm font-medium uppercase tracking-widest text-[var(--dark-red)] transition-colors hover:bg-[var(--dark-red)] hover:text-white"
                     >
                         Back to Home
                     </Link>
                     <Link
-                        href="/shop"
+                        href={WEBSITE_SHOP_PLANTS}
                         className="bg-[var(--dark-red)] px-8 py-3 text-sm font-medium uppercase tracking-widest text-white transition-colors hover:bg-[var(--dark-red-2)]"
                     >
                         Shop Now
                     </Link>
                 </div>
+
+                <nav aria-label="Popular pages" className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+                    {quickLinks.map((link) => (
+                        <Link
+                            key={link.url}
+                            href={link.url}
+                            className="text-sm font-medium tracking-wide text-[var(--dark-red-2)] underline underline-offset-4 transition-colors hover:text-[var(--dark-red)]"
+                        >
+                            {link.title}
+                        </Link>
+                    ))}
+                </nav>
             </div>
         </div>
     )

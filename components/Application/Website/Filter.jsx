@@ -22,7 +22,7 @@ const ChipSkeletons = ({ count = 4 }) => (
 // Shared pill-chip look for the Category facet - filled brand-green
 // when selected, outlined neutral otherwise.
 const chipClass = (active) =>
-    `inline-flex items-center rounded-full border px-3.5 py-1.5 text-[12px] font-semibold tracking-[0.02em] transition ${active
+    `inline-flex items-center rounded-full border px-3.5 py-1.5 text-[0.8rem] font-semibold tracking-[0.02em] transition ${active
         ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
         : 'border-border/70 bg-background text-[var(--brand-primary)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]'
     }`
@@ -134,14 +134,14 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                     <h3 className="flex items-center gap-2 font-header text-xl font-semibold tracking-tight text-[var(--brand-primary)]">
                         Filter
                         {activeFilterCount > 0 && (
-                            <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)] px-1.5 text-[11px] font-semibold text-white">
+                            <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)] px-1.5 text-[0.8rem] font-semibold text-white">
                                 {activeFilterCount}
                             </span>
                         )}
                     </h3>
                 )}
                 {hasFilters && showClearLink && (
-                    <Button type="button" variant="link" className="h-auto w-fit gap-1 p-0 text-[11px] font-semibold uppercase text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]" asChild>
+                    <Button type="button" variant="link" className="h-auto w-fit gap-1 p-0 text-[0.8rem] font-semibold uppercase text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]" asChild>
                         <Link href={WEBSITE_SHOP}>
                             <X className="size-3" />
                             Clear All
@@ -183,7 +183,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                             <span className="flex items-center gap-2">
                                 By Category
                                 {selectedCategory.length > 0 && (
-                                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[11px] font-semibold text-[var(--brand-primary)]">
+                                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[0.8rem] font-semibold text-[var(--brand-primary)]">
                                         {selectedCategory.length}
                                     </span>
                                 )}
@@ -218,7 +218,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                             <span className="flex items-center gap-2">
                                 Color
                                 {selectedColor.length > 0 && (
-                                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[11px] font-semibold text-[var(--brand-primary)]">
+                                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[0.8rem] font-semibold text-[var(--brand-primary)]">
                                         {selectedColor.length}
                                     </span>
                                 )}
@@ -278,7 +278,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                 filter panel. */}
             {categoriesReady && colorsReady && sizesReady
                 && categories.length === 0 && colors.length === 0 && sizes.length === 0 && (
-                <p className="text-[12px] text-muted-foreground">
+                <p className="text-[0.8rem] text-muted-foreground">
                     More filters will appear here once products are added to the catalogue.
                 </p>
             )}

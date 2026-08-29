@@ -46,7 +46,7 @@ const EditorialCardsSection = () => {
                         Three Ways In
                     </h2>
                 </div>
-                <span className="hidden text-[0.68rem] font-semibold uppercase text-muted-foreground sm:block">
+                <span className="hidden text-[0.8rem] font-semibold uppercase text-muted-foreground sm:block">
                     Story · Nursery · Site Visit
                 </span>
             </div>
@@ -80,7 +80,7 @@ const EditorialCardsSection = () => {
                         <div className="absolute inset-x-0 bottom-0 p-6 lg:p-7">
 
                             {/* number tag */}
-                            <p className="mb-3 text-[0.6rem] font-semibold uppercase tracking-[0.32em] text-white/50">
+                            <p className="mb-3 text-[0.8rem] font-semibold uppercase tracking-[0.32em] text-white/50">
                                 {card.num}
                             </p>
 
@@ -98,7 +98,7 @@ const EditorialCardsSection = () => {
                             </p>
 
                             {/* CTA */}
-                            <div className="mt-5 inline-flex items-center gap-1.5 text-[0.78rem] font-medium tracking-[-0.01em] text-white/85 transition-colors duration-200 group-hover:text-[var(--brand-lime)]">
+                            <div className="mt-5 inline-flex items-center gap-1.5 text-[0.8rem] font-medium tracking-[-0.01em] text-white/85 transition-colors duration-200 group-hover:text-[var(--brand-lime)]">
                                 {card.cta}
                                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                             </div>

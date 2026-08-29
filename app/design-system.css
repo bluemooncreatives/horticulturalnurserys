@@ -170,14 +170,14 @@
   --font-geist-sans: var(--font-body);
 
   /* ── Type scale ── */
-  --text-2xs:      0.58rem;                      /*  ~9px  counter overlays    */
-  --text-xs:       0.625rem;                     /* ~10px  section labels       */
-  --text-sm-xs:    0.65rem;                      /* ~10px  caps labels          */
-  --text-sm:       0.78rem;                      /* ~12px  pill buttons         */
+  --text-2xs:      0.8rem;                       /* min font size floor - was ~9px  counter overlays */
+  --text-xs:       0.8rem;                       /* min font size floor - was ~10px section labels    */
+  --text-sm-xs:    0.8rem;                       /* min font size floor - was ~10px caps labels        */
+  --text-sm:       0.8rem;                       /* min font size floor - was ~12px pill buttons       */
   --text-base-sm:  0.82rem;                      /* ~13px  description text     */
-  --text-10:       0.625rem;                     /*  10px  badges               */
-  --text-11:       0.6875rem;                    /*  11px  product name / filter*/
-  --text-12:       0.75rem;                      /*  12px  loading / muted copy */
+  --text-10:       0.8rem;                       /* min font size floor - was 10px badges              */
+  --text-11:       0.8rem;                       /* min font size floor - was 11px product name/filter */
+  --text-12:       0.8rem;                       /* min font size floor - was 12px loading/muted copy  */
   --text-13:       0.8125rem;                    /*  13px  form labels          */
   --text-15:       0.9375rem;                    /*  15px  product prices       */
   --text-base:     1rem;                         /*  16px  body                 */

@@ -198,7 +198,7 @@ const HeroSection = () => {
                   ))}
                 </div>
                 <span aria-hidden className="h-px w-6 bg-black/25" />
-                <span className="text-[0.75rem] font-medium uppercase text-[var(--muted-foreground)]">
+                <span className="text-[0.8rem] font-medium uppercase text-[var(--muted-foreground)]">
                   [ Kolkata · Since 1989 ]
                 </span>
               </div>
@@ -224,7 +224,7 @@ const HeroSection = () => {
               duration={REVEAL.trustDuration}
               className="hero-overlay hidden sm:block"
             >
-              <p className="max-w-xs text-[0.72rem] leading-snug text-white/85 sm:text-[0.8rem]">
+              <p className="max-w-xs text-[0.8rem] leading-snug text-white/85 sm:text-[0.8rem]">
                 Entrusted with the Assembly House, National Library, Alipore Zoo
                 and Rabindra Sarobar.
               </p>
@@ -232,7 +232,7 @@ const HeroSection = () => {
                 {CRAFT_MARKS.map((mark) => (
                   <span
                     key={mark}
-                    className="hero-mark flex items-center gap-1.5 text-[0.66rem] font-medium tracking-wide text-white/80 sm:text-[0.72rem]"
+                    className="hero-mark flex items-center gap-1.5 text-[0.8rem] font-medium tracking-wide text-white/80 sm:text-[0.8rem]"
                   >
                     <span aria-hidden className="text-[var(--brand-lime)]">✦</span>
                     {mark}
@@ -320,7 +320,7 @@ const HeroSection = () => {
                 </span>
 
                 {/* Hover affordance - signals the box is an interactive control. */}
-                <span className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex translate-y-full items-center justify-center gap-1.5 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2.5 pt-6 text-[0.66rem] font-medium text-white opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex translate-y-full items-center justify-center gap-1.5 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2.5 pt-6 text-[0.8rem] font-medium text-white opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
                   <ArrowLeftRight aria-hidden className="size-3.5" />
                   Click to feature
                 </span>
@@ -344,7 +344,7 @@ const HeroSection = () => {
                       bottom copy rolls into place, staggered left-to-right. */}
                   <span
                     aria-label={CARD_TITLE}
-                    className="flex text-[0.78rem] font-semibold leading-none text-[var(--brand-primary)] sm:text-[0.9rem]"
+                    className="flex text-[0.8rem] font-semibold leading-none text-[var(--brand-primary)] sm:text-[0.9rem]"
                   >
                     {CARD_TITLE.split("").map((ch, i) => (
                       <span
@@ -369,7 +369,7 @@ const HeroSection = () => {
                   </span>
                   {/* Description: gentler counterpart - colour deepens and the
                       line eases inward as the card is hovered. */}
-                  <p className="mt-1.5 hidden text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)] sm:block">
+                  <p className="mt-1.5 hidden text-[0.8rem] leading-[1.4] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)] sm:block">
                     Hardy nursery-raised seedlings, ready to plant this season.
                   </p>
                 </div>

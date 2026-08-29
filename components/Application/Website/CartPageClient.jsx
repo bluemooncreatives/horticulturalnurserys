@@ -55,7 +55,7 @@ const CartPageClient = () => {
                                     <p>Browse the catalogue and add the plants &amp; supplies you need to send us an enquiry.</p>
                                 </CardContent>
                                 <CardFooter className="flex justify-start">
-                                    <Button type="button" asChild variant="brand" className="px-6 text-[11px] font-semibold uppercase tracking-[0em]">
+                                    <Button type="button" asChild variant="brand" className="px-6 text-[0.8rem] font-semibold uppercase tracking-[0em]">
                                         <Link href={WEBSITE_SHOP}>Browse Catalogue</Link>
                                     </Button>
                                 </CardFooter>
@@ -85,10 +85,10 @@ const CartPageClient = () => {
                                             </p>
                                         </CardContent>
                                         <CardFooter className="flex flex-col gap-3">
-                                            <Button type="button" onClick={() => router.push(WEBSITE_ENQUIRY)} variant="brand" className="h-11 w-full text-[11px] font-semibold uppercase tracking-[0.2em]">
+                                            <Button type="button" onClick={() => router.push(WEBSITE_ENQUIRY)} variant="brand" className="h-11 w-full text-[0.8rem] font-semibold uppercase tracking-[0.2em]">
                                                 Submit Enquiry
                                             </Button>
-                                            <Button type="button" variant="link" asChild className="h-auto p-0 text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground">
+                                            <Button type="button" variant="link" asChild className="h-auto p-0 text-[0.8rem] font-semibold uppercase tracking-[0.24em] text-foreground">
                                                 <Link href={WEBSITE_SHOP}>Continue Browsing</Link>
                                             </Button>
                                         </CardFooter>
@@ -127,7 +127,7 @@ const CartPageClient = () => {
                                                                 <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
                                                                     {product.color} / {product.size}
                                                                 </p>
-                                                                <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--dark-red)]">
+                                                                <p className="mt-1 text-[0.8rem] font-medium uppercase tracking-[0.08em] text-[var(--dark-red)]">
                                                                     Price on enquiry
                                                                 </p>
                                                             </div>

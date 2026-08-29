@@ -309,12 +309,12 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                         {product?.category?.name ? (
                             <Link
                                 href={`${WEBSITE_SHOP}?category=${encodeURIComponent(product.category.slug)}`}
-                                className="w-fit text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--dark-red)] transition-colors hover:text-[var(--dark-red-2)]"
+                                className="w-fit text-[0.8rem] font-semibold uppercase tracking-[0.28em] text-[var(--dark-red)] transition-colors hover:text-[var(--dark-red-2)]"
                             >
                                 {product.category.name}
                             </Link>
                         ) : (
-                            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--dark-red)]">From Our Nursery</p>
+                            <p className="text-[0.8rem] font-semibold uppercase tracking-[0.28em] text-[var(--dark-red)]">From Our Nursery</p>
                         )}
 
                         <h1 className="font-header mt-2 text-[1.75rem] leading-[1.1] tracking-[-0.02em] text-foreground sm:text-[2rem] lg:text-[2.25rem]">
@@ -350,7 +350,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                         {/* Color */}
                         {swatches.length > 0 && (
                             <div className="mb-6">
-                                <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                <p className="mb-3 text-[0.8rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                                     Color: <span className="text-foreground">{variant?.color}</span>
                                 </p>
                                 <div className="flex flex-wrap gap-2.5">
@@ -376,7 +376,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                                     style={style || undefined}
                                                 >
                                                     {!style && (
-                                                        <span className="flex h-full w-full items-center justify-center text-[9px] font-semibold uppercase text-foreground/60">
+                                                        <span className="flex h-full w-full items-center justify-center text-[0.8rem] font-semibold uppercase text-foreground/60">
                                                             {name?.slice(0, 2)}
                                                         </span>
                                                     )}
@@ -393,7 +393,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                         {sizes?.length > 0 && (
                             <div className="mb-6">
                                 <div className="mb-3 flex items-center justify-between gap-3">
-                                    <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                    <p className="text-[0.8rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                                         Size: <span className="text-foreground">{variant?.size}</span>
                                     </p>
                                 </div>
@@ -439,7 +439,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 type="button"
                                 variant="brand"
                                 disabled
-                                className="h-12 w-full rounded-[var(--radius-sm)] text-[12px] font-semibold uppercase tracking-[0.2em]"
+                                className="h-12 w-full rounded-[var(--radius-sm)] text-[0.8rem] font-semibold uppercase tracking-[0.2em]"
                             >
                                 Unavailable
                             </Button>
@@ -473,7 +473,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                         type="button"
                                         text="Add To Enquiry"
                                         variant="brand"
-                                        className="h-12 w-full rounded-[var(--radius-sm)] text-[12px] font-semibold uppercase tracking-[0.2em]"
+                                        className="h-12 w-full rounded-[var(--radius-sm)] text-[0.8rem] font-semibold uppercase tracking-[0.2em]"
                                         onClick={handleAddToCart}
                                     />
                                 </div>
@@ -505,7 +505,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 <div className="flex-1">
                                     <Button
                                         variant="brand"
-                                        className="h-12 w-full rounded-[var(--radius-sm)] text-[12px] font-semibold uppercase tracking-[0.2em]"
+                                        className="h-12 w-full rounded-[var(--radius-sm)] text-[0.8rem] font-semibold uppercase tracking-[0.2em]"
                                         type="button"
                                         asChild
                                     >
@@ -533,8 +533,8 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 <div key={title} className="flex items-center gap-3 rounded-[var(--radius-sm)] border border-border/50 bg-muted/20 px-3 py-2.5">
                                     <Icon className="size-5 shrink-0 text-[var(--dark-red)]" strokeWidth={1.75} />
                                     <div className="leading-tight">
-                                        <p className="text-[12px] font-semibold text-foreground">{title}</p>
-                                        <p className="text-[11px] text-muted-foreground">{sub}</p>
+                                        <p className="text-[0.8rem] font-semibold text-foreground">{title}</p>
+                                        <p className="text-[0.8rem] text-muted-foreground">{sub}</p>
                                     </div>
                                 </div>
                             ))}
@@ -577,7 +577,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             { label: 'Step 4', text: 'We arrange delivery or nursery pickup once the details are confirmed.' },
                         ].map(({ label, text }) => (
                             <div key={label} className="flex flex-col gap-1 py-4 first:pt-0 last:pb-0 sm:flex-row sm:gap-6">
-                                <dt className="shrink-0 pt-0.5 text-[0.625rem] font-semibold uppercase tracking-[0.22em] text-foreground/45 sm:w-24">
+                                <dt className="shrink-0 pt-0.5 text-[0.8rem] font-semibold uppercase tracking-[0.22em] text-foreground/45 sm:w-24">
                                     {label}
                                 </dt>
                                 <dd className="font-neue text-[0.95rem] leading-[1.85] text-[var(--text-body)]">

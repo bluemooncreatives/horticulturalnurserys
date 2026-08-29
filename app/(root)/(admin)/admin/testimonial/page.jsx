@@ -330,7 +330,7 @@ const ShowTestimonials = () => {
                       ))}
                     </span>
                     {!testimonial.isActive && (
-                      <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
+                      <span className="rounded-full bg-muted px-2 py-0.5 text-[0.8rem] uppercase tracking-wide text-muted-foreground">
                         Hidden
                       </span>
                     )}

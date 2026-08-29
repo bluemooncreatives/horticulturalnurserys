@@ -3,7 +3,7 @@ import { Command, Crown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const HDCMark = ({ className }) => (
-    <span className={cn('text-[10px] font-bold tracking-tight', className)}>HDC</span>
+    <span className={cn('text-[0.8rem] font-bold tracking-tight', className)}>HDC</span>
 )
 
 const teams = [

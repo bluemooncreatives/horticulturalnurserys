@@ -679,7 +679,7 @@ const AboutUsSection = () => {
 
                         <div className="mt-auto">
                             <span aria-hidden className="about-c3-accent mb-2 block h-px w-10 origin-left bg-[var(--brand-primary)]" />
-                            <span className="about-c3-label block text-[0.7rem] uppercase text-[var(--muted-foreground)]">Nursery Spread</span>
+                            <span className="about-c3-label block text-[0.8rem] uppercase text-[var(--muted-foreground)]">Nursery Spread</span>
                             <span className="about-c3-figure mt-1 flex items-baseline gap-1.5 text-[1.9rem] font-semibold leading-none text-[var(--brand-primary)] will-change-transform">
                                 <span className="about-c3-num">50</span>
                                 <span>Bighas</span>

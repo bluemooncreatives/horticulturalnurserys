@@ -38,7 +38,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                 <SheetTrigger aria-label="Open cart" className="relative flex items-center justify-center rounded-md px-1.5 py-1.5 transition hover:bg-muted/40 sm:px-2.5 sm:py-2">
                     <ShoppingCart className="h-4 w-4 text-foreground sm:h-5 sm:w-5" strokeWidth={1.75} />
                     {cartCount > 0 && (
-                        <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--dark-red)] px-1 text-[9px] font-semibold text-white tabular-nums sm:-right-2 sm:-top-2 sm:h-5 sm:min-w-5 sm:text-[10px]">
+                        <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--dark-red)] px-1 text-[0.8rem] font-semibold text-white tabular-nums sm:-right-2 sm:-top-2 sm:h-5 sm:min-w-5 sm:text-[0.8rem]">
                             {cartCount}
                         </span>
                     )}
@@ -55,7 +55,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                             My Enquiry
                         </SheetTitle>
                         {cartCount > 0 && (
-                            <span className="rounded-full bg-[var(--brand-cream)]/60 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--brand-primary)] sm:bg-muted/60 sm:text-muted-foreground">
+                            <span className="rounded-full bg-[var(--brand-cream)]/60 px-2.5 py-0.5 text-[0.8rem] font-medium uppercase tracking-[0.14em] text-[var(--brand-primary)] sm:bg-muted/60 sm:text-muted-foreground">
                                 {cartCount} {cartCount === 1 ? 'item' : 'items'}
                             </span>
                         )}
@@ -108,21 +108,21 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                         <h4 className="line-clamp-2 font-neue text-[13px] font-semibold leading-snug text-foreground">
                                             {product.name}
                                         </h4>
-                                        <span className="w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-muted-foreground">
+                                        <span className="w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase tracking-[0.1em] text-muted-foreground">
                                             {product.size} / {product.color}
                                         </span>
                                         <div className="flex items-center justify-between">
-                                            <span className="rounded-xs bg-[var(--dark-red)]/10 px-1.5 py-0.5 font-neue text-[10px] font-semibold text-[var(--dark-red)]">
+                                            <span className="rounded-xs bg-[var(--dark-red)]/10 px-1.5 py-0.5 font-neue text-[0.8rem] font-semibold text-[var(--dark-red)]">
                                                 Qty ×{product.qty}
                                             </span>
-                                            <span className="font-neue text-[11px] font-medium uppercase tracking-[0.06em] text-muted-foreground">
+                                            <span className="font-neue text-[0.8rem] font-medium uppercase tracking-[0.06em] text-muted-foreground">
                                                 Price on enquiry
                                             </span>
                                         </div>
                                         <button
                                             type="button"
                                             onClick={() => dispatch(removeFromCart({ productId: product.productId, variantId: product.variantId }))}
-                                            className="w-fit cursor-pointer text-[10px] font-medium uppercase tracking-[0.08em] text-muted-foreground/50 transition-colors hover:text-[var(--dark-red)]"
+                                            className="w-fit cursor-pointer text-[0.8rem] font-medium uppercase tracking-[0.08em] text-muted-foreground/50 transition-colors hover:text-[var(--dark-red)]"
                                         >
                                             Remove
                                         </button>
@@ -142,7 +142,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                         </div>
                     )}
 
-                    <p className="mt-2.5 rounded-lg bg-muted/40 px-3 py-2 text-center text-[11.5px] font-medium text-muted-foreground">
+                    <p className="mt-2.5 rounded-lg bg-muted/40 px-3 py-2 text-center text-[0.8rem] font-medium text-muted-foreground">
                         No payment now - submit the list and our team will share pricing.
                     </p>
 

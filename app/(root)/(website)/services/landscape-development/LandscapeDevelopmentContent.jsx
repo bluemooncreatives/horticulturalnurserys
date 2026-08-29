@@ -105,7 +105,7 @@ export default function LandscapeDevelopmentContent({ service }) {
         <div className="lumora-shell absolute inset-x-0 top-0 z-10 pt-8">
           <Link
             href="/services"
-            className="group inline-flex items-center gap-2 text-[0.78rem] font-medium text-white/45 transition-colors hover:text-white"
+            className="group inline-flex items-center gap-2 text-[0.8rem] font-medium text-white/45 transition-colors hover:text-white"
           >
             <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
             All Services
@@ -117,7 +117,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           <RevealUp
             as="p"
             delay={60}
-            className="mb-4 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[var(--brand-lime)]"
+            className="mb-4 text-[0.8rem] font-semibold uppercase text-[var(--brand-lime)]"
           >
             Service {service.num}
           </RevealUp>
@@ -154,7 +154,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                   delay={340 + i * 70}
                   className={`border-white/10 py-5 lg:py-6 ${STAT_CELL_EDGES[i % 4]}`}
                 >
-                  <dt className="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-white/40">
+                  <dt className="text-[0.8rem] font-semibold uppercase tracking-[0.22em] text-white/40">
                     {stat.label}
                   </dt>
                   <dd className="mt-1.5 font-neue text-[clamp(1.05rem,2vw,1.4rem)] font-medium leading-tight tracking-[-0.01em] text-white">
@@ -209,7 +209,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           {service.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-4 py-1.5 text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[var(--brand-primary)]"
+              className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-4 py-1.5 text-[0.8rem] font-medium uppercase tracking-[0.12em] text-[var(--brand-primary)]"
             >
               {tag}
             </span>
@@ -275,7 +275,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                 className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-[var(--brand-lime)]/0 blur-2xl transition-all duration-500 group-hover:bg-[var(--brand-lime)]/25"
               />
 
-              <span className="relative text-[0.62rem] font-semibold uppercase tracking-[0.26em] text-[var(--brand-primary)]/40">
+              <span className="relative text-[0.8rem] font-semibold uppercase tracking-[0.26em] text-[var(--brand-primary)]/40">
                 {String(i + 1).padStart(2, '0')}
               </span>
 
@@ -293,7 +293,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                 {cap.tags.map((t) => (
                   <li
                     key={t}
-                    className="rounded-[var(--radius-pill)] bg-[var(--secondary)] px-3 py-1 text-[0.7rem] font-medium text-[var(--brand-primary)]/75"
+                    className="rounded-[var(--radius-pill)] bg-[var(--secondary)] px-3 py-1 text-[0.8rem] font-medium text-[var(--brand-primary)]/75"
                   >
                     {t}
                   </li>
@@ -334,7 +334,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                   <h3 className="font-neue text-[1.3rem] font-medium tracking-[-0.02em] text-white">
                     {grass.name}
                   </h3>
-                  <span className="shrink-0 text-[0.68rem] italic text-white/35">{grass.latin}</span>
+                  <span className="shrink-0 text-[0.8rem] italic text-white/35">{grass.latin}</span>
                 </div>
 
                 <span
@@ -347,7 +347,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                 <dl className="mt-auto flex flex-col gap-2.5 border-t border-white/10 pt-5">
                   {grass.specs.map((spec) => (
                     <div key={spec.label} className="flex items-baseline justify-between gap-4">
-                      <dt className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/35">
+                      <dt className="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-white/35">
                         {spec.label}
                       </dt>
                       <dd className="text-right text-[0.82rem] font-medium text-white/85">
@@ -387,7 +387,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                   delay={120 + i * 80}
                   className="flex flex-col gap-2 py-5 sm:flex-row sm:items-start sm:gap-6"
                 >
-                  <span className="shrink-0 pt-0.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[var(--brand-primary)] sm:w-28">
+                  <span className="shrink-0 pt-0.5 text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-[var(--brand-primary)] sm:w-28">
                     {mat.name}
                   </span>
                   <span className="text-[0.85rem] leading-[1.7] text-[var(--muted-foreground)]">
@@ -481,7 +481,7 @@ export default function LandscapeDevelopmentContent({ service }) {
             {service.credentials.projects.map((project) => (
               <span
                 key={project}
-                className="rounded-[var(--radius-pill)] border border-white/15 px-4 py-2 text-[0.78rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white"
+                className="rounded-[var(--radius-pill)] border border-white/15 px-4 py-2 text-[0.8rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white"
               >
                 {project}
               </span>
@@ -512,13 +512,13 @@ export default function LandscapeDevelopmentContent({ service }) {
               delay={80 + i * 80}
               className="bg-[var(--brand-white)] px-6 py-8 lg:px-8 lg:py-10"
             >
-              <dt className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)]">
+              <dt className="text-[0.8rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)]">
                 {figure.label}
               </dt>
               <dd className="mt-3 font-neue text-[clamp(1.5rem,3.2vw,2.25rem)] font-medium leading-none tracking-[-0.03em] text-[var(--brand-primary)]">
                 {figure.value}
               </dd>
-              <dd className="mt-2 text-[0.78rem] leading-relaxed text-[var(--muted-foreground)]">
+              <dd className="mt-2 text-[0.8rem] leading-relaxed text-[var(--muted-foreground)]">
                 {figure.note}
               </dd>
             </RevealUp>
@@ -559,7 +559,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           <div className="relative flex flex-col items-start gap-6 lg:max-w-2xl">
             <RevealUp
               as="p"
-              className="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[var(--brand-lime)]"
+              className="text-[0.8rem] font-semibold uppercase text-[var(--brand-lime)]"
             >
               Start here
             </RevealUp>

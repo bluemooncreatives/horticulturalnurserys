@@ -235,7 +235,7 @@ const ShowFreshlyArrived = () => {
                     <p className="text-xs text-muted-foreground">{formatPrice(product.sellingPrice)}</p>
                   </div>
                   {!onStorefront && (
-                    <span className="hidden shrink-0 rounded bg-muted px-2 py-0.5 text-[11px] text-muted-foreground sm:inline">
+                    <span className="hidden shrink-0 rounded bg-muted px-2 py-0.5 text-[0.8rem] text-muted-foreground sm:inline">
                       Not shown
                     </span>
                   )}

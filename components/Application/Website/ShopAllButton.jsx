@@ -27,7 +27,7 @@ const ShopAllButton = ({
             type="button"
             onClick={() => router.push(href)}
             className={cn(
-                "group relative inline-flex h-12 w-full min-w-0 cursor-pointer select-none items-center justify-center overflow-hidden border px-6 text-[0.78rem] font-semibold uppercase transition-colors duration-200 sm:w-auto sm:min-w-[220px] sm:px-10",
+                "group relative inline-flex h-12 w-full min-w-0 cursor-pointer select-none items-center justify-center overflow-hidden border px-6 text-[0.8rem] font-semibold uppercase transition-colors duration-200 sm:w-auto sm:min-w-[220px] sm:px-10",
                 radiusClass,
                 className
             )}

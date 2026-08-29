@@ -82,7 +82,7 @@
 }
 
 .itemName {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: -0.008rem;
   text-transform: uppercase;
@@ -119,6 +119,6 @@
   }
 
   .itemName {
-    font-size: 0.65rem;
+    font-size: 0.8rem;
   }
 }

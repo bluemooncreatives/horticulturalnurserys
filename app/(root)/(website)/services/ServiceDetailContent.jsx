@@ -39,7 +39,7 @@ function RevealLabel({ children }) {
     return () => tween.kill()
   }, [])
   return (
-    <span ref={ref} className="block text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-[var(--brand-lime)]/70">
+    <span ref={ref} className="block text-[0.8rem] font-semibold uppercase tracking-[0.28em] text-[var(--brand-lime)]/70">
       {children}
     </span>
   )
@@ -119,13 +119,13 @@ export default function ServiceDetailContent({ service }) {
           {/* Back link */}
           <Link
             href="/services"
-            className="group mb-8 inline-flex items-center gap-2 text-[0.78rem] font-medium text-white/40 transition-colors hover:text-white"
+            className="group mb-8 inline-flex items-center gap-2 text-[0.8rem] font-medium text-white/40 transition-colors hover:text-white"
           >
             <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
             All Services
           </Link>
 
-          <RevealUp as="p" delay={60} className="mb-3 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-[var(--brand-lime)]/70">
+          <RevealUp as="p" delay={60} className="mb-3 text-[0.8rem] font-semibold uppercase tracking-[0.28em] text-[var(--brand-lime)]/70">
             Service {service.num}
           </RevealUp>
 
@@ -165,7 +165,7 @@ export default function ServiceDetailContent({ service }) {
               {service.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-[var(--brand-primary)]/20 bg-[var(--secondary)] px-4 py-1 text-[0.75rem] font-medium uppercase tracking-[0.12em] text-[var(--brand-primary)]"
+                  className="rounded-full border border-[var(--brand-primary)]/20 bg-[var(--secondary)] px-4 py-1 text-[0.8rem] font-medium uppercase tracking-[0.12em] text-[var(--brand-primary)]"
                 >
                   {tag}
                 </span>
@@ -194,7 +194,7 @@ export default function ServiceDetailContent({ service }) {
                         {h.icon}
                       </span>
                       <span className="flex flex-col gap-0.5">
-                        <span className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-white/40">{h.label}</span>
+                        <span className="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-white/40">{h.label}</span>
                         <span className="text-[0.9rem] font-medium text-white">{h.value}</span>
                       </span>
                     </li>
@@ -228,7 +228,7 @@ export default function ServiceDetailContent({ service }) {
       {/* ── CTA ── */}
       <section className="website-gutter pb-20">
         <div className="flex flex-col items-center gap-5 rounded-2xl bg-[var(--brand-ink-soft)] px-8 py-12 text-center lg:py-14">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-[var(--brand-lime)]/70">
+          <p className="text-[0.8rem] font-semibold uppercase text-[var(--brand-lime)]/70">
             Interested?
           </p>
           <h2 className="font-neue text-[clamp(1.4rem,3.5vw,2.4rem)] font-semibold leading-tight tracking-[-0.02em] text-white">

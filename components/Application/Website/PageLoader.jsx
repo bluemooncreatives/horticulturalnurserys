@@ -135,7 +135,7 @@ export default function PageLoader({ onComplete }) {
         <Image src={logoMark} alt="" priority className="size-14 rounded-full" />
         <span className="flex flex-col items-center leading-none">
           <span className="font-wordmark text-2xl">Horticultural</span>
-          <span className="mt-1 text-[0.62rem] font-medium uppercase tracking-[0.2em] text-white/60">
+          <span className="mt-1 text-[0.8rem] font-medium uppercase tracking-[0.2em] text-white/60">
             Development Centre
           </span>
         </span>

@@ -15,7 +15,7 @@ export function SectionLabel({ children, tone = 'light', className = '' }) {
   const rule = tone === 'dark' ? 'bg-[var(--brand-lime)]/35' : 'bg-[var(--brand-primary)]/20'
   return (
     <RevealUp className={`flex items-center gap-4 ${className}`}>
-      <span className={`shrink-0 text-[0.68rem] font-semibold uppercase tracking-[0.3em] ${color}`}>
+      <span className={`shrink-0 text-[0.8rem] font-semibold uppercase ${color}`}>
         {children}
       </span>
       <span aria-hidden className={`h-px flex-1 ${rule}`} />

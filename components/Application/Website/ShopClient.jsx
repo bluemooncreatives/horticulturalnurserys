@@ -301,7 +301,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                                     siblings={isMobile ? 0 : 1}
                                 />
                                 {total > 0 && (
-                                    <p className="font-neue text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+                                    <p className="font-neue text-[0.8rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
                                         Page {Math.min(page + 1, totalPages)} of {totalPages} · {total} {total === 1 ? 'item' : 'items'}
                                     </p>
                                 )}

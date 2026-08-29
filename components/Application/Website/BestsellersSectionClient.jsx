@@ -113,7 +113,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                 className={styles.cartBtn}
                                                 aria-label="Go to cart"
                                             >
-                                                <Check size={15} strokeWidth={2} />
+                                                <Check size={17} strokeWidth={2} />
                                             </Link>
                                         ) : (
                                             <button
@@ -122,7 +122,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                 disabled={!product?.defaultVariant}
                                                 aria-label="Add to enquiry list"
                                             >
-                                                <ShoppingCart size={15} strokeWidth={1.8} />
+                                                <ShoppingCart size={17} strokeWidth={1.8} />
                                             </button>
                                         )}
                                     </div>

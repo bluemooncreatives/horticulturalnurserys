@@ -53,7 +53,7 @@ function Chip({ children, tone = 'light', className = '' }) {
       : 'border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)]'
   return (
     <span
-      className={`inline-flex items-center rounded-[var(--radius-pill)] border px-4 py-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.24em] ${skin} ${className}`}
+      className={`inline-flex items-center rounded-[var(--radius-pill)] border px-4 py-1.5 text-[0.8rem] font-semibold uppercase tracking-[0.24em] ${skin} ${className}`}
     >
       {children}
     </span>
@@ -307,7 +307,7 @@ export default function ServicesContent({
                 delay={80 + i * 80}
                 className="flex flex-col-reverse items-center text-center"
               >
-                <dt className="mt-3 max-w-[18ch] text-[0.78rem] leading-[1.6] text-[var(--muted-foreground)]">
+                <dt className="mt-3 max-w-[18ch] text-[0.8rem] leading-[1.6] text-[var(--muted-foreground)]">
                   {stat.label}
                 </dt>
                 <dd className="font-neue text-[clamp(1.8rem,4vw,2.7rem)] font-medium leading-none tracking-[-0.035em] text-[var(--brand-primary)]">
@@ -521,7 +521,7 @@ export default function ServicesContent({
               {credentials.projects.map((project) => (
                 <span
                   key={project}
-                  className="rounded-[var(--radius-pill)] border border-white/15 px-4 py-2 text-[0.78rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white"
+                  className="rounded-[var(--radius-pill)] border border-white/15 px-4 py-2 text-[0.8rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white"
                 >
                   {project}
                 </span>

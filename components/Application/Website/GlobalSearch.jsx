@@ -54,7 +54,7 @@ const readRecent = () => {
 }
 
 const Kbd = ({ children }) => (
-    <kbd className="rounded border border-border bg-background px-1.5 py-0.5 font-sans text-[10px] font-medium leading-none text-muted-foreground">
+    <kbd className="rounded border border-border bg-background px-1.5 py-0.5 font-sans text-[0.8rem] font-medium leading-none text-muted-foreground">
         {children}
     </kbd>
 )
@@ -224,13 +224,13 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                                 {recent.length > 0 && (
                                     <CommandGroup>
                                         <div className="flex items-center justify-between px-2 pb-1">
-                                            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                            <span className="text-[0.8rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                                                 Recent
                                             </span>
                                             <button
                                                 type="button"
                                                 onClick={clearRecent}
-                                                className="text-[11px] font-medium text-muted-foreground transition-colors hover:text-[var(--brand-primary-hover)]"
+                                                className="text-[0.8rem] font-medium text-muted-foreground transition-colors hover:text-[var(--brand-primary-hover)]"
                                             >
                                                 Clear
                                             </button>
@@ -371,7 +371,7 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                                                                 {product?.name}
                                                             </p>
                                                             <p className="flex items-center gap-2 text-[13px]">
-                                                                <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--dark-red)]">
+                                                                <span className="text-[0.8rem] font-semibold uppercase tracking-[0.06em] text-[var(--dark-red)]">
                                                                     Price on enquiry
                                                                 </span>
                                                             </p>
@@ -402,7 +402,7 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                     </CommandPrimitive.List>
 
                     {/* ── Footer hint bar ── */}
-                    <div className="flex shrink-0 items-center justify-end border-t border-border/70 px-4 py-2.5 text-[11px] text-muted-foreground">
+                    <div className="flex shrink-0 items-center justify-end border-t border-border/70 px-4 py-2.5 text-[0.8rem] text-muted-foreground">
                         <span className="flex items-center gap-1">
                             <Kbd>esc</Kbd>
                             <span className="ml-0.5">close</span>

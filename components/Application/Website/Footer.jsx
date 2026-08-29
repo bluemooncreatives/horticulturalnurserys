@@ -108,7 +108,7 @@ const Footer = ({ categoryLinks = [] }) => {
                 <div className="flex flex-col gap-8 border-t border-white/10 pt-8 sm:flex-row sm:items-end sm:justify-between">
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4">
                         <div>
-                            <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
+                            <p className="flex items-center gap-1.5 text-[0.8rem] uppercase tracking-[0.2em] text-white/35">
                                 <Phone className="size-3.5" /> Phone
                             </p>
                             <Link href="tel:+913324795710" className="mt-2 block text-[0.95rem] text-white/70 transition-colors hover:text-[var(--brand-lime)]">
@@ -119,7 +119,7 @@ const Footer = ({ categoryLinks = [] }) => {
                             </Link>
                         </div>
                         <div>
-                            <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
+                            <p className="flex items-center gap-1.5 text-[0.8rem] uppercase tracking-[0.2em] text-white/35">
                                 <MapPin className="size-3.5" /> Sale Counter
                             </p>
                             <p className="mt-2 text-[0.95rem] leading-snug text-white/70">
@@ -129,7 +129,7 @@ const Footer = ({ categoryLinks = [] }) => {
                             </p>
                         </div>
                         <div>
-                            <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
+                            <p className="flex items-center gap-1.5 text-[0.8rem] uppercase tracking-[0.2em] text-white/35">
                                 <Sprout className="size-3.5" /> Farm
                             </p>
                             <p className="mt-2 text-[0.95rem] leading-snug text-white/70">
@@ -139,7 +139,7 @@ const Footer = ({ categoryLinks = [] }) => {
                             </p>
                         </div>
                         <div>
-                            <p className="flex items-center gap-1.5 text-[0.68rem] uppercase tracking-[0.2em] text-white/35">
+                            <p className="flex items-center gap-1.5 text-[0.8rem] uppercase tracking-[0.2em] text-white/35">
                                 <Clock className="size-3.5" /> Hours
                             </p>
                             <p className="mt-2 text-[0.95rem] text-white/70">Mon – Sat · 10:00 – 19:00</p>

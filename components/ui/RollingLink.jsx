@@ -195,11 +195,12 @@ export default function RollingLink({
       onBlur={() => rollRef.current?.reverse()}
       {...props}
     >
-      <RollingText
-        ref={rollRef}
-        underline={underline}
-        background={background}
-      >
+      {/* Rendered as a sibling of RollingText (not nested inside it) so the
+          fill's hover host is this full-size Link, not RollingText's inner
+          content-sized span - otherwise the reveal only covers the text's
+          own box instead of the whole button. */}
+      {background}
+      <RollingText ref={rollRef} underline={underline}>
         {children}
       </RollingText>
     </Link>

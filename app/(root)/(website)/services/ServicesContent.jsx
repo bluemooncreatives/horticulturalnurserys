@@ -150,7 +150,7 @@ function ScrollFillStatement({ chip, text }) {
       <div className="lumora-shell w-full">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <RevealUp>
-            <Chip>{chip}</Chip>
+            <Chip className="tracking-normal! border-[var(--brand-primary)]! text-[var(--brand-primary)]!">{chip}</Chip>
           </RevealUp>
 
           <p className="mt-8 font-neue text-[clamp(1.25rem,2.9vw,2.1rem)] font-medium leading-[1.35] tracking-[-0.02em] text-[var(--muted-foreground)]">
@@ -325,7 +325,7 @@ export default function ServicesContent({
           {/* Left rail */}
           <div className="flex flex-col lg:sticky lg:top-28 lg:self-start">
             <RevealUp>
-              <Chip>Services</Chip>
+              <Chip className="tracking-normal! border-[var(--brand-primary)]! text-[var(--brand-primary)]!">Services</Chip>
             </RevealUp>
             <RevealUp
               as="h2"
@@ -428,7 +428,7 @@ export default function ServicesContent({
       <section className="bg-[var(--card)] py-16 lg:py-24">
         <div className="lumora-shell">
           <RevealUp>
-            <Chip>Process</Chip>
+            <Chip className="tracking-normal! border-[var(--brand-primary)]! text-[var(--brand-primary)]!">Process</Chip>
           </RevealUp>
 
           <div className="mt-7 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -535,7 +535,7 @@ export default function ServicesContent({
       <section className="lumora-shell pb-20 lg:pb-28">
         <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
           <RevealUp>
-            <Chip>Ready to start?</Chip>
+            <Chip className="tracking-normal! border-[var(--brand-primary)]! text-[var(--brand-primary)]!">Ready to start?</Chip>
           </RevealUp>
           <RevealUp
             as="h2"

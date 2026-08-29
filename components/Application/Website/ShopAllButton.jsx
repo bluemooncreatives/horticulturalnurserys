@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { WEBSITE_SHOP } from "@/routes/WebsiteRoute"
 
 const SCHEMES = {
-    "dark-red": { border: "var(--brand-primary)",       fill: "var(--brand-primary-hover)", hoverText: "var(--brand-white)"   },
+    "dark-red": { border: "var(--brand-primary)",       fill: "var(--brand-primary-deep)",  hoverText: "var(--brand-white)"   },
     black:      { border: "var(--brand-ink)",           fill: "var(--brand-ink-soft)",      hoverText: "var(--brand-white)"   },
     white:      { border: "var(--brand-white)",         fill: "var(--brand-white)",         hoverText: "var(--brand-primary)" },
 }

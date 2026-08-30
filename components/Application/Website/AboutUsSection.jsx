@@ -691,8 +691,8 @@ const AboutUsSection = () => {
                             default so reduced-motion / no-JS shows the photo clean. */}
                         <div className="about-c3-imgwrap relative my-4 h-16 shrink-0 overflow-hidden rounded-[10px] lg:h-24">
                             <Image
-                                src="/assets/images/hero/02.jpg"
-                                alt="Seedlings raised on our farm at Bibirhut"
+                                src="https://res.cloudinary.com/heog9fna/image/upload/v1788117797/ChatGPT_Image_Aug_31_2026_12_52_06_AM_npdux3.png"
+                                alt="Foliage raised on our farm at Bibirhut"
                                 fill
                                 sizes="(min-width:1024px) 25vw, 50vw"
                                 className="about-c3-img object-cover object-center will-change-transform"
@@ -726,21 +726,21 @@ const AboutUsSection = () => {
                             all frames together; each frame crossfades on scroll. */}
                         <div aria-hidden className="about-c4-imgwrap absolute inset-0 will-change-transform">
                             <Image
-                                src="/assets/images/hero/01.jpg"
+                                src="https://res.cloudinary.com/heog9fna/image/upload/v1787667630/zuiiigfsl9h1rupinhq0.jpg"
                                 alt="Protected cultivation under the green house at our Bibirhut farm"
                                 fill
                                 sizes="(min-width:1024px) 25vw, 50vw"
                                 className="about-c4-img object-cover object-center"
                             />
                             <Image
-                                src="/assets/images/hero/03.jpg"
+                                src="https://res.cloudinary.com/heog9fna/image/upload/v1787578383/usn3usn3621dmmxihpoa.png"
                                 alt=""
                                 fill
                                 sizes="(min-width:1024px) 25vw, 50vw"
                                 className="about-c4-img object-cover object-center opacity-0"
                             />
                             <Image
-                                src="/assets/images/hero/02.jpg"
+                                src="https://res.cloudinary.com/heog9fna/image/upload/v1788117479/ChatGPT_Image_Aug_31_2026_12_46_54_AM_pso8e1.png"
                                 alt=""
                                 fill
                                 sizes="(min-width:1024px) 25vw, 50vw"

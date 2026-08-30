@@ -7,14 +7,22 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { NURSERY_BIGHAS, UNDER_COVER_SQM, yearsInBusiness } from '@/lib/companyInfo'
 
-// Collaborator cluster (card 1). Two OVERFLOWING rows of faces so the
-// side-fade mask always has faces behind its soft edges - the cluster reads
-// as a continuous, larger set than the card can show. Row B is image-offset
-// so the two rows never mirror each other. Only 01/02/03 exist on disk, so we
-// cycle them.
-const AVATAR_SRCS = ['/assets/images/hero/01.jpg', '/assets/images/hero/02.jpg', '/assets/images/hero/03.jpg']
-const AVATAR_ROW_A = Array.from({ length: 7 }, (_, i) => AVATAR_SRCS[i % AVATAR_SRCS.length])
-const AVATAR_ROW_B = Array.from({ length: 7 }, (_, i) => AVATAR_SRCS[(i + 1) % AVATAR_SRCS.length])
+// Collaborator cluster (card 1). Two overflowing rows of garden project
+// shots so the side-fade mask always has photos behind its soft edges - the
+// cluster reads as a continuous, larger set than the card can show. Row B is
+// offset so the two rows never duplicate vertically adjacent photos.
+const AVATAR_SRCS = [
+    'https://res.cloudinary.com/heog9fna/image/upload/v1788117797/ChatGPT_Image_Aug_31_2026_12_52_06_AM_npdux3.png',
+    'https://res.cloudinary.com/heog9fna/image/upload/v1787731802/ekw9icnf59busuhimjw4.jpg',
+    'https://res.cloudinary.com/heog9fna/image/upload/v1787667630/zuiiigfsl9h1rupinhq0.jpg',
+    'https://res.cloudinary.com/heog9fna/image/upload/v1787582197/pklraaorrpqqvfss304g.jpg',
+    'https://res.cloudinary.com/heog9fna/image/upload/v1787578383/usn3usn3621dmmxihpoa.png',
+    'https://res.cloudinary.com/heog9fna/image/upload/v1787579099/zghj02urhtxrjsddsgkx.jpg',
+    'https://res.cloudinary.com/heog9fna/image/upload/v1788117479/ChatGPT_Image_Aug_31_2026_12_46_54_AM_pso8e1.png',
+    'https://res.cloudinary.com/heog9fna/image/upload/v1787731929/mb3shitmk9vb0qdxw0bi.jpg',
+]
+const AVATAR_ROW_A = Array.from({ length: 8 }, (_, i) => AVATAR_SRCS[i % AVATAR_SRCS.length])
+const AVATAR_ROW_B = Array.from({ length: 8 }, (_, i) => AVATAR_SRCS[(i + 3) % AVATAR_SRCS.length])
 
 // Signature of the reference cards: content fades to nothing at the left/right
 // edges. Used as a mask on both the avatar rows and the big count, always bled

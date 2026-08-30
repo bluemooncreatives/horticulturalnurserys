@@ -431,8 +431,8 @@ const ServicesSection = () => {
                                                 className="group/cbtn relative flex size-32 shrink-0 flex-col items-center justify-center gap-1.5 rounded-full border border-[var(--brand-lime)]/40 bg-transparent p-3 text-[var(--brand-lime)] transition-colors duration-300 hover:border-[var(--brand-lime)] hover:bg-[var(--brand-lime)] hover:text-[var(--brand-lime-ink)] lg:size-40"
                                             >
                                                 <span className="pointer-events-none absolute inset-2 rounded-full border border-dashed border-current/25 transition-colors group-hover/cbtn:border-[var(--brand-lime-ink)]/35 lg:inset-2.5" />
-                                                <span className="relative z-10 text-center text-[0.82rem] font-medium tracking-tight text-current lg:text-[0.92rem]">
-                                                    Explore More
+                                                <span className="relative z-10 text-center text-[1rem] font-medium tracking-tight text-current lg:text-[13rem]">
+                                                    Explore
                                                 </span>
                                                 <ArrowUpRight className="relative z-10 size-4 text-current transition-transform duration-300 group-hover/cbtn:translate-x-0.5 group-hover/cbtn:-translate-y-0.5 lg:size-5" />
                                             </Link>
@@ -489,18 +489,18 @@ const ServicesSection = () => {
                 <div className="relative mt-10 flex flex-wrap items-center justify-center gap-4 lg:mt-12">
                     <Link
                         href="/services"
-                        className="group flex items-center gap-4 rounded-[var(--radius-full)] bg-[var(--brand-lime)] py-3 pl-6 pr-3 transition-colors hover:bg-[var(--brand-lime-hover)]"
+                        className="group flex h-14 items-center gap-4 rounded-full bg-[var(--brand-lime)] py-2 pl-7 pr-2.5 transition-colors hover:bg-[var(--brand-lime-hover)]"
                     >
-                        <span className="text-[1rem] font-semibold text-[var(--brand-lime-ink)]">
+                        <span className="font-neue text-[1.05rem] font-medium tracking-tight text-[var(--brand-lime-ink)]">
                             Explore All Services
                         </span>
-                        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[var(--brand-primary)] text-white transition-transform duration-300 ease-out group-hover:rotate-45">
+                        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--brand-primary)] text-white transition-transform duration-300 ease-out group-hover:rotate-45">
                             <ArrowUpRight className="size-4" />
                         </span>
                     </Link>
                     <Link
                         href="/contact"
-                        className="group flex items-center gap-3 rounded-[var(--radius-full)] border border-white/20 bg-white/5 py-3 px-6 text-[1rem] font-medium text-white transition-colors hover:border-white/40 hover:bg-white/10"
+                        className="group flex h-14 items-center gap-3 rounded-full border border-white/20 bg-white/5 px-7 font-neue text-[1.05rem] font-medium tracking-tight text-white transition-colors hover:border-white/40 hover:bg-white/10"
                     >
                         <span>Request a Site Visit</span>
                         <ArrowUpRight className="size-4 opacity-70 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

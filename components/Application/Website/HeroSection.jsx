@@ -41,22 +41,20 @@ const CRAFT_MARKS = [
   "Imported Plants",
 ];
 
-// The three hero frames. The big screen shows HERO_IMAGES[i]; the floating
+// The hero frames. The big screen shows HERO_IMAGES[i]; the floating
 // thumbnail always shows the *next* frame, HERO_IMAGES[i + 1]. A single
 // index (see useHeroCarousel) drives both, so they can never fall out of step.
 const HERO_IMAGES = [
-  "/assets/images/hero/01.jpg",
-  "/assets/images/hero/02.jpg",
-  "/assets/images/hero/03.jpg",
+  "https://res.cloudinary.com/heog9fna/image/upload/v1788118565/ChatGPT_Image_Aug_31_2026_01_05_03_AM_cgk80g.png",
+  "https://res.cloudinary.com/heog9fna/image/upload/v1788117479/ChatGPT_Image_Aug_31_2026_12_46_54_AM_pso8e1.png",
+  "https://res.cloudinary.com/heog9fna/image/upload/v1788118026/ChatGPT_Image_Aug_31_2026_12_56_08_AM_v2dwkd.png",
+  "https://res.cloudinary.com/heog9fna/image/upload/v1788117284/ChatGPT_Image_Aug_31_2026_12_43_45_AM_zw7guh.png"
 ];
 
-// Only the first (LCP) frame carries a descriptive alt; the cycling frames
-// behind it are decorative, so a screen reader isn't handed three near-
-// identical background descriptions. The page's headline carries the meaning.
+// Descriptive alts for the hero frames
 const HERO_ALTS = [
   "A landscaped garden developed by Horticultural Development Centre, Kolkata",
-  "",
-  "",
+  "Nursery garden and landscaping developed by Horticultural Development Centre, Kolkata",
 ];
 
 // Countdown-ring geometry (36×36 viewBox, centred at 18).
@@ -176,12 +174,12 @@ const HeroSection = () => {
             >
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2.5">
-                  {/* "Up next" preview - the two frames queued behind the big
-                      screen (i+1, i+2). On each advance they circular-wipe to
-                      their new frame: the incoming blooms in from the right
-                      while the outgoing slides off to the left. A small stagger
-                      on the second circle makes the pair read as a cascade. */}
-                  {[1, 2].map((offset) => (
+                  {/* "Up next" preview - queued frames behind the big screen.
+                      On each advance they circular-wipe to their new frame:
+                      the incoming blooms in from the right while the outgoing
+                      slides off to the left. A small stagger on later circles
+                      makes them read as a cascade. */}
+                  {Array.from({ length: Math.min(HERO_IMAGES.length - 1, 2) }, (_, i) => i + 1).map((offset) => (
                     <span
                       key={offset}
                       className="relative size-7 overflow-hidden rounded-full border-2 border-[var(--background)]"

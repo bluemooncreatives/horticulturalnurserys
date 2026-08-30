@@ -55,11 +55,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="font-sans">
       <head>
-        {/* Cloudinary serves product images, about-us photos and Instagram videos,
-            but all of it is below the fold - the homepage LCP is a local /assets hero.
-            A full preconnect (TCP + TLS) therefore sits unused during the critical
-            window (Lighthouse: "Unused preconnect"), so we only warm DNS here. The
-            socket is established lazily when the first below-the-fold Image/video loads. */}
+        {/* Cloudinary serves the hero images, product images, about-us photos and Instagram videos.
+            Preconnecting to Cloudinary speeds up TLS handshake for the hero LCP frame. */}
+        <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
 
         {/* Preload only fonts on the LCP critical path.

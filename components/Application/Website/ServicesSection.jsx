@@ -44,38 +44,59 @@ const RollTitle = ({ text, className = '' }) => {
     )
 }
 
-// One nursery, four services - the same shape as BenefitsSection's "how we
-// work" list, but expandable: each row hides its tags + reference photos
-// behind the +/- drawer, matching the accordion reference. Images are drawn
-// from the only stock we have (hero/01-03), reused across rows.
+// One nursery, four services - aligned with our dedicated service divisions:
+// 1. Landscape Development (/services/landscape-development)
+// 2. Garden Maintenance & Aftercare (/services/garden-maintenance)
+// 3. Roof Garden Design (/services/roof-garden)
+// 4. Vertical Garden Systems (/services/vertical-garden)
 const SERVICES = [
     {
         num: '01',
-        title: 'Garden Design & Consultation',
-        description: 'Every project starts with a site visit - we read the light, soil, drainage and how the space will be used, then return a planting plan with a costing. Work begins only once the layout and estimate are approved, whether it’s a balcony or a full township.',
-        tags: ['Site Survey', 'Planting Plans', 'Costing'],
-        images: ['/assets/images/hero/01.jpg', '/assets/images/hero/02.jpg'],
+        title: 'Landscape Design & Development',
+        slug: 'landscape-development',
+        href: '/services/landscape-development',
+        description: 'Complete landscape architecture and garden execution for homes, campuses, townships, and public grounds. We assess light angles, soil profile, and natural drainage to deliver scientific planting plans, Selection-I or Mexican lawn laying, and custom FRP/iron architectural structures - carried by qualified horticulturists from first visit to handover.',
+        tags: ['Site Survey & Soil Profiling', 'Selection-I & Mexican Lawns', 'FRP & Iron Structures', 'Township & Campus Scale', 'State Govt. & CPWD Approved'],
+        images: [
+            'https://res.cloudinary.com/heog9fna/image/upload/v1788116698/5_hsovs6.png',
+            'https://res.cloudinary.com/heog9fna/image/upload/v1788116700/4_zfdwiv.png',
+        ],
     },
     {
         num: '02',
-        title: 'Nursery & Plant Supply',
-        description: `Grown on our own ${NURSERY_BIGHAS}-bigha farm at Bibirhut, Ramdevpur - ${POLYSHED_SQM.toLocaleString('en-US')} sqm of polyshed, ${GREEN_HOUSE_SQM.toLocaleString('en-US')} sqm of green house and a ${FANPAD_SQM} sqm fanpad house. Seasonal flowers, shrubs, ornamental trees and select imported varieties, hardened before they ever leave the farm.`,
-        tags: ['Own Farm Stock', 'Seasonal Flowers', 'Imported Varieties'],
-        images: ['/assets/images/hero/02.jpg', '/assets/images/hero/03.jpg'],
+        title: 'Garden Maintenance & Aftercare',
+        slug: 'garden-maintenance',
+        href: '/services/garden-maintenance',
+        description: 'Annual maintenance contracts (AMC) that keep gardens thriving across every season. Scheduled visits by trained horticultural staff for pruning and topiary shaping, granular and foliar feeding, integrated pest management, lawn mowing, and full seasonal replanting using inputs directly from our own farm.',
+        tags: ['Annual Contracts (AMC)', 'Pruning & Topiary Shaping', 'Integrated Pest Control', 'Lawn Upkeep & Edging', 'Seasonal Replanting', 'Farm-Grown Inputs'],
+        images: [
+            'https://res.cloudinary.com/heog9fna/image/upload/v1787744099/WhatsApp_Image_2026-08-26_at_4.57.12_PM_v9lbib.jpg',
+            'https://res.cloudinary.com/heog9fna/image/upload/v1787667630/zuiiigfsl9h1rupinhq0.jpg',
+        ],
     },
     {
         num: '03',
-        title: 'Landscape Execution',
-        description: 'Garden development for residential and commercial sites alike - from a roof garden, laid with geotextile net and drain cell to protect the slab, to Selection-I, Mexican or Doob grass lawns and township-scale landscapes. We furnish the space with structures and statuary in FRP, iron or Astroturf too. We also hold credentials for State Government and CPWD work: parks, lake fronts, zoo and library grounds, IT parks and tourist lodges.',
-        tags: ['Roof Gardens', 'Lawns', 'Structures & Statuary', 'Township Scale'],
-        images: ['/assets/images/hero/03.jpg', '/assets/images/hero/01.jpg'],
+        title: 'Roof Garden Design',
+        slug: 'roof-garden',
+        href: '/services/roof-garden',
+        description: 'Specialist engineered rooftop ecosystems that turn concrete slabs into lush, usable green retreats. Multi-layer installations with root-barrier geotextile membranes, high-flow drainage cells, ultra-lightweight media within structural load budgets, automated drip irrigation, and weather-hardy flora.',
+        tags: ['Root-Barrier Geotextile', 'High-Flow Drain Cell', 'Lightweight Media Blends', 'Automated Drip Irrigation', 'Weather-Proof Planters'],
+        images: [
+            'https://res.cloudinary.com/heog9fna/image/upload/v1788118026/ChatGPT_Image_Aug_31_2026_12_56_08_AM_v2dwkd.png',
+            'https://res.cloudinary.com/heog9fna/image/upload/v1788118565/ChatGPT_Image_Aug_31_2026_01_05_03_AM_cgk80g.png',
+        ],
     },
     {
         num: '04',
-        title: 'Maintenance & Aftercare',
-        description: 'Annual maintenance contracts for gardens we’ve built and for existing ones too - pruning, feeding, pest control, lawn upkeep and seasonal replanting by our own field staff, using the same organic and inorganic manures we stock at the counter.',
-        tags: ['Pruning', 'Pest Control', 'Annual Contracts'],
-        images: ['/assets/images/hero/01.jpg', '/assets/images/hero/03.jpg'],
+        title: 'Vertical Garden Systems',
+        slug: 'vertical-garden',
+        href: '/services/vertical-garden',
+        description: 'Modular living-wall panels and structural trellises for building facades, interior atriums, and boundary screens. Custom-engineered with automated drip irrigation, drainage collection trays, and botanical selections tailored precisely to ambient light levels—from air-purifying indoor aroids to resilient exterior climbers.',
+        tags: ['Modular Living Walls', 'Structural Trellis Frames', 'Concealed Drip Irrigation', 'Indoor Air-Purifying Flora', 'Facade Greenery'],
+        images: [
+            'https://res.cloudinary.com/heog9fna/image/upload/v1788117797/ChatGPT_Image_Aug_31_2026_12_52_06_AM_npdux3.png',
+            'https://res.cloudinary.com/heog9fna/image/upload/v1787744100/WhatsApp_Image_2026-08-26_at_4.57.12_PM_1_cdnqow.jpg',
+        ],
     },
 ]
 
@@ -298,10 +319,10 @@ const ServicesSection = () => {
                     </div>
                     <div className="flex flex-col items-start gap-4 lg:items-end">
                         <p className="max-w-sm text-[0.85rem] leading-relaxed text-white lg:text-right">
-                            Kolkata&apos;s landscaper since 1989 - {yearsInBusiness()}+ years, {NURSERY_BIGHAS} bighas of our own farm at Bibirhut and {UNDER_COVER_SQM.toLocaleString('en-US')} m² under cover. From a single balcony pot to State Government and CPWD landscapes, one nursery carries every service below, start to finish.
+                            Kolkata&apos;s landscaper since 1989 - {yearsInBusiness()}+ years, {NURSERY_BIGHAS} bighas of our own farm at Bibirhut and {UNDER_COVER_SQM.toLocaleString('en-US')} m² under cover. From residential terraces and living walls to State Government and CPWD public grounds, our four specialized divisions carry every project from site survey to lifelong aftercare.
                         </p>
                         <div className="flex flex-wrap gap-2 lg:justify-end">
-                            {['Design', 'Nursery', 'Build', 'Maintain'].map((label) => (
+                            {['Landscape Development', 'Garden Maintenance', 'Roof Gardens', 'Vertical Walls'].map((label) => (
                                 <span key={label} className="tag-chip">{label}</span>
                             ))}
                         </div>
@@ -314,11 +335,18 @@ const ServicesSection = () => {
                         const isOpen = openIndex === i
                         return (
                             <div key={service.num} className="border-b border-white/80 last:border-b-0">
-                                <button
-                                    type="button"
+                                <div
+                                    role="button"
+                                    tabIndex={0}
                                     onClick={() => toggle(i)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault()
+                                            toggle(i)
+                                        }
+                                    }}
                                     aria-expanded={isOpen}
-                                    className="group flex w-full items-start gap-4 py-7 text-left sm:gap-6 lg:gap-10 lg:py-9"
+                                    className="group flex w-full cursor-pointer items-start gap-4 py-7 text-left sm:gap-6 lg:gap-10 lg:py-9"
                                 >
                                     {/* number - pinned top-left, extra margin so it doesn't crowd the title */}
                                     <span className="mr-4 w-6 shrink-0 pt-1 text-[0.8rem] font-medium text-white/80 sm:mr-8 sm:w-9 lg:mr-14 lg:pt-1.5">
@@ -326,38 +354,46 @@ const ServicesSection = () => {
                                     </span>
 
                                     {/* title + description stacked, tags reveal below on open */}
-                                    <span className="min-w-0 flex-1">
+                                    <div className="min-w-0 flex-1">
                                         <RollTitle
                                             text={service.title}
                                             className="block text-[1.15rem] font-medium text-white lg:text-[1.55rem]"
                                         />
-                                        <span className="mt-2.5 block max-w-lg text-[0.82rem] leading-relaxed text-white/45 lg:max-w-xl">
+                                        <p className="mt-2.5 block max-w-lg text-[0.82rem] leading-relaxed text-white/45 lg:max-w-xl">
                                             {service.description}
-                                        </span>
-                                        <span
+                                        </p>
+                                        <div
                                             ref={(el) => (tagsRefs.current[i] = el)}
                                             className="block overflow-hidden"
                                             style={i === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
                                         >
-                                            <span className="flex flex-wrap gap-2 pt-5">
+                                            <div className="flex flex-wrap items-center gap-2 pt-5">
                                                 {service.tags.map((tag) => (
                                                     <span key={tag} className="tag-chip">{tag}</span>
                                                 ))}
-                                            </span>
-                                        </span>
+                                                <Link
+                                                    href={service.href}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="inline-flex items-center gap-1.5 rounded-full border border-[var(--brand-lime)]/40 bg-[var(--brand-lime)]/10 px-3.5 py-1.5 text-[0.78rem] font-medium text-[var(--brand-lime)] transition-colors hover:bg-[var(--brand-lime)] hover:text-[var(--brand-lime-ink)]"
+                                                >
+                                                    <span>Explore {service.title}</span>
+                                                    <ArrowUpRight className="size-3.5" />
+                                                </Link>
+                                            </div>
+                                        </div>
 
                                         {/* mobile-only reference photos - same shapes/lime-veil reveal as
                                             the desktop pair below, but stacked in-flow full width (edge to
                                             edge within the card) instead of hidden, so nothing needs a
                                             popup/overlay to be seen on a phone. */}
-                                        <span
+                                        <div
                                             ref={(el) => (mobileImagesRefs.current[i] = el)}
                                             className="block overflow-hidden sm:hidden"
                                             style={i === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
                                         >
-                                            <span className="flex items-center gap-3 pt-5">
+                                            <div className="flex items-center gap-3 pt-5">
                                                 {service.images.map((src, pi) => (
-                                                    <span
+                                                    <div
                                                         key={`m-${src}-${pi}`}
                                                         ref={setMobilePhotoRef(i, pi, 'wrap')}
                                                         className={`relative aspect-square w-full flex-1 overflow-hidden ${pi === 0 ? 'rounded-full' : 'rounded-2xl'}`}
@@ -377,25 +413,25 @@ const ServicesSection = () => {
                                                             className="pointer-events-none absolute inset-0 bg-[var(--brand-lime)]"
                                                             style={i === 0 ? { opacity: 0 } : undefined}
                                                         />
-                                                    </span>
+                                                    </div>
                                                 ))}
-                                            </span>
-                                        </span>
-                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     {/* reference photos - vertically centred against the whole row, only on
                                         open. Hidden below sm: the row's fixed-width items (number badge +
                                         two size-32/40 photos + toggle) already exceed a phone's content
                                         width, so these would force the title/description off-row; the
                                         mobile-only pair above (full width, in-flow) covers phones instead. */}
-                                    <span
+                                    <div
                                         ref={(el) => (imagesRefs.current[i] = el)}
                                         className="hidden self-center overflow-hidden sm:block"
                                         style={i === 0 ? { width: 'auto', height: 'auto', opacity: 1 } : { width: 0, height: 0, opacity: 0 }}
                                     >
-                                        <span className="flex items-center gap-5">
+                                        <div className="flex items-center gap-5">
                                             {service.images.map((src, pi) => (
-                                                <span
+                                                <div
                                                     key={src + pi}
                                                     ref={setPhotoRef(i, pi, 'wrap')}
                                                     className={`relative size-32 shrink-0 overflow-hidden lg:size-40 ${pi === 0 ? 'rounded-full' : 'rounded-2xl'}`}
@@ -413,16 +449,12 @@ const ServicesSection = () => {
                                                         ref={setPhotoRef(i, pi, 'veil')}
                                                         aria-hidden
                                                         className="pointer-events-none absolute inset-0 bg-[var(--brand-lime)]"
-                                                        // Row 0 renders open server-side, before the timeline's
-                                                        // own opacity:0 end-state has a chance to apply - without
-                                                        // this the lime veil would flash solid over its photos
-                                                        // for a frame (or permanently with JS disabled).
                                                         style={i === 0 ? { opacity: 0 } : undefined}
                                                     />
-                                                </span>
+                                                </div>
                                             ))}
-                                        </span>
-                                    </span>
+                                        </div>
+                                    </div>
 
                                     {/* toggle - pinned top-right. Dashed ring spins slowly at rest;
                                         the solid inner badge is what pops on click. Lime on hover
@@ -441,25 +473,31 @@ const ServicesSection = () => {
                                             {isOpen ? <Minus className="size-3.5" strokeWidth={1.75} /> : <Plus className="size-3.5" strokeWidth={1.75} />}
                                         </span>
                                     </span>
-                                </button>
+                                </div>
                             </div>
                         )
                     })}
                 </div>
 
-                {/* CTA - lime card with a solid circular arrow badge, matching
-                    the hero's floating product card (minus its writeup line). */}
-                <div className="relative mt-10 flex justify-center lg:mt-12">
+                {/* CTA - Explore All Services + Request a Site Visit */}
+                <div className="relative mt-10 flex flex-wrap items-center justify-center gap-4 lg:mt-12">
                     <Link
-                        href="/contact"
+                        href="/services"
                         className="group flex items-center gap-4 rounded-[var(--radius-full)] bg-[var(--brand-lime)] py-3 pl-6 pr-3 transition-colors hover:bg-[var(--brand-lime-hover)]"
                     >
                         <span className="text-[1rem] font-semibold text-[var(--brand-lime-ink)]">
-                            Let&apos;s Talk
+                            Explore All Services
                         </span>
                         <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[var(--brand-primary)] text-white transition-transform duration-300 ease-out group-hover:rotate-45">
                             <ArrowUpRight className="size-4" />
                         </span>
+                    </Link>
+                    <Link
+                        href="/contact"
+                        className="group flex items-center gap-3 rounded-[var(--radius-full)] border border-white/20 bg-white/5 py-3 px-6 text-[1rem] font-medium text-white transition-colors hover:border-white/40 hover:bg-white/10"
+                    >
+                        <span>Request a Site Visit</span>
+                        <ArrowUpRight className="size-4 opacity-70 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </Link>
                 </div>
             </div>

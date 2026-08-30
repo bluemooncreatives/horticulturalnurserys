@@ -431,7 +431,7 @@ const ServicesSection = () => {
                                                 className="group/cbtn relative flex size-32 shrink-0 flex-col items-center justify-center gap-1.5 rounded-full border border-[var(--brand-lime)]/40 bg-transparent p-3 text-[var(--brand-lime)] transition-colors duration-300 hover:border-[var(--brand-lime)] hover:bg-[var(--brand-lime)] hover:text-[var(--brand-lime-ink)] lg:size-40"
                                             >
                                                 <span className="pointer-events-none absolute inset-2 rounded-full border border-dashed border-current/25 transition-colors group-hover/cbtn:border-[var(--brand-lime-ink)]/35 lg:inset-2.5" />
-                                                <span className="relative z-10 text-center text-[1rem] font-medium tracking-tight text-current lg:text-[13rem]">
+                                                <span className="relative z-10 text-center text-[1rem] font-medium tracking-tight text-current lg:text-[1.3rem]">
                                                     Explore
                                                 </span>
                                                 <ArrowUpRight className="relative z-10 size-4 text-current transition-transform duration-300 group-hover/cbtn:translate-x-0.5 group-hover/cbtn:-translate-y-0.5 lg:size-5" />

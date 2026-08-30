@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Plus, Minus, ArrowUpRight } from 'lucide-react'
 import gsap from 'gsap'
-import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM, UNDER_COVER_SQM, yearsInBusiness } from '@/lib/companyInfo'
+import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM, UNDER_COVER_SQM, FLAGSHIP_PROJECTS, yearsInBusiness } from '@/lib/companyInfo'
 
 // Row title, hover-rolled - same glyph-roll technique as the hero's
 // "Winter Seedlings" card title (stacked duplicate slides up into place),
@@ -307,8 +307,8 @@ const ServicesSection = () => {
             <div className="dark-panel relative overflow-hidden p-6 sm:p-8 lg:p-14">
 
                 {/* header */}
-                <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                    <div>
+                <div className="relative grid gap-7 lg:grid-cols-[minmax(0,0.95fr)_minmax(30rem,1.05fr)] lg:gap-x-14 lg:gap-y-8">
+                    <div className="self-end">
                         <span className="flex items-start gap-2 text-[0.8rem] font-semibold uppercase text-white lg:pt-3">
                             <span aria-hidden className="mt-1.5 size-1.5 rounded-full border border-current" />
                             Our Services
@@ -317,15 +317,15 @@ const ServicesSection = () => {
                             Rooted In Craft, Grown Into Every Garden
                         </h2>
                     </div>
-                    <div className="flex flex-col items-start gap-4 lg:items-end">
-                        <p className="max-w-sm text-[0.85rem] leading-relaxed text-white lg:text-right">
-                            Kolkata&apos;s landscaper since 1989 - {yearsInBusiness()}+ years, {NURSERY_BIGHAS} bighas of our own farm at Bibirhut and {UNDER_COVER_SQM.toLocaleString('en-US')} m² under cover. From residential terraces and living walls to State Government and CPWD public grounds, our four specialized divisions carry every project from site survey to lifelong aftercare.
-                        </p>
-                        <div className="flex flex-wrap gap-2 lg:justify-end">
-                            {['Landscape Development', 'Garden Maintenance', 'Roof Gardens', 'Vertical Walls'].map((label) => (
-                                <span key={label} className="tag-chip">{label}</span>
-                            ))}
-                        </div>
+                    <p className="max-w-md text-[0.85rem] leading-relaxed text-white lg:justify-self-end lg:text-right">
+                        Kolkata&apos;s landscaper since 1989 - {yearsInBusiness()}+ years, {NURSERY_BIGHAS} bighas of our own farm at Bibirhut and {UNDER_COVER_SQM.toLocaleString('en-US')} m² under cover. From residential terraces and living walls to State Government and CPWD public grounds, our four specialized divisions carry every project from site survey to lifelong aftercare.
+                    </p>
+                    <div className="flex flex-wrap justify-start gap-2 lg:col-span-2 lg:mt-2">
+                        {FLAGSHIP_PROJECTS.map((label) => (
+                            <span key={label} className="tag-chip">
+                                {label}
+                            </span>
+                        ))}
                     </div>
                 </div>
 

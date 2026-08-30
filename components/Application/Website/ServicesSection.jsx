@@ -353,31 +353,29 @@ const ServicesSection = () => {
                                         [{service.num}]
                                     </span>
 
-                                    {/* title + description stacked, tags reveal below on open */}
+                                    {/* title stacked, writeup reveals below on open */}
                                     <div className="min-w-0 flex-1">
                                         <RollTitle
                                             text={service.title}
                                             className="block text-[1.15rem] font-medium text-white lg:text-[1.55rem]"
                                         />
-                                        <p className="mt-2.5 block max-w-lg text-[0.82rem] leading-relaxed text-white/45 lg:max-w-xl">
-                                            {service.description}
-                                        </p>
                                         <div
                                             ref={(el) => (tagsRefs.current[i] = el)}
                                             className="block overflow-hidden"
                                             style={i === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
                                         >
-                                            <div className="flex flex-wrap items-center gap-2 pt-5">
-                                                {service.tags.map((tag) => (
-                                                    <span key={tag} className="tag-chip">{tag}</span>
-                                                ))}
+                                            <p className="max-w-sm pt-3 text-[0.82rem] leading-relaxed text-white/45 md:max-w-md lg:max-w-lg">
+                                                {service.description}
+                                            </p>
+                                            {/* mobile-only CTA */}
+                                            <div className="pt-4 sm:hidden">
                                                 <Link
                                                     href={service.href}
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="inline-flex items-center gap-1.5 rounded-full border border-[var(--brand-lime)]/40 bg-[var(--brand-lime)]/10 px-3.5 py-1.5 text-[0.78rem] font-medium text-[var(--brand-lime)] transition-colors hover:bg-[var(--brand-lime)] hover:text-[var(--brand-lime-ink)]"
+                                                    className="group/mbtn relative inline-flex items-center gap-2 rounded-full border border-[var(--brand-lime)]/45 bg-[var(--brand-lime)]/10 px-4 py-2 text-[1rem] font-medium text-[var(--brand-lime)] transition-colors hover:bg-[var(--brand-lime)] hover:text-[var(--brand-lime-ink)]"
                                                 >
-                                                    <span>Explore {service.title}</span>
-                                                    <ArrowUpRight className="size-3.5" />
+                                                    <span>Explore</span>
+                                                    <ArrowUpRight className="size-4" />
                                                 </Link>
                                             </div>
                                         </div>
@@ -419,17 +417,25 @@ const ServicesSection = () => {
                                         </div>
                                     </div>
 
-                                    {/* reference photos - vertically centred against the whole row, only on
-                                        open. Hidden below sm: the row's fixed-width items (number badge +
-                                        two size-32/40 photos + toggle) already exceed a phone's content
-                                        width, so these would force the title/description off-row; the
-                                        mobile-only pair above (full width, in-flow) covers phones instead. */}
+                                    {/* reference photos + circular CTA button - vertically centred against the whole row, only on
+                                        open. In the exact same line: [Explore More circle] [Photo 1 circle] [Photo 2 rounded-rect] */}
                                     <div
                                         ref={(el) => (imagesRefs.current[i] = el)}
                                         className="hidden self-center overflow-hidden sm:block"
                                         style={i === 0 ? { width: 'auto', height: 'auto', opacity: 1 } : { width: 0, height: 0, opacity: 0 }}
                                     >
-                                        <div className="flex items-center gap-5">
+                                        <div className="flex items-center gap-4 lg:gap-5">
+                                            <Link
+                                                href={service.href}
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="group/cbtn relative flex size-32 shrink-0 flex-col items-center justify-center gap-1.5 rounded-full border border-[var(--brand-lime)]/40 bg-transparent p-3 text-[var(--brand-lime)] transition-colors duration-300 hover:border-[var(--brand-lime)] hover:bg-[var(--brand-lime)] hover:text-[var(--brand-lime-ink)] lg:size-40"
+                                            >
+                                                <span className="pointer-events-none absolute inset-2 rounded-full border border-dashed border-current/25 transition-colors group-hover/cbtn:border-[var(--brand-lime-ink)]/35 lg:inset-2.5" />
+                                                <span className="relative z-10 text-center text-[0.82rem] font-medium tracking-tight text-current lg:text-[0.92rem]">
+                                                    Explore More
+                                                </span>
+                                                <ArrowUpRight className="relative z-10 size-4 text-current transition-transform duration-300 group-hover/cbtn:translate-x-0.5 group-hover/cbtn:-translate-y-0.5 lg:size-5" />
+                                            </Link>
                                             {service.images.map((src, pi) => (
                                                 <div
                                                     key={src + pi}

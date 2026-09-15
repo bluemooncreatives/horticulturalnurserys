@@ -83,7 +83,7 @@ const TIMELINES = [
   'Planning stage / Future',
 ]
 
-export default function ServiceEnquiryForm({ defaultService = 'landscape-development' }) {
+export default function ServiceEnquiryForm({ defaultService = 'landscape-development', lockService = false }) {
   const searchParams = useSearchParams()
   const [selectedServiceId, setSelectedServiceId] = useState(defaultService)
   const [copied, setCopied] = useState(false)
@@ -104,6 +104,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
 
   // Pre-select service from URL query param if present (e.g. ?service=roof-garden)
   useEffect(() => {
+    if (lockService) return
     const param = searchParams?.get('service')
     if (param) {
       const match = SERVICES.find((s) => s.id === param || s.title.toLowerCase().includes(param.toLowerCase()))
@@ -111,7 +112,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
         setSelectedServiceId(match.id)
       }
     }
-  }, [searchParams])
+  }, [searchParams, lockService])
 
   const currentService = SERVICES.find((s) => s.id === selectedServiceId) || SERVICES[0]
 
@@ -218,8 +219,9 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
           </h3>
 
           <p className="mt-3 max-w-2xl text-[0.92rem] leading-[1.75] text-[var(--muted-foreground)]">
-            Choose from our 4 core services below. A senior horticulturist will examine light, soil,
-            and drainage on your site and draw an itemised plan with zero obligation.
+            {lockService
+              ? `A senior horticulturist will examine light, soil, and drainage on your site for ${currentService.title} and draw an itemised plan with zero obligation.`
+              : 'Choose from our 4 core services below. A senior horticulturist will examine light, soil, and drainage on your site and draw an itemised plan with zero obligation.'}
           </p>
         </div>
 
@@ -281,82 +283,108 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
         ) : (
           /* ══ Form Screen ════════════════════════════════════ */
           <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-8">
-            {/* Step 1: 4 Types of Services Selector */}
-            <div>
-              <div className="flex items-center justify-between">
-                <label className="text-[0.85rem] font-semibold uppercase tracking-[0.16em] text-[var(--brand-primary)]">
-                  1. Select a Service <span className="text-[var(--brand-primary)]">*</span>
-                </label>
-                <span className="text-xs text-[var(--muted-foreground)]">
-                  Click to switch services
-                </span>
-              </div>
+            {/* Step 1: 4 Types of Services Selector (skipped when the form is locked to one service) */}
+            {lockService ? (
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-full)] bg-[var(--brand-primary)] text-white">
+                    <currentService.icon className="size-4" strokeWidth={1.75} />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[0.85rem] font-semibold uppercase tracking-[0.16em] text-[var(--brand-primary)]">
+                      Service: {currentService.title}
+                    </p>
+                    <p className="text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)]">
+                      {currentService.tagline}
+                    </p>
+                  </div>
+                </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {SERVICES.map((s) => {
-                  const Icon = s.icon
-                  const isSelected = selectedServiceId === s.id
-                  return (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => setSelectedServiceId(s.id)}
-                      className={`group relative flex items-start gap-2.5 rounded-[var(--radius-xl)] border p-3 text-left transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] ${
-                        isSelected
-                          ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 shadow-md ring-1 ring-[var(--brand-primary)]/30'
-                          : 'border-[var(--border)] bg-[var(--background)] hover:border-[var(--brand-primary)]/30 hover:bg-[var(--card)]'
-                      }`}
-                    >
-                      <span
-                        className={`flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-full)] transition-colors duration-300 ${
+                {/* Dynamic Service Guidance Pill */}
+                <div className="mt-3.5 flex items-start gap-2.5 rounded-xl border border-[var(--brand-primary)]/15 bg-[var(--brand-primary)]/5 px-4 py-2.5 text-xs text-[var(--brand-primary)]">
+                  <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[var(--brand-primary)]" />
+                  <p className="leading-relaxed">
+                    <strong className="font-semibold">{currentService.title}:</strong> {currentService.note}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className="flex items-center justify-between">
+                  <label className="text-[0.85rem] font-semibold uppercase tracking-[0.16em] text-[var(--brand-primary)]">
+                    1. Select a Service <span className="text-[var(--brand-primary)]">*</span>
+                  </label>
+                  <span className="text-xs text-[var(--muted-foreground)]">
+                    Click to switch services
+                  </span>
+                </div>
+
+                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  {SERVICES.map((s) => {
+                    const Icon = s.icon
+                    const isSelected = selectedServiceId === s.id
+                    return (
+                      <button
+                        key={s.id}
+                        type="button"
+                        onClick={() => setSelectedServiceId(s.id)}
+                        className={`group relative flex items-start gap-2.5 rounded-[var(--radius-xl)] border p-3 text-left transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] ${
                           isSelected
-                            ? 'bg-[var(--brand-primary)] text-white'
-                            : 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] group-hover:bg-[var(--brand-primary)]/15'
+                            ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 shadow-md ring-1 ring-[var(--brand-primary)]/30'
+                            : 'border-[var(--border)] bg-[var(--background)] hover:border-[var(--brand-primary)]/30 hover:bg-[var(--card)]'
                         }`}
                       >
-                        <Icon className="size-4" strokeWidth={1.75} />
-                      </span>
-
-                      <div className="min-w-0 flex-1">
-                        <h4
-                          className={`font-neue text-[0.92rem] font-medium leading-tight ${
-                            isSelected ? 'text-[var(--brand-primary)]' : 'text-[var(--foreground)]'
+                        <span
+                          className={`flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-full)] transition-colors duration-300 ${
+                            isSelected
+                              ? 'bg-[var(--brand-primary)] text-white'
+                              : 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] group-hover:bg-[var(--brand-primary)]/15'
                           }`}
                         >
-                          {s.title}
-                        </h4>
-                        <p className="mt-0.5 text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)] line-clamp-1">
-                          {s.tagline}
-                        </p>
-                      </div>
+                          <Icon className="size-4" strokeWidth={1.75} />
+                        </span>
 
-                      <span
-                        className={`flex size-4 shrink-0 items-center justify-center rounded-full border transition-all ${
-                          isSelected
-                            ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
-                            : 'border-[var(--border)] bg-transparent opacity-40'
-                        }`}
-                      >
-                        {isSelected && <Check className="size-2.5" strokeWidth={2.5} />}
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
+                        <div className="min-w-0 flex-1">
+                          <h4
+                            className={`font-neue text-[0.92rem] font-medium leading-tight ${
+                              isSelected ? 'text-[var(--brand-primary)]' : 'text-[var(--foreground)]'
+                            }`}
+                          >
+                            {s.title}
+                          </h4>
+                          <p className="mt-0.5 text-[0.72rem] leading-[1.4] text-[var(--muted-foreground)] line-clamp-1">
+                            {s.tagline}
+                          </p>
+                        </div>
 
-              {/* Dynamic Service Guidance Pill */}
-              <div className="mt-3.5 flex items-start gap-2.5 rounded-xl border border-[var(--brand-primary)]/15 bg-[var(--brand-primary)]/5 px-4 py-2.5 text-xs text-[var(--brand-primary)]">
-                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[var(--brand-primary)]" />
-                <p className="leading-relaxed">
-                  <strong className="font-semibold">{currentService.title}:</strong> {currentService.note}
-                </p>
+                        <span
+                          className={`flex size-4 shrink-0 items-center justify-center rounded-full border transition-all ${
+                            isSelected
+                              ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
+                              : 'border-[var(--border)] bg-transparent opacity-40'
+                          }`}
+                        >
+                          {isSelected && <Check className="size-2.5" strokeWidth={2.5} />}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Dynamic Service Guidance Pill */}
+                <div className="mt-3.5 flex items-start gap-2.5 rounded-xl border border-[var(--brand-primary)]/15 bg-[var(--brand-primary)]/5 px-4 py-2.5 text-xs text-[var(--brand-primary)]">
+                  <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[var(--brand-primary)]" />
+                  <p className="leading-relaxed">
+                    <strong className="font-semibold">{currentService.title}:</strong> {currentService.note}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Step 2: Contact & Location Info */}
             <div className="flex flex-col gap-4">
               <label className="text-[0.85rem] font-semibold uppercase tracking-[0.16em] text-[var(--brand-primary)]">
-                2. Contact & Site Details
+                {lockService ? '1' : '2'}. Contact & Site Details
               </label>
 
               <div className="grid gap-4 sm:grid-cols-2">
@@ -448,7 +476,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
             {/* Step 3: Project Scope & Timing */}
             <div className="flex flex-col gap-4">
               <label className="text-[0.85rem] font-semibold uppercase tracking-[0.16em] text-[var(--brand-primary)]">
-                3. Approximate Area & Timeline
+                {lockService ? '2' : '3'}. Approximate Area & Timeline
               </label>
 
               {/* Scale Pills */}

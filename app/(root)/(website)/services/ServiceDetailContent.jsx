@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { RevealLines, RevealUp } from '@/components/ui/reveal'
 import { SectionHeading, SectionLabel } from './SectionHeader'
+import ServiceEnquiryForm from '@/components/Application/Website/ServiceEnquiryForm'
 
 const DEFAULT_STEP_ICONS = [ClipboardList, PencilRuler, Calculator, Hammer]
 
@@ -215,6 +216,13 @@ export default function ServiceDetailContent({ service }) {
             ))}
           </RevealUp>
         )}
+      </section>
+
+      {/* ══ Enquiry Form - locked to this service ═══════════════ */}
+      <section id="enquiry" className="lumora-shell scroll-mt-24 pb-16 lg:pb-24">
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <ServiceEnquiryForm defaultService={service.slug} lockService />
+        </Suspense>
       </section>
 
       {/* ══ Process ════════════════════════════════════════════ */}
@@ -577,7 +585,7 @@ export default function ServiceDetailContent({ service }) {
       )}
 
       {/* ══ CTA ════════════════════════════════════════════════ */}
-      <section className="lumora-shell pb-20 lg:pb-24">
+      <section className="lumora-shell pb-16 lg:pb-20">
         <div className="relative overflow-hidden rounded-[var(--radius-4xl)] bg-[var(--brand-ink-soft)] px-8 py-14 lg:px-16 lg:py-20">
           <div
             aria-hidden
@@ -603,7 +611,7 @@ export default function ServiceDetailContent({ service }) {
             </RevealUp>
             <RevealUp delay={200}>
               <Link
-                href={service.cta?.buttonUrl || '/contact'}
+                href="#enquiry"
                 className="group inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-[var(--brand-lime)] px-7 py-3.5 text-[0.88rem] font-semibold text-[var(--brand-lime-ink)] transition-all duration-300 hover:bg-[var(--brand-lime-hover)] hover:shadow-[0_12px_36px_-10px_rgba(201,242,78,0.45)]"
               >
                 {service.cta?.buttonText || 'Request a site visit'}

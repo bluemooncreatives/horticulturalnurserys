@@ -20,6 +20,7 @@ import Editor from '@/components/Application/Admin/LazyEditor'
 import MediaModal from '@/components/Application/Admin/MediaModal'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { ImageIcon, Plus, X } from 'lucide-react'
 const breadcrumbData = [
   { href: ADMIN_DASHBOARD, label: 'Home' },
   { href: ADMIN_PRODUCT_SHOW, label: 'Products' },
@@ -36,6 +37,11 @@ const AddProduct = () => {
   // media modal states  
   const [open, setOpen] = useState(false)
   const [selectedMedia, setSelectedMedia] = useState([])
+
+  const handleRemoveMedia = (id, e) => {
+    e?.stopPropagation?.()
+    setSelectedMedia(prev => prev.filter(m => m._id !== id))
+  }
 
   useEffect(() => {
     if (getCategory && getCategory.success) {
@@ -158,7 +164,7 @@ const AddProduct = () => {
                         Name<span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input type="text" placeholder="Enter category name" {...field} />
+                        <Input type="text" placeholder="Enter product name (e.g. Fiddle Leaf Fig)" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -282,7 +288,16 @@ const AddProduct = () => {
               </div>
             </div>
 
-            <div className="md:col-span-2 border border-dashed rounded p-5 text-center">
+            <div className="md:col-span-2 space-y-3 pt-2">
+              <div className="flex items-center justify-between">
+                <FormLabel className="text-sm font-medium">
+                  Product Images <span className="text-destructive" aria-hidden>*</span>
+                </FormLabel>
+                <span className="text-xs text-muted-foreground tabular-nums">
+                  {selectedMedia.length} image{selectedMedia.length === 1 ? '' : 's'} selected
+                </span>
+              </div>
+
               <MediaModal
                 open={open}
                 setOpen={setOpen}
@@ -291,25 +306,57 @@ const AddProduct = () => {
                 isMultiple={true}
               />
 
-              {selectedMedia.length > 0 && (
-                <div className="flex justify-center items-center flex-wrap mb-3 gap-2">
-                  {selectedMedia.map((media) => (
-                    <div key={media._id} className="h-24 w-24 border">
+              {selectedMedia.length > 0 ? (
+                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                  {selectedMedia.map((media, idx) => (
+                    <div
+                      key={media._id}
+                      className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-muted/20 transition-all hover:border-primary/50 hover:shadow-xs"
+                    >
                       <Image
                         src={media.url}
-                        height={100}
-                        width={100}
-                        alt=""
-                        className="size-full object-cover"
+                        alt="Product media"
+                        fill
+                        className="size-full object-cover transition-transform duration-200 group-hover:scale-105"
                       />
+                      {idx === 0 && (
+                        <span className="absolute left-1.5 top-1.5 z-10 rounded bg-primary/90 px-1.5 py-0.5 text-[10px] font-semibold text-primary-foreground shadow-xs">
+                          Cover
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={(e) => handleRemoveMedia(media._id, e)}
+                        className="absolute right-1.5 top-1.5 z-10 flex size-6 items-center justify-center rounded-full bg-black/70 text-white opacity-0 transition-opacity hover:bg-destructive group-hover:opacity-100 cursor-pointer"
+                        aria-label="Remove image"
+                      >
+                        <X className="size-3.5" />
+                      </button>
                     </div>
                   ))}
+
+                  <div
+                    onClick={() => setOpen(true)}
+                    className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed border-border bg-muted/20 text-center transition-colors hover:border-primary hover:bg-primary/5"
+                  >
+                    <Plus className="size-5 text-muted-foreground" />
+                    <span className="text-xs font-medium text-muted-foreground">Add More</span>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  onClick={() => setOpen(true)}
+                  className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border bg-muted/20 p-8 text-center transition-all hover:border-primary hover:bg-primary/5"
+                >
+                  <div className="flex size-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                    <ImageIcon className="size-5" />
+                  </div>
+                  <div>
+                    <span className="text-sm font-semibold text-foreground">Click to browse media library</span>
+                    <p className="text-xs text-muted-foreground mt-0.5">Select high quality product photos</p>
+                  </div>
                 </div>
               )}
-
-              <div onClick={() => setOpen(true)} className="mx-auto flex w-[200px] cursor-pointer flex-col items-center gap-2 rounded-lg border border-dashed border-border bg-muted/40 p-5 text-center transition-colors hover:border-primary/50 hover:bg-muted">
-                <span className="font-semibold">Select Media</span>
-              </div>
             </div>
 
             <p className="mt-5 text-sm text-muted-foreground">

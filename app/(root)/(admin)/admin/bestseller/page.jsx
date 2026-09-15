@@ -8,6 +8,8 @@ import { ArrowDown, ArrowUp, Plus, Trash2, Crown, GripVertical } from 'lucide-re
 import BreadCrumb from '@/components/Application/Admin/BreadCrumb'
 import PageHeader from '@/components/Application/Admin/PageHeader'
 import ButtonLoading from '@/components/Application/ButtonLoading'
+import EmptyState from '@/components/Application/Admin/EmptyState'
+import { CuratedListSkeleton } from '@/components/Application/Admin/Loaders'
 import Select from '@/components/Application/Select'
 import { Button } from '@/components/ui/button'
 import { showToast } from '@/lib/showToast'
@@ -137,7 +139,7 @@ const ShowBestseller = () => {
       />
 
       {/* Add products */}
-      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
+      <div className="rounded-xl border border-border bg-card p-5 shadow-xs sm:p-6">
         <h3 className="mb-1 text-sm font-semibold">Add products</h3>
         <p className="mb-4 text-sm text-muted-foreground">
           Pick from existing products to feature them as bestsellers.
@@ -169,10 +171,13 @@ const ShowBestseller = () => {
       </div>
 
       {/* Current bestsellers */}
-      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
+      <div className="rounded-xl border border-border bg-card p-5 shadow-xs sm:p-6">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h3 className="text-sm font-semibold">Current bestsellers</h3>
+            <h3 className="text-sm font-semibold">
+              Current bestsellers{' '}
+              <span className="text-muted-foreground font-normal">({bestsellers.length})</span>
+            </h3>
             <p className="text-sm text-muted-foreground">
               Reorder with the arrows; lower entries appear later on the storefront.
             </p>
@@ -189,11 +194,16 @@ const ShowBestseller = () => {
         </div>
 
         {loadingList ? (
-          <p className="py-8 text-center text-sm text-muted-foreground">Loading…</p>
+          <div className="py-2">
+            <CuratedListSkeleton rows={4} />
+          </div>
         ) : bestsellers.length === 0 ? (
-          <div className="flex flex-col items-center gap-2 py-10 text-center text-muted-foreground">
-            <Crown className="size-8 opacity-40" />
-            <p className="text-sm">No bestsellers yet. Add products above to get started.</p>
+          <div className="py-6">
+            <EmptyState
+              icon={Crown}
+              title="No bestsellers yet"
+              description="Pick products above to feature them prominently in the storefront Bestsellers showcase."
+            />
           </div>
         ) : (
           <ul className="flex flex-col gap-2">
@@ -202,13 +212,13 @@ const ShowBestseller = () => {
               return (
                 <li
                   key={product._id}
-                  className="flex items-center gap-3 rounded-md border p-2 sm:p-3"
+                  className="flex items-center gap-3 rounded-xl border border-border/80 bg-card/60 p-2.5 shadow-2xs transition-colors hover:border-primary/30 hover:bg-muted/30 sm:p-3"
                 >
-                  <GripVertical className="size-4 shrink-0 text-muted-foreground" />
-                  <span className="w-6 shrink-0 text-center text-sm text-muted-foreground">
+                  <GripVertical className="size-4 shrink-0 text-muted-foreground/60" />
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground">
                     {index + 1}
                   </span>
-                  <div className="relative size-12 shrink-0 overflow-hidden rounded border bg-muted">
+                  <div className="relative size-12 shrink-0 overflow-hidden rounded-lg border border-border/70 bg-muted">
                     <Image src={imgSrc} alt={product.name} fill className="object-cover" sizes="48px" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -220,7 +230,7 @@ const ShowBestseller = () => {
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="size-8"
+                      className="size-8 cursor-pointer"
                       disabled={index === 0}
                       onClick={() => move(index, -1)}
                       aria-label="Move up"
@@ -231,7 +241,7 @@ const ShowBestseller = () => {
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="size-8"
+                      className="size-8 cursor-pointer"
                       disabled={index === bestsellers.length - 1}
                       onClick={() => move(index, 1)}
                       aria-label="Move down"
@@ -242,7 +252,7 @@ const ShowBestseller = () => {
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="size-8 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                      className="size-8 cursor-pointer text-destructive hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
                       disabled={removingId === product._id}
                       onClick={() => handleRemove(product._id)}
                       aria-label="Remove from bestsellers"

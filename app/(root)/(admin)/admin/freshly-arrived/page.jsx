@@ -8,6 +8,8 @@ import { ArrowDown, ArrowUp, Plus, Trash2, Sparkles, GripVertical, Info } from '
 import BreadCrumb from '@/components/Application/Admin/BreadCrumb'
 import PageHeader from '@/components/Application/Admin/PageHeader'
 import ButtonLoading from '@/components/Application/ButtonLoading'
+import EmptyState from '@/components/Application/Admin/EmptyState'
+import { CuratedListSkeleton } from '@/components/Application/Admin/Loaders'
 import Select from '@/components/Application/Select'
 import { Button } from '@/components/ui/button'
 import { showToast } from '@/lib/showToast'
@@ -141,18 +143,20 @@ const ShowFreshlyArrived = () => {
       />
 
       {belowMinimum && (
-        <div className="flex items-start gap-2 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-900/40 dark:bg-amber-900/20 dark:text-amber-300">
-          <Info className="mt-0.5 size-4 shrink-0" />
-          <p>
-            This section always displays {MIN_REQUIRED} products. You currently have{' '}
-            <strong>{items.length}</strong> - until you reach {MIN_REQUIRED}, the remaining slots are
-            filled automatically with your most recent products.
+        <div className="flex items-start gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-900 shadow-2xs dark:border-amber-500/20 dark:bg-amber-500/15 dark:text-amber-200">
+          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 text-amber-700 dark:text-amber-300">
+            <Info className="size-4" />
+          </div>
+          <p className="leading-relaxed">
+            This section displays <strong className="font-semibold">{MIN_REQUIRED}</strong> products on the storefront. You currently have{' '}
+            <strong className="font-semibold">{items.length}</strong> - until you reach {MIN_REQUIRED}, remaining slots are
+            filled automatically with your most recent catalogue products.
           </p>
         </div>
       )}
 
       {/* Add products */}
-      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
+      <div className="rounded-xl border border-border bg-card p-5 shadow-xs sm:p-6">
         <h3 className="mb-1 text-sm font-semibold">Add products</h3>
         <p className="mb-4 text-sm text-muted-foreground">
           Pick from existing products to feature them as freshly arrived.
@@ -184,12 +188,12 @@ const ShowFreshlyArrived = () => {
       </div>
 
       {/* Current list */}
-      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
+      <div className="rounded-xl border border-border bg-card p-5 shadow-xs sm:p-6">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
             <h3 className="text-sm font-semibold">
               Current freshly arrived{' '}
-              <span className="text-muted-foreground">({items.length})</span>
+              <span className="text-muted-foreground font-normal">({items.length})</span>
             </h3>
             <p className="text-sm text-muted-foreground">
               Reorder with the arrows; the first {MIN_REQUIRED} appear on the storefront.
@@ -207,11 +211,16 @@ const ShowFreshlyArrived = () => {
         </div>
 
         {loadingList ? (
-          <p className="py-8 text-center text-sm text-muted-foreground">Loading…</p>
+          <div className="py-2">
+            <CuratedListSkeleton rows={4} />
+          </div>
         ) : items.length === 0 ? (
-          <div className="flex flex-col items-center gap-2 py-10 text-center text-muted-foreground">
-            <Sparkles className="size-8 opacity-40" />
-            <p className="text-sm">No products selected yet. Add products above to get started.</p>
+          <div className="py-6">
+            <EmptyState
+              icon={Sparkles}
+              title="No products selected yet"
+              description="Pick products above to curate the storefront Freshly Arrived showcase."
+            />
           </div>
         ) : (
           <ul className="flex flex-col gap-2">
@@ -221,13 +230,13 @@ const ShowFreshlyArrived = () => {
               return (
                 <li
                   key={product._id}
-                  className="flex items-center gap-3 rounded-md border p-2 sm:p-3"
+                  className="flex items-center gap-3 rounded-xl border border-border/80 bg-card/60 p-2.5 shadow-2xs transition-colors hover:border-primary/30 hover:bg-muted/30 sm:p-3"
                 >
-                  <GripVertical className="size-4 shrink-0 text-muted-foreground" />
-                  <span className="w-6 shrink-0 text-center text-sm text-muted-foreground">
+                  <GripVertical className="size-4 shrink-0 text-muted-foreground/60" />
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground">
                     {index + 1}
                   </span>
-                  <div className="relative size-12 shrink-0 overflow-hidden rounded border bg-muted">
+                  <div className="relative size-12 shrink-0 overflow-hidden rounded-lg border border-border/70 bg-muted">
                     <Image src={imgSrc} alt={product.name} fill className="object-cover" sizes="48px" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -235,7 +244,7 @@ const ShowFreshlyArrived = () => {
                     <p className="text-xs text-muted-foreground">{formatPrice(product.sellingPrice)}</p>
                   </div>
                   {!onStorefront && (
-                    <span className="hidden shrink-0 rounded bg-muted px-2 py-0.5 text-[0.8rem] text-muted-foreground sm:inline">
+                    <span className="hidden shrink-0 rounded-full border border-border/70 bg-muted/80 px-2.5 py-0.5 text-xs font-medium text-muted-foreground sm:inline">
                       Not shown
                     </span>
                   )}
@@ -244,7 +253,7 @@ const ShowFreshlyArrived = () => {
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="size-8"
+                      className="size-8 cursor-pointer"
                       disabled={index === 0}
                       onClick={() => move(index, -1)}
                       aria-label="Move up"
@@ -255,7 +264,7 @@ const ShowFreshlyArrived = () => {
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="size-8"
+                      className="size-8 cursor-pointer"
                       disabled={index === items.length - 1}
                       onClick={() => move(index, 1)}
                       aria-label="Move down"
@@ -266,7 +275,7 @@ const ShowFreshlyArrived = () => {
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="size-8 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                      className="size-8 cursor-pointer text-destructive hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
                       disabled={removingId === product._id}
                       onClick={() => handleRemove(product._id)}
                       aria-label="Remove from freshly arrived"
@@ -285,3 +294,4 @@ const ShowFreshlyArrived = () => {
 }
 
 export default ShowFreshlyArrived
+

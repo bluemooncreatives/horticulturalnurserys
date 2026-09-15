@@ -27,21 +27,25 @@ const ModalMediaBlock = ({ media, selectedMedia, setSelectedMedia, isMultiple })
         }
     }
     return (
-        <label htmlFor={media._id} className='group relative cursor-pointer overflow-hidden rounded-lg border border-border transition-colors hover:border-primary/50 has-[button[data-state=checked]]:border-primary has-[button[data-state=checked]]:ring-2 has-[button[data-state=checked]]:ring-primary/30'>
-            <div className='absolute top-2 left-2 z-20'>
+        <label
+            htmlFor={media._id}
+            className="group relative flex cursor-pointer flex-col overflow-hidden rounded-xl border border-border bg-muted/40 transition-all hover:border-primary/50 hover:shadow-2xs has-[button[data-state=checked]]:border-primary has-[button[data-state=checked]]:ring-2 has-[button[data-state=checked]]:ring-primary/40"
+        >
+            <div className="absolute top-2 left-2 z-20 rounded-md bg-background/90 p-1 shadow-2xs backdrop-blur-xs transition-transform group-hover:scale-105">
                 <Checkbox
                     id={media._id}
-                    checked={selectedMedia.find(m => m._id === media._id) ? true : false}
+                    checked={selectedMedia.some((m) => m._id === media._id)}
                     onCheckedChange={handleCheck}
+                    className="cursor-pointer"
                 />
             </div>
-            <div className='size-full relative'>
+            <div className="relative aspect-square w-full overflow-hidden">
                 <Image
                     src={media.secure_url}
-                    alt={media.alt || ''}
+                    alt={media.alt || 'Media item'}
                     width={300}
                     height={300}
-                    className='object-cover md:h-[150px] h-[100px]'
+                    className="size-full object-cover transition-transform duration-300 group-hover:scale-105 md:h-[150px] h-[100px]"
                 />
             </div>
         </label>

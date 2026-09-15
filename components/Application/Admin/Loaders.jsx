@@ -65,3 +65,27 @@ export const FormSkeleton = ({ fields = 4 }) => (
         <Skeleton className="h-9 w-32 rounded-lg" />
     </div>
 )
+
+export const CuratedListSkeleton = ({ rows = 4 }) => (
+    <div className="flex flex-col gap-2">
+        {Array.from({ length: rows }).map((_, i) => (
+            <div
+                key={i}
+                className="flex items-center gap-3 rounded-lg border border-border/60 bg-card/40 p-2 sm:p-3"
+            >
+                <Skeleton className="size-4 shrink-0 rounded" />
+                <Skeleton className="size-6 shrink-0 rounded-full" />
+                <Skeleton className="size-12 shrink-0 rounded-lg" />
+                <div className="min-w-0 flex-1 space-y-1.5">
+                    <Skeleton className="h-4 w-40 max-w-full" />
+                    <Skeleton className="h-3 w-20" />
+                </div>
+                <div className="flex shrink-0 items-center gap-1">
+                    <Skeleton className="size-8 rounded-md" />
+                    <Skeleton className="size-8 rounded-md" />
+                    <Skeleton className="size-8 rounded-md" />
+                </div>
+            </div>
+        ))}
+    </div>
+)

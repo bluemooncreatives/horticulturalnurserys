@@ -1,7 +1,5 @@
 'use client'
-import Image from 'next/image'
 import Link from 'next/link'
-import logoWhite from '@/public/assets/images/logo-horti.png'
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
 
@@ -20,16 +18,6 @@ const TeamSwitcher = ({ teams = [] }) => {
                     and mis-aligned the two text lines beside it. */}
                 <SidebarMenuButton size="lg" asChild className="hover:bg-sidebar-accent">
                     <Link href={ADMIN_DASHBOARD}>
-                        <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-sidebar-accent">
-                            <Image
-                                src={logoWhite}
-                                alt=""
-                                width={36}
-                                height={36}
-                                className="size-7 object-contain"
-                                priority
-                            />
-                        </div>
                         <div className="grid flex-1 text-start leading-tight">
                             <span className="truncate text-sm font-semibold">{activeTeam.name}</span>
                             <span className="truncate text-xs text-sidebar-foreground/70">

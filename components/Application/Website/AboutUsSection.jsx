@@ -48,38 +48,6 @@ const HEADING =
 const NOTABLE_PROJECTS =
     'Trusted for landscapes at Alipore Zoo, National Library, Rabindra Sarobar Lake, Krishnanagar IT Park and more.'
 
-// Glyph-roll geometry, borrowed from components/ui/RollingLink.jsx. Each glyph
-// is a fixed-height mask over a THREE-cell column of the SAME letter
-// [copy · copy · copy]; sliding the column one cell rolls the glyph vertically
-// while a letter is always in the window (never blank). Here the roll isn't
-// hover-driven - it's tied to the section's scrub, so each line rolls into
-// place as it's scrolled to (see makeLineFill).
-const CELL = '1.3em'          // mask + cell height; clears descenders (g, y, p)
-const REST = -100 / 3         // -33.33% → middle cell centred = readable letter
-// Rolled-OUT start: alternate glyphs sit one cell above / below the middle, so
-// on scroll they roll in from opposite directions in a left-to-right cascade.
-const rollFrom = (i) => (i % 2 === 0 ? -200 / 3 : 0) // even → from below, odd → from above
-
-// Split a text element into per-word spans so a timeline can reveal them one
-// at a time (card 3's copy - words "focus in" on scroll). Idempotent: it reads
-// the aggregate textContent, so re-running on a breakpoint change re-splits
-// cleanly. Whitespace is kept as text nodes so wrapping is unaffected.
-const splitWords = (el) => {
-    const parts = el.textContent.split(/(\s+)/)
-    el.textContent = ''
-    const words = []
-    parts.forEach((part) => {
-        if (part === '') return
-        if (/^\s+$/.test(part)) { el.appendChild(document.createTextNode(part)); return }
-        const span = document.createElement('span')
-        span.className = 'about-c3-word inline-block will-change-transform'
-        span.textContent = part
-        el.appendChild(span)
-        words.push(span)
-    })
-    return words
-}
-
 // Group already-rendered word spans into visual lines by their layout top
 // (offsetTop is transform-invariant, so parallax/pin never skews it).
 const groupLines = (els) => {
@@ -108,10 +76,9 @@ const AboutUsSection = () => {
 
         const mm = gsap.matchMedia()
 
-        // Build (and rebuild) the line-by-line brighten timeline. Each visual
-        // line goes from --brand-primary/50 → full, one after another. Returns
-        // a disposer so callers can rebuild on resize / font load without
-        // touching the pin.
+        // Build (and rebuild) the clean, solid line-by-line brighten timeline.
+        // Each visual line illuminates from 35% opacity to 100% full green
+        // without fragmenting or rolling individual glyphs, keeping words completely legible.
         const makeLineFill = (triggerVars) => {
             const words = gsap.utils.toArray('.about-fill-word', root)
             let tl = null
@@ -121,42 +88,14 @@ const AboutUsSection = () => {
                 if (disposed) return
                 tl?.scrollTrigger?.kill()
                 tl?.kill()
-                gsap.set(words, { opacity: 0.5 }) // dim base: brand-primary @ 50%
+                gsap.set(words, { opacity: 0.35 }) // Soft, readable dim base
                 const lines = groupLines(words)
                 tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { ...triggerVars } })
 
-                // One scrub, one clock: for every visual line we (a) brighten it
-                // 50%→full and (b) roll its glyphs from rolled-out into place,
-                // staggered left-to-right - so lines resolve one after another as
-                // the pinned section is scrolled, never all at once.
-                let g = 0 // running glyph index → stable alternating roll direction
+                // One scrub: each visual line smoothly illuminates sequentially
                 lines.forEach((lineWords, li) => {
-                    const at = li * 1.05 // a touch more space per line so rolls don't crowd
-                    tl.to(lineWords, { opacity: 1, duration: 0.9 }, at)
-
-                    // Columns in this line, in reading order. Drive a numeric proxy
-                    // → CSS translateY(%) (gsap's yPercent basis is wrong for these
-                    // nested overflow-clipped columns - same note as in RollingLink).
-                    const cols = lineWords.flatMap((w) =>
-                        Array.from(w.querySelectorAll('[data-roll-col]'))
-                    )
-                    cols.forEach((col, k) => {
-                        const from = rollFrom(g++)
-                        col.style.transform = `translateY(${from}%)` // seed rolled-out
-                        const proxy = { v: from }
-                        tl.to(
-                            proxy,
-                            {
-                                v: REST, // land on the readable middle cell
-                                duration: 0.75, // longer roll → each glyph settles slower
-                                ease: 'power2.out', // gentler deceleration than power3
-                                onUpdate() {
-                                    col.style.transform = `translateY(${proxy.v}%)`
-                                },
-                            },
-                            at + k * 0.02 // slightly wider L→R cascade, still inside the line's window
-                        )
-                    })
+                    const at = li * 0.75
+                    tl.to(lineWords, { opacity: 1, duration: 0.65, ease: 'power2.out' }, at)
                 })
             }
             build()
@@ -297,97 +236,41 @@ const AboutUsSection = () => {
         // section-entrance window, so the copy cascade finished while the card
         // was still low on the screen / about to pin - it read as static by the
         // time the card centred.
+        // Card 3 (the spread card) - robustly rendered, no stuck blurs or hidden elements
         const makeCardThree = ({ settle, hold }) => {
             const card = root.querySelector('.about-card-three')
             if (!card) return
-            const copy = card.querySelector('.about-c3-copy')
-            const words = copy ? splitWords(copy) : []
-            const imgWrap = card.querySelector('.about-c3-imgwrap')
             const img = card.querySelector('.about-c3-img')
-            const veil = card.querySelector('.about-c3-veil')
             const accent = card.querySelector('.about-c3-accent')
-            const label = card.querySelector('.about-c3-label')
-            const figure = card.querySelector('.about-c3-figure')
             const numEl = card.querySelector('.about-c3-num')
             const proxy = { v: 0 }
 
-            // 1 · Entrance (settle) - the whole card lifts and clears from a soft
-            //     blur as it arrives, so it's present when the section pins.
+            // 1 · Entrance - gentle lift into place
             gsap.fromTo(card,
-                { yPercent: 16, scale: 0.93, autoAlpha: 0, filter: 'blur(8px)' },
-                { yPercent: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)', ease: 'power3.out', scrollTrigger: settle })
+                { yPercent: 8, scale: 0.98, autoAlpha: 0.8 },
+                { yPercent: 0, scale: 1, autoAlpha: 1, ease: 'power3.out', scrollTrigger: settle })
 
-            // The sequenced content plays across the hold, one beat after another.
-            const tl = gsap.timeline({
-                defaults: { ease: 'power3.out' },
-                scrollTrigger: hold,
-            })
-
-            // 2 · Copy: each word rises from below and sharpens - focus-in cascade.
-            if (words.length) {
-                tl.fromTo(words,
-                    { yPercent: 110, autoAlpha: 0, filter: 'blur(4px)' },
-                    { yPercent: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 1, stagger: 0.08 }, 0.25)
-            }
-
-            // 3 · Image box apertures open from the centre (clip-path keeps the
-            //     rounded corners via the fixed `round`), the photo counter-zooms
-            //     for depth, and the colour veil clears upward.
-            if (imgWrap) {
-                tl.fromTo(imgWrap,
-                    { clipPath: 'inset(50% 0% 50% 0% round 10px)' },
-                    { clipPath: 'inset(0% 0% 0% 0% round 10px)', duration: 1, ease: 'power4.inOut' }, 0.9)
-            }
-            if (img) {
-                tl.fromTo(img,
-                    { scale: 1.4, yPercent: -6 },
-                    { scale: 1.08, yPercent: 0, duration: 1.6, ease: 'power2.out' }, 0.9)
-            }
-            if (veil) {
-                tl.fromTo(veil,
-                    { autoAlpha: 1, yPercent: 0 },
-                    { autoAlpha: 0, yPercent: -14, duration: 0.9, ease: 'power2.out' }, 1.2)
-            }
-
-            // 4 · Accent line wipes out from the left, cueing the metric.
             if (accent) {
-                tl.fromTo(accent, { scaleX: 0, transformOrigin: '0% 50%' },
-                    { scaleX: 1, duration: 0.5, ease: 'power2.out' }, 2.0)
+                gsap.fromTo(accent, { scaleX: 0, transformOrigin: '0% 50%' },
+                    { scaleX: 1, duration: 0.6, ease: 'power2.out', scrollTrigger: settle })
             }
 
-            // 5 · Label rises in under the line.
-            if (label) {
-                tl.fromTo(label, { yPercent: 90, autoAlpha: 0 },
-                    { yPercent: 0, autoAlpha: 1, duration: 0.6 }, 2.15)
+            if (img) {
+                gsap.fromTo(img,
+                    { scale: 1.15 },
+                    { scale: 1, ease: 'none', scrollTrigger: hold })
             }
 
-            // 6 · Figure unfolds toward the viewer with an overshoot (needs the
-            //     perspective set on the card) while the number counts 0→50.
-            if (figure) {
-                tl.fromTo(figure,
-                    { yPercent: 80, scale: 0.6, rotateX: -75, autoAlpha: 0, transformOrigin: '0% 100%' },
-                    { yPercent: 0, scale: 1, rotateX: 0, autoAlpha: 1, duration: 0.9, ease: 'back.out(1.7)' }, 2.3)
-            }
             if (numEl) {
-                tl.to(proxy, {
-                    v: NURSERY_BIGHAS, snap: { v: 1 }, ease: 'none', duration: 1,
+                gsap.fromTo(proxy, { v: 0 }, {
+                    v: NURSERY_BIGHAS, snap: { v: 1 }, ease: 'none',
+                    scrollTrigger: hold,
                     onUpdate() { numEl.textContent = Math.round(proxy.v) },
-                }, 2.3)
+                })
             }
         }
 
-        // Card 4 (the photo card). Split like card 2 so the payoff is actually
-        // watchable: `settle` is the entrance as the card arrives (pre-pin) -
-        // the card pops from a soft blur, the gradient veil deepens, the eyebrow
-        // clip-rises and the area figure unfolds in 3D. `hold` runs over the
-        // long range (the pinned hold), while the card sits fully in
-        // view: the image stack slow-zooms (Ken Burns) AND crossfades through
-        // THREE frames in turn (the "changing images" - a live photo swap), and
-        // the number counts 0 → 4,700 end to end. Earlier this was one short
-        // window keyed to the section entrance, so every beat finished while the
-        // card was still near the bottom of the screen / about to pin - nothing
-        // was left to see once it settled. SSR / reduced motion paints the base
-        // frame + "4,700 m²" in place.
+        // Card 4 (the photo card) - clean photo transitions and count
         const makeCardFour = ({ settle, hold }) => {
             const card = root.querySelector('.about-card-four')
             if (!card) return
@@ -399,34 +282,30 @@ const AboutUsSection = () => {
             const numEl = card.querySelector('.about-c4-num')
             const fmt = (n) => Math.round(n).toLocaleString('en-US')
 
-            // ── Entrance (settle) - as the card arrives ──
+            // ── Entrance (settle) - clean lift without blur ──
             gsap.fromTo(card,
-                { yPercent: 16, scale: 0.94, autoAlpha: 0, filter: 'blur(8px)' },
-                { yPercent: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)', ease: 'power3.out', scrollTrigger: settle })
+                { yPercent: 8, scale: 0.98, autoAlpha: 0.8 },
+                { yPercent: 0, scale: 1, autoAlpha: 1, ease: 'power3.out', scrollTrigger: settle })
             if (overlay) {
-                gsap.fromTo(overlay, { autoAlpha: 0.5 }, { autoAlpha: 1, ease: 'none', scrollTrigger: settle })
+                gsap.fromTo(overlay, { autoAlpha: 0.6 }, { autoAlpha: 1, ease: 'none', scrollTrigger: settle })
             }
             if (eyebrow) {
                 gsap.fromTo(eyebrow,
-                    { yPercent: 120, autoAlpha: 0, clipPath: 'inset(0% 0% 100% 0%)' },
-                    { yPercent: 0, autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)', ease: 'power3.out', scrollTrigger: settle })
+                    { yPercent: 30, autoAlpha: 0 },
+                    { yPercent: 0, autoAlpha: 1, ease: 'power3.out', scrollTrigger: settle })
             }
             if (figure) {
                 gsap.fromTo(figure,
-                    { yPercent: 70, scale: 0.65, rotateX: -75, autoAlpha: 0, transformOrigin: '0% 100%' },
-                    { yPercent: 0, scale: 1, rotateX: 0, autoAlpha: 1, ease: 'back.out(1.7)', scrollTrigger: settle })
+                    { yPercent: 30, scale: 0.85, autoAlpha: 0 },
+                    { yPercent: 0, scale: 1, autoAlpha: 1, ease: 'power3.out', scrollTrigger: settle })
             }
 
-            // ── Hold - plays across the long range while the card is on screen ──
-            // One timeline so the Ken Burns zoom, the frame crossfades and the
-            // counter share the same clock and span the full hold.
-            const span = Math.max(frames.length, 2) // scroll units the hold fills
+            // ── Hold - plays across scroll ──
+            const span = Math.max(frames.length, 2)
             const holdTl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: hold })
 
-            if (wrap) holdTl.fromTo(wrap, { scale: 1.32 }, { scale: 1.06, duration: span }, 0)
+            if (wrap) holdTl.fromTo(wrap, { scale: 1.2 }, { scale: 1.05, duration: span }, 0)
 
-            // The photo visibly changes: each later frame fades up over the one
-            // beneath it, one after another, so the image swaps as you scroll.
             if (frames.length > 1) {
                 gsap.set(frames.slice(1), { autoAlpha: 0 })
                 frames.slice(1).forEach((frame, i) => {
@@ -443,59 +322,57 @@ const AboutUsSection = () => {
             }
         }
 
-        // ── All breakpoints ─────────────────────────────────────────────────
-        // The section rises with a layered parallax, sticks to the top, and
-        // while it's held the heading brightens line by line, end to end.
-        // Same pin-and-scrub lock on every screen size - mobile/tablet used to
-        // get an un-pinned "pass through" variant instead, which read as a
-        // glitchy double-exposure (the fill/roll timeline scrubbing against a
-        // section still sliding under the viewport rather than held still).
+        // ── Pinned Hold & Scroll Scrub ──────────────────────────────────────
+        // The section climbs into view, locks into the screen (pinned hold),
+        // and while pinned the heading illuminates line by line and the stat
+        // cards play their live reveals/counters. Once the hold finishes, the
+        // pin releases and the following sections open up on scroll.
         mm.add('(prefers-reduced-motion: no-preference)', () => {
             gsap.fromTo(
                 statementRef.current,
-                { yPercent: 0 },
+                { yPercent: 12 },
                 { yPercent: 0, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
             )
             gsap.fromTo(
                 statsRef.current,
-                { yPercent: 0, scale: 0.98, autoAlpha: 0.8 },
+                { yPercent: 6, scale: 0.98, autoAlpha: 0.8 },
                 { yPercent: 0, scale: 1, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
             )
 
-            // Pin the section for the hold (kept separate from the fill so the
-            // fill can be rebuilt on resize without disturbing the pin).
-            const pin = ScrollTrigger.create({ trigger: root, start: 'top top', end: '+=155%', pin: true })
+            // Pin the section to lock the screen
+            const pin = ScrollTrigger.create({
+                trigger: root,
+                start: 'top top',
+                end: '+=140%',
+                pin: true,
+                pinSpacing: true,
+            })
 
-            const disposeFill = makeLineFill({ trigger: root, start: 'top top', end: '+=155%', scrub: true })
+            // Heading line brighten scrub across the pinned hold
+            const disposeFill = makeLineFill({
+                trigger: root,
+                start: 'top top',
+                end: '+=140%',
+                scrub: true,
+            })
 
             makeCardOne({
                 pass: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
-                settle: { trigger: root, start: 'top 82%', end: 'top 32%', scrub: true },
+                settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
                 drift: 4,
             })
             makeCardTwo({
                 pass: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
-                settle: { trigger: root, start: 'top 78%', end: 'top 28%', scrub: true },
-                // 0→35 spans the full pinned hold - the number climbs from the
-                // moment the section sticks until it releases (same range that
-                // drives the heading fill), so it counts end to end on scroll.
-                count: { trigger: root, start: 'top top', end: '+=155%', scrub: true },
-            })
-            // Wide window over the section's entrance so the sequenced timeline
-            // is watchable as the section scrolls up, resolving as it pins.
-            makeCardThree({
-                // Entrance as the card rises in, then the sequenced content
-                // (copy → image → figure/count) rides the full pinned hold, so
-                // it plays out while the card sits fixed and fully in view.
                 settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
-                hold: { trigger: root, start: 'top top', end: '+=155%', scrub: true },
+                count: { trigger: root, start: 'top top', end: '+=140%', scrub: true },
+            })
+            makeCardThree({
+                settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
+                hold: { trigger: root, start: 'top top', end: '+=140%', scrub: true },
             })
             makeCardFour({
-                // Entrance as the card rises in, then the photo swap + count
-                // ride the full pinned hold (same range as the heading fill),
-                // so they play out while the card sits fixed in view.
-                settle: { trigger: root, start: 'top 76%', end: 'top 26%', scrub: true },
-                hold: { trigger: root, start: 'top top', end: '+=155%', scrub: true },
+                settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
+                hold: { trigger: root, start: 'top top', end: '+=140%', scrub: true },
             })
 
             ScrollTrigger.refresh()
@@ -509,57 +386,26 @@ const AboutUsSection = () => {
     }, [])
 
     return (
-        <section ref={rootRef} className="about-section relative z-[2] bg-[var(--background)] pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
-            <div className="lumora-shell">
+        <section ref={rootRef} id="about-us" className="about-section relative z-[2] bg-[var(--background)]">
+            <div className="lumora-shell flex min-h-svh flex-col justify-center pt-20 pb-10 sm:pt-22 sm:pb-12 lg:pt-24 lg:pb-14">
 
                 {/* ── Statement (parallax layer A) ── */}
                 <div ref={statementRef} className="about-statement grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_1.85fr] lg:gap-8">
-                    <span className="flex items-start gap-2 text-[0.8rem] font-semibold uppercase text-[var(--brand-primary)] lg:pt-3">
+                    <span className="flex items-start gap-2 text-[0.8rem] font-semibold uppercase text-[var(--brand-primary)] lg:pt-1.5">
                         <span aria-hidden className="mt-1.5 size-1.5 rounded-full border border-current" />
                         About Company
                     </span>
-                    {/* One green voice, dimmed to 50% at rest. Each word is a run
-                        of tripled glyph columns (RollingLink's mask technique); on
-                        scroll the pinned section brightens AND rolls the heading
-                        into place, one visual line after another. Words stay inline
-                        so they wrap naturally - line grouping reads their offsetTop.
-                        A real space between words keeps line breaks possible. */}
                     <div>
-                    <h2 className="max-w text-[clamp(1.5rem,3.4vw,2.35rem)] font-medium leading-[1.28] tracking-[-0.01em] text-[var(--brand-primary)]">
-                        {HEADING.split(' ').flatMap((word, wi) => [
+                    <h2 className="max-w text-[clamp(1.5rem,3.4vw,2.35rem)] font-medium leading-[1.32] tracking-[-0.01em] text-[var(--brand-primary)]">
+                        {HEADING.split(' ').map((word, wi, arr) => (
                             <span
                                 key={wi}
-                                className="about-fill-word inline-block whitespace-nowrap align-baseline"
+                                className="about-fill-word inline-block whitespace-nowrap align-baseline transition-opacity duration-200"
                             >
-                                {[...word].map((ch, ci) => (
-                                    <span
-                                        key={ci}
-                                        className="relative inline-block overflow-hidden align-baseline"
-                                        // px padding (cancelled by -mx) keeps glyph
-                                        // side-bearings from being shaved by the clip.
-                                        style={{
-                                            height: CELL,
-                                            lineHeight: CELL,
-                                            paddingInline: '0.06em',
-                                            marginInline: '-0.06em',
-                                        }}
-                                    >
-                                        <span
-                                            data-roll-col
-                                            className="block will-change-transform"
-                                            // Pre-seed the readable middle cell so SSR /
-                                            // reduced-motion / pre-JS paint is correct.
-                                            style={{ transform: `translateY(${REST}%)` }}
-                                        >
-                                            <span className="block" style={{ height: CELL }}>{ch}</span>
-                                            <span className="block" style={{ height: CELL }}>{ch}</span>
-                                            <span className="block" style={{ height: CELL }}>{ch}</span>
-                                        </span>
-                                    </span>
-                                ))}
-                            </span>,
-                            ' ',
-                        ])}
+                                {word}
+                                {wi < arr.length - 1 ? '\u00A0' : ''}
+                            </span>
+                        ))}
                     </h2>
                     <p className="mt-3 text-[0.85rem] text-[var(--muted-foreground)]">
                         {NOTABLE_PROJECTS}

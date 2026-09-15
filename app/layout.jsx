@@ -53,7 +53,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="font-sans">
+    <html lang="en" className="font-sans" suppressHydrationWarning>
       <head>
         {/* Cloudinary serves the hero images, product images, about-us photos and Instagram videos.
             Preconnecting to Cloudinary speeds up TLS handshake for the hero LCP frame. */}

@@ -35,7 +35,7 @@ const NavGroup = ({ title, items }) => {
 
     return (
         <SidebarGroup>
-            <SidebarGroupLabel>{title}</SidebarGroupLabel>
+            {title ? <SidebarGroupLabel>{title}</SidebarGroupLabel> : null}
             <SidebarMenu className="gap-0.5">
                 {items.map((item) => {
                     const key = `${item.title}-${item.url || 'group'}`

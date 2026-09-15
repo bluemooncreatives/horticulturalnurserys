@@ -20,6 +20,8 @@ import {
 import BreadCrumb from '@/components/Application/Admin/BreadCrumb'
 import PageHeader from '@/components/Application/Admin/PageHeader'
 import ButtonLoading from '@/components/Application/ButtonLoading'
+import EmptyState from '@/components/Application/Admin/EmptyState'
+import { CuratedListSkeleton } from '@/components/Application/Admin/Loaders'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -291,37 +293,39 @@ const ShowTestimonials = () => {
         </div>
 
         {loadingList ? (
-          <p className="py-8 text-center text-sm text-muted-foreground">Loading…</p>
+          <div className="py-2">
+            <CuratedListSkeleton rows={3} />
+          </div>
         ) : testimonials.length === 0 ? (
-          <div className="flex flex-col items-center gap-2 py-10 text-center text-muted-foreground">
-            <Quote className="size-8 opacity-40" />
-            <p className="text-sm">No testimonials yet. Add one above to get started.</p>
-            <p className="text-xs">
-              Until then the storefront shows a default set so the section never appears empty.
-            </p>
+          <div className="py-6">
+            <EmptyState
+              icon={Quote}
+              title="No testimonials yet"
+              description="Add a customer testimonial above to showcase social proof on the storefront."
+            />
           </div>
         ) : (
           <ul className="flex flex-col gap-2">
             {testimonials.map((testimonial, index) => (
               <li
                 key={testimonial._id}
-                className={`flex items-start gap-3 rounded-md border p-3 ${
+                className={`flex items-start gap-3 rounded-xl border border-border/80 bg-card/60 p-3 shadow-2xs transition-colors hover:border-primary/30 hover:bg-muted/30 ${
                   testimonial.isActive ? '' : 'opacity-60'
                 }`}
               >
-                <GripVertical className="mt-1 size-4 shrink-0 text-muted-foreground" />
-                <span className="mt-0.5 w-6 shrink-0 text-center text-sm text-muted-foreground">
+                <GripVertical className="mt-1 size-4 shrink-0 text-muted-foreground/60" />
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground">
                   {index + 1}
                 </span>
 
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="text-sm font-medium">{testimonial.name}</p>
+                    <p className="text-sm font-semibold text-foreground">{testimonial.name}</p>
                     <span className="flex items-center gap-0.5">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <Star
                           key={i}
-                          className={`size-3 ${
+                          className={`size-3.5 ${
                             i < testimonial.rating
                               ? 'fill-[var(--status-rating)] text-[var(--status-rating)]'
                               : 'fill-transparent text-border'
@@ -330,12 +334,12 @@ const ShowTestimonials = () => {
                       ))}
                     </span>
                     {!testimonial.isActive && (
-                      <span className="rounded-full bg-muted px-2 py-0.5 text-[0.8rem] uppercase tracking-wide text-muted-foreground">
+                      <span className="rounded-full border border-border/70 bg-muted/80 px-2 py-0.5 text-[0.75rem] font-medium uppercase tracking-wide text-muted-foreground">
                         Hidden
                       </span>
                     )}
                   </div>
-                  <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+                  <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground leading-relaxed">
                     {testimonial.review}
                   </p>
                 </div>

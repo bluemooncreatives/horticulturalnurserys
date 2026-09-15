@@ -5,7 +5,7 @@ import DeleteAction from "@/components/Application/Admin/DeleteAction"
 import PageHeader from "@/components/Application/Admin/PageHeader"
 import { DT_REVIEW_COLUMN, } from "@/lib/column"
 import { columnConfig } from "@/lib/helperFunction"
-import { ADMIN_DASHBOARD, ADMIN_REVIEW_ADD, ADMIN_TRASH } from "@/routes/AdminPanelRoute"
+import { ADMIN_DASHBOARD, ADMIN_REVIEW_SHOW, ADMIN_REVIEW_ADD, ADMIN_TRASH } from "@/routes/AdminPanelRoute"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Plus } from "lucide-react"
@@ -13,7 +13,7 @@ import { useCallback, useMemo } from "react"
 
 const breadcrumbData = [
     { href: ADMIN_DASHBOARD, label: 'Home' },
-    { href: '', label: 'Review' },
+    { href: ADMIN_REVIEW_SHOW, label: 'Reviews' },
 ]
 const ShowReview = () => {
 
@@ -35,12 +35,12 @@ const ShowReview = () => {
                 description="Admin-managed product reviews shown on the storefront."
                 breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
                 actions={
-                    <Link href={ADMIN_REVIEW_ADD}>
-                        <Button className="gap-2 h-9" size="lg">
+                    <Button asChild size="lg" className="h-9">
+                        <Link href={ADMIN_REVIEW_ADD} className="inline-flex items-center gap-2">
                             <Plus className="size-4" />
                             Add Review
-                        </Button>
-                    </Link>
+                        </Link>
+                    </Button>
                 }
             />
 

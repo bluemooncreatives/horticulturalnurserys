@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef } from 'react'
+import { Suspense, useEffect, useMemo, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -19,6 +19,7 @@ import {
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { RevealLines, RevealUp } from '@/components/ui/reveal'
+import ServiceEnquiryForm from '@/components/Application/Website/ServiceEnquiryForm'
 
 /* ────────────────────────────────────────────────────────────────
    ServicesContent - the /services index.
@@ -212,7 +213,7 @@ export default function ServicesContent({
           </RevealUp>
 
           <RevealUp delay={340} className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <PrimaryButton href="/contact">Request a site visit</PrimaryButton>
+            <PrimaryButton href="#enquiry-form">Request a site visit</PrimaryButton>
             <GhostButton href="/shop">Browse catalogue</GhostButton>
           </RevealUp>
         </div>
@@ -292,6 +293,15 @@ export default function ServicesContent({
         `}</style>
       </section>
 
+      {/* ══ Service Enquiry Form Section (Directly after Hero Bento) ════ */}
+      <section id="enquiry-form" className="lumora-shell py-14 lg:py-20 scroll-mt-24">
+        <RevealUp>
+          <Suspense fallback={<div className="min-h-[400px]" />}>
+            <ServiceEnquiryForm />
+          </Suspense>
+        </RevealUp>
+      </section>
+
       {/* ══ Approach - centred statement + stat row ════════════ */}
       <section className="bg-[var(--card)] pb-16 lg:pb-24">
         <ScrollFillStatement chip="Our approach" text={approach.lead} />
@@ -343,7 +353,7 @@ export default function ServicesContent({
               planting, construction and the aftercare that keeps it alive.
             </RevealUp>
             <RevealUp delay={190} className="mt-9">
-              <PrimaryButton href="/contact">Get started</PrimaryButton>
+              <PrimaryButton href="#enquiry-form">Get started</PrimaryButton>
             </RevealUp>
           </div>
 
@@ -440,7 +450,7 @@ export default function ServicesContent({
               How every project runs - four steps, in order
             </RevealUp>
             <RevealUp delay={130} className="shrink-0">
-              <PrimaryButton href="/contact">Start a project</PrimaryButton>
+              <PrimaryButton href="#enquiry-form">Start a project</PrimaryButton>
             </RevealUp>
           </div>
 
@@ -553,8 +563,8 @@ export default function ServicesContent({
             advice from qualified horticulturists.
           </RevealUp>
           <RevealUp delay={190} className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <PrimaryButton href="/contact">Get in touch</PrimaryButton>
-            <GhostButton href="/about-us">About the nursery</GhostButton>
+            <PrimaryButton href="#enquiry-form">Request consultation</PrimaryButton>
+            <GhostButton href="/contact">Direct office contact</GhostButton>
           </RevealUp>
         </div>
       </section>

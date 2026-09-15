@@ -23,7 +23,7 @@ import {
  * @param {string} [data.subject]
  * @param {string} data.message
  */
-export const contactConfirmation = ({ ticketId, name, subject, message }) => {
+export const contactConfirmation = ({ ticketId, name, subject, serviceType, projectScale, preferredTimeline, message }) => {
     const refCard = `
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:8px 0 24px;">
   <tr>
@@ -50,6 +50,9 @@ ${paragraph("We've received your message and our team will get back to you as so
 ${refCard}
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="border-top:1px solid ${BRAND.border};padding-top:8px;margin-top:8px;">
   ${subject ? detail("Subject", subject) : ""}
+  ${serviceType ? detail("Service Requested", serviceType) : ""}
+  ${projectScale ? detail("Project Scale", projectScale) : ""}
+  ${preferredTimeline ? detail("Preferred Timeline", preferredTimeline) : ""}
   ${detail("Your message", message)}
 </table>`;
 

@@ -55,9 +55,14 @@ export const ADMIN_ENQUIRY_SHOW = '/admin/enquiries'
 export const ADMIN_ENQUIRY_DETAILS = (id) => id ? `/admin/enquiries/details/${id}` : ''
 
 
-// Contact Queries routes
+// Contact Queries routes (mega section: General Enquiry + Service Enquiry)
 export const ADMIN_CONTACTS_SHOW = '/admin/contacts'
-export const ADMIN_CONTACT_DETAILS = (id) => id ? `/admin/contacts/details/${id}` : ''
+export const ADMIN_CONTACTS_GENERAL_SHOW = '/admin/contacts/general'
+export const ADMIN_CONTACTS_SERVICE_SHOW = '/admin/contacts/service'
+export const ADMIN_CONTACT_DETAILS = (id, from) => {
+  if (!id) return ''
+  return from ? `/admin/contacts/details/${id}?from=${from}` : `/admin/contacts/details/${id}`
+}
 
 // Trash route
 

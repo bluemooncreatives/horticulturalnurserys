@@ -1,26 +1,45 @@
 'use client'
 import { use, useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import useFetch from '@/hooks/useFetch'
 import BreadCrumb from '@/components/Application/Admin/BreadCrumb'
 import PageHeader from '@/components/Application/Admin/PageHeader'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ADMIN_CONTACTS_SHOW, ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
-import { Mail, User, MessageSquare, Calendar, Tag, Phone, MapPin, SearchX, ArrowLeft } from 'lucide-react'
+import {
+  ADMIN_CONTACTS_SHOW,
+  ADMIN_CONTACTS_GENERAL_SHOW,
+  ADMIN_CONTACTS_SERVICE_SHOW,
+  ADMIN_DASHBOARD,
+} from '@/routes/AdminPanelRoute'
+import { Mail, User, MessageSquare, Calendar, Tag, Phone, MapPin, SearchX, ArrowLeft, Sprout, Maximize2, Clock } from 'lucide-react'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { statusChipStyle } from '@/lib/adminStatus'
 import { FormSkeleton } from '@/components/Application/Admin/Loaders'
 import EmptyState from '@/components/Application/Admin/EmptyState'
 
-const breadcrumbData = [
-  { href: ADMIN_DASHBOARD, label: 'Home' },
-  { href: ADMIN_CONTACTS_SHOW, label: 'Contact Queries' },
-  { href: '', label: 'View Message' },
-]
-
 const ContactDetail = ({ params }) => {
   const { id } = use(params)
+  const searchParams = useSearchParams()
+  const from = searchParams.get('from') // 'general' | 'service' | null
+
+  const backHref =
+    from === 'general'
+      ? ADMIN_CONTACTS_GENERAL_SHOW
+      : from === 'service'
+      ? ADMIN_CONTACTS_SERVICE_SHOW
+      : ADMIN_CONTACTS_SHOW
+  const backLabel =
+    from === 'general' ? 'General Enquiry' : from === 'service' ? 'Service Enquiry' : 'Contact Queries'
+
+  const breadcrumbData = [
+    { href: ADMIN_DASHBOARD, label: 'Home' },
+    { href: ADMIN_CONTACTS_SHOW, label: 'Contact Queries' },
+    ...(from ? [{ href: backHref, label: backLabel }] : []),
+    { href: '', label: 'View Message' },
+  ]
+
   const [contact, setContact] = useState(null)
   const { data, loading } = useFetch(`/api/contact/get/${id}`)
 
@@ -38,9 +57,9 @@ const ContactDetail = ({ params }) => {
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
         actions={
           <Button asChild variant="outline" size="sm" className="h-9">
-            <Link href={ADMIN_CONTACTS_SHOW} className="inline-flex items-center gap-1.5">
+            <Link href={backHref} className="inline-flex items-center gap-1.5">
               <ArrowLeft className="size-4" />
-              Back to Messages
+              Back to {backLabel}
             </Link>
           </Button>
         }
@@ -60,7 +79,7 @@ const ContactDetail = ({ params }) => {
             description="This contact query may have been deleted or moved to the recycle bin."
             action={
               <Button asChild variant="outline" size="sm">
-                <Link href={ADMIN_CONTACTS_SHOW}>Back to contact queries</Link>
+                <Link href={backHref}>Back to {backLabel}</Link>
               </Button>
             }
           />
@@ -149,7 +168,43 @@ const ContactDetail = ({ params }) => {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-border/80 bg-card p-4 shadow-2xs flex gap-3.5 items-start transition-colors hover:border-primary/30 sm:col-span-2">
+              {contact.serviceType && (
+                <div className="rounded-xl border border-border/80 bg-card p-4 shadow-2xs flex gap-3.5 items-start transition-colors hover:border-primary/30">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    <Sprout className="size-4" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Service Requested</p>
+                    <p className="font-semibold text-sm text-foreground">{contact.serviceType}</p>
+                  </div>
+                </div>
+              )}
+
+              {contact.projectScale && (
+                <div className="rounded-xl border border-border/80 bg-card p-4 shadow-2xs flex gap-3.5 items-start transition-colors hover:border-primary/30">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                    <Maximize2 className="size-4" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Project Scale / Area</p>
+                    <p className="font-semibold text-sm text-foreground">{contact.projectScale}</p>
+                  </div>
+                </div>
+              )}
+
+              {contact.preferredTimeline && (
+                <div className="rounded-xl border border-border/80 bg-card p-4 shadow-2xs flex gap-3.5 items-start transition-colors hover:border-primary/30">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                    <Clock className="size-4" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Preferred Timeline</p>
+                    <p className="font-semibold text-sm text-foreground">{contact.preferredTimeline}</p>
+                  </div>
+                </div>
+              )}
+
+              <div className={`rounded-xl border border-border/80 bg-card p-4 shadow-2xs flex gap-3.5 items-start transition-colors hover:border-primary/30 ${contact.serviceType ? '' : 'sm:col-span-2'}`}>
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <Tag className="size-4" />
                 </span>

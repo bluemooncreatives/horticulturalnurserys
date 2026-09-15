@@ -41,6 +41,24 @@ const contactSchema = new mongoose.Schema(
       maxlength: 200,
       default: '',
     },
+    serviceType: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+      default: '',
+    },
+    projectScale: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+      default: '',
+    },
+    preferredTimeline: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+      default: '',
+    },
     message: {
       type: String,
       required: true,

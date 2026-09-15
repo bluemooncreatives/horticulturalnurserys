@@ -12,8 +12,18 @@ export async function GET(request) {
 
     await connectDB()
 
-    const contacts = await ContactModel.find({ deletedAt: null })
-      .select('ticketId name email phone address subject message isRead createdAt')
+    const kind = request.nextUrl.searchParams.get('kind')
+    const matchQuery = { deletedAt: null }
+    if (kind === 'general') {
+      matchQuery.serviceType = { $in: [null, ''] }
+    } else if (kind === 'service') {
+      matchQuery.serviceType = { $nin: [null, ''] }
+    }
+
+    const contacts = await ContactModel.find(matchQuery)
+      .select(
+        'ticketId name email phone address subject serviceType projectScale preferredTimeline message isRead createdAt'
+      )
       .sort({ createdAt: -1 })
       .lean()
 

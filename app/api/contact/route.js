@@ -12,7 +12,7 @@ import { NextResponse } from 'next/server'
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { name, email, phone, address, subject, message } = body
+    const { name, email, phone, address, subject, serviceType, projectScale, preferredTimeline, message } = body
 
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
       return response(false, 400, 'Name is required.')
@@ -38,7 +38,10 @@ export async function POST(request) {
       email: email.trim().toLowerCase(),
       phone: phone.trim(),
       address: address?.trim() || '',
-      subject: subject?.trim() || '',
+      subject: subject?.trim() || (serviceType?.trim() ? `Service Enquiry: ${serviceType.trim()}` : ''),
+      serviceType: serviceType?.trim() || '',
+      projectScale: projectScale?.trim() || '',
+      preferredTimeline: preferredTimeline?.trim() || '',
       message: message.trim(),
     }
 
@@ -107,12 +110,21 @@ export async function GET(request) {
     const globalFilter = searchParams.get('globalFilter') || ''
     const sorting = JSON.parse(searchParams.get('sorting') || '[]')
     const deleteType = searchParams.get('deleteType')
+    // kind: 'general' -> plain contact-form submissions (no service picked),
+    // 'service' -> submissions raised against one of the 4 services.
+    const kind = searchParams.get('kind')
 
     let matchQuery = {}
     if (deleteType === 'SD') {
       matchQuery = { deletedAt: null }
     } else if (deleteType === 'PD') {
       matchQuery = { deletedAt: { $ne: null } }
+    }
+
+    if (kind === 'general') {
+      matchQuery.serviceType = { $in: [null, ''] }
+    } else if (kind === 'service') {
+      matchQuery.serviceType = { $nin: [null, ''] }
     }
 
     if (globalFilter) {

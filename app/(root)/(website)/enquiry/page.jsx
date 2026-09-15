@@ -115,8 +115,8 @@ const Enquiry = () => {
                         </p>
                         {result.ticketId && (
                             <div className="mt-6 w-full rounded-xl border border-border/60 bg-muted/30 px-6 py-4">
-                                <p className="text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">Your enquiry reference</p>
-                                <p className="mt-1 font-mono text-lg font-semibold tracking-wide text-[var(--dark-red)]">{result.ticketId}</p>
+                                <p className="text-[0.8rem] font-semibold uppercase text-muted-foreground">Your enquiry reference</p>
+                                <p className="mt-1 font-mono text-lg font-semibold text-[var(--dark-red)]">{result.ticketId}</p>
                             </div>
                         )}
                         <div className="mt-8 w-full max-w-[240px]">
@@ -175,7 +175,7 @@ const Enquiry = () => {
 
                                 <div className="mb-5 flex items-center gap-2">
                                     <User className="size-[18px] text-[var(--dark-red)]" strokeWidth={1.75} />
-                                    <h2 className="font-neue text-base font-semibold uppercase tracking-[0.06em]">Your Contact Details</h2>
+                                    <h2 className="font-neue text-base font-semibold uppercase">Your Contact Details</h2>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -203,7 +203,7 @@ const Enquiry = () => {
 
                                 <div className="mb-5 mt-10 flex items-center gap-2">
                                     <Leaf className="size-[18px] text-[var(--dark-red)]" strokeWidth={1.75} />
-                                    <h2 className="font-neue text-base font-semibold uppercase tracking-[0.06em]">Delivery Location <span className="ml-1 text-[0.8rem] font-medium normal-case tracking-normal text-muted-foreground">(optional)</span></h2>
+                                    <h2 className="font-neue text-base font-semibold uppercase">Delivery Location <span className="ml-1 text-[0.8rem] font-medium normal-case tracking-normal text-muted-foreground">(optional)</span></h2>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -253,8 +253,8 @@ const Enquiry = () => {
                         <div className="space-y-4 lg:sticky lg:top-6">
                             <div className="overflow-hidden rounded-md border border-border/60 bg-background shadow-sm">
                                 <div className="flex items-center justify-between border-b border-border/60 px-5 py-4">
-                                    <h2 className="font-neue text-lg font-semibold uppercase tracking-[0.04em]">Your Enquiry</h2>
-                                    <span className="rounded-full bg-muted/60 px-2.5 py-0.5 text-[0.8rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                                    <h2 className="font-neue text-lg font-semibold uppercase">Your Enquiry</h2>
+                                    <span className="rounded-full bg-muted/60 px-2.5 py-0.5 text-[0.8rem] font-medium uppercase text-muted-foreground">
                                         {cart.count} {cart.count === 1 ? 'item' : 'items'}
                                     </span>
                                 </div>
@@ -275,7 +275,7 @@ const Enquiry = () => {
                                                     </button>
                                                 </div>
                                                 {(product.size || product.color) && (
-                                                    <span className="mt-1 w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase tracking-[0.1em] text-muted-foreground">
+                                                    <span className="mt-1 w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase text-muted-foreground">
                                                         {[product.size, product.color].filter(Boolean).join(' / ')}
                                                     </span>
                                                 )}
@@ -289,7 +289,7 @@ const Enquiry = () => {
                                                             <Plus className="size-3" />
                                                         </Button>
                                                     </div>
-                                                    <span className="text-[0.8rem] font-medium uppercase tracking-[0.06em] text-muted-foreground">Price on enquiry</span>
+                                                    <span className="text-[0.8rem] font-medium uppercase text-muted-foreground">Price on enquiry</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -309,9 +309,9 @@ const Enquiry = () => {
                                         type="submit"
                                         text="Submit Enquiry"
                                         loading={submitting}
-                                        className="h-12 w-full rounded-sm bg-[var(--dark-red)] text-base font-semibold uppercase tracking-[0.04em] hover:bg-[var(--dark-red-2)] cursor-pointer"
+                                        className="h-12 w-full rounded-sm bg-[var(--dark-red)] text-base font-semibold uppercase hover:bg-[var(--dark-red-2)] cursor-pointer"
                                     />
-                                    <Link href={WEBSITE_CART} className="mt-3 flex items-center justify-center gap-1.5 text-[0.8rem] font-medium uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground">
+                                    <Link href={WEBSITE_CART} className="mt-3 flex items-center justify-center gap-1.5 text-[0.8rem] font-medium uppercase text-muted-foreground transition-colors hover:text-foreground">
                                         ← Edit enquiry list
                                     </Link>
                                 </div>

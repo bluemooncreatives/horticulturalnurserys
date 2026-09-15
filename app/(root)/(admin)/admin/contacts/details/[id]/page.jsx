@@ -93,7 +93,7 @@ const ContactDetail = ({ params }) => {
             <div className="flex items-center justify-between mb-6 pb-5 border-b border-border/70">
               <div className="flex items-center gap-3">
                 {contact.ticketId && (
-                  <span className="font-mono text-sm font-semibold tracking-wide bg-muted/60 border border-border/70 px-2.5 py-1 rounded-md">
+                  <span className="font-mono text-sm font-semibold bg-muted/60 border border-border/70 px-2.5 py-1 rounded-md">
                     {contact.ticketId}
                   </span>
                 )}
@@ -120,7 +120,7 @@ const ContactDetail = ({ params }) => {
                   <User className="size-4" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">From</p>
+                  <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">From</p>
                   <p className="font-semibold text-sm text-foreground truncate">{contact.name}</p>
                 </div>
               </div>
@@ -130,7 +130,7 @@ const ContactDetail = ({ params }) => {
                   <Mail className="size-4" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Email</p>
+                  <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Email</p>
                   <a
                     href={`mailto:${contact.email}`}
                     className="text-sm font-medium text-primary hover:underline truncate block"
@@ -145,7 +145,7 @@ const ContactDetail = ({ params }) => {
                   <Phone className="size-4" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Mobile</p>
+                  <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Mobile</p>
                   {contact.phone ? (
                     <a
                       href={`tel:${contact.phone}`}
@@ -164,7 +164,7 @@ const ContactDetail = ({ params }) => {
                   <MapPin className="size-4" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Address</p>
+                  <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Address</p>
                   <p className="font-medium text-sm text-foreground">{contact.address || <span className="text-muted-foreground italic">Not provided</span>}</p>
                 </div>
               </div>
@@ -175,7 +175,7 @@ const ContactDetail = ({ params }) => {
                     <Sprout className="size-4" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Service Requested</p>
+                    <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Service Requested</p>
                     <p className="font-semibold text-sm text-foreground">{contact.serviceType}</p>
                   </div>
                 </div>
@@ -187,7 +187,7 @@ const ContactDetail = ({ params }) => {
                     <Maximize2 className="size-4" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Project Scale / Area</p>
+                    <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Project Scale / Area</p>
                     <p className="font-semibold text-sm text-foreground">{contact.projectScale}</p>
                   </div>
                 </div>
@@ -199,7 +199,7 @@ const ContactDetail = ({ params }) => {
                     <Clock className="size-4" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Preferred Timeline</p>
+                    <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Preferred Timeline</p>
                     <p className="font-semibold text-sm text-foreground">{contact.preferredTimeline}</p>
                   </div>
                 </div>
@@ -210,7 +210,7 @@ const ContactDetail = ({ params }) => {
                   <Tag className="size-4" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Subject</p>
+                  <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Subject</p>
                   <p className="font-semibold text-sm text-foreground">{contact.subject || <span className="text-muted-foreground italic">No subject</span>}</p>
                 </div>
               </div>
@@ -222,7 +222,7 @@ const ContactDetail = ({ params }) => {
                 <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
                   <MessageSquare className="size-3.5" />
                 </span>
-                <p className="text-xs uppercase tracking-wider font-medium text-muted-foreground">Message</p>
+                <p className="text-xs uppercase font-medium text-muted-foreground">Message</p>
               </div>
               <p className="text-sm leading-relaxed whitespace-pre-wrap text-foreground/90">{contact.message}</p>
             </div>

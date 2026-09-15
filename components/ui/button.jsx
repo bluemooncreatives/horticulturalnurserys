@@ -26,7 +26,7 @@ const buttonVariants = cva(
           "bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/30",
         success:
           "bg-success text-success-foreground shadow-xs hover:bg-success/90 focus-visible:ring-success/30",
-        pill: "rounded-full border-current bg-transparent font-semibold uppercase tracking-[0em]",
+        pill: "rounded-full border-current bg-transparent font-semibold uppercase",
         brand:
           "rounded-full bg-[var(--dark-red)] text-white hover:bg-[var(--dark-red-2)] focus-visible:ring-[var(--dark-red)]/40",
         "brand-outline":

@@ -78,7 +78,7 @@ export const FAQ = ({
                             onClick={() => setSelected(key)}
                             className={cn(
                                 'relative overflow-hidden rounded-[var(--radius-pill)] border px-4 py-2',
-                                'text-[0.8rem] font-semibold uppercase tracking-[0.12em]',
+                                'text-[0.8rem] font-semibold uppercase',
                                 'transition-colors duration-300',
                                 active
                                     ? 'border-[var(--brand-primary)] text-white'

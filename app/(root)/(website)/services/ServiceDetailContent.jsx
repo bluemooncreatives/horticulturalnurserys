@@ -75,7 +75,7 @@ export default function ServiceDetailContent({ service }) {
     <main className="min-h-screen bg-[var(--background)]">
 
       {/* ══ Hero ═══════════════════════════════════════════════ */}
-      <section className="relative flex h-[88vh] min-h-[560px] flex-col justify-end overflow-hidden bg-[var(--brand-ink-soft)]">
+      <section className="relative flex h-[88vh] min-h-[560px] flex-col overflow-hidden bg-[var(--brand-ink-soft)]">
         {service.images?.[0] && (
           <div
             ref={heroImgRef}
@@ -102,8 +102,10 @@ export default function ServiceDetailContent({ service }) {
           style={{ background: `radial-gradient(ellipse at 15% 90%, ${service.accent || '#C9F24E'} 0%, transparent 62%)` }}
         />
 
-        {/* Back link - pinned to the top of the hero */}
-        <div className="lumora-shell absolute inset-x-0 top-0 z-10 pt-8">
+        {/* Back link - sits in normal flow above the headline (so it can never
+            overlap it on short viewports), offset down to clear the fixed
+            transparent site header instead of sitting behind it */}
+        <div className="lumora-shell relative z-10 pt-20 sm:pt-22 lg:pt-24">
           <Link
             href="/services"
             className="group inline-flex items-center gap-2 text-[0.8rem] font-medium text-white/45 transition-colors hover:text-white"
@@ -114,7 +116,7 @@ export default function ServiceDetailContent({ service }) {
         </div>
 
         {/* Headline block */}
-        <div className="lumora-shell relative z-10 pb-10 lg:pb-12">
+        <div className="lumora-shell relative z-10 mt-auto pb-10 lg:pb-12">
           <RevealUp
             as="p"
             delay={60}
@@ -152,7 +154,7 @@ export default function ServiceDetailContent({ service }) {
                     delay={340 + i * 70}
                     className={`border-white/10 py-5 lg:py-6 ${STAT_CELL_EDGES[i % 4]}`}
                   >
-                    <dt className="text-[0.8rem] font-semibold uppercase tracking-[0.22em] text-white/40">
+                    <dt className="text-[0.8rem] font-semibold uppercase text-white/40">
                       {stat.label}
                     </dt>
                     <dd className="mt-1.5 font-neue text-[clamp(1.05rem,2vw,1.4rem)] font-medium leading-tight tracking-[-0.01em] text-white">
@@ -209,7 +211,7 @@ export default function ServiceDetailContent({ service }) {
             {service.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-4 py-1.5 text-[0.8rem] font-medium uppercase tracking-[0.12em] text-[var(--brand-primary)]"
+                className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-4 py-1.5 text-[0.8rem] font-medium uppercase text-[var(--brand-primary)]"
               >
                 {tag}
               </span>
@@ -285,7 +287,7 @@ export default function ServiceDetailContent({ service }) {
                   className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-[var(--brand-lime)]/0 blur-2xl transition-all duration-500 group-hover:bg-[var(--brand-lime)]/25"
                 />
 
-                <span className="relative text-[0.8rem] font-semibold uppercase tracking-[0.26em] text-[var(--brand-primary)]/40">
+                <span className="relative text-[0.8rem] font-semibold uppercase text-[var(--brand-primary)]/40">
                   {String(i + 1).padStart(2, '0')}
                 </span>
 
@@ -365,7 +367,7 @@ export default function ServiceDetailContent({ service }) {
                     <dl className="mt-auto flex flex-col gap-2.5 border-t border-white/10 pt-5">
                       {item.specs.map((spec) => (
                         <div key={spec.label} className="flex items-baseline justify-between gap-4">
-                          <dt className="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-white/35">
+                          <dt className="text-[0.8rem] font-semibold uppercase text-white/35">
                             {spec.label}
                           </dt>
                           <dd className="text-right text-[0.82rem] font-medium text-white/85">
@@ -408,7 +410,7 @@ export default function ServiceDetailContent({ service }) {
                     delay={120 + i * 80}
                     className="flex flex-col gap-2 py-5 sm:flex-row sm:items-start sm:gap-6"
                   >
-                    <span className="shrink-0 pt-0.5 text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-[var(--brand-primary)] sm:w-32">
+                    <span className="shrink-0 pt-0.5 text-[0.8rem] font-semibold uppercase text-[var(--brand-primary)] sm:w-32">
                       {mat.name}
                     </span>
                     <span className="text-[0.85rem] leading-[1.7] text-[var(--muted-foreground)]">
@@ -546,7 +548,7 @@ export default function ServiceDetailContent({ service }) {
                   delay={80 + i * 80}
                   className="bg-[var(--brand-white)] px-6 py-8 lg:px-8 lg:py-10"
                 >
-                  <dt className="text-[0.8rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)]">
+                  <dt className="text-[0.8rem] font-semibold uppercase text-[var(--muted-foreground)]">
                     {figure.label}
                   </dt>
                   <dd className="mt-3 font-neue text-[clamp(1.5rem,3.2vw,2.25rem)] font-medium leading-none tracking-[-0.03em] text-[var(--brand-primary)]">

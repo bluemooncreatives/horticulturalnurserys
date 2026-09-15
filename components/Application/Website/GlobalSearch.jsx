@@ -224,7 +224,7 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                                 {recent.length > 0 && (
                                     <CommandGroup>
                                         <div className="flex items-center justify-between px-2 pb-1">
-                                            <span className="text-[0.8rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                            <span className="text-[0.8rem] font-semibold uppercase text-muted-foreground">
                                                 Recent
                                             </span>
                                             <button
@@ -371,7 +371,7 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                                                                 {product?.name}
                                                             </p>
                                                             <p className="flex items-center gap-2 text-[13px]">
-                                                                <span className="text-[0.8rem] font-semibold uppercase tracking-[0.06em] text-[var(--dark-red)]">
+                                                                <span className="text-[0.8rem] font-semibold uppercase text-[var(--dark-red)]">
                                                                     Price on enquiry
                                                                 </span>
                                                             </p>

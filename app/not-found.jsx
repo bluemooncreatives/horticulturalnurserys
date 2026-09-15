@@ -44,13 +44,13 @@ export default function GlobalNotFound() {
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
                     <Link
                         href={WEBSITE_HOME}
-                        className="border border-[var(--dark-red)] px-8 py-3 text-sm font-medium uppercase tracking-widest text-[var(--dark-red)] transition-colors hover:bg-[var(--dark-red)] hover:text-white"
+                        className="border border-[var(--dark-red)] px-8 py-3 text-sm font-medium uppercase text-[var(--dark-red)] transition-colors hover:bg-[var(--dark-red)] hover:text-white"
                     >
                         Back to Home
                     </Link>
                     <Link
                         href={WEBSITE_SHOP_PLANTS}
-                        className="bg-[var(--dark-red)] px-8 py-3 text-sm font-medium uppercase tracking-widest text-white transition-colors hover:bg-[var(--dark-red-2)]"
+                        className="bg-[var(--dark-red)] px-8 py-3 text-sm font-medium uppercase text-white transition-colors hover:bg-[var(--dark-red-2)]"
                     >
                         Shop Now
                     </Link>
@@ -61,7 +61,7 @@ export default function GlobalNotFound() {
                         <Link
                             key={link.url}
                             href={link.url}
-                            className="text-sm font-medium tracking-wide text-[var(--dark-red-2)] underline underline-offset-4 transition-colors hover:text-[var(--dark-red)]"
+                            className="text-sm font-medium text-[var(--dark-red-2)] underline underline-offset-4 transition-colors hover:text-[var(--dark-red)]"
                         >
                             {link.title}
                         </Link>

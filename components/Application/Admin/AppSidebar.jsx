@@ -18,8 +18,8 @@ const AppSidebar = () => {
                 <TeamSwitcher teams={sidebarData.teams} />
             </SidebarHeader>
             <SidebarContent>
-                {sidebarData.navGroups.map((group) => (
-                    <NavGroup key={group.title} {...group} />
+                {sidebarData.navGroups.map((group, index) => (
+                    <NavGroup key={group.title || index} {...group} />
                 ))}
             </SidebarContent>
             {/* SidebarFooter ships with no padding, so the account row used to sit

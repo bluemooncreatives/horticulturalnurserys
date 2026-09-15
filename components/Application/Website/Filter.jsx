@@ -22,7 +22,7 @@ const ChipSkeletons = ({ count = 4 }) => (
 // Shared pill-chip look for the Category facet - filled brand-green
 // when selected, outlined neutral otherwise.
 const chipClass = (active) =>
-    `inline-flex items-center rounded-full border px-3.5 py-1.5 text-[0.8rem] font-semibold tracking-[0.02em] transition ${active
+    `inline-flex items-center rounded-full border px-3.5 py-1.5 text-[0.8rem] font-semibold transition ${active
         ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
         : 'border-border/70 bg-background text-[var(--brand-primary)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]'
     }`

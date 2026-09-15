@@ -128,7 +128,7 @@ export default function Navbar({
     setTimeout(open, 80)
   }
 
-  const LINK_CLASS = "text-[0.95rem] font-semibold tracking-[0.01em] text-[var(--brand-primary)]"
+  const LINK_CLASS = "text-[0.95rem] font-semibold text-[var(--brand-primary)]"
 
   return (
     <div
@@ -206,7 +206,7 @@ export default function Navbar({
                 href={cta.url}
                 underline={false}
                 background={<CircleReveal color="var(--brand-lime)" />}
-                className="h-8 items-center justify-center overflow-hidden rounded-full bg-[var(--brand-primary-deep)] px-6 text-[0.85rem] font-medium tracking-[0.01em] text-white transition-colors duration-500 hover:text-[var(--brand-primary-deep)]"
+                className="h-8 items-center justify-center overflow-hidden rounded-full bg-[var(--brand-primary-deep)] px-6 text-[0.85rem] font-medium text-white transition-colors duration-500 hover:text-[var(--brand-primary-deep)]"
               >
                 {cta.title}
               </RollingLink>
@@ -298,7 +298,7 @@ export default function Navbar({
                       <SheetClose asChild>
                         <Link
                           href={item.url}
-                          className="group mx-2 mb-0.5 flex items-center gap-2 rounded-[var(--radius-xl)] px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-widest text-[var(--brand-primary)]/60 transition-colors hover:text-[var(--brand-primary)]"
+                          className="group mx-2 mb-0.5 flex items-center gap-2 rounded-[var(--radius-xl)] px-3 py-2 text-[0.82rem] font-semibold uppercase text-[var(--brand-primary)]/60 transition-colors hover:text-[var(--brand-primary)]"
                         >
                           View all {item.title} →
                         </Link>

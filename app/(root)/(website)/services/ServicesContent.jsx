@@ -54,7 +54,7 @@ function Chip({ children, tone = 'light', className = '' }) {
       : 'border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)]'
   return (
     <span
-      className={`inline-flex items-center rounded-[var(--radius-pill)] border px-4 py-1.5 text-[0.8rem] font-semibold uppercase tracking-[0.24em] ${skin} ${className}`}
+      className={`inline-flex items-center rounded-[var(--radius-pill)] border px-4 py-1.5 text-[0.8rem] font-semibold uppercase ${skin} ${className}`}
     >
       {children}
     </span>

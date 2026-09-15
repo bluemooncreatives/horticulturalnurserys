@@ -26,7 +26,7 @@ const CartPageClient = () => {
                 <div className="absolute inset-0 bg-[var(--dark-red-2)]" />
                 <div className="absolute inset-x-0 top-14 z-10 flex justify-center sm:top-5 lg:top-6">
                     <div
-                        className="pointer-events-none select-none font-neue font-semibold uppercase tracking-[0.02em] text-white/90"
+                        className="pointer-events-none select-none font-neue font-semibold uppercase text-white/90"
                         style={{
                             fontSize: "clamp(4.5rem, 20vw, 18rem)",
                             lineHeight: 0.78,
@@ -48,14 +48,14 @@ const CartPageClient = () => {
                         <div className="lg:col-span-2">
                             <Card className="mx-auto w-full max-w-2xl border-border/60 shadow-sm">
                                 <CardHeader className="border-b border-border/60">
-                                    <CardTitle className="text-xl font-semibold uppercase tracking-[0.04em]">Your enquiry list is empty</CardTitle>
+                                    <CardTitle className="text-xl font-semibold uppercase">Your enquiry list is empty</CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-3 text-muted-foreground">
                                     <p>You haven&apos;t added any products yet.</p>
                                     <p>Browse the catalogue and add the plants &amp; supplies you need to send us an enquiry.</p>
                                 </CardContent>
                                 <CardFooter className="flex justify-start">
-                                    <Button type="button" asChild variant="brand" className="px-6 text-[0.8rem] font-semibold uppercase tracking-[0em]">
+                                    <Button type="button" asChild variant="brand" className="px-6 text-[0.8rem] font-semibold uppercase">
                                         <Link href={WEBSITE_SHOP}>Browse Catalogue</Link>
                                     </Button>
                                 </CardFooter>
@@ -67,7 +67,7 @@ const CartPageClient = () => {
                                 <div className="sticky top-6">
                                     <Card className="border-border/60 shadow-sm">
                                         <CardHeader className="border-b border-border/60">
-                                            <CardTitle className="text-lg font-semibold uppercase tracking-[0.04em]">Enquiry Summary</CardTitle>
+                                            <CardTitle className="text-lg font-semibold uppercase">Enquiry Summary</CardTitle>
                                         </CardHeader>
                                         <CardContent className="space-y-3">
                                             <div className="flex items-center justify-between text-sm">
@@ -85,10 +85,10 @@ const CartPageClient = () => {
                                             </p>
                                         </CardContent>
                                         <CardFooter className="flex flex-col gap-3">
-                                            <Button type="button" onClick={() => router.push(WEBSITE_ENQUIRY)} variant="brand" className="h-11 w-full text-[0.8rem] font-semibold uppercase tracking-[0.2em]">
+                                            <Button type="button" onClick={() => router.push(WEBSITE_ENQUIRY)} variant="brand" className="h-11 w-full text-[0.8rem] font-semibold uppercase">
                                                 Submit Enquiry
                                             </Button>
-                                            <Button type="button" variant="link" asChild className="h-auto p-0 text-[0.8rem] font-semibold uppercase tracking-[0.24em] text-foreground">
+                                            <Button type="button" variant="link" asChild className="h-auto p-0 text-[0.8rem] font-semibold uppercase text-foreground">
                                                 <Link href={WEBSITE_SHOP}>Continue Browsing</Link>
                                             </Button>
                                         </CardFooter>
@@ -124,10 +124,10 @@ const CartPageClient = () => {
                                                                         {product.name}
                                                                     </Link>
                                                                 </h4>
-                                                                <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                                                                <p className="text-xs uppercase text-muted-foreground">
                                                                     {product.color} / {product.size}
                                                                 </p>
-                                                                <p className="mt-1 text-[0.8rem] font-medium uppercase tracking-[0.08em] text-[var(--dark-red)]">
+                                                                <p className="mt-1 text-[0.8rem] font-medium uppercase text-[var(--dark-red)]">
                                                                     Price on enquiry
                                                                 </p>
                                                             </div>

@@ -149,7 +149,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                 <div className="absolute inset-0 bg-background" />
                 <div className="absolute inset-x-0 top-14 z-10 flex justify-center sm:top-12 lg:top-16">
                     <div
-                        className="pointer-events-none select-none font-neue font-semibold uppercase tracking-[0.02em] text-[var(--brand-primary)]/90"
+                        className="pointer-events-none select-none font-neue font-semibold uppercase text-[var(--brand-primary)]/90"
                         style={{
                             fontSize: "clamp(2.25rem, 8vw, 6.5rem)",
                             lineHeight: 0.78,
@@ -301,7 +301,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                                     siblings={isMobile ? 0 : 1}
                                 />
                                 {total > 0 && (
-                                    <p className="font-neue text-[0.8rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+                                    <p className="font-neue text-[0.8rem] font-semibold uppercase text-muted-foreground">
                                         Page {Math.min(page + 1, totalPages)} of {totalPages} · {total} {total === 1 ? 'item' : 'items'}
                                     </p>
                                 )}

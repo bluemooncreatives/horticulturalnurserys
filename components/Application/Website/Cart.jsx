@@ -51,11 +51,11 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                 {/* Header */}
                 <SheetHeader className="flex-shrink-0 border-b border-border/50 px-5 py-4 sm:px-6 sm:py-5">
                     <div className="flex items-center justify-between pr-8">
-                        <SheetTitle className="font-header text-2xl leading-none tracking-wide text-[var(--brand-primary)] sm:font-neue sm:text-xl sm:font-semibold sm:leading-normal sm:tracking-[0.01em] sm:text-foreground">
+                        <SheetTitle className="font-header text-2xl leading-none text-[var(--brand-primary)] sm:font-neue sm:text-xl sm:font-semibold sm:leading-normal sm:text-foreground">
                             My Enquiry
                         </SheetTitle>
                         {cartCount > 0 && (
-                            <span className="rounded-full bg-[var(--brand-cream)]/60 px-2.5 py-0.5 text-[0.8rem] font-medium uppercase tracking-[0.14em] text-[var(--brand-primary)] sm:bg-muted/60 sm:text-muted-foreground">
+                            <span className="rounded-full bg-[var(--brand-cream)]/60 px-2.5 py-0.5 text-[0.8rem] font-medium uppercase text-[var(--brand-primary)] sm:bg-muted/60 sm:text-muted-foreground">
                                 {cartCount} {cartCount === 1 ? 'item' : 'items'}
                             </span>
                         )}
@@ -70,7 +70,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                             <div className="flex size-16 items-center justify-center rounded-full bg-[var(--brand-cream)]/50 text-[var(--brand-primary)]">
                                 <ShoppingCartIcon className="size-8" strokeWidth={1.5} />
                             </div>
-                            <h3 className="font-header mt-5 text-2xl leading-none tracking-wide text-[var(--brand-primary)] sm:font-neue sm:text-xl sm:font-semibold sm:leading-normal sm:tracking-normal sm:text-foreground">
+                            <h3 className="font-header mt-5 text-2xl leading-none text-[var(--brand-primary)] sm:font-neue sm:text-xl sm:font-semibold sm:leading-normal sm:tracking-normal sm:text-foreground">
                                 Your enquiry list is empty
                             </h3>
                             <p className="font-neue mt-2.5 max-w-[220px] text-sm text-muted-foreground">
@@ -108,21 +108,21 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                         <h4 className="line-clamp-2 font-neue text-[13px] font-semibold leading-snug text-foreground">
                                             {product.name}
                                         </h4>
-                                        <span className="w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase tracking-[0.1em] text-muted-foreground">
+                                        <span className="w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase text-muted-foreground">
                                             {product.size} / {product.color}
                                         </span>
                                         <div className="flex items-center justify-between">
                                             <span className="rounded-xs bg-[var(--dark-red)]/10 px-1.5 py-0.5 font-neue text-[0.8rem] font-semibold text-[var(--dark-red)]">
                                                 Qty ×{product.qty}
                                             </span>
-                                            <span className="font-neue text-[0.8rem] font-medium uppercase tracking-[0.06em] text-muted-foreground">
+                                            <span className="font-neue text-[0.8rem] font-medium uppercase text-muted-foreground">
                                                 Price on enquiry
                                             </span>
                                         </div>
                                         <button
                                             type="button"
                                             onClick={() => dispatch(removeFromCart({ productId: product.productId, variantId: product.variantId }))}
-                                            className="w-fit cursor-pointer text-[0.8rem] font-medium uppercase tracking-[0.08em] text-muted-foreground/50 transition-colors hover:text-[var(--dark-red)]"
+                                            className="w-fit cursor-pointer text-[0.8rem] font-medium uppercase text-muted-foreground/50 transition-colors hover:text-[var(--dark-red)]"
                                         >
                                             Remove
                                         </button>
@@ -151,7 +151,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                         <BrandOutlineButton
                             type="button"
                             asChild
-                            className="text-[13px] tracking-wide sm:text-base sm:tracking-normal"
+                            className="text-[13px] sm:text-base sm:tracking-normal"
                             onClick={() => setOpen(false)}
                         >
                             <Link href={WEBSITE_CART}>View List</Link>
@@ -159,7 +159,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                         <BrandButton
                             type="button"
                             asChild
-                            className="text-[13px] tracking-wide sm:text-base sm:tracking-normal"
+                            className="text-[13px] sm:text-base sm:tracking-normal"
                             onClick={() => setOpen(false)}
                         >
                             {cart.count ? (

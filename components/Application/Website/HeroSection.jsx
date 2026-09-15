@@ -231,7 +231,7 @@ const HeroSection = () => {
                 {CRAFT_MARKS.map((mark) => (
                   <span
                     key={mark}
-                    className="hero-mark flex items-center gap-1.5 text-[0.8rem] font-medium tracking-wide text-white/80 sm:text-[0.8rem]"
+                    className="hero-mark flex items-center gap-1.5 text-[0.8rem] font-medium text-white/80 sm:text-[0.8rem]"
                   >
                     <span aria-hidden className="text-[var(--brand-lime)]">✦</span>
                     {mark}

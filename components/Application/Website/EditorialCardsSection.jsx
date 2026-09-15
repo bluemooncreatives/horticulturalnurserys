@@ -80,7 +80,7 @@ const EditorialCardsSection = () => {
                         <div className="absolute inset-x-0 bottom-0 p-6 lg:p-7">
 
                             {/* number tag */}
-                            <p className="mb-3 text-[0.8rem] font-semibold uppercase tracking-[0.32em] text-white/50">
+                            <p className="mb-3 text-[0.8rem] font-semibold uppercase text-white/50">
                                 {card.num}
                             </p>
 

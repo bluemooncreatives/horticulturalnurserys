@@ -103,7 +103,7 @@ const EnquiryDetail = ({ params }) => {
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-5 border-b border-border/70">
               <div className="flex items-center gap-3">
                 {enquiry.ticketId && (
-                  <span className="font-mono text-sm font-semibold tracking-wide bg-muted/60 border border-border/70 px-2.5 py-1 rounded-md">
+                  <span className="font-mono text-sm font-semibold bg-muted/60 border border-border/70 px-2.5 py-1 rounded-md">
                     {enquiry.ticketId}
                   </span>
                 )}
@@ -124,7 +124,7 @@ const EnquiryDetail = ({ params }) => {
                   <User className="size-4" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">From</p>
+                  <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">From</p>
                   <p className="font-semibold text-sm text-foreground truncate">{enquiry.name}</p>
                 </div>
               </div>
@@ -134,7 +134,7 @@ const EnquiryDetail = ({ params }) => {
                   <Mail className="size-4" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Email</p>
+                  <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Email</p>
                   <a href={`mailto:${enquiry.email}`} className="text-sm font-medium text-primary hover:underline truncate block">
                     {enquiry.email}
                   </a>
@@ -146,7 +146,7 @@ const EnquiryDetail = ({ params }) => {
                   <Phone className="size-4" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Mobile</p>
+                  <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Mobile</p>
                   <a href={`tel:${enquiry.phone}`} className="text-sm font-medium text-primary hover:underline truncate block">
                     {enquiry.phone}
                   </a>
@@ -158,7 +158,7 @@ const EnquiryDetail = ({ params }) => {
                   <MapPin className="size-4" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[0.7rem] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Location</p>
+                  <p className="text-[0.7rem] uppercase text-muted-foreground font-medium mb-0.5">Location</p>
                   <p className="font-medium text-sm text-foreground">
                     {locationParts.length ? locationParts.join(', ') : <span className="text-muted-foreground italic">Not provided</span>}
                   </p>
@@ -172,7 +172,7 @@ const EnquiryDetail = ({ params }) => {
                 <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
                   <Package className="size-3.5" />
                 </span>
-                <p className="text-xs uppercase tracking-wider font-medium text-muted-foreground">
+                <p className="text-xs uppercase font-medium text-muted-foreground">
                   Products requested ({enquiry.products?.length || 0})
                 </p>
               </div>
@@ -194,7 +194,7 @@ const EnquiryDetail = ({ params }) => {
             {/* Customer note */}
             {enquiry.message && (
               <div className="rounded-xl border border-border/80 bg-muted/20 p-5 mb-6 shadow-2xs">
-                <p className="text-xs uppercase tracking-wider font-medium text-muted-foreground mb-2">Customer note</p>
+                <p className="text-xs uppercase font-medium text-muted-foreground mb-2">Customer note</p>
                 <p className="text-sm leading-relaxed whitespace-pre-wrap text-foreground/90">{enquiry.message}</p>
               </div>
             )}
@@ -205,7 +205,7 @@ const EnquiryDetail = ({ params }) => {
                 <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
                   <StickyNote className="size-3.5" />
                 </span>
-                <p className="text-xs uppercase tracking-wider font-medium text-muted-foreground">Manage enquiry</p>
+                <p className="text-xs uppercase font-medium text-muted-foreground">Manage enquiry</p>
               </div>
 
               <label className="block text-xs font-medium text-muted-foreground mb-2">Status</label>

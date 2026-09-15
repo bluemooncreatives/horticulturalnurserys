@@ -113,7 +113,7 @@ export default function TestimonialClient({ testimonials = [] }) {
     >
       {/* ── Centralized Eyebrow + Header ── */}
       <div className="website-gutter mx-auto max-w flex flex-col items-center text-center">
-        <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-black/50">
+        <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-black/50">
           <span
             aria-hidden
             className="size-1.5 shrink-0 rounded-full bg-[var(--brand-primary)]"

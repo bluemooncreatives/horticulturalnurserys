@@ -10,6 +10,7 @@ import {
   ADMIN_CONTACTS_SHOW,
   ADMIN_CONTACTS_GENERAL_SHOW,
   ADMIN_CONTACTS_SERVICE_SHOW,
+  ADMIN_ENQUIRY_SHOW,
   ADMIN_DASHBOARD,
 } from '@/routes/AdminPanelRoute'
 import { Mail, User, MessageSquare, Calendar, Tag, Phone, MapPin, SearchX, ArrowLeft, Sprout, Maximize2, Clock } from 'lucide-react'
@@ -35,8 +36,8 @@ const ContactDetail = ({ params }) => {
 
   const breadcrumbData = [
     { href: ADMIN_DASHBOARD, label: 'Home' },
-    { href: ADMIN_CONTACTS_SHOW, label: 'Contact Queries' },
-    ...(from ? [{ href: backHref, label: backLabel }] : []),
+    { href: ADMIN_ENQUIRY_SHOW, label: 'Enquiries' },
+    ...(from ? [{ href: backHref, label: backLabel }] : [{ href: ADMIN_CONTACTS_SHOW, label: 'Contact Queries' }]),
     { href: '', label: 'View Message' },
   ]
 

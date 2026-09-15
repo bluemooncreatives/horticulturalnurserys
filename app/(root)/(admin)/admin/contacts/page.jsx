@@ -5,6 +5,7 @@ import useFetch from '@/hooks/useFetch'
 import {
   ADMIN_CONTACTS_GENERAL_SHOW,
   ADMIN_CONTACTS_SERVICE_SHOW,
+  ADMIN_ENQUIRY_SHOW,
   ADMIN_DASHBOARD,
 } from '@/routes/AdminPanelRoute'
 import { ArrowRight, Handshake, MessageCircleQuestion } from 'lucide-react'
@@ -12,6 +13,7 @@ import Link from 'next/link'
 
 const breadcrumbData = [
   { href: ADMIN_DASHBOARD, label: 'Home' },
+  { href: ADMIN_ENQUIRY_SHOW, label: 'Enquiries' },
   { href: '', label: 'Contact Queries' },
 ]
 

@@ -1,7 +1,7 @@
 import { isAuthenticated } from "@/lib/authentication"
 import { connectDB } from "@/lib/databaseConnection"
 import { catchError, response } from "@/lib/helperFunction"
-import CategoryModel from "@/models/Category.model"
+import ParentModel from "@/models/Parent.model"
 import { NextResponse } from "next/server"
 
 export async function GET(request) {
@@ -15,7 +15,7 @@ export async function GET(request) {
 
         const searchParams = request.nextUrl.searchParams
 
-        // Extract query parameters 
+        // Extract query parameters
         const start = parseInt(searchParams.get('start') || 0, 10)
         const size = parseInt(searchParams.get('size') || 10, 10)
         const filters = JSON.parse(searchParams.get('filters') || "[]")
@@ -23,7 +23,7 @@ export async function GET(request) {
         const sorting = JSON.parse(searchParams.get('sorting') || "[]")
         const deleteType = searchParams.get('deleteType')
 
-        // Build match query  
+        // Build match query
         let matchQuery = {}
 
         if (deleteType === 'SD') {
@@ -32,7 +32,7 @@ export async function GET(request) {
             matchQuery = { deletedAt: { $ne: null } }
         }
 
-        // Global search 
+        // Global search
         if (globalFilter) {
             matchQuery["$or"] = [
                 { name: { $regex: globalFilter, $options: 'i' } },
@@ -40,13 +40,13 @@ export async function GET(request) {
             ]
         }
 
-        //  Column filteration  
+        //  Column filteration
 
         filters.forEach(filter => {
             matchQuery[filter.id] = { $regex: filter.value, $options: 'i' }
         });
 
-        //   Sorting  
+        //   Sorting
         let sortQuery = {}
         sorting.forEach(sort => {
             sortQuery[sort.id] = sort.desc ? -1 : 1
@@ -56,19 +56,6 @@ export async function GET(request) {
         // Aggregate pipeline
 
         const aggregatePipeline = [
-            {
-                $lookup: {
-                    from: 'parents',
-                    localField: 'parent',
-                    foreignField: '_id',
-                    as: 'parentData'
-                }
-            },
-            {
-                $unwind: {
-                    path: "$parentData", preserveNullAndEmptyArrays: true
-                }
-            },
             { $match: matchQuery },
             { $sort: Object.keys(sortQuery).length ? sortQuery : { createdAt: -1 } },
             { $skip: start },
@@ -78,7 +65,6 @@ export async function GET(request) {
                     _id: 1,
                     name: 1,
                     slug: 1,
-                    parent: "$parentData.name",
                     createdAt: 1,
                     updatedAt: 1,
                     deletedAt: 1
@@ -86,16 +72,16 @@ export async function GET(request) {
             }
         ]
 
-        // Execute query  
+        // Execute query
 
-        const getCategory = await CategoryModel.aggregate(aggregatePipeline)
+        const getParent = await ParentModel.aggregate(aggregatePipeline)
 
-        // Get totalRowCount  
-        const totalRowCount = await CategoryModel.countDocuments(matchQuery)
+        // Get totalRowCount
+        const totalRowCount = await ParentModel.countDocuments(matchQuery)
 
         return NextResponse.json({
             success: true,
-            data: getCategory,
+            data: getParent,
             meta: { totalRowCount }
         })
 

@@ -5,7 +5,13 @@ export const ADMIN_DASHBOARD = '/admin/dashboard'
 export const ADMIN_MEDIA_SHOW = '/admin/media'
 export const ADMIN_MEDIA_EDIT = (id) => id ? `/admin/media/edit/${id}` : ''
 
-// Category routes 
+// Parent routes
+
+export const ADMIN_PARENT_ADD = '/admin/parent/add'
+export const ADMIN_PARENT_SHOW = '/admin/parent'
+export const ADMIN_PARENT_EDIT = (id) => id ? `/admin/parent/edit/${id}` : ''
+
+// Category routes
 
 export const ADMIN_CATEGORY_ADD = '/admin/category/add'
 export const ADMIN_CATEGORY_SHOW = '/admin/category'

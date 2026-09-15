@@ -1,9 +1,8 @@
-import { revalidateTag } from "next/cache"
 import { isAuthenticated } from "@/lib/authentication"
 import { connectDB } from "@/lib/databaseConnection"
-import { catchError,  response } from "@/lib/helperFunction"
+import { catchError, response } from "@/lib/helperFunction"
 import { zSchema } from "@/lib/zodSchema"
-import CategoryModel from "@/models/Category.model"
+import ParentModel from "@/models/Parent.model"
 
 export async function POST(request) {
     try {
@@ -16,7 +15,7 @@ export async function POST(request) {
         const payload = await request.json()
 
         const schema = zSchema.pick({
-            name: true, slug: true, parent: true
+            name: true, slug: true
         })
 
         const validate = schema.safeParse(payload)
@@ -24,20 +23,15 @@ export async function POST(request) {
             return response(false, 400, 'Invalid or missing fields.', validate.error)
         }
 
-        const { name, slug, parent } = validate.data
+        const { name, slug } = validate.data
 
-        const newCategory = new CategoryModel({
-            name, slug, parent
+        const newParent = new ParentModel({
+            name, slug
         })
 
-        await newCategory.save()
+        await newParent.save()
 
-        // The new category can change the shop filter list and the homepage
-        // "Categories" section (once it has products), so refresh those caches.
-        revalidateTag('storefront-shop-filters')
-        revalidateTag('storefront-home-categories')
-
-        return response(true, 200, 'Category added successfully.')
+        return response(true, 200, 'Parent added successfully.')
 
     } catch (error) {
         return catchError(error)

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const categorySchema = new mongoose.Schema({
+const parentSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -14,13 +14,6 @@ const categorySchema = new mongoose.Schema({
         trim: true
     },
 
-    parent: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Parent',
-        required: true,
-        index: true
-    },
-
     deletedAt: {
         type: Date,
         default: null,
@@ -30,5 +23,5 @@ const categorySchema = new mongoose.Schema({
 }, { timestamps: true })
 
 
-const CategoryModel = mongoose.models.Category || mongoose.model('Category', categorySchema, 'categories')
-export default CategoryModel
+const ParentModel = mongoose.models.Parent || mongoose.model('Parent', parentSchema, 'parents')
+export default ParentModel

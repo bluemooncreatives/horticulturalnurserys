@@ -1,9 +1,8 @@
-import { revalidateTag } from "next/cache"
 import { isAuthenticated } from "@/lib/authentication"
 import { connectDB } from "@/lib/databaseConnection"
 import { catchError, response } from "@/lib/helperFunction"
 import { zSchema } from "@/lib/zodSchema"
-import CategoryModel from "@/models/Category.model"
+import ParentModel from "@/models/Parent.model"
 
 export async function PUT(request) {
     try {
@@ -16,7 +15,7 @@ export async function PUT(request) {
         const payload = await request.json()
 
         const schema = zSchema.pick({
-            _id: true, name: true, slug: true, parent: true
+            _id: true, name: true, slug: true
         })
 
         const validate = schema.safeParse(payload)
@@ -24,24 +23,18 @@ export async function PUT(request) {
             return response(false, 400, 'Invalid or missing fields.', validate.error)
         }
 
-        const { _id, name, slug, parent } = validate.data
+        const { _id, name, slug } = validate.data
 
-        const getCategory = await CategoryModel.findOne({ deletedAt: null, _id })
-        if (!getCategory) {
+        const getParent = await ParentModel.findOne({ deletedAt: null, _id })
+        if (!getParent) {
             return response(false, 404, 'Data not found.')
         }
 
-        getCategory.name = name
-        getCategory.slug = slug
-        getCategory.parent = parent
-        await getCategory.save()
+        getParent.name = name
+        getParent.slug = slug
+        await getParent.save()
 
-        // Name/slug changes ripple to the shop filter list and the homepage
-        // "Categories" section (label + shop link), so refresh those caches.
-        revalidateTag('storefront-shop-filters')
-        revalidateTag('storefront-home-categories')
-
-        return response(true, 200, 'Category updated successfully.')
+        return response(true, 200, 'Parent updated successfully.')
 
     } catch (error) {
         return catchError(error)

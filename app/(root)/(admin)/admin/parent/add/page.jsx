@@ -1,7 +1,7 @@
 'use client'
 import BreadCrumb from '@/components/Application/Admin/BreadCrumb'
 import PageHeader from '@/components/Application/Admin/PageHeader'
-import { ADMIN_CATEGORY_SHOW, ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
+import { ADMIN_PARENT_SHOW, ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import ButtonLoading from '@/components/Application/ButtonLoading'
@@ -12,28 +12,16 @@ import { useEffect, useState } from 'react'
 import slugify from 'slugify'
 import { showToast } from '@/lib/showToast'
 import axios from 'axios'
-import useFetch from '@/hooks/useFetch'
-import Select from '@/components/Application/Select'
 const breadcrumbData = [
   { href: ADMIN_DASHBOARD, label: 'Home' },
-  { href: ADMIN_CATEGORY_SHOW, label: 'Category' },
-  { href: '', label: 'Add Category' },
+  { href: ADMIN_PARENT_SHOW, label: 'Parent' },
+  { href: '', label: 'Add Parent' },
 ]
 
-const AddCategory = () => {
+const AddParent = () => {
   const [loading, setLoading] = useState(false)
-  const [parentOption, setParentOption] = useState([])
-  const { data: getParent } = useFetch('/api/parent?deleteType=SD&&size=10000')
-
-  useEffect(() => {
-    if (getParent && getParent.success) {
-      const options = getParent.data.map((parent) => ({ label: parent.name, value: parent._id }))
-      setParentOption(options)
-    }
-  }, [getParent])
-
   const formSchema = zSchema.pick({
-    name: true, slug: true, parent: true
+    name: true, slug: true
   })
 
   const form = useForm({
@@ -41,7 +29,6 @@ const AddCategory = () => {
     defaultValues: {
       name: "",
       slug: "",
-      parent: "",
     },
   })
 
@@ -55,7 +42,7 @@ const AddCategory = () => {
   const onSubmit = async (values) => {
     setLoading(true)
     try {
-      const { data: response } = await axios.post('/api/category/create', values)
+      const { data: response } = await axios.post('/api/parent/create', values)
       if (!response.success) {
         throw new Error(response.message)
       }
@@ -72,8 +59,8 @@ const AddCategory = () => {
   return (
     <div className="flex flex-col gap-4 sm:gap-6">
       <PageHeader
-        title="Add Category"
-        description="Create a new product category for your catalog."
+        title="Add Parent"
+        description="Create a new parent section for your catalog."
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />
 
@@ -83,32 +70,12 @@ const AddCategory = () => {
             <div className="mb-5">
               <FormField
                 control={form.control}
-                name="parent"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Parent</FormLabel>
-                    <FormControl>
-                      <Select
-                        options={parentOption}
-                        selected={field.value}
-                        setSelected={field.onChange}
-                        isMulti={false}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="mb-5">
-              <FormField
-                control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input type="text" placeholder="Enter category name" {...field} />
+                      <Input type="text" placeholder="Enter parent name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,7 +99,7 @@ const AddCategory = () => {
             </div>
 
             <div className="mb-3">
-              <ButtonLoading loading={loading} type="submit" text="Add Category" className="h-9 cursor-pointer" size="lg" />
+              <ButtonLoading loading={loading} type="submit" text="Add Parent" className="h-9 cursor-pointer" size="lg" />
             </div>
           </form>
         </Form>
@@ -141,4 +108,4 @@ const AddCategory = () => {
   )
 }
 
-export default AddCategory
+export default AddParent

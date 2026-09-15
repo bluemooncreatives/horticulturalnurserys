@@ -1,7 +1,7 @@
 'use client'
 import BreadCrumb from '@/components/Application/Admin/BreadCrumb'
 import PageHeader from '@/components/Application/Admin/PageHeader'
-import { ADMIN_CATEGORY_SHOW, ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
+import { ADMIN_PARENT_SHOW, ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import ButtonLoading from '@/components/Application/ButtonLoading'
@@ -13,31 +13,21 @@ import slugify from 'slugify'
 import { showToast } from '@/lib/showToast'
 import axios from 'axios'
 import useFetch from '@/hooks/useFetch'
-import Select from '@/components/Application/Select'
 const breadcrumbData = [
     { href: ADMIN_DASHBOARD, label: 'Home' },
-    { href: ADMIN_CATEGORY_SHOW, label: 'Category' },
-    { href: '', label: 'Edit Category' },
+    { href: ADMIN_PARENT_SHOW, label: 'Parent' },
+    { href: '', label: 'Edit Parent' },
 ]
 
-const EditCategory = ({ params }) => {
+const EditParent = ({ params }) => {
 
     const { id } = use(params)
-    const { data: categoryData } = useFetch(`/api/category/get/${id}`)
+    const { data: parentData } = useFetch(`/api/parent/get/${id}`)
 
-    const [parentOption, setParentOption] = useState([])
-    const { data: getParent } = useFetch('/api/parent?deleteType=SD&&size=10000')
-
-    useEffect(() => {
-        if (getParent && getParent.success) {
-            const options = getParent.data.map((parent) => ({ label: parent.name, value: parent._id }))
-            setParentOption(options)
-        }
-    }, [getParent])
 
     const [loading, setLoading] = useState(false)
     const formSchema = zSchema.pick({
-        _id: true, name: true, slug: true, parent: true
+        _id: true, name: true, slug: true
     })
 
     const form = useForm({
@@ -46,23 +36,21 @@ const EditCategory = ({ params }) => {
             _id: id,
             name: "",
             slug: "",
-            parent: "",
         },
     })
 
 
 
     useEffect(() => {
-        if (categoryData && categoryData.success) {
-            const data = categoryData.data
+        if (parentData && parentData.success) {
+            const data = parentData.data
             form.reset({
                 _id: data?._id,
                 name: data?.name,
-                slug: data?.slug,
-                parent: data?.parent
+                slug: data?.slug
             })
         }
-    }, [categoryData])
+    }, [parentData])
 
 
     useEffect(() => {
@@ -75,7 +63,7 @@ const EditCategory = ({ params }) => {
     const onSubmit = async (values) => {
         setLoading(true)
         try {
-            const { data: response } = await axios.put('/api/category/update', values)
+            const { data: response } = await axios.put('/api/parent/update', values)
             if (!response.success) {
                 throw new Error(response.message)
             }
@@ -91,8 +79,8 @@ const EditCategory = ({ params }) => {
     return (
         <div className="flex flex-col gap-4 sm:gap-6">
             <PageHeader
-                title="Edit Category"
-                description="Update the category details and slug."
+                title="Edit Parent"
+                description="Update the parent section details and slug."
                 breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
             />
 
@@ -102,32 +90,12 @@ const EditCategory = ({ params }) => {
                         <div className="mb-5">
                             <FormField
                                 control={form.control}
-                                name="parent"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Parent</FormLabel>
-                                        <FormControl>
-                                            <Select
-                                                options={parentOption}
-                                                selected={field.value}
-                                                setSelected={field.onChange}
-                                                isMulti={false}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className="mb-5">
-                            <FormField
-                                control={form.control}
                                 name="name"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Name</FormLabel>
                                         <FormControl>
-                                            <Input type="text" placeholder="Enter category name" {...field} />
+                                            <Input type="text" placeholder="Enter parent name" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -151,7 +119,7 @@ const EditCategory = ({ params }) => {
                         </div>
 
                         <div className="mb-3">
-                            <ButtonLoading loading={loading} type="submit" text="Update Category" className="h-9 cursor-pointer" size="lg" />
+                            <ButtonLoading loading={loading} type="submit" text="Update Parent" className="h-9 cursor-pointer" size="lg" />
                         </div>
                     </form>
                 </Form>
@@ -160,4 +128,4 @@ const EditCategory = ({ params }) => {
     )
 }
 
-export default EditCategory
+export default EditParent

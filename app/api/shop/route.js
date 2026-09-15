@@ -15,6 +15,7 @@ export async function GET(request) {
             minPrice: searchParams.get('minPrice'),
             maxPrice: searchParams.get('maxPrice'),
             category: searchParams.get('category'),
+            parent: searchParams.get('parent'),
             bestseller: searchParams.get('bestseller'),
             freshlyArrived: searchParams.get('freshlyArrived'),
             q: searchParams.get('q'),

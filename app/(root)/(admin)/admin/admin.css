@@ -1,85 +1,260 @@
 /* Admin-only theme overrides - imported only by the admin layout,
-   not loaded on website pages. */
-.admin-theme {
-  --radius: 0.3rem;
-  --admin-shell-radius: 8px;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.16 0.02 25);
+   not loaded on website pages.
+
+   Scoping note: Radix portals (dropdown menus, dialogs, tooltips, sheets,
+   toasts) render into document.body, OUTSIDE the .admin-theme element.
+   Without the `body:has(.admin-theme)` selector below they fall back to the
+   website palette, which is why admin popovers and dialogs used to look like
+   a different product. Both selectors carry the same token set. */
+.admin-theme,
+body:has(.admin-theme) {
+  --radius: 0.5rem;
+  --admin-shell-radius: 12px;
+
+  /* ── Surfaces ──
+     A three-step ramp so nested panels stay legible:
+     page (background) < card < elevated (popover). */
+  --background: oklch(0.975 0.004 140);
+  --foreground: oklch(0.19 0.02 150);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 25);
+  --card-foreground: oklch(0.19 0.02 150);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 25);
+  --popover-foreground: oklch(0.19 0.02 150);
+
   --primary: var(--brand-primary);
   --primary-foreground: var(--brand-white);
-  --secondary: oklch(0.95 0 0);
-  --secondary-foreground: var(--brand-ink-soft);
-  --muted: oklch(0.96 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.94 0 0);
+  --secondary: oklch(0.945 0.008 140);
+  --secondary-foreground: var(--brand-primary);
+  --muted: oklch(0.955 0.006 140);
+  --muted-foreground: oklch(0.47 0.015 150);
+  --accent: oklch(0.93 0.015 140);
   --accent-foreground: var(--brand-primary);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.92 0 0);
+  --destructive: oklch(0.55 0.21 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --success: oklch(0.52 0.13 155);
+  --success-foreground: oklch(0.99 0 0);
+  --border: oklch(0.9 0.008 140);
+  --input: oklch(0.89 0.008 140);
   --ring: var(--brand-primary);
-  --chart-1: var(--brand-primary);
-  --chart-2: var(--brand-primary-hover);
-  --chart-3: var(--brand-olive);
-  --chart-4: var(--brand-ink-soft);
-  --chart-5: var(--brand-primary-bright);
-  --sidebar: var(--dark-red);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.98 0 0);
-  --sidebar-primary-foreground: var(--dark-red);
-  --sidebar-accent: var(--brand-primary-hover);
+
+  /* ── Accent hues for stat tiles and quick actions ──
+     Distinct enough to tell four tiles apart, all dark enough to sit on a
+     white card as text. The paired *-soft fills carry the icon chips. */
+  --admin-accent-1: oklch(0.45 0.11 150);   /* forest green */
+  --admin-accent-2: oklch(0.47 0.1 195);    /* teal         */
+  --admin-accent-3: oklch(0.5 0.12 265);    /* indigo       */
+  --admin-accent-4: oklch(0.52 0.13 60);    /* amber-brown  */
+  --admin-accent-1-soft: oklch(0.94 0.04 150);
+  --admin-accent-2-soft: oklch(0.94 0.04 195);
+  --admin-accent-3-soft: oklch(0.94 0.04 265);
+  --admin-accent-4-soft: oklch(0.95 0.05 60);
+
+  /* ── Status palette (enquiries, contacts, trends) ──
+     One definition consumed by every badge, chip and bar in the panel. */
+  --status-new-bg: oklch(0.93 0.04 245);
+  --status-new-fg: oklch(0.42 0.14 245);
+  --status-new-solid: oklch(0.55 0.16 245);
+  --status-contacted-bg: oklch(0.94 0.05 75);
+  --status-contacted-fg: oklch(0.45 0.12 60);
+  --status-contacted-solid: oklch(0.7 0.15 65);
+  --status-quoted-bg: oklch(0.93 0.04 300);
+  --status-quoted-fg: oklch(0.44 0.15 300);
+  --status-quoted-solid: oklch(0.56 0.17 300);
+  --status-closed-bg: oklch(0.93 0.04 160);
+  --status-closed-fg: oklch(0.4 0.1 160);
+  --status-closed-solid: oklch(0.55 0.13 160);
+  --status-neutral-bg: oklch(0.94 0.004 140);
+  --status-neutral-fg: oklch(0.42 0.01 150);
+  --status-neutral-solid: oklch(0.65 0.008 150);
+  --status-rating: oklch(0.75 0.16 75);
+
+  /* Charts follow the accent ramp so dashboards read as one system. */
+  --chart-1: var(--admin-accent-1);
+  --chart-2: var(--admin-accent-2);
+  --chart-3: var(--admin-accent-3);
+  --chart-4: var(--admin-accent-4);
+  --chart-5: var(--brand-olive);
+
+  /* ── Sidebar (deep forest in both themes) ── */
+  --sidebar: var(--brand-primary-deep);
+  --sidebar-foreground: oklch(0.93 0.015 140);
+  --sidebar-primary: var(--brand-lime);
+  --sidebar-primary-foreground: var(--brand-lime-ink);
+  --sidebar-accent: color-mix(in srgb, var(--brand-white) 10%, transparent);
   --sidebar-accent-foreground: var(--brand-white);
+  --sidebar-active: color-mix(in srgb, var(--brand-lime) 16%, transparent);
+  --sidebar-active-foreground: var(--brand-lime);
   --sidebar-border: color-mix(in srgb, var(--brand-white) 12%, transparent);
   --sidebar-ring: var(--brand-lime);
+
   --font-sans: 'PP Neue Montreal', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   --font-serif: Georgia, serif;
-  --font-mono: JetBrains Mono, monospace;
-  font-family: var(--font-sans);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, monospace;
   --tracking-normal: 0px;
   --spacing: 0.25rem;
 }
 
-.dark .admin-theme {
-  --admin-shell-radius: 8px;
-  --background: oklch(0.12 0.02 20);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.16 0.02 20);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.16 0.02 20);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: var(--brand-primary-hover);
-  --primary-foreground: var(--brand-white);
-  --secondary: oklch(0.22 0 0);
-  --secondary-foreground: var(--brand-white);
-  --muted: oklch(0.2 0 0);
-  --muted-foreground: oklch(0.8 0 0);
-  --accent: oklch(0.22 0 0);
+.admin-theme {
+  font-family: var(--font-sans);
+}
+
+.dark .admin-theme,
+.dark body:has(.admin-theme) {
+  --admin-shell-radius: 12px;
+
+  --background: oklch(0.155 0.012 155);
+  --foreground: oklch(0.96 0.005 140);
+  --card: oklch(0.2 0.013 155);
+  --card-foreground: oklch(0.96 0.005 140);
+  --popover: oklch(0.225 0.014 155);
+  --popover-foreground: oklch(0.96 0.005 140);
+
+  /* A lifted green: reaches ~5:1 against white ink, unlike the near-black
+     brand green, which was effectively invisible on a dark page. */
+  --primary: oklch(0.53 0.11 148);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.27 0.014 155);
+  --secondary-foreground: oklch(0.95 0.005 140);
+  --muted: oklch(0.25 0.012 155);
+  --muted-foreground: oklch(0.73 0.012 145);
+  --accent: oklch(0.29 0.02 150);
   --accent-foreground: var(--brand-lime);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.26 0.02 20);
-  --input: oklch(0.26 0.02 20);
-  --ring: var(--brand-primary-hover);
-  --chart-1: var(--brand-primary-hover);
-  --chart-2: var(--brand-primary-bright);
-  --chart-3: var(--brand-olive-hover);
-  --chart-4: var(--brand-primary);
+  --destructive: oklch(0.65 0.19 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --success: oklch(0.68 0.15 155);
+  --success-foreground: oklch(0.16 0.02 155);
+  --border: oklch(0.31 0.014 155);
+  --input: oklch(0.33 0.014 155);
+  --ring: oklch(0.62 0.13 148);
+
+  /* Accents lightened so they carry as text on a dark card. */
+  --admin-accent-1: oklch(0.75 0.16 145);
+  --admin-accent-2: oklch(0.74 0.11 195);
+  --admin-accent-3: oklch(0.74 0.12 265);
+  --admin-accent-4: oklch(0.79 0.13 75);
+  --admin-accent-1-soft: oklch(0.32 0.06 145);
+  --admin-accent-2-soft: oklch(0.31 0.05 195);
+  --admin-accent-3-soft: oklch(0.31 0.06 265);
+  --admin-accent-4-soft: oklch(0.33 0.06 75);
+
+  --status-new-bg: oklch(0.32 0.07 245);
+  --status-new-fg: oklch(0.82 0.1 245);
+  --status-new-solid: oklch(0.66 0.14 245);
+  --status-contacted-bg: oklch(0.33 0.07 70);
+  --status-contacted-fg: oklch(0.85 0.11 75);
+  --status-contacted-solid: oklch(0.76 0.14 70);
+  --status-quoted-bg: oklch(0.32 0.08 300);
+  --status-quoted-fg: oklch(0.83 0.1 300);
+  --status-quoted-solid: oklch(0.68 0.15 300);
+  --status-closed-bg: oklch(0.31 0.06 160);
+  --status-closed-fg: oklch(0.83 0.11 160);
+  --status-closed-solid: oklch(0.68 0.13 160);
+  --status-neutral-bg: oklch(0.28 0.01 150);
+  --status-neutral-fg: oklch(0.8 0.008 145);
+  --status-neutral-solid: oklch(0.55 0.008 150);
+  --status-rating: oklch(0.82 0.15 78);
+
+  --chart-1: var(--admin-accent-1);
+  --chart-2: var(--admin-accent-2);
+  --chart-3: var(--admin-accent-3);
+  --chart-4: var(--admin-accent-4);
   --chart-5: var(--brand-lime);
-  --sidebar: var(--dark-red);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.98 0 0);
-  --sidebar-primary-foreground: var(--dark-red);
-  --sidebar-accent: var(--brand-primary-bright);
+
+  --sidebar: oklch(0.175 0.022 152);
+  --sidebar-foreground: oklch(0.92 0.015 140);
+  --sidebar-primary: var(--brand-lime);
+  --sidebar-primary-foreground: var(--brand-lime-ink);
+  --sidebar-accent: color-mix(in srgb, var(--brand-white) 8%, transparent);
   --sidebar-accent-foreground: var(--brand-white);
-  --sidebar-border: color-mix(in srgb, var(--brand-white) 14%, transparent);
+  --sidebar-active: color-mix(in srgb, var(--brand-lime) 14%, transparent);
+  --sidebar-active-foreground: var(--brand-lime);
+  --sidebar-border: color-mix(in srgb, var(--brand-white) 12%, transparent);
   --sidebar-ring: var(--brand-lime);
-  --font-sans: 'PP Neue Montreal', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  --font-serif: Georgia, serif;
-  --font-mono: JetBrains Mono, monospace;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   SIDEBAR NAVIGATION
+   The stock data-active treatment (a slightly lighter green on green) was
+   almost invisible against the forest sidebar. Active rows now get a lime
+   wash plus a lime rail, and hover stays distinct from active.
+   ──────────────────────────────────────────────────────────────── */
+.admin-theme [data-slot='sidebar-menu-button'],
+.admin-theme [data-slot='sidebar-menu-sub-button'] {
+  position: relative;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.admin-theme [data-slot='sidebar-menu-button'][data-active='true'],
+.admin-theme [data-slot='sidebar-menu-sub-button'][data-active='true'] {
+  background-color: var(--sidebar-active);
+  color: var(--sidebar-active-foreground);
+  font-weight: 600;
+}
+
+.admin-theme [data-slot='sidebar-menu-button'][data-active='true']::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 15%;
+  width: 3px;
+  border-radius: 9999px;
+  background-color: var(--brand-lime);
+}
+
+.admin-theme [data-slot='sidebar-menu-button'][data-active='true'] svg,
+.admin-theme [data-slot='sidebar-menu-sub-button'][data-active='true'] svg {
+  color: var(--brand-lime);
+}
+
+.admin-theme [data-slot='sidebar-menu-sub'] {
+  border-color: var(--sidebar-border);
+}
+
+/* Group labels sat at 70% opacity on dark green - too faint to scan. */
+.admin-theme [data-slot='sidebar-group-label'] {
+  color: color-mix(in srgb, var(--sidebar-foreground) 62%, transparent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.6875rem;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   SCROLLBARS
+   The global .thin-scrollbar paints a 1px brand-green track, which is
+   invisible inside admin panels. Admin scroll areas get a usable one.
+   ──────────────────────────────────────────────────────────────── */
+.admin-theme [data-slot='sidebar-content'] {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--brand-white) 22%, transparent) transparent;
+}
+.admin-theme [data-slot='sidebar-content']::-webkit-scrollbar {
+  width: 6px;
+}
+.admin-theme [data-slot='sidebar-content']::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-theme [data-slot='sidebar-content']::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--brand-white) 22%, transparent);
+  border-radius: 9999px;
+}
+
+.admin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.admin-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.admin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 9999px;
+}
+.admin-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted-foreground);
 }
 
 /* Radix UI Collapsible animation - used by the admin sidebar */
@@ -87,10 +262,10 @@
   overflow: hidden;
 }
 .CollapsibleContent[data-state='open'] {
-  animation: slideDown 300ms ease-out;
+  animation: slideDown 250ms ease-out;
 }
 .CollapsibleContent[data-state='closed'] {
-  animation: slideUp 300ms ease-out;
+  animation: slideUp 250ms ease-out;
 }
 
 @keyframes slideDown {
@@ -101,4 +276,11 @@
 @keyframes slideUp {
   from { height: var(--radix-collapsible-content-height); }
   to { height: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .CollapsibleContent[data-state='open'],
+  .CollapsibleContent[data-state='closed'] {
+    animation: none;
+  }
 }

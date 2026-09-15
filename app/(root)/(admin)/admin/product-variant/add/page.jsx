@@ -202,7 +202,7 @@ const AddProduct = () => {
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />
 
-      <div className="rounded-md bg-card p-4 sm:p-6">
+      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
@@ -213,7 +213,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Product <span className="text-red-500">*</span>
+                        Product <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Select
@@ -236,7 +236,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        SKU<span className="text-red-500">*</span>
+                        SKU<span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <div className="flex h-10 items-stretch overflow-hidden rounded-md border border-input bg-background shadow-xs transition-[color,box-shadow] has-[input:focus-visible]:border-ring has-[input:focus-visible]:ring-[3px] has-[input:focus-visible]:ring-ring/50">
@@ -279,7 +279,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Color <span className="text-red-500">*</span>
+                        Color <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Enter color" {...field} />
@@ -315,7 +315,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Size <span className="text-red-500">*</span>
+                        Size <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Select
@@ -338,7 +338,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        MRP <span className="text-red-500">*</span>
+                        MRP <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Enter MRP" {...field} />
@@ -355,7 +355,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Selling Price <span className="text-red-500">*</span>
+                        Selling Price <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Enter Selling Price" {...field} />
@@ -372,7 +372,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Discount Percentage <span className="text-red-500">*</span>
+                        Discount Percentage <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" readOnly placeholder="Enter Discount Percentage" {...field} />
@@ -409,7 +409,7 @@ const AddProduct = () => {
                 </div>
               )}
 
-              <div onClick={() => setOpen(true)} className="bg-gray-50 dark:bg-card border w-[200px] mx-auto p-5 cursor-pointer">
+              <div onClick={() => setOpen(true)} className="mx-auto flex w-[200px] cursor-pointer flex-col items-center gap-2 rounded-lg border border-dashed border-border bg-muted/40 p-5 text-center transition-colors hover:border-primary/50 hover:bg-muted">
                 <span className="font-semibold">Select Media</span>
               </div>
             </div>

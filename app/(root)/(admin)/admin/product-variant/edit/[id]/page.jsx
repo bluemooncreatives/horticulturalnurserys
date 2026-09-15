@@ -136,7 +136,7 @@ const EditProductVariant = ({ params }) => {
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />
 
-      <div className="rounded-md bg-card p-4 sm:p-6">
+      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
@@ -147,7 +147,7 @@ const EditProductVariant = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Product <span className="text-red-500">*</span>
+                        Product <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Select
@@ -170,7 +170,7 @@ const EditProductVariant = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        SKU <span className="text-red-500">*</span>
+                        SKU <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Enter sku" {...field} />
@@ -188,7 +188,7 @@ const EditProductVariant = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Color <span className="text-red-500">*</span>
+                        Color <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Enter color" {...field} />
@@ -226,7 +226,7 @@ const EditProductVariant = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Size <span className="text-red-500">*</span>
+                        Size <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Select
@@ -249,7 +249,7 @@ const EditProductVariant = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        MRP <span className="text-red-500">*</span>
+                        MRP <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Enter MRP" {...field} />
@@ -267,7 +267,7 @@ const EditProductVariant = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Selling Price <span className="text-red-500">*</span>
+                        Selling Price <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Enter Selling Price" {...field} />
@@ -285,7 +285,7 @@ const EditProductVariant = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Discount Percentage <span className="text-red-500">*</span>
+                        Discount Percentage <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" readOnly placeholder="Enter Discount Percentage" {...field} />

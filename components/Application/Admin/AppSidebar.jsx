@@ -14,7 +14,7 @@ import NavUser from './layout/NavUser'
 const AppSidebar = () => {
     return (
         <Sidebar variant="inset" collapsible="icon" className="z-50">
-            <SidebarHeader>
+            <SidebarHeader className="border-b border-sidebar-border pb-2">
                 <TeamSwitcher teams={sidebarData.teams} />
             </SidebarHeader>
             <SidebarContent>
@@ -22,7 +22,9 @@ const AppSidebar = () => {
                     <NavGroup key={group.title} {...group} />
                 ))}
             </SidebarContent>
-            <SidebarFooter>
+            {/* SidebarFooter ships with no padding, so the account row used to sit
+                flush against the bottom edge of the rail. */}
+            <SidebarFooter className="p-2">
                 <NavUser />
             </SidebarFooter>
             <SidebarRail />

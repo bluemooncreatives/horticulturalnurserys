@@ -19,6 +19,7 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar'
 import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -35,7 +36,7 @@ const NavGroup = ({ title, items }) => {
     return (
         <SidebarGroup>
             <SidebarGroupLabel>{title}</SidebarGroupLabel>
-            <SidebarMenu>
+            <SidebarMenu className="gap-0.5">
                 {items.map((item) => {
                     const key = `${item.title}-${item.url || 'group'}`
                     if (!item.items) {
@@ -65,8 +66,17 @@ const NavGroup = ({ title, items }) => {
     )
 }
 
+// The default Badge is bg-primary, i.e. forest green - invisible against the
+// forest-green sidebar. Sidebar badges use the lime accent instead.
 const NavBadge = ({ children }) => {
-    return <Badge className="rounded-full px-1 py-0 text-xs">{children}</Badge>
+    return (
+        <Badge
+            variant="status"
+            className="ms-auto rounded-full bg-sidebar-primary px-1.5 py-0 text-[0.6875rem] text-sidebar-primary-foreground"
+        >
+            {children}
+        </Badge>
+    )
 }
 
 const SidebarMenuLink = ({ item, pathname }) => {
@@ -102,7 +112,7 @@ const SidebarMenuCollapsible = ({ item, pathname }) => {
                         {item.icon && <item.icon />}
                         <span>{item.title}</span>
                         {item.badge && <NavBadge>{item.badge}</NavBadge>}
-                        <ChevronRight className="ms-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180" />
+                        <ChevronRight className="ms-auto size-4 shrink-0 opacity-70 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180" />
                     </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="CollapsibleContent">
@@ -140,7 +150,7 @@ const SidebarMenuCollapsedDropdown = ({ item, pathname }) => {
                         {item.icon && <item.icon />}
                         <span>{item.title}</span>
                         {item.badge && <NavBadge>{item.badge}</NavBadge>}
-                        <ChevronRight className="ms-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                        <ChevronRight className="ms-auto size-4 shrink-0 opacity-70 transition-transform duration-200" />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent side="right" align="start" sideOffset={4}>
@@ -152,7 +162,10 @@ const SidebarMenuCollapsedDropdown = ({ item, pathname }) => {
                         <DropdownMenuItem key={`${sub.title}-${sub.url}`} asChild>
                             <Link
                                 href={sub.url}
-                                className={checkIsActive(pathname, sub) ? 'bg-secondary' : ''}
+                                className={cn(
+                                    'cursor-pointer',
+                                    checkIsActive(pathname, sub) && 'bg-accent font-medium text-accent-foreground'
+                                )}
                             >
                                 {sub.icon && <sub.icon />}
                                 <span className="max-w-52 text-wrap">{sub.title}</span>

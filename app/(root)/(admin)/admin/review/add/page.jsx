@@ -33,7 +33,7 @@ const StarRatingField = ({ value = 0, onChange }) => (
         aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
         className="transition-transform hover:scale-110"
       >
-        <Star className={`size-7 ${star <= Number(value || 0) ? 'fill-amber-500 text-amber-500' : 'text-amber-400'}`} />
+        <Star className={`size-7 ${star <= Number(value || 0) ? 'fill-[var(--status-rating)] text-[var(--status-rating)]' : 'fill-transparent text-border'}`} />
       </button>
     ))}
   </div>
@@ -92,7 +92,7 @@ const AddReview = () => {
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />
 
-      <div className="rounded-md bg-card p-6 max-w-2xl">
+      <div className="rounded-xl border border-border bg-card shadow-xs max-w-2xl p-5 sm:p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField control={form.control} name="product" render={({ field }) => (

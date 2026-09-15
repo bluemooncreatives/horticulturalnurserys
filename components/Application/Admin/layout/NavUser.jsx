@@ -30,7 +30,7 @@ const NavUser = () => {
 
     return (
         <SidebarMenu>
-            <SidebarMenuItem>
+            <SidebarMenuItem className="border-t border-sidebar-border pt-2">
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuButton
@@ -43,11 +43,16 @@ const NavUser = () => {
                                     {name.slice(0, 2).toUpperCase()}
                                 </AvatarFallback>
                             </Avatar>
-                            <div className="grid flex-1 text-start text-sm leading-tight">
+                            <div className="grid min-w-0 flex-1 text-start text-sm leading-tight">
                                 <span className="truncate font-semibold">{name}</span>
-                                <span className="truncate text-xs">{email}</span>
+                                {/* min-w-0 + truncate on the wrapper: long admin
+                                    emails used to push the chevron off the edge
+                                    of the sidebar instead of ellipsising. */}
+                                <span className="truncate text-xs text-sidebar-foreground/70">
+                                    {email}
+                                </span>
                             </div>
-                            <ChevronsUpDown className="ms-auto size-4" />
+                            <ChevronsUpDown className="ms-auto size-4 shrink-0 opacity-70" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent

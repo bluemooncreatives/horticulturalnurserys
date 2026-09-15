@@ -45,7 +45,7 @@ const ShowParent = () => {
                 }
             />
 
-            <div className="rounded-md bg-card">
+            <div>
                 <DatatableWrapper
                     queryKey="parent-data"
                     fetchUrl="/api/parent"

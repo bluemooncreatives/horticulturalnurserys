@@ -1,95 +1,131 @@
 'use client'
 import Link from 'next/link'
-import useFetch from '@/hooks/useFetch';
-import { ADMIN_CATEGORY_SHOW, ADMIN_PRODUCT_SHOW, ADMIN_ENQUIRY_SHOW } from '@/routes/AdminPanelRoute';
-import { FolderTree, Shirt, ClipboardList, Inbox, TrendingUp, TrendingDown } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import useFetch from '@/hooks/useFetch'
+import {
+    ADMIN_CATEGORY_SHOW,
+    ADMIN_PRODUCT_SHOW,
+    ADMIN_ENQUIRY_SHOW,
+} from '@/routes/AdminPanelRoute'
+import { FolderTree, Sprout, ClipboardList, Inbox, TrendingUp, TrendingDown, Minus } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
+import { accentBarStyle, accentChipStyle } from '@/lib/adminStatus'
+
 const CountOverview = () => {
+    const { data: countData, loading } = useFetch('/api/dashboard/admin/count')
 
-    const { data: countData } = useFetch('/api/dashboard/admin/count')
-
+    /**
+     * A zero previous month is "no history", not growth. The old version
+     * claimed "Increased from Last Month" on a brand-new install showing 0,
+     * which is the state in the screenshots.
+     */
     const getTrendInfo = (current, previous) => {
-        if (!previous || previous === 0) {
-            return { isIncreased: true, text: 'Increased from Last Month' }
+        if (previous === undefined || previous === null) {
+            return { direction: 'flat', text: 'No comparison yet' }
+        }
+        if (current === previous) {
+            return { direction: 'flat', text: 'Unchanged from last month' }
         }
         const isIncreased = current > previous
         return {
-            isIncreased,
-            text: isIncreased ? 'Increased from Last Month' : 'Decreased from Last Month'
+            direction: isIncreased ? 'up' : 'down',
+            text: isIncreased ? 'Increased from last month' : 'Decreased from last month',
         }
     }
 
-    const categoryTrend = getTrendInfo(countData?.data?.category || 0, countData?.data?.categoryPrevious)
-    const productTrend = getTrendInfo(countData?.data?.product || 0, countData?.data?.productPrevious)
-    const enquiryTrend = getTrendInfo(countData?.data?.enquiry || 0, countData?.data?.enquiryPrevious)
-    const newEnquiryTrend = getTrendInfo(countData?.data?.newEnquiry || 0, countData?.data?.newEnquiryPrevious)
+    const counts = countData?.data
 
     const cards = [
         {
             title: 'Total Categories',
-            value: countData?.data?.category || 0,
-            trend: categoryTrend,
+            value: counts?.category ?? 0,
+            trend: getTrendInfo(counts?.category ?? 0, counts?.categoryPrevious),
             href: ADMIN_CATEGORY_SHOW,
             icon: FolderTree,
-            chartVar: '--chart-1'
+            accent: '1',
         },
         {
             title: 'Total Products',
-            value: countData?.data?.product || 0,
-            trend: productTrend,
+            value: counts?.product ?? 0,
+            trend: getTrendInfo(counts?.product ?? 0, counts?.productPrevious),
             href: ADMIN_PRODUCT_SHOW,
-            icon: Shirt,
-            chartVar: '--chart-2'
+            icon: Sprout,
+            accent: '2',
         },
         {
             title: 'Total Enquiries',
-            value: countData?.data?.enquiry || 0,
-            trend: enquiryTrend,
+            value: counts?.enquiry ?? 0,
+            trend: getTrendInfo(counts?.enquiry ?? 0, counts?.enquiryPrevious),
             href: ADMIN_ENQUIRY_SHOW,
             icon: ClipboardList,
-            chartVar: '--chart-3'
+            accent: '3',
         },
         {
             title: 'New Enquiries',
-            value: countData?.data?.newEnquiry || 0,
-            trend: newEnquiryTrend,
+            value: counts?.newEnquiry ?? 0,
+            trend: getTrendInfo(counts?.newEnquiry ?? 0, counts?.newEnquiryPrevious),
             href: ADMIN_ENQUIRY_SHOW,
             icon: Inbox,
-            chartVar: '--chart-4'
+            accent: '4',
         },
     ]
 
+    const trendMeta = {
+        up: { Icon: TrendingUp, className: 'text-success' },
+        down: { Icon: TrendingDown, className: 'text-destructive' },
+        flat: { Icon: Minus, className: 'text-muted-foreground' },
+    }
+
     return (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {cards.map((card) => (
-                <Link key={card.title} href={card.href} aria-label={`${card.title}: ${card.value}`}>
-                        <Card className={`border-l-4 hover:border-l-8`} style={{ borderLeftColor: `var(${card.chartVar})` }}> 
-                                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                            <div className="flex items-center gap-2">
-                                                <CardTitle className={`text-sm font-medium`} style={{ color: `var(${card.chartVar})` }}>{card.title}</CardTitle>
-                                            </div>
-                                            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full" style={{ backgroundColor: `var(${card.chartVar})`, color: 'white' }} aria-hidden>
-                                                <card.icon className="h-4 w-4" />
-                                            </span>
-                                        </CardHeader>
-                            <CardContent>
-                                <div className="text-4xl font-bold">{card.value}</div>
-                                <p className="flex items-center gap-2 text-xs text-muted-foreground">
-                                    {card.trend.isIncreased ? (
-                                            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                                                <TrendingUp className="h-3 w-3" />
-                                            </span>
-                                        ) : (
-                                            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-rose-100 text-rose-600">
-                                                <TrendingDown className="h-3 w-3" />
-                                            </span>
-                                        )}
-                                    <span className="ml-1">{card.trend.text}</span>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {cards.map((card) => {
+                const { Icon: TrendIcon, className: trendClass } = trendMeta[card.trend.direction]
+
+                return (
+                    <Link
+                        key={card.title}
+                        href={card.href}
+                        aria-label={`${card.title}: ${card.value}`}
+                        className="rounded-xl focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                    >
+                        <Card interactive className="relative h-full pl-1">
+                            {/* The accent lives in a fixed-width rail rather than a
+                                border-left that grows on hover - that used to shift
+                                the whole card's contents sideways. */}
+                            <span
+                                aria-hidden
+                                className="absolute inset-y-0 left-0 w-1"
+                                style={accentBarStyle(card.accent)}
+                            />
+                            <CardHeader className="flex flex-row items-start justify-between gap-3 space-y-0">
+                                <CardTitle className="pt-1 text-sm font-medium text-muted-foreground">
+                                    {card.title}
+                                </CardTitle>
+                                <span
+                                    className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg"
+                                    style={accentChipStyle(card.accent)}
+                                    aria-hidden
+                                >
+                                    <card.icon className="size-4" />
+                                </span>
+                            </CardHeader>
+                            <CardContent className="space-y-2">
+                                {loading ? (
+                                    <Skeleton className="h-9 w-16" />
+                                ) : (
+                                    <div className="text-3xl font-semibold tabular-nums tracking-tight text-foreground">
+                                        {card.value}
+                                    </div>
+                                )}
+                                <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                                    <TrendIcon className={`size-3.5 shrink-0 ${trendClass}`} aria-hidden />
+                                    <span>{card.trend.text}</span>
                                 </p>
                             </CardContent>
-                    </Card>
-                </Link>
-            ))}
+                        </Card>
+                    </Link>
+                )
+            })}
         </div>
     )
 }

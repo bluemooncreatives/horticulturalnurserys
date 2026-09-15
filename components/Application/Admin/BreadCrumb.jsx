@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+import Link from 'next/link'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -5,33 +7,52 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-const BreadCrumb = ({ breadcrumbData }) => {
+} from '@/components/ui/breadcrumb'
+
+/**
+ * Breadcrumb trail above a page title.
+ *
+ * Two fixes over the previous version:
+ *  - it wrapped each crumb in a <div> inside the <ol>, which is invalid list
+ *    markup and broke the flex gap between crumb and separator;
+ *  - it carried its own `mb-5`, which stacked on top of the PageHeader gap and
+ *    left an uneven gutter under the trail on every page.
+ * Links are also real <Link>s now, so crumbs navigate client-side instead of
+ * triggering a full document load.
+ */
+const BreadCrumb = ({ breadcrumbData = [] }) => {
+    if (!breadcrumbData.length) return null
+
     return (
-        <Breadcrumb className="mb-5">
+        <Breadcrumb>
             <BreadcrumbList>
-                {breadcrumbData.length > 0 && breadcrumbData.map((data, index) => {
+                {breadcrumbData.map((data, index) => {
                     const isLast = index === breadcrumbData.length - 1
+
                     return (
-                        !isLast
-                            ?
-                            <div key={index} className="flex items-center">
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink href={data.href}>{data.label}</BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator className="ms-2 mt-1" />
-                            </div>
-                            :
-                            <div key={index} className="flex items-center">
-                                <BreadcrumbItem>
-                                    <BreadcrumbPage className="font-semibold">{data.label}</BreadcrumbPage>
-                                </BreadcrumbItem>
-                            </div>
+                        <Fragment key={`${data.label}-${index}`}>
+                            <BreadcrumbItem>
+                                {isLast || !data.href ? (
+                                    <BreadcrumbPage className="font-medium">
+                                        {data.label}
+                                    </BreadcrumbPage>
+                                ) : (
+                                    <BreadcrumbLink asChild>
+                                        <Link
+                                            href={data.href}
+                                            className="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                                        >
+                                            {data.label}
+                                        </Link>
+                                    </BreadcrumbLink>
+                                )}
+                            </BreadcrumbItem>
+                            {!isLast && <BreadcrumbSeparator />}
+                        </Fragment>
                     )
                 })}
             </BreadcrumbList>
-        </Breadcrumb >
-
+        </Breadcrumb>
     )
 }
 

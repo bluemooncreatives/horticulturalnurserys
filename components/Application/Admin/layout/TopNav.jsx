@@ -15,16 +15,20 @@ const TopNav = ({ className, links = [], ...props }) => {
             <div className="lg:hidden">
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
-                        <Button size="icon" variant="outline" className="md:size-7">
+                        <Button size="icon-sm" variant="ghost" aria-label="Open section menu">
                             <Menu className="size-4" />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent side="bottom" align="start">
+                    <DropdownMenuContent side="bottom" align="start" className="w-44">
                         {links.map(({ title, href, isActive, disabled }) => (
                             <DropdownMenuItem key={`${title}-${href}`} asChild>
                                 <Link
                                     href={href}
-                                    className={!isActive ? 'text-muted-foreground' : ''}
+                                    className={cn(
+                                        'cursor-pointer',
+                                        isActive ? 'font-medium text-foreground' : 'text-muted-foreground'
+                                    )}
+                                    aria-current={isActive ? 'page' : undefined}
                                     aria-disabled={disabled}
                                     tabIndex={disabled ? -1 : undefined}
                                 >
@@ -37,21 +41,25 @@ const TopNav = ({ className, links = [], ...props }) => {
             </div>
 
             <nav
-                className={cn(
-                    'hidden items-center space-x-4 lg:flex lg:space-x-4 xl:space-x-6',
-                    className
-                )}
+                className={cn('hidden h-full items-center gap-1 lg:flex', className)}
                 {...props}
             >
                 {links.map(({ title, href, isActive, disabled }) => (
                     <Link
                         key={`${title}-${href}`}
                         href={href}
+                        aria-current={isActive ? 'page' : undefined}
                         aria-disabled={disabled}
                         tabIndex={disabled ? -1 : undefined}
                         className={cn(
-                            'text-sm font-medium transition-colors hover:text-primary',
-                            isActive ? '' : 'text-muted-foreground',
+                            // The active tab was distinguished only by inheriting
+                            // the default text colour - near-invisible next to the
+                            // muted ones. It now carries a weight change and an
+                            // underline rule.
+                            'relative rounded-md px-2.5 py-1.5 text-sm transition-colors after:absolute after:inset-x-2.5 after:-bottom-px after:h-0.5 after:rounded-full after:transition-colors',
+                            isActive
+                                ? 'font-medium text-foreground after:bg-primary'
+                                : 'text-muted-foreground hover:bg-muted hover:text-foreground after:bg-transparent',
                             disabled && 'pointer-events-none opacity-60'
                         )}
                     >

@@ -1,14 +1,11 @@
 'use client'
 
-import useFetch from "@/hooks/useFetch"
-import { useEffect, useState } from "react"
-
-const BAR = {
-    new: 'bg-blue-500',
-    contacted: 'bg-amber-500',
-    quoted: 'bg-purple-500',
-    closed: 'bg-emerald-500',
-}
+import useFetch from '@/hooks/useFetch'
+import { useEffect, useState } from 'react'
+import { PieChart } from 'lucide-react'
+import { statusSolidStyle } from '@/lib/adminStatus'
+import EmptyState from '@/components/Application/Admin/EmptyState'
+import { BarsSkeleton } from '@/components/Application/Admin/Loaders'
 
 const EnquiryStatusOverview = () => {
     const [breakdown, setBreakdown] = useState({ data: [], total: 0 })
@@ -20,12 +17,18 @@ const EnquiryStatusOverview = () => {
         }
     }, [data])
 
-    if (loading) return <div className="flex h-40 items-center justify-center text-sm text-muted-foreground">Loading…</div>
+    if (loading) return <BarsSkeleton rows={4} />
 
     const { data: rows = [], total = 0 } = breakdown
 
     if (!total) {
-        return <div className="flex h-40 items-center justify-center text-sm text-muted-foreground">No enquiries yet.</div>
+        return (
+            <EmptyState
+                icon={PieChart}
+                title="No enquiries yet"
+                description="Once leads come in you'll see how they're distributed across the pipeline."
+            />
+        )
     }
 
     return (
@@ -34,17 +37,40 @@ const EnquiryStatusOverview = () => {
                 const pct = total ? Math.round((count / total) * 100) : 0
                 return (
                     <div key={status}>
-                        <div className="mb-1 flex items-center justify-between text-sm">
-                            <span className="capitalize font-medium">{status}</span>
-                            <span className="text-muted-foreground tabular-nums">{count} · {pct}%</span>
+                        <div className="mb-1.5 flex items-center justify-between text-sm">
+                            <span className="flex items-center gap-2 font-medium capitalize">
+                                <span
+                                    aria-hidden
+                                    className="size-2 shrink-0 rounded-full"
+                                    style={statusSolidStyle(status)}
+                                />
+                                {status}
+                            </span>
+                            <span className="tabular-nums text-muted-foreground">
+                                {count} · {pct}%
+                            </span>
                         </div>
-                        <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-                            <div className={`h-full rounded-full ${BAR[status] || 'bg-gray-400'}`} style={{ width: `${pct}%` }} />
+                        {/* role/aria so the bar is not a purely visual figure */}
+                        <div
+                            className="h-2 w-full overflow-hidden rounded-full bg-muted"
+                            role="meter"
+                            aria-valuenow={pct}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                            aria-label={`${status}: ${count} of ${total} enquiries`}
+                        >
+                            <div
+                                className="h-full rounded-full transition-[width] duration-500 ease-out"
+                                style={{ width: `${pct}%`, ...statusSolidStyle(status) }}
+                            />
                         </div>
                     </div>
                 )
             })}
-            <p className="pt-2 text-xs text-muted-foreground">Total enquiries: <span className="font-semibold text-foreground tabular-nums">{total}</span></p>
+            <p className="border-t border-border pt-3 text-xs text-muted-foreground">
+                Total enquiries:{' '}
+                <span className="font-semibold tabular-nums text-foreground">{total}</span>
+            </p>
         </div>
     )
 }

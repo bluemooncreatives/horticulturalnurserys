@@ -9,8 +9,12 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { showToast } from '@/lib/showToast'
 import { ADMIN_ENQUIRY_SHOW, ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
-import { Mail, User, Calendar, Phone, MapPin, Package, StickyNote } from 'lucide-react'
+import Link from 'next/link'
+import { Mail, User, Calendar, Phone, MapPin, Package, StickyNote, SearchX } from 'lucide-react'
 import dayjs from 'dayjs'
+import { ENQUIRY_STATUSES, statusChipStyle, statusRingStyle } from '@/lib/adminStatus'
+import { FormSkeleton } from '@/components/Application/Admin/Loaders'
+import EmptyState from '@/components/Application/Admin/EmptyState'
 
 const breadcrumbData = [
   { href: ADMIN_DASHBOARD, label: 'Home' },
@@ -18,14 +22,9 @@ const breadcrumbData = [
   { href: '', label: 'View Enquiry' },
 ]
 
-const STATUS_OPTIONS = ['new', 'contacted', 'quoted', 'closed']
-
-const statusClass = (status) => ({
-  new: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-  contacted: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
-  quoted: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
-  closed: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
-}[status] || 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300')
+// Status colours live in lib/adminStatus so this page, the dashboard widget
+// and the contacts screen cannot drift apart again.
+const STATUS_OPTIONS = ENQUIRY_STATUSES
 
 const EnquiryDetail = ({ params }) => {
   const { id } = use(params)
@@ -69,15 +68,24 @@ const EnquiryDetail = ({ params }) => {
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />
 
-      <div className="rounded-md bg-card">
+      <div className="rounded-xl border border-border bg-card shadow-xs">
         {loading && (
-          <div className="flex justify-center items-center py-24 text-muted-foreground text-sm">Loading…</div>
+          <div className="p-5 sm:p-6">
+            <FormSkeleton fields={5} />
+          </div>
         )}
 
         {!loading && !enquiry && (
-          <div className="flex justify-center items-center py-24">
-            <p className="text-red-500 text-lg font-medium">Enquiry not found.</p>
-          </div>
+          <EmptyState
+            icon={SearchX}
+            title="Enquiry not found"
+            description="This enquiry may have been deleted or moved to the recycle bin."
+            action={
+              <Button asChild variant="outline" size="sm">
+                <Link href={ADMIN_ENQUIRY_SHOW}>Back to enquiries</Link>
+              </Button>
+            }
+          />
         )}
 
         {enquiry && (
@@ -89,7 +97,9 @@ const EnquiryDetail = ({ params }) => {
                 {enquiry.ticketId && (
                   <span className="font-mono text-sm font-semibold tracking-wide">{enquiry.ticketId}</span>
                 )}
-                <Badge className={`${statusClass(enquiry.status)} capitalize`}>{enquiry.status}</Badge>
+                <Badge variant="status" style={statusChipStyle(enquiry.status)} className="capitalize">
+                  {enquiry.status}
+                </Badge>
               </div>
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
                 <Calendar className="size-3.5" />
@@ -110,14 +120,14 @@ const EnquiryDetail = ({ params }) => {
                 <Mail className="size-4 mt-0.5 shrink-0 text-muted-foreground" />
                 <div>
                   <p className="text-xs text-muted-foreground mb-0.5 uppercase tracking-wide">Email</p>
-                  <a href={`mailto:${enquiry.email}`} className="font-medium text-sm text-blue-600 hover:underline dark:text-blue-400">{enquiry.email}</a>
+                  <a href={`mailto:${enquiry.email}`} className="text-sm font-medium text-primary hover:underline">{enquiry.email}</a>
                 </div>
               </div>
               <div className="rounded-lg border p-4 flex gap-3">
                 <Phone className="size-4 mt-0.5 shrink-0 text-muted-foreground" />
                 <div>
                   <p className="text-xs text-muted-foreground mb-0.5 uppercase tracking-wide">Mobile</p>
-                  <a href={`tel:${enquiry.phone}`} className="font-medium text-sm text-blue-600 hover:underline dark:text-blue-400">{enquiry.phone}</a>
+                  <a href={`tel:${enquiry.phone}`} className="text-sm font-medium text-primary hover:underline">{enquiry.phone}</a>
                 </div>
               </div>
               <div className="rounded-lg border p-4 flex gap-3">
@@ -173,8 +183,14 @@ const EnquiryDetail = ({ params }) => {
                   <button
                     key={s}
                     type="button"
+                    aria-pressed={status === s}
                     onClick={() => setStatus(s)}
-                    className={`rounded-full px-3 py-1 text-xs font-medium capitalize transition ${status === s ? statusClass(s) + ' ring-2 ring-offset-1 ring-current/30' : 'bg-background border text-muted-foreground hover:text-foreground'}`}
+                    style={status === s ? statusRingStyle(s) : undefined}
+                    className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-colors ${
+                      status === s
+                        ? ''
+                        : 'border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground'
+                    }`}
                   >
                     {s}
                   </button>

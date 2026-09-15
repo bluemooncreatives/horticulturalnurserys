@@ -155,7 +155,7 @@ const EditProduct = ({ params }) => {
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />
 
-      <div className="rounded-md bg-card p-4 sm:p-6">
+      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
@@ -166,7 +166,7 @@ const EditProduct = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Name<span className="text-red-500">*</span>
+                        Name<span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Enter category name" {...field} />
@@ -183,7 +183,7 @@ const EditProduct = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Slug <span className="text-red-500">*</span>
+                        Slug <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Enter slug" {...field} />
@@ -200,7 +200,7 @@ const EditProduct = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Category <span className="text-red-500">*</span>
+                        Category <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Select
@@ -223,7 +223,7 @@ const EditProduct = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        MRP <span className="text-red-500">*</span>
+                        MRP <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Enter MRP" {...field} />
@@ -240,7 +240,7 @@ const EditProduct = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Selling Price <span className="text-red-500">*</span>
+                        Selling Price <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Enter Selling Price" {...field} />
@@ -257,7 +257,7 @@ const EditProduct = ({ params }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Discount Percentage <span className="text-red-500">*</span>
+                        Discount Percentage <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" readOnly placeholder="Enter Discount Percentage" {...field} />
@@ -269,7 +269,7 @@ const EditProduct = ({ params }) => {
               </div>
               <div className="mb-5 md:col-span-2">
                 <FormLabel className="mb-2">
-                  Description <span className="text-red-500">*</span>
+                  Description <span className="text-destructive" aria-hidden>*</span>
                 </FormLabel>
                 {!getProductLoading && <Editor onChange={editor} initialData={form.getValues('description')} />}
                 <FormMessage></FormMessage>
@@ -301,7 +301,7 @@ const EditProduct = ({ params }) => {
                 </div>
               )}
 
-              <div onClick={() => setOpen(true)} className="bg-gray-50 dark:bg-card border w-[200px] mx-auto p-5 cursor-pointer">
+              <div onClick={() => setOpen(true)} className="mx-auto flex w-[200px] cursor-pointer flex-col items-center gap-2 rounded-lg border border-dashed border-border bg-muted/40 p-5 text-center transition-colors hover:border-primary/50 hover:bg-muted">
                 <span className="font-semibold">Select Media</span>
               </div>
             </div>

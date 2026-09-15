@@ -64,7 +64,7 @@ const AddParent = () => {
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />
 
-      <div className="rounded-md bg-card p-4 sm:p-6">
+      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-5">

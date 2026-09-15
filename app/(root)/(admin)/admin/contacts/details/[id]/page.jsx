@@ -6,8 +6,12 @@ import PageHeader from '@/components/Application/Admin/PageHeader'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ADMIN_CONTACTS_SHOW, ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
-import { Mail, User, MessageSquare, Calendar, Tag, Phone, MapPin } from 'lucide-react'
+import { Mail, User, MessageSquare, Calendar, Tag, Phone, MapPin, SearchX } from 'lucide-react'
 import dayjs from 'dayjs'
+import Link from 'next/link'
+import { statusChipStyle } from '@/lib/adminStatus'
+import { FormSkeleton } from '@/components/Application/Admin/Loaders'
+import EmptyState from '@/components/Application/Admin/EmptyState'
 
 const breadcrumbData = [
   { href: ADMIN_DASHBOARD, label: 'Home' },
@@ -34,17 +38,24 @@ const ContactDetail = ({ params }) => {
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />
 
-      <div className="rounded-md bg-card">
+      <div className="rounded-xl border border-border bg-card shadow-xs">
         {loading && (
-          <div className="flex justify-center items-center py-24 text-muted-foreground text-sm">
-            Loading…
+          <div className="p-5 sm:p-6">
+            <FormSkeleton fields={4} />
           </div>
         )}
 
         {!loading && !contact && (
-          <div className="flex justify-center items-center py-24">
-            <p className="text-red-500 text-lg font-medium">Message not found.</p>
-          </div>
+          <EmptyState
+            icon={SearchX}
+            title="Message not found"
+            description="This contact query may have been deleted or moved to the recycle bin."
+            action={
+              <Button asChild variant="outline" size="sm">
+                <Link href={ADMIN_CONTACTS_SHOW}>Back to contact queries</Link>
+              </Button>
+            }
+          />
         )}
 
         {contact && (
@@ -58,15 +69,14 @@ const ContactDetail = ({ params }) => {
                     {contact.ticketId}
                   </span>
                 )}
-                {contact.isRead ? (
-                  <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-300">
-                    Read
-                  </Badge>
-                ) : (
-                  <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300">
-                    New
-                  </Badge>
-                )}
+                {/* Same token pair the enquiry statuses use, so "Read" here
+                    and "Closed" there are the same green. */}
+                <Badge
+                  variant="status"
+                  style={statusChipStyle(contact.isRead ? 'closed' : 'new')}
+                >
+                  {contact.isRead ? 'Read' : 'New'}
+                </Badge>
               </div>
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
                 <Calendar className="size-3.5" />
@@ -90,7 +100,7 @@ const ContactDetail = ({ params }) => {
                   <p className="text-xs text-muted-foreground mb-0.5 uppercase tracking-wide">Email</p>
                   <a
                     href={`mailto:${contact.email}`}
-                    className="font-medium text-sm text-blue-600 hover:underline dark:text-blue-400"
+                    className="text-sm font-medium text-primary hover:underline"
                   >
                     {contact.email}
                   </a>
@@ -104,7 +114,7 @@ const ContactDetail = ({ params }) => {
                   {contact.phone ? (
                     <a
                       href={`tel:${contact.phone}`}
-                      className="font-medium text-sm text-blue-600 hover:underline dark:text-blue-400"
+                      className="text-sm font-medium text-primary hover:underline"
                     >
                       {contact.phone}
                     </a>

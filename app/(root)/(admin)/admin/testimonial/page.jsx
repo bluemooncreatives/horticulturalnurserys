@@ -48,7 +48,7 @@ const StarPicker = ({ value, onChange }) => (
       >
         <Star
           className={`size-6 transition-colors ${
-            n <= value ? 'fill-amber-500 text-amber-500' : 'fill-muted text-muted-foreground/40'
+            n <= value ? 'fill-[var(--status-rating)] text-[var(--status-rating)]' : 'fill-transparent text-border'
           }`}
         />
       </button>
@@ -190,7 +190,7 @@ const ShowTestimonials = () => {
       />
 
       {/* Add / edit testimonial */}
-      <div className="rounded-md bg-card p-4 sm:p-6">
+      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
         <h3 className="mb-1 text-sm font-semibold">
           {editingId ? 'Edit testimonial' : 'Add testimonial'}
         </h3>
@@ -271,7 +271,7 @@ const ShowTestimonials = () => {
       </div>
 
       {/* Current testimonials */}
-      <div className="rounded-md bg-card p-4 sm:p-6">
+      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
             <h3 className="text-sm font-semibold">Current testimonials</h3>
@@ -323,8 +323,8 @@ const ShowTestimonials = () => {
                           key={i}
                           className={`size-3 ${
                             i < testimonial.rating
-                              ? 'fill-amber-500 text-amber-500'
-                              : 'fill-muted text-muted-foreground/40'
+                              ? 'fill-[var(--status-rating)] text-[var(--status-rating)]'
+                              : 'fill-transparent text-border'
                           }`}
                         />
                       ))}
@@ -389,7 +389,7 @@ const ShowTestimonials = () => {
                     type="button"
                     variant="outline"
                     size="icon"
-                    className="size-8 text-red-600 hover:text-red-700"
+                    className="size-8 text-destructive hover:bg-destructive/10 hover:text-destructive"
                     disabled={busyId === testimonial._id}
                     onClick={() => handleDelete(testimonial._id)}
                     aria-label="Delete testimonial"

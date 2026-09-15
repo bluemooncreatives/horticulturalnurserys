@@ -44,7 +44,7 @@ const ShowReview = () => {
                 }
             />
 
-            <div className="rounded-md bg-card">
+            <div>
                 <DatatableWrapper
                     queryKey="review-data"
                     fetchUrl="/api/review"

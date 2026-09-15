@@ -144,7 +144,7 @@ const AddProduct = () => {
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />
 
-      <div className="rounded-md bg-card p-4 sm:p-6">
+      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
@@ -155,7 +155,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Name<span className="text-red-500">*</span>
+                        Name<span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Enter category name" {...field} />
@@ -172,7 +172,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Slug <span className="text-red-500">*</span>
+                        Slug <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Enter slug" {...field} />
@@ -189,7 +189,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Parent SKU <span className="text-red-500">*</span>
+                        Parent SKU <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Enter parent SKU" {...field} />
@@ -206,7 +206,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Category <span className="text-red-500">*</span>
+                        Category <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Select
@@ -229,7 +229,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        MRP <span className="text-red-500">*</span>
+                        MRP <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Enter MRP" {...field} />
@@ -246,7 +246,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Selling Price <span className="text-red-500">*</span>
+                        Selling Price <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Enter Selling Price" {...field} />
@@ -263,7 +263,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Discount Percentage <span className="text-red-500">*</span>
+                        Discount Percentage <span className="text-destructive" aria-hidden>*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="number" readOnly placeholder="Enter Discount Percentage" {...field} />
@@ -275,7 +275,7 @@ const AddProduct = () => {
               </div>
               <div className="mb-5 md:col-span-2">
                 <FormLabel className="mb-2">
-                  Description <span className="text-red-500">*</span>
+                  Description <span className="text-destructive" aria-hidden>*</span>
                 </FormLabel>
                 <Editor onChange={editor} />
                 <FormMessage></FormMessage>
@@ -307,7 +307,7 @@ const AddProduct = () => {
                 </div>
               )}
 
-              <div onClick={() => setOpen(true)} className="bg-gray-50 dark:bg-card border w-[200px] mx-auto p-5 cursor-pointer">
+              <div onClick={() => setOpen(true)} className="mx-auto flex w-[200px] cursor-pointer flex-col items-center gap-2 rounded-lg border border-dashed border-border bg-muted/40 p-5 text-center transition-colors hover:border-primary/50 hover:bg-muted">
                 <span className="font-semibold">Select Media</span>
               </div>
             </div>

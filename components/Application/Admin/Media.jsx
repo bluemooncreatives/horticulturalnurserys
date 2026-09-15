@@ -25,7 +25,7 @@ const Media = ({ media, handleDelete, deleteType, selectedMedia, setSelectedMedi
     }
 
     return (
-        <div className='border border-gray-200 dark:border-gray-800 relative group rounded overflow-hidden'>
+        <div className='group relative overflow-hidden rounded-lg border border-border bg-muted/30 transition-colors hover:border-primary/40'>
             <div className='absolute top-2 left-2 z-20'>
                 <Checkbox
                     checked={selectedMedia.includes(media._id)}
@@ -37,7 +37,7 @@ const Media = ({ media, handleDelete, deleteType, selectedMedia, setSelectedMedi
             <div className='absolute top-2 right-2 z-20'>
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
-                        <button type='button' className='w-7 h-7 flex items-center justify-center rounded-full bg-black/50 text-white cursor-pointer'>
+                        <button type='button' className='flex size-7 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100 max-md:opacity-100'>
                             <MoreVertical className='size-4' />
                         </button>
                     </DropdownMenuTrigger>
@@ -58,7 +58,7 @@ const Media = ({ media, handleDelete, deleteType, selectedMedia, setSelectedMedi
                         }
 
                         <DropdownMenuItem className="cursor-pointer" onClick={() => handleDelete([media._id], deleteType)}>
-                            <Trash2 className='size-4 text-red-500' />
+                            <Trash2 className='size-4 text-destructive' />
                             {deleteType === 'SD' ? 'Move Into Trash' : 'Delete Permanently'}
                         </DropdownMenuItem>
 
@@ -68,7 +68,7 @@ const Media = ({ media, handleDelete, deleteType, selectedMedia, setSelectedMedi
             </div>
 
 
-            <div className='w-full h-full absolute z-10 transition-all duration-150 ease-in group-hover:bg-black/30'></div>
+            <div className='pointer-events-none absolute inset-0 z-10 transition-colors duration-150 ease-in group-hover:bg-black/25'></div>
 
             <div>
                 <Image
@@ -76,7 +76,7 @@ const Media = ({ media, handleDelete, deleteType, selectedMedia, setSelectedMedi
                     alt={media?.alt || 'Image'}
                     height={300}
                     width={300}
-                    className='object-cover w-full sm:h-[200px] h-[150px]'
+                    className='h-[150px] w-full object-cover sm:h-[200px]'
                 />
             </div>
         </div>

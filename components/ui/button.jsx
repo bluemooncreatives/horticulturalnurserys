@@ -9,7 +9,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+        // `[a]:hover:` only matches when the element IS an anchor, so plain
+        // <button>s had no hover state at all. Hover both; keep the anchor
+        // selector out of it entirely.
+        default:
+          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 active:bg-primary/95",
         outline:
           "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
@@ -18,6 +22,10 @@ const buttonVariants = cva(
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+        "destructive-solid":
+          "bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/30",
+        success:
+          "bg-success text-success-foreground shadow-xs hover:bg-success/90 focus-visible:ring-success/30",
         pill: "rounded-full border-current bg-transparent font-semibold uppercase tracking-[0em]",
         brand:
           "rounded-full bg-[var(--dark-red)] text-white hover:bg-[var(--dark-red-2)] focus-visible:ring-[var(--dark-red)]/40",

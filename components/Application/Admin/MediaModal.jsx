@@ -2,12 +2,13 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import Image from 'next/image'
 import React, { useState } from 'react'
-import loading from '@/public/assets/images/loading.svg'
 import ModalMediaBlock from './ModalMediaBlock'
 import { showToast } from '@/lib/showToast'
 import ButtonLoading from '../ButtonLoading'
+import EmptyState from './EmptyState'
+import { Skeleton } from '@/components/ui/skeleton'
+import { AlertCircle } from 'lucide-react'
 const MediaModal = ({ open, setOpen, selectedMedia, setSelectedMedia, isMultiple }) => {
 
     const [previouslySelected, setPreviouslySelected] = useState([])
@@ -47,84 +48,103 @@ const MediaModal = ({ open, setOpen, selectedMedia, setSelectedMedia, isMultiple
         setOpen(false)
     }
 
+    const selectedCount = selectedMedia?.length || 0
+
     return (
-        <Dialog
-            open={open}
-            onOpenChange={setOpen}
-        >
-            <DialogContent onInteractOutside={(e) => e.preventDefault()}
-                className="sm:max-w-[80%] h-screen border-0 bg-transparent p-0 py-10 shadow-none"
+        <Dialog open={open} onOpenChange={setOpen}>
+            {/* The panel used to be a fixed h-[90vh] box with a 32px header, a
+                40px footer and a body sized `calc(100% - 80px)` - numbers that
+                never added up, so the footer buttons overflowed their strip. It
+                is a flex column now: header and footer take their natural
+                height, the grid takes the rest. */}
+            <DialogContent
+                onInteractOutside={(e) => e.preventDefault()}
+                className="flex h-[min(90vh,52rem)] w-[calc(100%-2rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-5xl"
             >
-                <DialogDescription className="hidden"></DialogDescription>
+                <DialogHeader className="shrink-0 space-y-0 border-b border-border px-5 py-3 text-start">
+                    <DialogTitle>Media Selection</DialogTitle>
+                    <DialogDescription>
+                        {isMultiple
+                            ? 'Pick one or more images from your library.'
+                            : 'Pick an image from your library.'}
+                    </DialogDescription>
+                </DialogHeader>
 
-                <div className='h-[90vh] rounded-xl border bg-background p-3 shadow-sm'>
-                    <DialogHeader className="h-8 border-b">
-                        <DialogTitle>Media Selection</DialogTitle>
-                    </DialogHeader>
+                <div className="admin-scroll min-h-0 flex-1 overflow-y-auto px-5 py-4">
+                    {isPending ? (
+                        <div className="grid grid-cols-3 gap-3 lg:grid-cols-6">
+                            {Array.from({ length: 12 }).map((_, i) => (
+                                <Skeleton key={i} className="h-[100px] w-full rounded-lg md:h-[150px]" />
+                            ))}
+                        </div>
+                    ) : isError ? (
+                        <EmptyState
+                            icon={AlertCircle}
+                            title="Couldn&apos;t load your media"
+                            description={error.message}
+                        />
+                    ) : (
+                        <>
+                            <div className="grid grid-cols-3 gap-3 lg:grid-cols-6">
+                                {data?.pages?.map((page, index) => (
+                                    <React.Fragment key={index}>
+                                        {page?.mediaData?.map((media) => (
+                                            <ModalMediaBlock
+                                                key={media._id}
+                                                media={media}
+                                                selectedMedia={selectedMedia}
+                                                setSelectedMedia={setSelectedMedia}
+                                                isMultiple={isMultiple}
+                                            />
+                                        ))}
+                                    </React.Fragment>
+                                ))}
+                            </div>
 
-                    <div className='h-[calc(100%-80px)] overflow-auto py-2'>
-                        {isPending ?
-                            (<div className='size-full flex justify-center items-center'>
-                                <Image src={loading} alt='loading' height={80} width={80} />
-                            </div>)
-                            :
-                            isError ?
-                                <div className='size-full flex justify-center items-center'>
-                                    <span className='text-red-500'>{error.message}</span>
+                            {hasNextPage ? (
+                                <div className="flex justify-center py-5">
+                                    <ButtonLoading
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => fetchNextPage()}
+                                        loading={isFetching}
+                                        text="Load More"
+                                        size="lg"
+                                    />
                                 </div>
-                                :
-                                <>
-                                    <div className='grid lg:grid-cols-6 grid-cols-3 gap-2'>
-                                        {
-                                            data?.pages?.map((page, index) => (
-                                                <React.Fragment key={index}>
-                                                    {
-                                                        page?.mediaData?.map((media) => (
-                                                            <ModalMediaBlock
-                                                                key={media._id}
-                                                                media={media}
-                                                                selectedMedia={selectedMedia}
-                                                                setSelectedMedia={setSelectedMedia}
-                                                                isMultiple={isMultiple}
-                                                            />
-                                                        ))
-                                                    }
-                                                </React.Fragment>
-                                            ))
-                                        }
-                                    </div>
-
-                                    {hasNextPage ?
-                                        <div className='flex justify-center py-5'>
-                                                    <ButtonLoading type="button" onClick={() => fetchNextPage()} loading={isFetching} text="Load More" size="lg" />
-                                        </div>
-                                        :
-                                        <p className='text-center py-5'>Nothing more to load.</p>
-                                    }
-
-                                </>
-                        }
-                    </div>
-
-
-                    <div className='h-10 pt-3 border-t flex justify-between'>
-                        <div>
-                            <Button type="button" variant="destructive" size="lg" onClick={handleClear} >
-                                Clear All
-                            </Button>
-                        </div>
-                        <div className='flex gap-5'>
-                            <Button type="button" variant="secondary" size="lg" onClick={handleClose} >
-                                Close
-                            </Button>
-                            <Button type="button" size="lg" onClick={handleSelect} >
-                                Select
-                            </Button>
-                        </div>
-                    </div>
-
+                            ) : (
+                                <p className="py-5 text-center text-xs text-muted-foreground">
+                                    Nothing more to load.
+                                </p>
+                            )}
+                        </>
+                    )}
                 </div>
 
+                <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-t border-border px-5 py-3">
+                    <div className="flex items-center gap-3">
+                        <Button
+                            type="button"
+                            variant="destructive"
+                            size="lg"
+                            disabled={selectedCount === 0}
+                            onClick={handleClear}
+                        >
+                            Clear All
+                        </Button>
+                        <span className="text-xs text-muted-foreground tabular-nums">
+                            {selectedCount} selected
+                        </span>
+                    </div>
+                    <div className="flex gap-2">
+                        <Button type="button" variant="outline" size="lg" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button type="button" size="lg" onClick={handleSelect}>
+                            Select
+                        </Button>
+                    </div>
+                </div>
             </DialogContent>
         </Dialog>
     )

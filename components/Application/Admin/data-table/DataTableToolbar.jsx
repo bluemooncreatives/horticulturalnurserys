@@ -1,5 +1,5 @@
 'use client'
-import { Cross2Icon } from '@radix-ui/react-icons'
+import { Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import DataTableViewOptions from './DataTableViewOptions'
@@ -11,44 +11,63 @@ const DataTableToolbar = ({
     searchKey,
     className,
 }) => {
-    const isFiltered =
-        table.getState().columnFilters?.length > 0 || table.getState().globalFilter
+    const globalFilter = table.getState().globalFilter ?? ''
+    const columnFilter = searchKey
+        ? (table.getColumn(searchKey)?.getFilterValue() ?? '')
+        : ''
+    const value = searchKey ? columnFilter : globalFilter
+    const isFiltered = table.getState().columnFilters?.length > 0 || Boolean(globalFilter)
+
+    const setValue = (next) => {
+        if (searchKey) {
+            table.getColumn(searchKey)?.setFilterValue(next)
+        } else {
+            table.setGlobalFilter(next)
+        }
+    }
+
+    const reset = () => {
+        table.resetColumnFilters?.()
+        table.setGlobalFilter?.('')
+    }
 
     return (
-        <div className={cn("flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between", className)}>
-            <div className="flex w-full flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:space-x-2">
-                {searchKey ? (
-                    <Input
-                        placeholder={searchPlaceholder}
-                        value={(table.getColumn(searchKey)?.getFilterValue() ?? '')}
-                        onChange={(event) =>
-                            table.getColumn(searchKey)?.setFilterValue(event.target.value)
-                        }
-                        className="h-9 w-full sm:w-[220px] lg:w-[280px]"
-                    />
-                ) : (
-                    <Input
-                        placeholder={searchPlaceholder}
-                        value={table.getState().globalFilter ?? ''}
-                        onChange={(event) => table.setGlobalFilter(event.target.value)}
-                        className="h-9 w-full sm:w-[220px] lg:w-[280px]"
-                    />
-                )}
-                {isFiltered && (
+        <div className={cn('flex w-full items-center gap-2', className)}>
+            <div className="relative flex-1">
+                {/* The search box was a bare Input with no affordance and the
+                    Reset control appeared as a separate button beside it. The
+                    clear affordance now lives inside the field. */}
+                <Search
+                    className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+                    aria-hidden
+                />
+                <Input
+                    placeholder={searchPlaceholder}
+                    value={value}
+                    onChange={(event) => setValue(event.target.value)}
+                    aria-label={searchPlaceholder}
+                    className="h-9 ps-9 pe-9"
+                />
+                {value ? (
                     <Button
+                        type="button"
                         variant="ghost"
-                        size="lg"
-                        onClick={() => {
-                            table.resetColumnFilters?.()
-                            table.setGlobalFilter?.('')
-                        }}
-                        className="h-9 px-2 lg:px-3"
+                        size="icon-xs"
+                        onClick={() => setValue('')}
+                        aria-label="Clear search"
+                        className="absolute end-1.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
-                        Reset
-                        <Cross2Icon className="ms-2 h-4 w-4" />
+                        <X className="size-3.5" />
                     </Button>
-                )}
+                ) : null}
             </div>
+
+            {isFiltered && (
+                <Button variant="ghost" size="lg" onClick={reset} className="shrink-0">
+                    Reset
+                </Button>
+            )}
+
             <DataTableViewOptions table={table} />
         </div>
     )

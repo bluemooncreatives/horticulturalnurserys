@@ -14,7 +14,9 @@ import axios from 'axios'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { ArrowLeft, Trash2 } from 'lucide-react'
+import { ArrowLeft, Trash2, ImageOff, AlertCircle } from 'lucide-react'
+import EmptyState from '@/components/Application/Admin/EmptyState'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const breadcrumbData = [
     { href: ADMIN_DASHBOARD, label: 'Home' },
@@ -99,6 +101,9 @@ const MediaContent = () => {
 
 
 
+    const mediaCount =
+        data?.pages?.reduce((total, page) => total + (page?.mediaData?.length || 0), 0) || 0
+
     return (
         <div className="flex flex-col gap-4 sm:gap-6">
             <PageHeader
@@ -129,24 +134,31 @@ const MediaContent = () => {
                 }
             />
 
-            <div className="rounded-md bg-card p-4 sm:p-5">
-                {selectedMedia.length > 0 && (
-                    <div className="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-md border bg-muted/40 px-3 py-2">
-                        <Label>
+            <div className="rounded-xl border border-border bg-card shadow-xs p-5">
+                {status === 'success' && mediaCount > 0 && (
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-muted/40 px-3 py-2">
+                        <Label className="cursor-pointer gap-2 text-sm font-medium">
                             <Checkbox
                                 checked={selectAll}
                                 onCheckedChange={handleSelectAll}
-                                className="border-primary mr-2"
                             />
-                            Select All
+                            Select all
+                            {selectedMedia.length > 0 && (
+                                <span className="text-muted-foreground tabular-nums">
+                                    ({selectedMedia.length} selected)
+                                </span>
+                            )}
                         </Label>
 
+                        {/* `hidden` loses to `display:flex`, so this has to be a
+                            conditional render rather than an attribute. */}
+                        {selectedMedia.length > 0 && (
                         <div className="flex flex-wrap gap-2">
                             {deleteType === 'SD' ? (
                                 <Button
                                     variant="destructive"
                                     onClick={() => handleDelete(selectedMedia, deleteType)}
-                                    className="h-9 cursor-pointer"
+                                    className="cursor-pointer"
                                     size="lg"
                                 >
                                     Move Into Trash
@@ -154,33 +166,50 @@ const MediaContent = () => {
                             ) : (
                                 <>
                                     <Button
-                                        className="bg-green-500 hover:bg-green-600 h-9"
+                                        variant="success"
                                         onClick={() => handleDelete(selectedMedia, "RSD")}
                                         size="lg"
                                     >
                                         Restore
                                     </Button>
 
-                                    <Button variant="destructive" onClick={() => handleDelete(selectedMedia, deleteType)} className="h-9" size="lg">
+                                    <Button variant="destructive-solid" onClick={() => handleDelete(selectedMedia, deleteType)} size="lg">
                                         Delete Permanently
                                     </Button>
                                 </>
                             )}
                         </div>
+                        )}
                     </div>
                 )}
 
                 {status === 'pending' ? (
-                    <div>Loading...</div>
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+                        {Array.from({ length: 10 }).map((_, i) => (
+                            <Skeleton key={i} className="h-[150px] w-full rounded-lg sm:h-[200px]" />
+                        ))}
+                    </div>
                 ) : status === 'error' ? (
-                    <div className="text-red-500 text-sm">{error.message}</div>
+                    <EmptyState
+                        icon={AlertCircle}
+                        title="Couldn&apos;t load your media"
+                        description={error.message}
+                    />
                 ) : (
                     <>
-                        {data.pages.flatMap(page => page.mediaData.map(media => media._id)).length === 0 && (
-                            <div>Data not found.</div>
-                        )}
+                        {data.pages.flatMap(page => page.mediaData.map(media => media._id)).length === 0 ? (
+                            <EmptyState
+                                icon={ImageOff}
+                                title={deleteType === 'SD' ? 'No media yet' : 'Media trash is empty'}
+                                description={
+                                    deleteType === 'SD'
+                                        ? 'Upload images to use them across products and pages.'
+                                        : 'Deleted images will appear here before they are removed for good.'
+                                }
+                            />
+                        ) : null}
 
-                        <div className="grid lg:grid-cols-5 sm:grid-cols-3 grid-cols-2 gap-2 mb-5">
+                        <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
                             {data?.pages?.map((page, index) => (
                                 <React.Fragment key={index}>
                                     {page?.mediaData?.map((media) => (

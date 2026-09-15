@@ -8,7 +8,9 @@ import { columnConfig } from "@/lib/helperFunction"
 import { ADMIN_DASHBOARD, ADMIN_TRASH } from "@/routes/AdminPanelRoute"
 
 import { useSearchParams } from "next/navigation"
+import Link from "next/link"
 import { useCallback, useMemo } from "react"
+import { ChevronRight, Trash2 } from "lucide-react"
 
 const breadcrumbData = [
     { href: ADMIN_DASHBOARD, label: 'Home' },
@@ -89,28 +91,50 @@ const TrashContent = () => {
 
     const config = TRASH_CONFIG[trashOf]
 
+    // These must run before any early return: hooks after a conditional
+    // `return` change the hook order between the empty and selected states,
+    // which React rejects outright when you navigate from one to the other.
+    const columns = useMemo(
+        () => (config ? columnConfig(config.columns, false, false, true) : []),
+        [config]
+    )
+
+    const action = useCallback(
+        (row, deleteType, handleDelete) => [
+            <DeleteAction key="delete" handleDelete={handleDelete} row={row} deleteType={deleteType} />,
+        ],
+        []
+    )
+
     if (!config) {
         return (
             <div className="flex flex-col gap-4 sm:gap-6">
                 <PageHeader
-                    title="Trash"
-                    description="Select a section to review deleted items."
+                    title="Recycle Bin"
+                    description="Pick a section to review the items deleted from it."
                     breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
                 />
-                <div className="rounded-md bg-card px-4 py-6 text-sm text-muted-foreground">
-                    Choose a valid trash section from an entity table.
-                </div>
+                <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                    {Object.entries(TRASH_CONFIG).map(([key, section]) => (
+                        <li key={key}>
+                            <Link
+                                href={`${ADMIN_TRASH}?trashof=${key}`}
+                                className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-xs transition-colors hover:border-primary/40 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                            >
+                                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+                                    <Trash2 className="size-4" />
+                                </span>
+                                <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                                    {section.title.replace(' Trash', '')}
+                                </span>
+                                <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
             </div>
         )
     }
-
-    const columns = useMemo(() => {
-        return columnConfig(config.columns, false, false, true)
-    }, [])
-
-    const action = useCallback((row, deleteType, handleDelete) => {
-        return [<DeleteAction key="delete" handleDelete={handleDelete} row={row} deleteType={deleteType} />]
-    }, [])
 
     return (
         <div className="flex flex-col gap-4 sm:gap-6">
@@ -120,7 +144,7 @@ const TrashContent = () => {
                 breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
             />
 
-            <div className="rounded-md bg-card">
+            <div>
                 <DatatableWrapper
                     queryKey={`${trashOf}-data-deleted`}
                     fetchUrl={config.fetchUrl}

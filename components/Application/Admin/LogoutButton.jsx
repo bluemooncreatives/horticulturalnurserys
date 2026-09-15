@@ -38,9 +38,9 @@ const LogoutButton = () => {
   return (
     <DropdownMenuItem
       onClick={handleLogout}
-      className="cursor-pointer"
+      className="cursor-pointer text-destructive focus:bg-destructive/10 focus:text-destructive"
     >
-      <LogOut className="size-4 text-red-500" />
+      <LogOut className="size-4" />
       Logout
     </DropdownMenuItem>
   );

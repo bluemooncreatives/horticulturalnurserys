@@ -27,7 +27,7 @@ const ModalMediaBlock = ({ media, selectedMedia, setSelectedMedia, isMultiple })
         }
     }
     return (
-        <label htmlFor={media._id} className='border border-gray-200 dark:border-gray-800 relative group rounded overflow-hidden'>
+        <label htmlFor={media._id} className='group relative cursor-pointer overflow-hidden rounded-lg border border-border transition-colors hover:border-primary/50 has-[button[data-state=checked]]:border-primary has-[button[data-state=checked]]:ring-2 has-[button[data-state=checked]]:ring-primary/30'>
             <div className='absolute top-2 left-2 z-20'>
                 <Checkbox
                     id={media._id}

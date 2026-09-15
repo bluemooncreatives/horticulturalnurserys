@@ -77,6 +77,9 @@
   --accent:              #E7E6E1;
   --accent-foreground:   #1D4020;
   --destructive:         oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0 0);
+  --success:             oklch(0.52 0.13 155);
+  --success-foreground:  oklch(0.99 0 0);
   --border:              #E3E1DC;   /* hairline warm-grey border                */
   --input:               #E3E1DC;
   --ring:                #1D4020;   /* forest-green focus ring                  */
@@ -102,6 +105,9 @@
   --accent:               oklch(0.269 0 0);
   --accent-foreground:    oklch(0.985 0 0);
   --destructive:          oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.99 0 0);
+  --success:              oklch(0.68 0.15 155);
+  --success-foreground:   oklch(0.16 0.02 155);
   --border:               oklch(1 0 0 / 10%);
   --input:                oklch(1 0 0 / 15%);
   --ring:                 oklch(0.556 0 0);

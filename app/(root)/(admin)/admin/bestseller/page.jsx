@@ -137,7 +137,7 @@ const ShowBestseller = () => {
       />
 
       {/* Add products */}
-      <div className="rounded-md bg-card p-4 sm:p-6">
+      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
         <h3 className="mb-1 text-sm font-semibold">Add products</h3>
         <p className="mb-4 text-sm text-muted-foreground">
           Pick from existing products to feature them as bestsellers.
@@ -169,7 +169,7 @@ const ShowBestseller = () => {
       </div>
 
       {/* Current bestsellers */}
-      <div className="rounded-md bg-card p-4 sm:p-6">
+      <div className="rounded-xl border border-border bg-card shadow-xs p-5 sm:p-6">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
             <h3 className="text-sm font-semibold">Current bestsellers</h3>
@@ -242,7 +242,7 @@ const ShowBestseller = () => {
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="size-8 text-red-600 hover:text-red-700"
+                      className="size-8 text-destructive hover:bg-destructive/10 hover:text-destructive"
                       disabled={removingId === product._id}
                       onClick={() => handleRemove(product._id)}
                       aria-label="Remove from bestsellers"

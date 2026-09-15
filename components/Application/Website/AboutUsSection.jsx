@@ -453,12 +453,12 @@ const AboutUsSection = () => {
         mm.add('(prefers-reduced-motion: no-preference)', () => {
             gsap.fromTo(
                 statementRef.current,
-                { yPercent: 20 },
+                { yPercent: 0 },
                 { yPercent: 0, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
             )
             gsap.fromTo(
                 statsRef.current,
-                { yPercent: 9, scale: 0.97, autoAlpha: 0.5 },
+                { yPercent: 0, scale: 0.98, autoAlpha: 0.8 },
                 { yPercent: 0, scale: 1, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
             )
 
@@ -509,18 +509,8 @@ const AboutUsSection = () => {
     }, [])
 
     return (
-        // No overlap at rest - the hero stays fully visible on load; the section
-        // climbs over it on scroll. z-[2] keeps it above the hero as it rises.
-        <section ref={rootRef} className="about-section relative z-[2] bg-[var(--background)]">
-            {/* min-h-svh is required by the ScrollTrigger pin - a pinned element
-                shorter than the viewport leaves a dead band beneath it while held.
-                Because the content is shorter than a viewport, that surplus height
-                has to go somewhere: justify-center keeps the statement and the stat
-                cards visually grouped (justify-between instead pushes them apart and
-                opens a void through the middle). The cost is that this section's
-                gaps to its neighbours are larger than the 32/56 rhythm every other
-                section follows - a deliberate trade, not an oversight. */}
-            <div className="lumora-shell flex min-h-svh flex-col justify-center py-10 lg:py-24">
+        <section ref={rootRef} className="about-section relative z-[2] bg-[var(--background)] pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
+            <div className="lumora-shell">
 
                 {/* ── Statement (parallax layer A) ── */}
                 <div ref={statementRef} className="about-statement grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_1.85fr] lg:gap-8">

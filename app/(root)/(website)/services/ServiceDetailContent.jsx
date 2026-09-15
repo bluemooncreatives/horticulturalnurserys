@@ -1,249 +1,616 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, ArrowUpRight } from 'lucide-react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  ClipboardList,
+  PencilRuler,
+  Calculator,
+  Hammer,
+  CheckCircle2,
+} from 'lucide-react'
 import { RevealLines, RevealUp } from '@/components/ui/reveal'
+import { SectionHeading, SectionLabel } from './SectionHeader'
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
+const DEFAULT_STEP_ICONS = [ClipboardList, PencilRuler, Calculator, Hammer]
 
-/* ────────────────────────────────────────────────────────────────
-   ServiceDetailContent - shared layout for every /services/* page.
-
-   Props:
-     service = {
-       num, title, tagline, intro, body[], tags[], images[], accent, slug
-       highlights: [{ icon, label, value }]
-       related: [{ title, slug }]
-     }
-   ──────────────────────────────────────────────────────────────── */
-
-// Animated section label that appears on scroll (GSAP reveal)
-function RevealLabel({ children }) {
-  const ref = useRef(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const tween = gsap.from(el, {
-      opacity: 0,
-      y: 10,
-      duration: 0.6,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' },
-    })
-    return () => tween.kill()
-  }, [])
-  return (
-    <span ref={ref} className="block text-[0.8rem] font-semibold uppercase tracking-[0.28em] text-[var(--brand-lime)]/70">
-      {children}
-    </span>
-  )
-}
-
-// Glyph-roll heading - CSS-only stagger
-const RollHeading = ({ text, className = '' }) => {
-  let gi = 0
-  return (
-    <span aria-label={text} className={className}>
-      {text.split(' ').flatMap((word, wi, words) => [
-        <span key={wi} aria-hidden className="inline-block whitespace-nowrap">
-          {[...word].map((ch, ci) => {
-            const delay = `${gi++ * 12}ms`
-            return (
-              <span key={ci} className="group/h relative inline-block overflow-hidden align-baseline">
-                <span
-                  className="inline-block transition-transform duration-[400ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/h:-translate-y-full"
-                  style={{ transitionDelay: delay }}
-                >{ch}</span>
-                <span
-                  className="absolute left-0 top-0 inline-block translate-y-full transition-transform duration-[400ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/h:translate-y-0"
-                  style={{ transitionDelay: delay }}
-                >{ch}</span>
-              </span>
-            )
-          })}
-        </span>,
-        wi < words.length - 1 ? ' ' : null,
-      ])}
-    </span>
-  )
-}
+/* Cell edges for the hero stat rail, indexed by position. The grid is 2-up on
+   mobile and 4-up from lg. */
+const STAT_CELL_EDGES = [
+  'px-5 pl-0 lg:px-6 lg:pl-0',
+  'border-l px-5 lg:px-6',
+  'border-t px-5 pl-0 lg:border-l lg:border-t-0 lg:px-6',
+  'border-l border-t px-5 lg:border-t-0 lg:px-6',
+]
 
 export default function ServiceDetailContent({ service }) {
   const heroImgRef = useRef(null)
 
-  // Subtle parallax on the hero image
+  // Subtle parallax on the hero image. rAF-throttled.
   useEffect(() => {
     const el = heroImgRef.current
     if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let frame = 0
     const onScroll = () => {
-      const scrollY = window.scrollY
-      el.style.transform = `translateY(${scrollY * 0.25}px)`
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        el.style.transform = `translate3d(0, ${window.scrollY * 0.22}px, 0)`
+      })
     }
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [])
+
+  const featureBand = service.featureBand || (service.lawns ? {
+    label: 'Lawns',
+    heading: 'Three grasses. The site decides which one.',
+    desc: 'Every lawn is graded, levelled and soil-prepared before a single roll goes down, then handed over with a watering and mowing schedule for its first season.',
+    items: service.lawns.map((l) => ({
+      name: l.name,
+      sub: l.latin,
+      note: l.note,
+      specs: l.specs,
+    })),
+  } : null)
+
+  const materialsData = service.materialsSection || {
+    label: service.materialsLabel || 'Materials & systems',
+    heading: service.materialsHeading || 'Built in the material the site can carry.',
+    desc: service.materialsDesc || 'Pergolas, screens, edging, water features, planters and statuary - fabricated to your choice of material, weighed against exposure, upkeep and budget before anything is ordered.',
+    items: service.materials || [],
+    image: service.images?.[1] || service.images?.[0] || '/assets/images/hero/01.jpg',
+  }
 
   return (
     <main className="min-h-screen bg-[var(--background)]">
 
-      {/* ── Hero ── */}
-      <section className="relative h-[70vh] min-h-[480px] overflow-hidden bg-[var(--brand-ink-soft)] lg:h-[80vh]">
-        {/* Parallax image */}
-        <div ref={heroImgRef} className="absolute inset-0 will-change-transform" style={{ top: '-10%', bottom: '-10%' }}>
-          <Image
-            src={service.images[0]}
-            alt={service.title}
-            fill
-            sizes="100vw"
-            className="object-cover"
-            priority
-          />
-        </div>
+      {/* ══ Hero ═══════════════════════════════════════════════ */}
+      <section className="relative flex h-[88vh] min-h-[560px] flex-col justify-end overflow-hidden bg-[var(--brand-ink-soft)]">
+        {service.images?.[0] && (
+          <div
+            ref={heroImgRef}
+            className="absolute inset-x-0 will-change-transform"
+            style={{ top: '-12%', bottom: '-12%' }}
+          >
+            <Image
+              src={service.images[0]}
+              alt={service.title}
+              fill
+              sizes="100vw"
+              quality={85}
+              className="object-cover"
+              priority
+            />
+          </div>
+        )}
 
-        {/* Layered scrims */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E0D]/95 via-[#0B1E0D]/50 to-[#0B1E0D]/20" />
+        {/* Layered scrims - vertical for legibility, radial for accent warmth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E0D] via-[#0B1E0D]/60 to-[#0B1E0D]/15" />
         <div
-          className="absolute inset-0 opacity-[0.08]"
-          style={{ background: `radial-gradient(ellipse at 20% 80%, ${service.accent} 0%, transparent 60%)` }}
           aria-hidden
+          className="absolute inset-0 opacity-[0.10]"
+          style={{ background: `radial-gradient(ellipse at 15% 90%, ${service.accent || '#C9F24E'} 0%, transparent 62%)` }}
         />
 
-        {/* Content pinned to the bottom */}
-        <div className="website-gutter absolute inset-x-0 bottom-0 z-10 pb-10 lg:pb-14">
-          {/* Back link */}
+        {/* Back link - pinned to the top of the hero */}
+        <div className="lumora-shell absolute inset-x-0 top-0 z-10 pt-8">
           <Link
             href="/services"
-            className="group mb-8 inline-flex items-center gap-2 text-[0.8rem] font-medium text-white/40 transition-colors hover:text-white"
+            className="group inline-flex items-center gap-2 text-[0.8rem] font-medium text-white/45 transition-colors hover:text-white"
           >
             <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
             All Services
           </Link>
+        </div>
 
-          <RevealUp as="p" delay={60} className="mb-3 text-[0.8rem] font-semibold uppercase tracking-[0.28em] text-[var(--brand-lime)]/70">
-            Service {service.num}
+        {/* Headline block */}
+        <div className="lumora-shell relative z-10 pb-10 lg:pb-12">
+          <RevealUp
+            as="p"
+            delay={60}
+            className="mb-4 text-[0.8rem] font-semibold uppercase text-[var(--brand-lime)]"
+          >
+            Service {service.num || '01'}
           </RevealUp>
 
-          <RevealLines
-            items={[service.title]}
-            delay={100}
-            stagger={0}
-            duration={1000}
-            className="block"
-          />
-          <style>{`.rv-line { overflow: hidden } .rv-inner { font-family: var(--font-neue); font-size: clamp(2.4rem,6.5vw,5.5rem); font-weight: 600; line-height: 0.95; letter-spacing: -0.03em; color: white; }`}</style>
+          <div className="service-hero-title">
+            <RevealLines
+              items={service.titleLines ?? [service.title]}
+              delay={120}
+              stagger={90}
+              duration={1000}
+            />
+          </div>
 
-          <RevealUp as="p" delay={260} className="mt-4 max-w-lg text-[0.95rem] italic leading-relaxed text-white/55">
+          <RevealUp
+            as="p"
+            delay={280}
+            className="mt-5 max-w-xl text-[0.98rem] leading-relaxed text-white/60"
+          >
             {service.tagline}
           </RevealUp>
         </div>
-      </section>
 
-      {/* ── Body ── */}
-      <article className="website-gutter py-16 lg:py-24">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-[1fr_340px] lg:gap-20">
-
-          {/* Left: intro + body paragraphs */}
-          <div className="flex flex-col gap-8">
-            <RevealLabel>Overview</RevealLabel>
-            <p className="text-[1.05rem] font-medium leading-relaxed text-[var(--foreground)] lg:text-[1.15rem]">
-              {service.intro}
-            </p>
-            {service.body.map((para, i) => (
-              <p key={i} className="text-[0.9rem] leading-[1.8] text-[var(--muted-foreground)]">
-                {para}
-              </p>
-            ))}
-
-            {/* Tags */}
-            <div className="mt-2 flex flex-wrap gap-2">
-              {service.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-[var(--brand-primary)]/20 bg-[var(--secondary)] px-4 py-1 text-[0.8rem] font-medium uppercase tracking-[0.12em] text-[var(--brand-primary)]"
-                >
-                  {tag}
-                </span>
-              ))}
+        {/* Stat rail - sits on the hero's lower edge */}
+        {service.stats && service.stats.length > 0 && (
+          <div className="relative z-10 border-t border-white/15">
+            <div className="lumora-shell">
+              <dl className="grid grid-cols-2 lg:grid-cols-4">
+                {service.stats.map((stat, i) => (
+                  <RevealUp
+                    key={stat.label}
+                    delay={340 + i * 70}
+                    className={`border-white/10 py-5 lg:py-6 ${STAT_CELL_EDGES[i % 4]}`}
+                  >
+                    <dt className="text-[0.8rem] font-semibold uppercase tracking-[0.22em] text-white/40">
+                      {stat.label}
+                    </dt>
+                    <dd className="mt-1.5 font-neue text-[clamp(1.05rem,2vw,1.4rem)] font-medium leading-tight tracking-[-0.01em] text-white">
+                      {stat.value}
+                    </dd>
+                  </RevealUp>
+                ))}
+              </dl>
             </div>
           </div>
+        )}
 
-          {/* Right: highlights sidebar + second image */}
-          <div className="flex flex-col gap-8">
-            {/* Second image */}
-            {service.images[1] && (
-              <div className="relative h-52 overflow-hidden rounded-2xl lg:h-64">
-                <Image src={service.images[1]} alt="" fill sizes="340px" className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-ink-soft)]/60 to-transparent" />
-              </div>
-            )}
+        <style>{`
+          .service-hero-title .rv-inner {
+            font-family: var(--font-neue);
+            font-size: clamp(2.5rem, 7vw, 5.75rem);
+            font-weight: 600;
+            line-height: 0.94;
+            letter-spacing: -0.035em;
+            color: #fff;
+          }
+        `}</style>
+      </section>
 
-            {/* Highlights */}
-            {service.highlights?.length > 0 && (
-              <div className="rounded-2xl bg-[var(--brand-ink-soft)] p-6">
-                <RevealLabel>At a glance</RevealLabel>
-                <ul className="mt-5 flex flex-col gap-4">
-                  {service.highlights.map((h) => (
-                    <li key={h.label} className="flex items-start gap-3">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-primary)]/30 text-base" aria-hidden>
-                        {h.icon}
-                      </span>
-                      <span className="flex flex-col gap-0.5">
-                        <span className="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-white/40">{h.label}</span>
-                        <span className="text-[0.9rem] font-medium text-white">{h.value}</span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </div>
-      </article>
+      {/* ══ Overview ═══════════════════════════════════════════ */}
+      <section className="lumora-shell py-16 lg:py-24">
+        <SectionLabel>Overview</SectionLabel>
 
-      {/* ── Related services ── */}
-      {service.related?.length > 0 && (
-        <section className="website-gutter pb-20">
-          <RevealLabel>Also explore</RevealLabel>
-          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {service.related.map((rel) => (
-              <Link
-                key={rel.slug}
-                href={`/services/${rel.slug}`}
-                className="group flex items-center justify-between rounded-2xl border border-[var(--border)] bg-white px-5 py-4 text-[0.9rem] font-medium text-[var(--brand-primary)] transition-all hover:border-[var(--brand-primary)]/30 hover:bg-[var(--secondary)] hover:shadow-sm"
+        <RevealUp
+          as="p"
+          delay={80}
+          className="mt-8 max-w-4xl font-neue text-[clamp(1.25rem,2.6vw,2rem)] font-medium leading-[1.32] tracking-[-0.02em] text-[var(--brand-primary)]"
+        >
+          {service.intro}
+        </RevealUp>
+
+        {service.body && service.body.length > 0 && (
+          <div className="mt-12 grid gap-x-14 gap-y-6 lg:grid-cols-2">
+            {service.body.map((para, i) => (
+              <RevealUp
+                key={i}
+                as="p"
+                delay={120 + i * 60}
+                className="text-[0.92rem] leading-[1.85] text-[var(--muted-foreground)]"
               >
-                {rel.title}
-                <ArrowUpRight className="size-4 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
-              </Link>
+                {para}
+              </RevealUp>
+            ))}
+          </div>
+        )}
+
+        {service.tags && service.tags.length > 0 && (
+          <RevealUp delay={200} className="mt-12 flex flex-wrap gap-2">
+            {service.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-4 py-1.5 text-[0.8rem] font-medium uppercase tracking-[0.12em] text-[var(--brand-primary)]"
+              >
+                {tag}
+              </span>
+            ))}
+          </RevealUp>
+        )}
+      </section>
+
+      {/* ══ Process ════════════════════════════════════════════ */}
+      {service.process && service.process.length > 0 && (
+        <section className="lumora-shell pb-16 lg:pb-24">
+          <SectionHeading className="mt-6 max-w-2xl">
+            {service.processHeading || 'Four steps, in order. Nothing skipped.'}
+          </SectionHeading>
+
+          <ol className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-4xl)] bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-4">
+            {service.process.map((step, i) => {
+              const Icon = step.icon || DEFAULT_STEP_ICONS[i % DEFAULT_STEP_ICONS.length]
+              return (
+                <RevealUp
+                  key={step.title}
+                  as="li"
+                  delay={80 + i * 90}
+                  className="group flex flex-col gap-4 bg-[var(--brand-white)] p-7 transition-colors duration-300 hover:bg-[var(--secondary)] lg:p-8"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="flex size-10 items-center justify-center rounded-[var(--radius-full)] bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] transition-colors duration-300 group-hover:bg-[var(--brand-lime)] group-hover:text-[var(--brand-lime-ink)]">
+                      <Icon className="size-[1.05rem]" strokeWidth={1.6} />
+                    </span>
+                    <span className="font-neue text-[1.6rem] font-medium leading-none text-[var(--brand-primary)]/15">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  <h3 className="text-[1.02rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)]">
+                    {step.title}
+                  </h3>
+                  <p className="text-[0.84rem] leading-[1.7] text-[var(--muted-foreground)]">
+                    {step.desc}
+                  </p>
+                </RevealUp>
+              )
+            })}
+          </ol>
+        </section>
+      )}
+
+      {/* ══ Capabilities ═══════════════════════════════════════ */}
+      {service.capabilities && service.capabilities.length > 0 && (
+        <section className="lumora-shell pb-16 lg:pb-24">
+          <SectionLabel>What the work covers</SectionLabel>
+          <SectionHeading className="mt-6 max-w-3xl">
+            {service.capabilitiesHeading || 'Planting is half of it. The rest is everything holding the space together.'}
+          </SectionHeading>
+
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:gap-5">
+            {service.capabilities.map((cap, i) => (
+              <RevealUp
+                key={cap.title}
+                delay={80 + i * 80}
+                className="group relative overflow-hidden rounded-[var(--radius-4xl)] border border-[var(--border)] bg-[var(--brand-white)] p-7 transition-all duration-300 hover:border-[var(--brand-primary)]/25 hover:shadow-[0_18px_50px_-24px_rgba(29,64,32,0.35)] lg:p-9"
+              >
+                {/* Lime wash that grows in on hover */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-[var(--brand-lime)]/0 blur-2xl transition-all duration-500 group-hover:bg-[var(--brand-lime)]/25"
+                />
+
+                <span className="relative text-[0.8rem] font-semibold uppercase tracking-[0.26em] text-[var(--brand-primary)]/40">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+
+                <h3 className="relative mt-5 font-neue text-[clamp(1.15rem,2.2vw,1.55rem)] font-medium leading-tight tracking-[-0.02em] text-[var(--brand-primary)]">
+                  {cap.title}
+                </h3>
+
+                <span aria-hidden className="relative my-5 block h-px w-10 bg-[var(--brand-lime)]" />
+
+                <p className="relative text-[0.88rem] leading-[1.8] text-[var(--muted-foreground)]">
+                  {cap.desc}
+                </p>
+
+                {cap.tags && cap.tags.length > 0 && (
+                  <ul className="relative mt-6 flex flex-wrap gap-1.5">
+                    {cap.tags.map((t) => (
+                      <li
+                        key={t}
+                        className="rounded-[var(--radius-pill)] bg-[var(--secondary)] px-3 py-1 text-[0.8rem] font-medium text-[var(--brand-primary)]/75"
+                      >
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </RevealUp>
             ))}
           </div>
         </section>
       )}
 
-      {/* ── CTA ── */}
-      <section className="website-gutter pb-20">
-        <div className="flex flex-col items-center gap-5 rounded-2xl bg-[var(--brand-ink-soft)] px-8 py-12 text-center lg:py-14">
-          <p className="text-[0.8rem] font-semibold uppercase text-[var(--brand-lime)]/70">
-            Interested?
-          </p>
-          <h2 className="font-neue text-[clamp(1.4rem,3.5vw,2.4rem)] font-semibold leading-tight tracking-[-0.02em] text-white">
-            Start with a site visit.
-          </h2>
-          <p className="max-w-sm text-[0.88rem] leading-relaxed text-white/50">
-            No obligation. One of our qualified horticulturists visits your site, assesses the space and gives you an honest brief and estimate.
-          </p>
-          <Link
-            href="/contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-[var(--brand-lime)] px-7 py-3 text-[0.88rem] font-semibold text-[var(--brand-lime-ink)] transition-all hover:bg-[var(--brand-lime-hover)] hover:shadow-lg hover:shadow-[var(--brand-lime)]/20"
-          >
-            Contact us
-            <ArrowUpRight className="size-4 transition-transform group-hover:rotate-45" />
-          </Link>
+      {/* ══ Technical / Feature Deep-Dive - Dark Band ═══════════ */}
+      {featureBand && featureBand.items && featureBand.items.length > 0 && (
+        <section className="bg-[var(--brand-ink-soft)] py-16 lg:py-24">
+          <div className="lumora-shell">
+            <SectionLabel tone="dark">{featureBand.label || 'Systems'}</SectionLabel>
+
+            <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+              <SectionHeading tone="dark" className="max-w-2xl">
+                {featureBand.heading}
+              </SectionHeading>
+              {featureBand.desc && (
+                <RevealUp
+                  as="p"
+                  delay={100}
+                  className="max-w-sm text-[0.88rem] leading-[1.75] text-white/50"
+                >
+                  {featureBand.desc}
+                </RevealUp>
+              )}
+            </div>
+
+            <div className="mt-12 grid gap-4 md:grid-cols-3 lg:gap-5">
+              {featureBand.items.map((item, i) => (
+                <RevealUp
+                  key={item.name}
+                  delay={80 + i * 90}
+                  className="group flex flex-col gap-5 rounded-[var(--radius-4xl)] border border-white/10 bg-white/[0.035] p-7 transition-all duration-300 hover:border-[var(--brand-lime)]/40 hover:bg-white/[0.07] lg:p-8"
+                >
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h3 className="font-neue text-[1.3rem] font-medium tracking-[-0.02em] text-white">
+                      {item.name}
+                    </h3>
+                    {item.sub && (
+                      <span className="shrink-0 text-[0.8rem] italic text-white/35">{item.sub}</span>
+                    )}
+                  </div>
+
+                  <span
+                    aria-hidden
+                    className="h-px w-8 bg-[var(--brand-lime)] transition-all duration-300 group-hover:w-16"
+                  />
+
+                  <p className="text-[0.86rem] leading-[1.75] text-white/55">{item.note || item.desc}</p>
+
+                  {item.specs && item.specs.length > 0 && (
+                    <dl className="mt-auto flex flex-col gap-2.5 border-t border-white/10 pt-5">
+                      {item.specs.map((spec) => (
+                        <div key={spec.label} className="flex items-baseline justify-between gap-4">
+                          <dt className="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-white/35">
+                            {spec.label}
+                          </dt>
+                          <dd className="text-right text-[0.82rem] font-medium text-white/85">
+                            {spec.value}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                </RevealUp>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ══ Structures, Materials & Systems ═════════════════════ */}
+      {materialsData && materialsData.items && materialsData.items.length > 0 && (
+        <section className="lumora-shell py-16 lg:py-24">
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <div>
+              <SectionLabel>{materialsData.label}</SectionLabel>
+              <SectionHeading className="mt-6">
+                {materialsData.heading}
+              </SectionHeading>
+              {materialsData.desc && (
+                <RevealUp
+                  as="p"
+                  delay={100}
+                  className="mt-6 max-w-md text-[0.92rem] leading-[1.85] text-[var(--muted-foreground)]"
+                >
+                  {materialsData.desc}
+                </RevealUp>
+              )}
+
+              <div className="mt-10 flex flex-col divide-y divide-[var(--border)] border-y border-[var(--border)]">
+                {materialsData.items.map((mat, i) => (
+                  <RevealUp
+                    key={mat.name}
+                    delay={120 + i * 80}
+                    className="flex flex-col gap-2 py-5 sm:flex-row sm:items-start sm:gap-6"
+                  >
+                    <span className="shrink-0 pt-0.5 text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-[var(--brand-primary)] sm:w-32">
+                      {mat.name}
+                    </span>
+                    <span className="text-[0.85rem] leading-[1.7] text-[var(--muted-foreground)]">
+                      {mat.desc}
+                    </span>
+                  </RevealUp>
+                ))}
+              </div>
+            </div>
+
+            {materialsData.image && (
+              <RevealUp
+                delay={140}
+                className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-4xl)] lg:aspect-[4/4.6]"
+              >
+                <Image
+                  src={materialsData.image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  quality={82}
+                  className="object-cover transition-transform duration-[900ms] ease-out hover:scale-[1.04]"
+                />
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--brand-ink-soft)]/55 to-transparent"
+                />
+              </RevealUp>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ══ Sectors ════════════════════════════════════════════ */}
+      {service.sectors && service.sectors.length > 0 && (
+        <section className="lumora-shell pb-16 lg:pb-24">
+          <SectionLabel>Who we work for</SectionLabel>
+          <SectionHeading className="mt-6 max-w-2xl">
+            {service.sectorsHeading || 'Residential and commercial, run the same way.'}
+          </SectionHeading>
+
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:gap-5">
+            {service.sectors.map((sector, i) => (
+              <RevealUp
+                key={sector.title}
+                delay={80 + i * 100}
+                className="flex flex-col rounded-[var(--radius-4xl)] bg-[var(--secondary)] p-8 lg:p-10"
+              >
+                <h3 className="font-neue text-[clamp(1.3rem,2.4vw,1.75rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
+                  {sector.title}
+                </h3>
+                <p className="mt-4 text-[0.88rem] leading-[1.8] text-[var(--muted-foreground)]">
+                  {sector.desc}
+                </p>
+                {sector.points && sector.points.length > 0 && (
+                  <ul className="mt-7 flex flex-col gap-3 border-t border-[var(--brand-primary)]/10 pt-6">
+                    {sector.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex items-start gap-3 text-[0.85rem] leading-[1.6] text-[var(--brand-primary)]/80"
+                      >
+                        <span
+                          aria-hidden
+                          className="mt-[0.5em] size-1.5 shrink-0 rounded-full bg-[var(--brand-olive)]"
+                        />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </RevealUp>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ══ Credentials - Dark Band ════════════════════════════ */}
+      {service.credentials && (
+        <section className="relative overflow-hidden bg-[var(--brand-ink-soft)] py-16 lg:py-24">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.07]"
+            style={{ background: `radial-gradient(ellipse at 85% 10%, ${service.accent || '#C9F24E'} 0%, transparent 55%)` }}
+          />
+          <div className="lumora-shell relative">
+            <SectionLabel tone="dark">Standards &amp; credentials</SectionLabel>
+            <SectionHeading tone="dark" className="mt-6 max-w-3xl">
+              {service.credentials.heading}
+            </SectionHeading>
+            <RevealUp
+              as="p"
+              delay={100}
+              className="mt-6 max-w-2xl text-[0.92rem] leading-[1.85] text-white/55"
+            >
+              {service.credentials.desc}
+            </RevealUp>
+
+            {service.credentials.projects && service.credentials.projects.length > 0 && (
+              <RevealUp delay={160} className="mt-12 flex flex-wrap gap-2.5">
+                {service.credentials.projects.map((project) => (
+                  <span
+                    key={project}
+                    className="rounded-[var(--radius-pill)] border border-white/15 px-4 py-2 text-[0.8rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white"
+                  >
+                    {project}
+                  </span>
+                ))}
+              </RevealUp>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ══ Farm / Provenance ══════════════════════════════════ */}
+      {service.farm && (
+        <section className="lumora-shell py-16 lg:py-24">
+          <SectionLabel>Where the plants come from</SectionLabel>
+
+          <div className="mt-6 grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-16">
+            <SectionHeading>{service.farm.heading}</SectionHeading>
+            <RevealUp
+              as="p"
+              delay={100}
+              className="text-[0.92rem] leading-[1.85] text-[var(--muted-foreground)]"
+            >
+              {service.farm.desc}
+            </RevealUp>
+          </div>
+
+          {service.farm.figures && service.farm.figures.length > 0 && (
+            <dl className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-4xl)] bg-[var(--border)] lg:grid-cols-4">
+              {service.farm.figures.map((figure, i) => (
+                <RevealUp
+                  key={figure.label}
+                  delay={80 + i * 80}
+                  className="bg-[var(--brand-white)] px-6 py-8 lg:px-8 lg:py-10"
+                >
+                  <dt className="text-[0.8rem] font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)]">
+                    {figure.label}
+                  </dt>
+                  <dd className="mt-3 font-neue text-[clamp(1.5rem,3.2vw,2.25rem)] font-medium leading-none tracking-[-0.03em] text-[var(--brand-primary)]">
+                    {figure.value}
+                  </dd>
+                  <dd className="mt-2 text-[0.8rem] leading-relaxed text-[var(--muted-foreground)]">
+                    {figure.note}
+                  </dd>
+                </RevealUp>
+              ))}
+            </dl>
+          )}
+        </section>
+      )}
+
+      {/* ══ Related Services ═══════════════════════════════════ */}
+      {service.related && service.related.length > 0 && (
+        <section className="lumora-shell pb-16 lg:pb-20">
+          <SectionLabel>Also explore</SectionLabel>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {service.related.map((rel, i) => (
+              <RevealUp key={rel.slug} delay={60 + i * 70}>
+                <Link
+                  href={`/services/${rel.slug}`}
+                  className="group flex h-full items-center justify-between gap-4 rounded-[var(--radius-4xl)] border border-[var(--border)] bg-[var(--brand-white)] px-6 py-5 transition-all duration-300 hover:border-[var(--brand-primary)]/25 hover:bg-[var(--secondary)]"
+                >
+                  <span className="text-[0.92rem] font-medium leading-snug text-[var(--brand-primary)]">
+                    {rel.title}
+                  </span>
+                  <ArrowUpRight className="size-4 shrink-0 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                </Link>
+              </RevealUp>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ══ CTA ════════════════════════════════════════════════ */}
+      <section className="lumora-shell pb-20 lg:pb-24">
+        <div className="relative overflow-hidden rounded-[var(--radius-4xl)] bg-[var(--brand-ink-soft)] px-8 py-14 lg:px-16 lg:py-20">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.09]"
+            style={{ background: `radial-gradient(ellipse at 10% 100%, ${service.accent || '#C9F24E'} 0%, transparent 60%)` }}
+          />
+          <div className="relative flex flex-col items-start gap-6 lg:max-w-2xl">
+            <RevealUp
+              as="p"
+              className="text-[0.8rem] font-semibold uppercase text-[var(--brand-lime)]"
+            >
+              {service.cta?.eyebrow || 'Start here'}
+            </RevealUp>
+            <RevealUp
+              as="h2"
+              delay={70}
+              className="font-neue text-[clamp(1.7rem,4.5vw,3rem)] font-medium leading-[1.05] tracking-[-0.03em] text-white"
+            >
+              {service.cta?.heading || 'It begins with a site visit.'}
+            </RevealUp>
+            <RevealUp as="p" delay={140} className="max-w-md text-[0.92rem] leading-[1.8] text-white/50">
+              {service.cta?.desc || 'No obligation. One of our qualified horticulturists comes out, reads the space and gives you an honest brief and an estimate before anything is committed.'}
+            </RevealUp>
+            <RevealUp delay={200}>
+              <Link
+                href={service.cta?.buttonUrl || '/contact'}
+                className="group inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-[var(--brand-lime)] px-7 py-3.5 text-[0.88rem] font-semibold text-[var(--brand-lime-ink)] transition-all duration-300 hover:bg-[var(--brand-lime-hover)] hover:shadow-[0_12px_36px_-10px_rgba(201,242,78,0.45)]"
+              >
+                {service.cta?.buttonText || 'Request a site visit'}
+                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45" />
+              </Link>
+            </RevealUp>
+          </div>
         </div>
       </section>
     </main>

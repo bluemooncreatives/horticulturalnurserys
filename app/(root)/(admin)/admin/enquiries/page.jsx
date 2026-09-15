@@ -15,7 +15,7 @@ import { useCallback, useMemo } from 'react'
 
 const breadcrumbData = [
   { href: ADMIN_DASHBOARD, label: 'Home' },
-  { href: '', label: 'Enquiries' },
+  { href: '', label: 'Product Enquiries' },
 ]
 
 const EnquiriesPage = () => {
@@ -31,7 +31,7 @@ const EnquiriesPage = () => {
   return (
     <div className="flex flex-col gap-4 sm:gap-6">
       <PageHeader
-        title="Enquiries"
+        title="Product Enquiries"
         description="Product enquiries submitted from the catalogue."
         breadcrumb={<BreadCrumb breadcrumbData={breadcrumbData} />}
       />

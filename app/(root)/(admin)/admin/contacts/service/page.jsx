@@ -8,7 +8,7 @@ import { DT_CONTACT_SERVICE_COLUMN } from '@/lib/column'
 import { columnConfig } from '@/lib/helperFunction'
 import {
   ADMIN_CONTACT_DETAILS,
-  ADMIN_CONTACTS_SHOW,
+  ADMIN_ENQUIRY_SHOW,
   ADMIN_DASHBOARD,
   ADMIN_TRASH,
 } from '@/routes/AdminPanelRoute'
@@ -16,7 +16,7 @@ import { useCallback, useMemo } from 'react'
 
 const breadcrumbData = [
   { href: ADMIN_DASHBOARD, label: 'Home' },
-  { href: ADMIN_CONTACTS_SHOW, label: 'Contact Queries' },
+  { href: ADMIN_ENQUIRY_SHOW, label: 'Enquiries' },
   { href: '', label: 'Service Enquiry' },
 ]
 

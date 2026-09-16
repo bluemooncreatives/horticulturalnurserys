@@ -15,7 +15,7 @@ const BENEFITS = [
 const BenefitsSection = () => {
     return (
         <section className="lumora-shell pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
-            <div className="dark-panel relative overflow-hidden p-8 lg:p-14">
+            <div className="dark-panel relative overflow-hidden p-5 sm:p-8 lg:p-14">
 
                 {/* watermark */}
                 <div aria-hidden className="pointer-events-none absolute -right-6 -top-10 select-none font-wordmark text-[16rem] leading-none text-white/[0.03] lg:text-[22rem]">
@@ -23,42 +23,42 @@ const BenefitsSection = () => {
                 </div>
 
                 {/* header */}
-                <div className="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="relative flex flex-col gap-2 sm:gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                        <h2 className="mt-3 max-w-xl text-[clamp(1.7rem,3.6vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.02em] text-white">
+                        <h2 className="text-[clamp(1.4rem,5vw,2.9rem)] font-medium leading-[1.15] tracking-[-0.02em] text-white sm:mt-3">
                             From First Survey To Season After Season
                         </h2>
                     </div>
-                    <p className="max-w-xs text-[0.82rem] leading-relaxed text-white/45">
+                    <p className="max-w-xs text-[0.78rem] leading-relaxed text-white/45 sm:text-[0.82rem]">
                         Landscaping, nursery and supply sit in one house - so nothing is
                         handed off and nothing gets lost between them.
                     </p>
                 </div>
 
                 {/* divider */}
-                <div className="my-10 h-px w-full bg-white/15 lg:my-12" />
+                <div className="my-5 h-px w-full bg-white/15 sm:my-10 lg:my-12" />
 
                 {/* items */}
-                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-0">
                     {BENEFITS.map((item) => (
                         <div
                             key={item.num}
                             className="relative lg:px-8 [&:first-child]:lg:pl-0 [&:not(:last-child)]:lg:border-r [&:not(:last-child)]:lg:border-white/10"
                         >
-                            <div className="mb-6 flex items-center justify-between">
-                                <span className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04]">
-                                    <item.Icon className="size-[18px] text-[var(--brand-lime)]" strokeWidth={1.6} />
+                            <div className="mb-3 flex items-center justify-between sm:mb-6">
+                                <span className="flex size-9 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] sm:size-11">
+                                    <item.Icon className="size-4 text-[var(--brand-lime)] sm:size-[18px]" strokeWidth={1.6} />
                                 </span>
-                                <span className="text-[0.8rem] font-medium text-white/30">[{item.num}]</span>
+                                <span className="text-[0.72rem] font-medium text-white/30 sm:text-[0.8rem]">[{item.num}]</span>
                             </div>
-                            <h3 className="text-[1.05rem] font-medium tracking-[-0.01em] text-white">{item.title}</h3>
-                            <p className="mt-2.5 text-[0.82rem] leading-relaxed text-white/45">{item.description}</p>
+                            <h3 className="text-[0.9rem] font-medium tracking-[-0.01em] text-white sm:text-[1.05rem]">{item.title}</h3>
+                            <p className="mt-1.5 text-[0.75rem] leading-relaxed text-white/45 sm:mt-2.5 sm:text-[0.82rem]">{item.description}</p>
                         </div>
                     ))}
                 </div>
 
                 {/* CTA */}
-                <div className="mt-12 flex justify-center lg:mt-14">
+                <div className="mt-6 flex justify-center sm:mt-12 lg:mt-14">
                     <Link href={WEBSITE_SHOP} className="pill pill-lime group">
                         Browse the Catalogue
                         <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

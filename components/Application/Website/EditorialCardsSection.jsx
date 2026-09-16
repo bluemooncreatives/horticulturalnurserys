@@ -60,8 +60,7 @@ const EditorialCardsSection = () => {
                     <Link
                         key={card.num}
                         href={card.href}
-                        className="group relative overflow-hidden rounded-[var(--radius-3xl)]"
-                        style={{ aspectRatio: '4/5' }}
+                        className="group relative aspect-4/3 overflow-hidden rounded-[var(--radius-3xl)] sm:aspect-4/5"
                     >
                         {/* background image */}
                         <Image

@@ -79,7 +79,7 @@ const contactItems = [
 // Small uppercase column heading. Tracking is set explicitly here rather than
 // left to `.eyebrow`, which is tuned for the light sections.
 const ColumnHeading = ({ children }) => (
-    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/40">
+    <p className="text-[0.7rem] font-semibold uppercase tracking-normal text-white/40">
         {children}
     </p>
 )
@@ -88,7 +88,7 @@ const LinkColumn = ({ title, links }) => (
     <div>
         <ColumnHeading>{title}</ColumnHeading>
         <nav aria-label={`${title} links`}>
-            <ul className="mt-4 space-y-2">
+            <ul className="mt-3 space-y-1.5 sm:mt-4 sm:space-y-2">
                 {links.map(({ label, href }) => (
                     <li key={`${title}-${label}`}>
                         <Link
@@ -111,16 +111,16 @@ const Footer = ({ categoryLinks = [] }) => {
 
     return (
         <footer className="website-gutter pt-[clamp(1.25rem,2.5vw,2rem)] pb-4" aria-label="Site footer">
-            <div className="dark-panel relative overflow-hidden px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+            <div className="dark-panel relative overflow-hidden px-5 py-7 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
 
                 {/* ── Wordmark ── */}
-                <div className="flex flex-col gap-6 border-b border-white/10 pb-8 sm:flex-row sm:items-start sm:justify-between lg:pb-10">
+                <div className="flex flex-col gap-4 border-b border-white/10 pb-6 sm:gap-6 sm:pb-8 sm:flex-row sm:items-start sm:justify-between lg:pb-10">
                     <h2 className="font-wordmark leading-[0.84] text-white">
                         <span className="block text-[clamp(2.4rem,10vw,6.4rem)]">Horticultural</span>
                         <span className="block text-[clamp(1.15rem,4.9vw,3.15rem)]">Development Centre</span>
                     </h2>
                     <div className="shrink-0 sm:text-right">
-                        <p className="text-[0.8rem] tracking-[0.04em] text-white/50">Est. 1989 · Kolkata</p>
+                        <p className="text-[0.8rem] tracking-normal text-white/50">Est. 1989 · Kolkata</p>
                         <span aria-hidden className="mt-3 block h-px w-24 bg-white/25 sm:ml-auto" />
                     </div>
                 </div>
@@ -128,7 +128,7 @@ const Footer = ({ categoryLinks = [] }) => {
                 {/* ── Brand block + link columns ──
                     Brand column is widest; the four link columns share the rest
                     evenly so their headings sit on one baseline. */}
-                <div className="grid grid-cols-2 gap-x-6 gap-y-9 py-10 sm:gap-x-8 lg:grid-cols-[1.5fr_repeat(4,1fr)] lg:gap-x-10 lg:gap-y-10 lg:py-12">
+                <div className="grid grid-cols-2 gap-x-5 gap-y-6 py-7 sm:gap-x-8 sm:gap-y-9 sm:py-10 lg:grid-cols-[1.5fr_repeat(4,1fr)] lg:gap-x-10 lg:gap-y-10 lg:py-12">
 
                     {/* Brand: blurb, email, social. Full width until the columns
                         get their own track at lg. */}
@@ -140,12 +140,12 @@ const Footer = ({ categoryLinks = [] }) => {
 
                         <Link
                             href={`mailto:${CONTACT_EMAIL}`}
-                            className="mt-6 inline-block break-all border-b border-white/25 pb-2 text-[clamp(1rem,2.2vw,1.35rem)] font-medium tracking-[-0.01em] text-white transition-colors duration-200 hover:border-[var(--brand-lime)] hover:text-[var(--brand-lime)]"
+                            className="mt-4 inline-block break-all border-b border-white/25 pb-1.5 sm:mt-6 sm:pb-2 text-[clamp(1rem,2.2vw,1.35rem)] font-medium tracking-[-0.01em] text-white transition-colors duration-200 hover:border-[var(--brand-lime)] hover:text-[var(--brand-lime)]"
                         >
                             {CONTACT_EMAIL}
                         </Link>
 
-                        <div className="mt-7 flex flex-wrap gap-2.5">
+                        <div className="mt-5 flex flex-wrap gap-2 sm:mt-7 sm:gap-2.5">
                             {socialLinks.map(({ label, href, Icon }) => (
                                 <Link
                                     key={label}
@@ -168,11 +168,11 @@ const Footer = ({ categoryLinks = [] }) => {
                 </div>
 
                 {/* ── Contact strip ── */}
-                <div className="border-t border-white/10 pt-8 lg:pt-10">
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:gap-x-8 lg:grid-cols-4">
+                <div className="border-t border-white/10 pt-6 sm:pt-8 lg:pt-10">
+                    <div className="grid grid-cols-2 gap-x-5 gap-y-5 sm:gap-x-8 sm:gap-y-7 lg:grid-cols-4">
                         {contactItems.map(({ Icon, label, lines }) => (
                             <div key={label}>
-                                <p className="flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/35">
+                                <p className="flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-normal text-white/35">
                                     <Icon className="size-3.5" strokeWidth={1.7} />
                                     {label}
                                 </p>
@@ -198,7 +198,7 @@ const Footer = ({ categoryLinks = [] }) => {
                     </div>
 
                     {/* Wholesale despatch note + back-to-top */}
-                    <div className="mt-8 flex items-center justify-between gap-4 rounded-[var(--radius-2xl)] border border-white/10 bg-white/[0.03] px-5 py-4 lg:mt-10">
+                    <div className="mt-6 flex items-center justify-between gap-3 rounded-[var(--radius-2xl)] border border-white/10 bg-white/[0.03] px-4 py-3 sm:mt-8 sm:gap-4 sm:px-5 sm:py-4 lg:mt-10">
                         <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.82rem] tracking-normal text-white/50">
                             <Truck className="size-4 shrink-0 text-[var(--brand-lime)]" strokeWidth={1.7} />
                             Wholesale despatch all over India
@@ -218,7 +218,7 @@ const Footer = ({ categoryLinks = [] }) => {
                 </div>
 
                 {/* ── Bottom bar ── */}
-                <div className="mt-8 flex flex-col gap-2 border-t border-white/10 pt-6 text-[0.8rem] tracking-normal text-white/40 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-6 flex flex-col gap-1.5 border-t border-white/10 pt-5 text-[0.8rem] sm:mt-8 sm:gap-2 sm:pt-6 tracking-normal text-white/40 sm:flex-row sm:items-center sm:justify-between">
                     <p>© {new Date().getFullYear()} Horticultural Development Centre. All rights reserved.</p>
                     <p>
                         Crafted by{' '}

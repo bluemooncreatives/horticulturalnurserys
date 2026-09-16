@@ -152,12 +152,12 @@ export default function ServiceDetailContent({ service }) {
                   <RevealUp
                     key={stat.label}
                     delay={340 + i * 70}
-                    className={`border-white/10 py-5 lg:py-6 ${STAT_CELL_EDGES[i % 4]} ${i > 1 ? 'hidden lg:block' : ''}`}
+                    className={`border-white/10 py-3.5 sm:py-5 lg:py-6 ${STAT_CELL_EDGES[i % 4]} ${i > 1 ? 'hidden lg:block' : ''}`}
                   >
-                    <dt className="text-[0.8rem] font-semibold uppercase text-white/40">
+                    <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.05em] text-white/40 sm:text-[0.8rem] sm:tracking-normal">
                       {stat.label}
                     </dt>
-                    <dd className="mt-1.5 font-neue text-[clamp(1.05rem,2vw,1.4rem)] font-medium leading-tight tracking-[-0.01em] text-white">
+                    <dd className="mt-1 font-neue text-[0.85rem] font-medium leading-snug tracking-[-0.01em] text-white sm:mt-1.5 sm:text-[clamp(1.05rem,2vw,1.4rem)] sm:leading-tight">
                       {stat.value}
                     </dd>
                   </RevealUp>
@@ -207,11 +207,11 @@ export default function ServiceDetailContent({ service }) {
         )}
 
         {service.tags && service.tags.length > 0 && (
-          <RevealUp delay={200} className="mt-12 flex flex-wrap gap-2">
+          <RevealUp delay={200} className="mt-10 flex flex-wrap gap-1.5 sm:mt-12 sm:gap-2">
             {service.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-4 py-1.5 text-[0.8rem] font-medium uppercase text-[var(--brand-primary)]"
+                className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-2.5 py-0.5 text-[0.62rem] font-medium uppercase tracking-[0.02em] text-[var(--brand-primary)] sm:px-4 sm:py-1.5 sm:text-[0.8rem] sm:tracking-normal"
               >
                 {tag}
               </span>
@@ -306,7 +306,7 @@ export default function ServiceDetailContent({ service }) {
                     {cap.tags.map((t) => (
                       <li
                         key={t}
-                        className="rounded-[var(--radius-pill)] bg-[var(--secondary)] px-3 py-1 text-[0.8rem] font-medium text-[var(--brand-primary)]/75"
+                        className="rounded-[var(--radius-pill)] bg-[var(--secondary)] px-2.5 py-0.5 text-[0.62rem] font-medium text-[var(--brand-primary)]/75 sm:px-3 sm:py-1 sm:text-[0.8rem]"
                       >
                         {t}
                       </li>
@@ -509,11 +509,11 @@ export default function ServiceDetailContent({ service }) {
             </RevealUp>
 
             {service.credentials.projects && service.credentials.projects.length > 0 && (
-              <RevealUp delay={160} className="mt-12 flex flex-wrap gap-2.5">
+              <RevealUp delay={160} className="mt-10 flex flex-wrap gap-1.5 sm:mt-12 sm:gap-2.5">
                 {service.credentials.projects.map((project) => (
                   <span
                     key={project}
-                    className="rounded-[var(--radius-pill)] border border-white/15 px-4 py-2 text-[0.8rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white"
+                    className="rounded-[var(--radius-pill)] border border-white/15 px-2.5 py-0.5 text-[0.62rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white sm:px-4 sm:py-2 sm:text-[0.8rem]"
                   >
                     {project}
                   </span>
@@ -546,15 +546,15 @@ export default function ServiceDetailContent({ service }) {
                 <RevealUp
                   key={figure.label}
                   delay={80 + i * 80}
-                  className="bg-[var(--brand-white)] px-6 py-8 lg:px-8 lg:py-10"
+                  className="bg-[var(--brand-white)] px-4 py-5 sm:px-6 sm:py-8 lg:px-8 lg:py-10"
                 >
-                  <dt className="text-[0.8rem] font-semibold uppercase text-[var(--muted-foreground)]">
+                  <dt className="text-[0.62rem] font-semibold uppercase tracking-[0.04em] text-[var(--muted-foreground)] sm:text-[0.8rem] sm:tracking-normal">
                     {figure.label}
                   </dt>
-                  <dd className="mt-3 font-neue text-[clamp(1.5rem,3.2vw,2.25rem)] font-medium leading-none tracking-[-0.03em] text-[var(--brand-primary)]">
+                  <dd className="mt-2 font-neue text-[1.3rem] font-medium leading-none tracking-[-0.03em] text-[var(--brand-primary)] sm:mt-3 sm:text-[clamp(1.5rem,3.2vw,2.25rem)]">
                     {figure.value}
                   </dd>
-                  <dd className="mt-2 text-[0.8rem] leading-relaxed text-[var(--muted-foreground)]">
+                  <dd className="mt-1.5 text-[0.65rem] leading-snug text-[var(--muted-foreground)] sm:mt-2 sm:text-[0.8rem] sm:leading-relaxed">
                     {figure.note}
                   </dd>
                 </RevealUp>
@@ -614,7 +614,7 @@ export default function ServiceDetailContent({ service }) {
             <RevealUp delay={200}>
               <Link
                 href="#enquiry"
-                className="group inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-[var(--brand-lime)] px-7 py-3.5 text-[0.88rem] font-semibold text-[var(--brand-lime-ink)] transition-all duration-300 hover:bg-[var(--brand-lime-hover)] hover:shadow-[0_12px_36px_-10px_rgba(201,242,78,0.45)]"
+                className="group inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--brand-lime)] px-5 py-3 text-[0.8rem] font-semibold text-[var(--brand-lime-ink)] transition-all duration-300 hover:bg-[var(--brand-lime-hover)] hover:shadow-[0_12px_36px_-10px_rgba(201,242,78,0.45)] sm:px-7 sm:py-3.5 sm:text-[0.88rem]"
               >
                 {service.cta?.buttonText || 'Request a site visit'}
                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45" />

@@ -64,7 +64,7 @@ export const FAQ = ({
             <div className="h-px w-full bg-foreground/10" />
 
             {/* category tabs */}
-            <div role="tablist" aria-label="FAQ categories" className="mt-6 flex flex-wrap gap-2 lg:mt-8">
+            <div role="tablist" aria-label="FAQ categories" className="mt-5 flex flex-wrap gap-1.5 sm:mt-6 sm:gap-2 lg:mt-8">
                 {categoryKeys.map((key) => {
                     const active = selected === key
                     return (
@@ -77,8 +77,8 @@ export const FAQ = ({
                             aria-controls={`${baseId}-panel-${key}`}
                             onClick={() => setSelected(key)}
                             className={cn(
-                                'relative overflow-hidden rounded-[var(--radius-pill)] border px-4 py-2',
-                                'text-[0.8rem] font-semibold uppercase',
+                                'relative overflow-hidden rounded-[var(--radius-pill)] border px-2.5 py-1 sm:px-4 sm:py-2',
+                                'text-[0.62rem] font-semibold uppercase tracking-[0.03em] sm:text-[0.8rem] sm:tracking-normal',
                                 'transition-colors duration-300',
                                 active
                                     ? 'border-[var(--brand-primary)] text-white'
@@ -111,7 +111,7 @@ export const FAQ = ({
                 role="tabpanel"
                 id={`${baseId}-panel-${selected}`}
                 aria-labelledby={`${baseId}-tab-${selected}`}
-                className="mt-8 flex animate-[slide-up-fade_0.45s_var(--ease-out-quart)] flex-col gap-3 motion-reduce:animate-none lg:mt-10"
+                className="mt-6 flex animate-[slide-up-fade_0.45s_var(--ease-out-quart)] flex-col gap-2 motion-reduce:animate-none sm:mt-8 sm:gap-3 lg:mt-10"
             >
                 {questions.map((faq) => (
                     <FAQItem key={faq.question} faq={faq} />
@@ -140,11 +140,11 @@ const FAQItem = ({ faq }) => {
                 type="button"
                 onClick={() => setIsOpen((open) => !open)}
                 aria-expanded={isOpen}
-                className="flex w-full items-center justify-between gap-4 p-4 text-left"
+                className="flex w-full items-center justify-between gap-3 p-3 text-left sm:gap-4 sm:p-4"
             >
                 <span
                     className={cn(
-                        'font-neue text-[0.95rem] font-medium tracking-[-0.01em] transition-colors duration-300 lg:text-[1rem]',
+                        'font-neue text-[0.82rem] font-medium leading-[1.3] tracking-[-0.01em] transition-colors duration-300 sm:text-[0.95rem] sm:leading-normal lg:text-[1rem]',
                         isOpen ? 'text-[var(--brand-primary)]' : 'text-foreground/80'
                     )}
                 >
@@ -166,7 +166,7 @@ const FAQItem = ({ faq }) => {
                 <div className="overflow-hidden">
                     {/* rows span the full width, but the answer is capped so the
                         line length stays readable on a wide viewport */}
-                    <p className="max-w-3xl px-4 pb-4 text-[0.84rem] leading-relaxed text-[var(--text-body)]">
+                    <p className="max-w-3xl px-3 pb-3 text-[0.75rem] leading-snug text-[var(--text-body)] sm:px-4 sm:pb-4 sm:text-[0.84rem] sm:leading-relaxed">
                         {faq.answer}
                     </p>
                 </div>

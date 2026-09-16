@@ -1,7 +1,8 @@
 import { isAuthenticated } from "@/lib/authentication"
 import { connectDB } from "@/lib/databaseConnection"
-import { catchError, response } from "@/lib/helperFunction"
+import { catchError, escapeRegex, response } from "@/lib/helperFunction"
 import CategoryModel from "@/models/Category.model"
+import mongoose from "mongoose"
 import { NextResponse } from "next/server"
 
 export async function GET(request) {
@@ -43,7 +44,22 @@ export async function GET(request) {
         //  Column filteration  
 
         filters.forEach(filter => {
-            matchQuery[filter.id] = { $regex: filter.value, $options: 'i' }
+            if (filter.id === 'parent') {
+                // The toolbar sends a parent _id. Match the raw ObjectId rather
+                // than the joined `parentData.name`: it is exact, it uses the
+                // index, and - because it is a field on the category itself -
+                // the countDocuments() below stays correct without having to
+                // repeat the $lookup.
+                //
+                // An unparseable id (stale bookmark, hand-edited request) must
+                // return an empty page. $in: [] matches nothing; null would
+                // wrongly match categories that genuinely have no parent.
+                matchQuery.parent = mongoose.isValidObjectId(filter.value)
+                    ? new mongoose.Types.ObjectId(String(filter.value))
+                    : { $in: [] }
+                return
+            }
+            matchQuery[filter.id] = { $regex: escapeRegex(String(filter.value)), $options: 'i' }
         });
 
         //   Sorting  

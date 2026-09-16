@@ -13,7 +13,8 @@ const DatatableWrapper = ({
     deleteEndpoint,
     deleteType,
     trashView,
-    createAction
+    createAction,
+    toolbarFilters
 }) => {
     const [mounted, setMounted] = useState(false)
 
@@ -46,6 +47,7 @@ const DatatableWrapper = ({
             deleteType={deleteType}
             trashView={trashView}
             createAction={createAction}
+            toolbarFilters={toolbarFilters}
         />
     )
 }

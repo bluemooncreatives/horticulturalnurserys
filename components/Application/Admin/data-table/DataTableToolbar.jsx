@@ -10,6 +10,9 @@ const DataTableToolbar = ({
     searchPlaceholder = 'Filter...',
     searchKey,
     className,
+    // Optional column-filter controls (e.g. a parent dropdown), rendered
+    // between the search field and the View menu.
+    filters,
 }) => {
     const globalFilter = table.getState().globalFilter ?? ''
     const columnFilter = searchKey
@@ -61,6 +64,8 @@ const DataTableToolbar = ({
                     </Button>
                 ) : null}
             </div>
+
+            {filters ? <div className="flex shrink-0 items-center gap-2">{filters}</div> : null}
 
             {isFiltered && (
                 <Button variant="ghost" size="lg" onClick={reset} className="shrink-0">

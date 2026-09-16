@@ -46,6 +46,9 @@ const Datatable = ({
     deleteType,
     trashView,
     createAction,
+    // Render-prop so the page can add column-filter controls without this
+    // component knowing anything about them. Receives the table instance.
+    toolbarFilters,
 }) => {
 
     const [columnFilters, setColumnFilters] = useState([])
@@ -62,6 +65,19 @@ const Datatable = ({
     const deleteMutation = useDeleteMutation(queryKey, deleteEndpoint)
 
     const hasSelection = Object.keys(rowSelection).length > 0
+    // Narrowing the result set while on a later page would otherwise leave the
+    // table on a page index that no longer exists, showing an empty grid. The
+    // global filter already resets to the first page; column filters must too.
+    const handleColumnFiltersChange = (updater) => {
+        setColumnFilters((prev) => {
+            const next = typeof updater === 'function' ? updater(prev) : updater
+            if (JSON.stringify(next) !== JSON.stringify(prev)) {
+                setPagination((prevPagination) => ({ ...prevPagination, pageIndex: 0 }))
+            }
+            return next
+        })
+    }
+
     const handleGlobalFilterChange = (value) => {
         setGlobalFilter((prev) => {
             const nextValue = typeof value === 'function' ? value(prev) : value
@@ -234,7 +250,7 @@ const Datatable = ({
         onRowSelectionChange: setRowSelection,
         onColumnVisibilityChange: setColumnVisibility,
         onGlobalFilterChange: handleGlobalFilterChange,
-        onColumnFiltersChange: setColumnFilters,
+        onColumnFiltersChange: handleColumnFiltersChange,
         getCoreRowModel: getCoreRowModel(),
     })
 
@@ -251,7 +267,8 @@ const Datatable = ({
                 <DataTableToolbar
                     table={table}
                     searchPlaceholder="Search in table..."
-                    className="xl:max-w-xl"
+                    className="xl:max-w-2xl"
+                    filters={typeof toolbarFilters === 'function' ? toolbarFilters(table) : toolbarFilters}
                 />
 
                 <div className="flex flex-wrap items-center gap-2">

@@ -11,6 +11,8 @@ import { ADMIN_CATEGORY_ADD, ADMIN_CATEGORY_EDIT, ADMIN_CATEGORY_SHOW, ADMIN_DAS
 import Link from "next/link"
 import { useCallback, useMemo } from "react"
 import { Plus } from 'lucide-react'
+import useFetch from "@/hooks/useFetch"
+import DataTableSelectFilter from "@/components/Application/Admin/data-table/DataTableSelectFilter"
 
 const breadcrumbData = [
     { href: ADMIN_DASHBOARD, label: 'Home' },
@@ -21,6 +23,28 @@ const ShowCategory = () => {
     const columns = useMemo(() => {
         return columnConfig(DT_CATEGORY_COLUMN)
     }, [])
+
+    // Parents for the toolbar filter. Options carry the parent _id, not its
+    // name: the API matches the raw `parent` ObjectId, so two parents sharing a
+    // name stay distinct and "Pots" cannot half-match "Pots & Planters".
+    const { data: parentData } = useFetch('/api/parent?deleteType=SD&&size=10000')
+    const parentOptions = useMemo(
+        () => (Array.isArray(parentData?.data) ? parentData.data : [])
+            .map((parent) => ({ label: parent.name, value: parent._id })),
+        [parentData]
+    )
+
+    const toolbarFilters = useCallback(
+        (table) => (
+            <DataTableSelectFilter
+                table={table}
+                columnId="parent"
+                options={parentOptions}
+                placeholder="All parents"
+            />
+        ),
+        [parentOptions]
+    )
 
     const action = useCallback((row, deleteType, handleDelete) => {
         let actionMenu = []
@@ -56,6 +80,7 @@ const ShowCategory = () => {
                     deleteType="SD"
                     trashView={`${ADMIN_TRASH}?trashof=category`}
                     createAction={action}
+                    toolbarFilters={toolbarFilters}
                 />
             </div>
         </div>

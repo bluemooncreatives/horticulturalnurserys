@@ -2,14 +2,22 @@
 import BreadCrumb from '@/components/Application/Admin/BreadCrumb'
 import PageHeader from '@/components/Application/Admin/PageHeader'
 import { ADMIN_DASHBOARD, ADMIN_PRODUCT_VARIANT_SHOW } from '@/routes/AdminPanelRoute'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import {
+  Form,
+  FormDescription,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import ButtonLoading from '@/components/Application/ButtonLoading'
 import { zSchema } from '@/lib/zodSchema'
 import { computeDiscountPercentage, validatePricing } from '@/lib/pricing'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState, useMemo } from 'react'
 import { showToast } from '@/lib/showToast'
 import axios from 'axios'
 import useFetch from '@/hooks/useFetch'
@@ -18,7 +26,6 @@ import MediaModal from '@/components/Application/Admin/MediaModal'
 import ColorHexPicker from '@/components/Application/Admin/ColorHexPicker'
 import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { sizes } from '@/lib/utils'
 import { ImageIcon, Plus, X } from 'lucide-react'
 const breadcrumbData = [
   { href: ADMIN_DASHBOARD, label: 'Home' },
@@ -35,6 +42,14 @@ const AddProduct = () => {
   const [productOption, setProductOption] = useState([])
   const [parentSku, setParentSku] = useState('')
   const { data: getProduct } = useFetch('/api/product?deleteType=SD&&size=10000')
+  // Size options come from the sizes already stored on live variants, so the
+  // picker reflects the real catalogue instead of a fixed apparel scale. Free
+  // text is still allowed (creatable), which is how a new size enters the list.
+  const { data: sizeData } = useFetch('/api/product-variant/sizes')
+  const sizeOptions = useMemo(
+    () => (Array.isArray(sizeData?.data) ? sizeData.data : []).map((s) => ({ label: s, value: s })),
+    [sizeData]
+  )
 
   // media modal states  
   const [open, setOpen] = useState(false)
@@ -321,16 +336,23 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Size <span className="text-destructive" aria-hidden>*</span>
+                        Size <span className="text-xs font-normal text-muted-foreground">(optional)</span>
                       </FormLabel>
                       <FormControl>
                         <Select
-                          options={sizes}
+                          options={sizeOptions}
                           selected={field.value}
-                          setSelected={field.onChange}
+                          setSelected={(value) => field.onChange(value ?? '')}
                           isMulti={false}
+                          creatable
+                          placeholder="No size"
+                          createLabel={(value) => `Use "${value}"`}
                         />
                       </FormControl>
+                      <FormDescription>
+                        Sizes already in the catalogue are listed. Type to add a new one, or
+                        leave empty for products that have no size.
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}

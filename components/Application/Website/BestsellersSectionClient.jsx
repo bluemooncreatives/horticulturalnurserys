@@ -37,7 +37,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
             variantId: variant._id,
             name: product.name,
             url: product.slug,
-            size: variant.size,
+            size: variant.size || '',
             color: variant.color,
             mrp: variant.mrp ?? product.mrp,
             sellingPrice: variant.sellingPrice ?? product.sellingPrice,

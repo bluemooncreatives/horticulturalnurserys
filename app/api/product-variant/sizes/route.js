@@ -11,8 +11,10 @@ export async function GET() {
 
         await connectDB()
 
+        // Size is optional, so sizeless variants group under '' / null - they
+        // must not become a blank entry in the admin picker or the shop facet.
         const getSize = await ProductVariantModel.aggregate([
-            { $match: { deletedAt: null } },
+            { $match: { deletedAt: null, size: { $nin: [null, ''] } } },
             { $sort: { _id: 1 } },
             {
                 $group: {
@@ -24,11 +26,9 @@ export async function GET() {
             { $project: { _id: 0, size: "$_id" } }
         ])
 
-        if (!getSize.length) {
-            return response(false, 404, 'Size not found.', {}, { headers: CACHE_HEADERS })
-        }
-
-        const sizes = getSize.map(item => item.size)
+        // An empty catalogue (or one where nothing carries a size) is a valid
+        // state, not a 404 - the admin picker still has to render.
+        const sizes = getSize.map(item => item.size).filter(Boolean)
 
         return response(true, 200, 'Size found.', sizes, { headers: CACHE_HEADERS })
 

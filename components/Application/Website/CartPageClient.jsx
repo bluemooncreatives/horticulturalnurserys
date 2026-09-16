@@ -124,9 +124,11 @@ const CartPageClient = () => {
                                                                         {product.name}
                                                                     </Link>
                                                                 </h4>
-                                                                <p className="text-xs uppercase text-muted-foreground">
-                                                                    {product.color} / {product.size}
-                                                                </p>
+                                                                {(product.color || product.size) && (
+                                                                    <p className="text-xs uppercase text-muted-foreground">
+                                                                        {[product.color, product.size].filter(Boolean).join(' / ')}
+                                                                    </p>
+                                                                )}
                                                                 <p className="mt-1 text-[0.8rem] font-medium uppercase text-[var(--dark-red)]">
                                                                     Price on enquiry
                                                                 </p>

@@ -108,9 +108,11 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                         <h4 className="line-clamp-2 font-neue text-[13px] font-semibold leading-snug text-foreground">
                                             {product.name}
                                         </h4>
-                                        <span className="w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase text-muted-foreground">
-                                            {product.size} / {product.color}
-                                        </span>
+                                        {(product.size || product.color) && (
+                                            <span className="w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase text-muted-foreground">
+                                                {[product.size, product.color].filter(Boolean).join(' / ')}
+                                            </span>
+                                        )}
                                         <div className="flex items-center justify-between">
                                             <span className="rounded-xs bg-[var(--dark-red)]/10 px-1.5 py-0.5 font-neue text-[0.8rem] font-semibold text-[var(--dark-red)]">
                                                 Qty ×{product.qty}

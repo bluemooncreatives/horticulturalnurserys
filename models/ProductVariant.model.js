@@ -28,10 +28,14 @@ const ProductVariantSchema = new mongoose.Schema({
         default: '',
         set: normalizeHex,
     },
+    // Optional. Most nursery stock (loose plants, manure, tools) has no
+    // meaningful size, while pots and saplings do. Stored as '' when absent so
+    // the field is always a string - queries, the cart snapshot and the admin
+    // table can treat it uniformly without null checks.
     size: {
         type: String,
-        required: true,
-        trim: true
+        trim: true,
+        default: '',
     },
 
     mrp: {

@@ -24,7 +24,7 @@ import { WEBSITE_CART, WEBSITE_PRODUCT_DETAILS, WEBSITE_SHOP } from "@/routes/We
 import Image from "next/image"
 import Link, { useLinkStatus } from "next/link"
 import dynamic from "next/dynamic"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import cloudinaryLoader from '@/lib/cloudinaryLoader'
 import ButtonLoading from "@/components/Application/ButtonLoading"
@@ -40,7 +40,7 @@ import LazyHydrate from "@/components/Application/LazyHydrate"
 // renders nothing until its own client fetches resolve, so there is no SSR
 // markup to lose.
 const ProductReveiw = dynamic(() => import("@/components/Application/Website/ProductReveiw"), { ssr: false })
-import { cn, decodeHTMLDeep, htmlToText, normalizeColor } from "@/lib/utils"
+import { cn, decodeHTMLDeep, htmlToText, NO_SIZE_PARAM, normalizeColor } from "@/lib/utils"
 import { resolveColorStyle } from "@/lib/colorMap"
 import { MAX_CART_QTY } from "@/lib/cartConstants"
 
@@ -82,8 +82,12 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
     const cartStore = useSelector(store => store.cartStore)
 
     const media = variant?.media?.length ? variant.media : []
+    // Always render at least one slide so the carousel markup stays uniform
+    // when a variant has no media of its own.
+    const slides = media.length ? media : [{ secure_url: imgPlaceholder.src, alt: product?.name }]
     const [activeIndex, setActiveIndex] = useState(0)
     const [qty, setQty] = useState(1)
+    const trackRef = useRef(null)
     // Color swatch resolution uses CSS.supports (browser-only). Gate the
     // resolved fill behind a mount flag to avoid an SSR/client hydration
     // mismatch for CSS-named colors. The same flag gates the cart-state UI so
@@ -94,9 +98,12 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
 
     // Reset gallery + quantity whenever the resolved variant changes (e.g. the
     // shopper switched color/size and the server returned a new variant).
+    // The track is snapped back with 'auto' - a smooth scroll here would animate
+    // across the new variant's images, which reads as a glitch.
     useEffect(() => {
         setActiveIndex(0)
         setQty(1)
+        trackRef.current?.scrollTo({ left: 0, behavior: 'auto' })
     }, [variant?._id])
 
     // The live cart line for the *currently selected* variant (or null). Derived
@@ -112,12 +119,37 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
     const inCart = mounted && Boolean(cartLine)
     const cartQty = cartLine?.qty || 0
 
-    const activeImage = media[activeIndex]?.secure_url || imgPlaceholder.src
-
-    const slideImage = (dir) => {
-        if (media.length < 2) return
-        setActiveIndex((prev) => (prev + dir + media.length) % media.length)
+    // ── Gallery carousel ──────────────────────────────────────────────────
+    // A native CSS scroll-snap track rather than a drag library: touch gets real
+    // momentum, rubber-banding and snapping for free, and the arrows, dots and
+    // thumbnails all drive the same scrollTo. It never advances on its own -
+    // the shopper is always the one moving it.
+    const goTo = (index, behavior = 'smooth') => {
+        const track = trackRef.current
+        if (!track) return
+        const clamped = Math.max(0, Math.min(index, slides.length - 1))
+        track.scrollTo({ left: clamped * track.clientWidth, behavior })
     }
+
+    // Arrows step without wrapping - at either end the button is disabled, so a
+    // wrap would contradict the scroll position the track can actually reach.
+    const slideImage = (dir) => goTo(activeIndex + dir)
+
+    // The scroll position is the single source of truth for which slide is
+    // active, so a flick, an arrow and a thumbnail click can never disagree.
+    // rAF-throttled because scroll fires far more often than the index changes.
+    const scrollFrame = useRef(0)
+    const onTrackScroll = () => {
+        if (scrollFrame.current) return
+        scrollFrame.current = requestAnimationFrame(() => {
+            scrollFrame.current = 0
+            const track = trackRef.current
+            if (!track?.clientWidth) return
+            const index = Math.round(track.scrollLeft / track.clientWidth)
+            setActiveIndex((prev) => (prev === index ? prev : index))
+        })
+    }
+    useEffect(() => () => cancelAnimationFrame(scrollFrame.current), [])
 
     // Pre-add quantity selector (how many to add). Capped at the shared max.
     const handleQty = (actionType) => {
@@ -136,7 +168,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
             variantId: variant._id,
             name: product.name,
             url: product.slug,
-            size: variant.size,
+            size: variant.size || '',
             color: variant.color,
             mrp: variant.mrp,
             sellingPrice: variant.sellingPrice,
@@ -164,18 +196,60 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
 
     // ── Variant availability matrix ───────────────────────────────────────
     const optionSet = useMemo(
-        () => new Set((variantOptions || []).map((o) => `${o.color}|${o.size}`)),
+        () => new Set((variantOptions || []).map((o) => `${o.color}|${o.size || ''}`)),
         [variantOptions]
     )
-    const isCombo = (color, size) => optionSet.has(`${normalizeColor(color)}|${size}`)
+    const isCombo = (color, size) => optionSet.has(`${normalizeColor(color)}|${size || ''}`)
+
+    // A product may mix sized and sizeless variants (a plant sold loose and in
+    // a 6-inch pot). `sizes` from the server holds only the real sizes, so the
+    // sizeless variant would have no pill to select and the row would render
+    // with nothing highlighted. Give it an explicit "One size" option, keyed by
+    // '' - the same key the availability matrix uses.
+    const NO_SIZE = ''
+    const hasUnsized = useMemo(
+        () => (variantOptions || []).some((o) => !o.size),
+        [variantOptions]
+    )
+    // Only offered when at least one real size exists. If nothing has a size,
+    // the whole size row stays hidden rather than showing a lone "One size".
+    const sizeChoices = useMemo(
+        () => (sizes?.length && hasUnsized ? [NO_SIZE, ...sizes] : (sizes || [])),
+        [sizes, hasUnsized]
+    )
+
+    // Only a product holding BOTH sizeless and sized variants needs to say
+    // "the sizeless one" in the URL. Everywhere else an absent size param is
+    // already unambiguous, so links stay clean.
+    const isMixed = hasUnsized && (sizes?.length || 0) > 0
+    const sizeParam = (size) => (size || (isMixed ? NO_SIZE_PARAM : ''))
 
     // When switching color, keep the current size if that combo exists,
     // otherwise land on the first available size for the new color - so a
     // color click never dead-ends on a non-existent combination.
     const sizeForColor = (color) => {
         const c = normalizeColor(color)
-        if ((variantOptions || []).some((o) => o.color === c && o.size === variant.size)) return variant.size
-        return (variantOptions || []).find((o) => o.color === c)?.size || variant.size
+        const forColor = (variantOptions || []).filter((o) => o.color === c)
+        // Unknown colour - nothing better to offer than the current size.
+        if (!forColor.length) return variant.size || NO_SIZE
+        // Keep the current size when that combination exists.
+        if (forColor.some((o) => o.size === (variant.size || NO_SIZE))) return variant.size || NO_SIZE
+        // Otherwise take that colour's first variant. `?? NO_SIZE` rather than
+        // `|| variant.size`: a sizeless variant is a real answer, and the old
+        // `||` treated its '' as "not found" and carried the previous size over,
+        // building a link to a combination that does not exist.
+        return forColor[0].size ?? NO_SIZE
+    }
+
+    // Size is optional, so a sizeless product must not emit a dangling
+    // `&size=` - it would show up in shared links and the canonical URL for
+    // no reason. Only colour is ever guaranteed to be present.
+    const variantHref = (color, size) => {
+        const params = new URLSearchParams()
+        if (color) params.set('color', color)
+        if (size) params.set('size', size)
+        const query = params.toString()
+        return query ? `${WEBSITE_PRODUCT_DETAILS(product.slug)}?${query}` : WEBSITE_PRODUCT_DETAILS(product.slug)
     }
 
     const shortDescription = htmlToText(product?.description)
@@ -188,7 +262,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
     }
 
     return (
-        <section className="website-gutter bg-[linear-gradient(180deg,rgba(11,11,11,0.03),transparent_18%)] py-8 lg:py-12">
+        <section className="website-gutter bg-[linear-gradient(180deg,rgba(11,11,11,0.03),transparent_18%)] pb-8 pt-20 lg:pb-12 lg:pt-24">
             <div className="w-full font-neue">
 
                 <div className="mb-6 lg:mb-8">
@@ -213,26 +287,27 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             )}
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>
-                                <BreadcrumbPage className="max-w-[180px] truncate sm:max-w-none">{product?.name}</BreadcrumbPage>
+                                <BreadcrumbPage className="max-w-[50vw] truncate sm:max-w-none">{product?.name}</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
                 </div>
 
-                <div className="grid items-start gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12 xl:gap-16">
+                <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12 xl:gap-16">
 
                     {/* ── GALLERY ─────────────────────────────────────────── */}
-                    <div className="lg:sticky lg:top-6">
+                    <div className="min-w-0 lg:sticky lg:top-6">
                         <div className="flex flex-col-reverse gap-3 xl:flex-row xl:gap-4">
-                            <div className="flex gap-3 overflow-x-auto pb-1 xl:max-h-[620px] xl:w-[84px] xl:flex-col xl:overflow-y-auto xl:pb-0 no-scrollbar">
+                            <div className="-mx-3 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-3 pb-1 sm:mx-0 sm:gap-3 sm:px-0 xl:max-h-[620px] xl:w-[84px] xl:flex-col xl:overflow-y-auto xl:pb-0 no-scrollbar">
                                 {media.length > 0 ? media.map((thumb, index) => (
                                     <button
                                         type="button"
                                         key={thumb._id || index}
-                                        onClick={() => setActiveIndex(index)}
+                                        onClick={() => goTo(index)}
+                                        aria-current={index === activeIndex}
                                         aria-label={`View image ${index + 1}`}
                                         className={cn(
-                                            'relative aspect-[4/5] w-[72px] shrink-0 overflow-hidden rounded-[var(--radius-sm)] border bg-[var(--product-card-bg)] transition xl:w-full',
+                                            'relative aspect-[4/5] w-[64px] shrink-0 snap-start overflow-hidden rounded-[var(--radius-sm)] border bg-[var(--product-card-bg)] transition sm:w-[72px] xl:w-full',
                                             index === activeIndex
                                                 ? 'border-[var(--dark-red)] ring-1 ring-[var(--dark-red)]/30'
                                                 : 'border-border/60 hover:border-foreground/40'
@@ -250,66 +325,96 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 )) : null}
                             </div>
 
-                            <div className="group relative flex-1">
-                                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-lg)] border border-border/60 bg-[var(--product-card-bg)]">
-                                    {/* fetchPriority must be passed explicitly - in Next 15
-                                        `priority` alone emits the preload but not
-                                        fetchpriority="high", so the LCP request still queued
-                                        behind fonts/JS on throttled connections. */}
-                                    <Image
-                                        key={activeImage}
-                                        src={activeImage}
-                                        alt={media[activeIndex]?.alt || product?.name}
-                                        fill
-                                        priority
-                                        fetchPriority="high"
-                                        loader={cloudinaryLoader}
-                                        sizes="(max-width: 1024px) 100vw, 55vw"
-                                        className="object-cover object-center"
-                                    />
+                            <div
+                                className="group relative flex-1"
+                                role="group"
+                                aria-roledescription="carousel"
+                                aria-label={`${product?.name} images`}
+                            >
+                                {/* The snap track. overscroll-x-contain stops a swipe past
+                                    the last image from turning into a browser back-gesture. */}
+                                <div
+                                    ref={trackRef}
+                                    onScroll={onTrackScroll}
+                                    className="flex w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-[var(--radius-lg)] border border-border/60 bg-[var(--product-card-bg)] no-scrollbar"
+                                >
+                                    {slides.map((item, index) => (
+                                        <div
+                                            key={item._id || index}
+                                            role="group"
+                                            aria-roledescription="slide"
+                                            aria-label={`Image ${index + 1} of ${slides.length}`}
+                                            className="relative aspect-[5/6] w-full shrink-0 snap-center snap-always sm:aspect-[4/5]"
+                                        >
+                                            {/* fetchPriority must be passed explicitly - in Next 15
+                                                `priority` alone emits the preload but not
+                                                fetchpriority="high", so the LCP request still queued
+                                                behind fonts/JS on throttled connections. Only the
+                                                first slide gets it - the rest must not compete with
+                                                the LCP image for bandwidth. */}
+                                            <Image
+                                                src={item?.secure_url || imgPlaceholder.src}
+                                                alt={item?.alt || `${product?.name} image ${index + 1}`}
+                                                fill
+                                                {...(index === 0 ? { priority: true, fetchPriority: 'high' } : {})}
+                                                loader={cloudinaryLoader}
+                                                sizes="(max-width: 1024px) 100vw, 55vw"
+                                                className="object-cover object-center"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
 
-                                    {media.length > 1 && (
+                                {slides.length > 1 && (
                                         <>
                                             <button
                                                 type="button"
                                                 aria-label="Previous image"
                                                 onClick={() => slideImage(-1)}
-                                                className="absolute left-3 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-border/40 bg-background/85 text-foreground/70 opacity-0 shadow-sm backdrop-blur-sm transition hover:bg-background hover:text-foreground group-hover:opacity-100"
+                                                disabled={activeIndex === 0}
+                                                className="absolute left-2 top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border/40 bg-background/85 text-foreground/70 shadow-sm backdrop-blur-sm transition hover:bg-background hover:text-foreground disabled:pointer-events-none disabled:opacity-0 sm:left-3 sm:size-9 sm:opacity-0 sm:group-hover:opacity-100"
                                             >
-                                                <ChevronLeft className="size-4" />
+                                                <ChevronLeft className="size-3.5 sm:size-4" />
                                             </button>
                                             <button
                                                 type="button"
                                                 aria-label="Next image"
                                                 onClick={() => slideImage(1)}
-                                                className="absolute right-3 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-border/40 bg-background/85 text-foreground/70 opacity-0 shadow-sm backdrop-blur-sm transition hover:bg-background hover:text-foreground group-hover:opacity-100"
+                                                disabled={activeIndex === slides.length - 1}
+                                                className="absolute right-2 top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border/40 bg-background/85 text-foreground/70 shadow-sm backdrop-blur-sm transition hover:bg-background hover:text-foreground disabled:pointer-events-none disabled:opacity-0 sm:right-3 sm:size-9 sm:opacity-0 sm:group-hover:opacity-100"
                                             >
-                                                <ChevronRight className="size-4" />
+                                                <ChevronRight className="size-3.5 sm:size-4" />
                                             </button>
-                                            <div className="absolute inset-x-0 bottom-3 z-10 flex justify-center gap-1.5">
-                                                {media.map((_, index) => (
-                                                    <span
+                                            {/* Dots sit on the photo itself, so they need their own
+                                                backing - bare dots disappeared against a busy image. */}
+                                            <div className="pointer-events-none absolute inset-x-0 bottom-3 z-10 flex justify-center">
+                                              <div className="pointer-events-none flex items-center gap-1.5 rounded-full bg-background/75 px-2 py-1 shadow-sm backdrop-blur-sm">
+                                                {slides.map((_, index) => (
+                                                    <button
                                                         key={index}
+                                                        type="button"
+                                                        onClick={() => goTo(index)}
+                                                        aria-label={`Go to image ${index + 1}`}
                                                         className={cn(
-                                                            'size-1.5 rounded-full transition-colors',
-                                                            index === activeIndex ? 'bg-[var(--dark-red)]' : 'bg-foreground/25'
+                                                            'pointer-events-auto size-1.5 rounded-full transition-colors',
+                                                            index === activeIndex ? 'bg-[var(--dark-red)]' : 'bg-foreground/30'
                                                         )}
                                                     />
                                                 ))}
+                                              </div>
                                             </div>
                                         </>
-                                    )}
-                                </div>
+                                )}
                             </div>
                         </div>
                     </div>
 
                     {/* ── INFO PANEL ──────────────────────────────────────── */}
-                    <div className="flex flex-col">
+                    <div className="flex min-w-0 flex-col">
                         {product?.category?.name ? (
                             <Link
                                 href={`${WEBSITE_SHOP}?category=${encodeURIComponent(product.category.slug)}`}
-                                className="w-fit text-[0.8rem] font-semibold uppercase text-[var(--dark-red)] transition-colors hover:text-[var(--dark-red-2)]"
+                                className="w-fit max-w-full break-words text-[0.8rem] font-semibold uppercase text-[var(--dark-red)] transition-colors hover:text-[var(--dark-red-2)]"
                             >
                                 {product.category.name}
                             </Link>
@@ -317,7 +422,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             <p className="text-[0.8rem] font-semibold uppercase text-[var(--dark-red)]">From Our Nursery</p>
                         )}
 
-                        <h1 className="font-header mt-2 text-[1.75rem] leading-[1.1] tracking-[-0.02em] text-foreground sm:text-[2rem] lg:text-[2.25rem]">
+                        <h1 className="font-header mt-2 break-words text-[1.6rem] leading-[1.15] tracking-[-0.02em] text-foreground sm:text-[2rem] sm:leading-[1.1] lg:text-[2.25rem]">
                             {product?.name}
                         </h1>
 
@@ -340,7 +445,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                         <p className="mt-1.5 text-xs text-muted-foreground">Add to your enquiry list and our team will share availability &amp; pricing.</p>
 
                         {shortDescription && (
-                            <p className="mt-5 line-clamp-3 text-sm leading-relaxed text-[var(--text-body)]">
+                            <p className="mt-5 line-clamp-3 break-words text-sm leading-relaxed text-[var(--text-body)]">
                                 {shortDescription}
                             </p>
                         )}
@@ -360,19 +465,19 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                         return (
                                             <Link
                                                 key={name}
-                                                href={`${WEBSITE_PRODUCT_DETAILS(product.slug)}?color=${encodeURIComponent(name)}&size=${encodeURIComponent(sizeForColor(name))}`}
+                                                href={variantHref(name, sizeParam(sizeForColor(name)))}
                                                 title={name}
                                                 aria-label={`Color ${name}`}
                                                 aria-pressed={isSelected}
                                                 className={cn(
-                                                    'relative flex size-9 items-center justify-center rounded-full border transition',
+                                                    'relative flex size-11 items-center justify-center rounded-full border transition sm:size-9',
                                                     isSelected
                                                         ? 'border-[var(--dark-red)] ring-2 ring-[var(--dark-red)]/25 ring-offset-2 ring-offset-background'
                                                         : 'border-border/70 hover:border-foreground/50'
                                                 )}
                                             >
                                                 <span
-                                                    className="size-7 rounded-full border border-black/10"
+                                                    className="size-8 rounded-full border border-black/10 sm:size-7"
                                                     style={style || undefined}
                                                 >
                                                     {!style && (
@@ -390,41 +495,42 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                         )}
 
                         {/* Size */}
-                        {sizes?.length > 0 && (
+                        {sizeChoices.length > 0 && (
                             <div className="mb-6">
                                 <div className="mb-3 flex items-center justify-between gap-3">
                                     <p className="text-[0.8rem] font-semibold uppercase text-muted-foreground">
-                                        Size: <span className="text-foreground">{variant?.size}</span>
+                                        Size: <span className="text-foreground">{variant?.size || 'One size'}</span>
                                     </p>
                                 </div>
                                 <div className="flex flex-wrap gap-2">
-                                    {sizes.map((size) => {
-                                        const isSelected = size === variant?.size
+                                    {sizeChoices.map((size) => {
+                                        const label = size || 'One size'
+                                        const isSelected = (size || NO_SIZE) === (variant?.size || NO_SIZE)
                                         const available = isCombo(variant?.color, size)
                                         if (!available && !isSelected) {
                                             return (
                                                 <span
-                                                    key={size}
-                                                    title={`${size} - unavailable in ${variant?.color}`}
-                                                    className="relative min-w-[44px] cursor-not-allowed select-none rounded-[var(--radius-sm)] border border-border/50 px-3.5 py-2 text-center text-sm text-foreground/30"
+                                                    key={size || '__none__'}
+                                                    title={`${label} - unavailable in ${variant?.color}`}
+                                                    className="relative inline-flex min-h-[44px] min-w-[52px] cursor-not-allowed select-none items-center justify-center rounded-[var(--radius-sm)] border border-border/50 px-3.5 text-center text-sm text-foreground/30 sm:min-h-[40px]"
                                                 >
-                                                    <span className="line-through">{size}</span>
+                                                    <span className="line-through">{label}</span>
                                                 </span>
                                             )
                                         }
                                         return (
                                             <Link
-                                                key={size}
-                                                href={`${WEBSITE_PRODUCT_DETAILS(product.slug)}?color=${encodeURIComponent(variant.color)}&size=${encodeURIComponent(size)}`}
+                                                key={size || '__none__'}
+                                                href={variantHref(variant.color, sizeParam(size))}
                                                 aria-pressed={isSelected}
                                                 className={cn(
-                                                    'relative min-w-[44px] rounded-[var(--radius-sm)] border px-3.5 py-2 text-center text-sm font-medium transition',
+                                                    'relative inline-flex min-h-[44px] min-w-[52px] items-center justify-center rounded-[var(--radius-sm)] border px-3.5 text-center text-sm font-medium transition sm:min-h-[40px]',
                                                     isSelected
                                                         ? 'border-[var(--dark-red)] bg-[var(--dark-red)] text-white'
                                                         : 'border-border/70 hover:border-foreground/50 hover:bg-muted/40'
                                                 )}
                                             >
-                                                {size}
+                                                {label}
                                                 {!isSelected && <NavSpinner />}
                                             </Link>
                                         )
@@ -439,29 +545,29 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 type="button"
                                 variant="brand"
                                 disabled
-                                className="h-12 w-full rounded-[var(--radius-sm)] text-[0.8rem] font-semibold uppercase"
+                                className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-2 text-[0.72rem] font-semibold uppercase sm:px-4 sm:text-[0.8rem]"
                             >
                                 Unavailable
                             </Button>
                         ) : !inCart ? (
                             /* ── Not in cart: pick a quantity, then add ──────────── */
-                            <div className="flex flex-row items-stretch gap-3">
+                            <div className="flex flex-row items-stretch gap-2.5 sm:gap-3">
                                 <div className="inline-flex h-12 shrink-0 items-center rounded-[var(--radius-sm)] border border-border/70">
                                     <button
                                         type="button"
                                         aria-label="Decrease quantity"
                                         disabled={qty <= 1}
-                                        className="flex h-full w-11 items-center justify-center text-foreground/80 transition hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+                                        className="flex h-full w-10 items-center justify-center text-foreground/80 sm:w-11 transition hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
                                         onClick={() => handleQty('desc')}
                                     >
                                         <Minus className="size-4" />
                                     </button>
-                                    <span className="w-10 select-none text-center text-sm font-semibold tabular-nums">{qty}</span>
+                                    <span className="w-8 select-none text-center text-sm font-semibold tabular-nums sm:w-10">{qty}</span>
                                     <button
                                         type="button"
                                         aria-label="Increase quantity"
                                         disabled={qty >= MAX_QTY}
-                                        className="flex h-full w-11 items-center justify-center text-foreground/80 transition hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+                                        className="flex h-full w-10 items-center justify-center text-foreground/80 sm:w-11 transition hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
                                         onClick={() => handleQty('inc')}
                                     >
                                         <Plus className="size-4" />
@@ -473,29 +579,29 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                         type="button"
                                         text="Add To Enquiry"
                                         variant="brand"
-                                        className="h-12 w-full rounded-[var(--radius-sm)] text-[0.8rem] font-semibold uppercase"
+                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-2 text-[0.72rem] font-semibold uppercase sm:px-4 sm:text-[0.8rem]"
                                         onClick={handleAddToCart}
                                     />
                                 </div>
                             </div>
                         ) : (
                             /* ── In cart: live stepper bound to the cart line ────── */
-                            <div className="flex flex-row items-stretch gap-3">
+                            <div className="flex flex-row items-stretch gap-2.5 sm:gap-3">
                                 <div className="inline-flex h-12 shrink-0 items-center rounded-[var(--radius-sm)] border border-[var(--dark-red)]/40 bg-[var(--brand-cream)]/30">
                                     <button
                                         type="button"
                                         aria-label={cartQty <= 1 ? 'Remove from cart' : 'Decrease quantity'}
-                                        className="flex h-full w-11 items-center justify-center text-[var(--dark-red)] transition hover:text-[var(--dark-red-2)]"
+                                        className="flex h-full w-10 items-center justify-center text-[var(--dark-red)] sm:w-11 transition hover:text-[var(--dark-red-2)]"
                                         onClick={handleCartDec}
                                     >
                                         <Minus className="size-4" />
                                     </button>
-                                    <span className="w-10 select-none text-center text-sm font-semibold tabular-nums text-[var(--dark-red)]">{cartQty}</span>
+                                    <span className="w-8 select-none text-center text-sm font-semibold tabular-nums text-[var(--dark-red)] sm:w-10">{cartQty}</span>
                                     <button
                                         type="button"
                                         aria-label="Increase quantity"
                                         disabled={cartQty >= MAX_QTY}
-                                        className="flex h-full w-11 items-center justify-center text-[var(--dark-red)] transition hover:text-[var(--dark-red-2)] disabled:cursor-not-allowed disabled:opacity-40"
+                                        className="flex h-full w-10 items-center justify-center text-[var(--dark-red)] sm:w-11 transition hover:text-[var(--dark-red-2)] disabled:cursor-not-allowed disabled:opacity-40"
                                         onClick={handleCartInc}
                                     >
                                         <Plus className="size-4" />
@@ -505,7 +611,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 <div className="flex-1">
                                     <Button
                                         variant="brand"
-                                        className="h-12 w-full rounded-[var(--radius-sm)] text-[0.8rem] font-semibold uppercase"
+                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-2 text-[0.72rem] font-semibold uppercase sm:px-4 sm:text-[0.8rem]"
                                         type="button"
                                         asChild
                                     >
@@ -524,15 +630,15 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                         ) : null}
 
                         {/* Trust badges */}
-                        <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        <div className="mt-6 grid grid-cols-1 gap-2.5 sm:mt-7 sm:grid-cols-3 sm:gap-3">
                             {[
                                 { icon: ShieldCheck, title: 'Quality Assured', sub: 'Nursery-grade stock' },
                                 { icon: RefreshCw, title: 'Quick Response', sub: 'We reply to every enquiry' },
                                 { icon: Truck, title: 'Pan-India Supply', sub: 'Delivery arranged on request' },
                             ].map(({ icon: Icon, title, sub }) => (
-                                <div key={title} className="flex items-center gap-3 rounded-[var(--radius-sm)] border border-border/50 bg-muted/20 px-3 py-2.5">
+                                <div key={title} className="flex min-w-0 items-center gap-3 rounded-[var(--radius-sm)] border border-border/50 bg-muted/20 px-3 py-2.5">
                                     <Icon className="size-5 shrink-0 text-[var(--dark-red)]" strokeWidth={1.75} />
-                                    <div className="leading-tight">
+                                    <div className="min-w-0 leading-tight">
                                         <p className="text-[0.8rem] font-semibold text-foreground">{title}</p>
                                         <p className="text-[0.8rem] text-muted-foreground">{sub}</p>
                                     </div>
@@ -546,15 +652,15 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                 {/* ── Full-width Product Details ───────────────────────── */}
                 <section className="mt-10 lg:mt-14">
                     <div className="mb-6 lg:mb-8">
-                        <p className="text-[1rem] font-semibold uppercase text-[var(--dark-red)]/60">
+                        <p className="text-[0.85rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[1rem]">
                             The Details
                         </p>
-                        <h2 className="mt-1.5 font-neue text-[clamp(1.6rem,3.4vw,2.6rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]">
+                        <h2 className="mt-1.5 font-neue text-[clamp(1.35rem,6vw,2.6rem)] font-medium uppercase leading-[1.15] text-[var(--dark-red-2)]">
                             Product Details
                         </h2>
                     </div>
                     <div
-                        className="w-full font-neue text-[0.95rem] font-normal leading-[1.85] text-[var(--text-body)] [&_a]:text-[var(--dark-red)] [&_a]:underline [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-4 [&_strong]:font-semibold [&_strong]:text-foreground [&_ul]:list-disc [&_ul]:pl-5"
+                        className="w-full overflow-hidden break-words font-neue text-[0.9rem] font-normal leading-[1.8] text-[var(--text-body)] sm:text-[0.95rem] sm:leading-[1.85] [&_a]:break-all [&_a]:text-[var(--dark-red)] [&_a]:underline [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[var(--radius-sm)] [&_iframe]:aspect-video [&_iframe]:h-auto [&_iframe]:w-full [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-4 [&_pre]:overflow-x-auto [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5"
                         dangerouslySetInnerHTML={{ __html: decodeHTMLDeep(product?.description) }}
                     />
                 </section>
@@ -562,10 +668,10 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                 {/* ── Full-width How Enquiries Work ────────────────────── */}
                 <section className="mt-10 lg:mt-14">
                     <div className="mb-6 lg:mb-8">
-                        <p className="text-[1rem] font-semibold uppercase text-[var(--dark-red)]/60">
+                        <p className="text-[0.85rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[1rem]">
                             Good To Know
                         </p>
-                        <h2 className="mt-1.5 font-neue text-[clamp(1.6rem,3.4vw,2.6rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]">
+                        <h2 className="mt-1.5 font-neue text-[clamp(1.35rem,6vw,2.6rem)] font-medium uppercase leading-[1.15] text-[var(--dark-red-2)]">
                             How Enquiries Work
                         </h2>
                     </div>
@@ -580,7 +686,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 <dt className="shrink-0 pt-0.5 text-[0.8rem] font-semibold uppercase text-foreground/45 sm:w-24">
                                     {label}
                                 </dt>
-                                <dd className="font-neue text-[0.95rem] leading-[1.85] text-[var(--text-body)]">
+                                <dd className="font-neue text-[0.9rem] leading-[1.8] text-[var(--text-body)] sm:text-[0.95rem] sm:leading-[1.85]">
                                     {text}
                                 </dd>
                             </div>
@@ -590,7 +696,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
 
 
 
-                <div id="reviews" className="mt-14 scroll-mt-24">
+                <div id="reviews" className="mt-10 scroll-mt-20 lg:mt-14 lg:scroll-mt-24">
                     <LazyHydrate>
                         <ProductReveiw productId={product._id} />
                     </LazyHydrate>
@@ -598,12 +704,12 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
 
                 {/* ── You May Also Like ────────────────────────────────── */}
                 {relatedProducts.length > 0 && (
-                    <section className="mt-12 lg:mt-16">
-                        <div className="mb-8 lg:mb-10">
-                            <p className="text-[1rem] font-semibold uppercase text-[var(--dark-red)]/60">
+                    <section className="mt-10 lg:mt-16">
+                        <div className="mb-6 lg:mb-10">
+                            <p className="text-[0.85rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[1rem]">
                                 Curated For You
                             </p>
-                            <h2 className="mt-1.5 font-neue text-[clamp(1.6rem,3.4vw,2.6rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]">
+                            <h2 className="mt-1.5 font-neue text-[clamp(1.35rem,6vw,2.6rem)] font-medium uppercase leading-[1.15] text-[var(--dark-red-2)]">
                                 You May Also Like
                             </h2>
                         </div>

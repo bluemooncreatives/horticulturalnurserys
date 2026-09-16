@@ -82,7 +82,7 @@ export async function PUT(request) {
         getProductVariant.product = validatedData.product
         getProductVariant.color = validatedData.color
         getProductVariant.colorHex = validatedData.colorHex || ''
-        getProductVariant.size = validatedData.size
+        getProductVariant.size = validatedData.size || ''
         getProductVariant.sku = sku
         getProductVariant.mrp = validatedData.mrp
         getProductVariant.sellingPrice = validatedData.sellingPrice

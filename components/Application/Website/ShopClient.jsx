@@ -28,7 +28,7 @@ import { PackageSearch, RotateCcw, SlidersHorizontal, Store } from 'lucide-react
 // larger screens. The server pre-renders the first page at the desktop size,
 // so any mobile-only size difference is resolved client-side after mount.
 const DESKTOP_PAGE_SIZE = 9
-const MOBILE_PAGE_SIZE = 10
+const MOBILE_PAGE_SIZE = 12
 
 const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages = 0, initialFilters, initialSearchParamsString = '', heading = 'All Products' }) => {
     const searchParams = useSearchParams()
@@ -37,7 +37,8 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
     const [page, setPage] = useState(0)
     const [isMobileFilter, setIsMobileFilter] = useState(false)
     const [isDesktop, setIsDesktop] = useState(false)
-    // Mobile (< sm) shows 10 cards/page; everything else keeps the server's 9.
+    // Mobile (< sm) shows 12 cards/page (6 clean rows of the 2-col grid);
+    // everything else keeps the server's 9.
     // Starts false so SSR + first client render match; corrected after mount.
     const [isMobile, setIsMobile] = useState(false)
     const gridTopRef = useRef(null)
@@ -76,7 +77,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
 
     // Filters, sort, or page size changed → always restart at the first page,
     // otherwise the user could be stranded on a page index that no longer exists
-    // (e.g. switching from 9- to 10-per-page shrinks the total page count).
+    // (e.g. switching from 9- to 12-per-page shrinks the total page count).
     useEffect(() => {
         setPage(0)
     }, [searchParamString, sorting, pageSize])
@@ -104,7 +105,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
         queryFn: () => fetchProduct(page),
         // Reuse the server-rendered first page so the initial paint needs no
         // refetch - but only when the client wants the same size the server
-        // rendered (desktop 9). Mobile (10) fetches its own first page.
+        // rendered (desktop 9). Mobile (12) fetches its own first page.
         initialData: (page === 0 && isInitialQuery && pageSize === DESKTOP_PAGE_SIZE)
             ? { products: initialProducts, total: initialTotal, totalPages: initialTotalPages, page: 0 }
             : undefined,

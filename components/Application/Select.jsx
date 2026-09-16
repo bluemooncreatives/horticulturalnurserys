@@ -15,7 +15,7 @@ import {
    PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { CheckIcon, ChevronDown, XIcon } from "lucide-react";
+import { CheckIcon, ChevronDown, PlusIcon, XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
@@ -26,8 +26,14 @@ function Select({
    placeholder = "Select options",
    isMulti = false,
    className = "",
+   // Opt-in: lets the user commit whatever they typed as a new value when it
+   // is not already in the list. Off by default so existing pickers, whose
+   // options are closed sets, keep rejecting unknown input.
+   creatable = false,
+   createLabel = (value) => `Add "${value}"`,
 }) {
    const [open, setOpen] = useState(false);
+   const [query, setQuery] = useState("");
    const safeOptions = Array.isArray(options) ? options : [];
 
    const handleSelect = (option) => {
@@ -59,12 +65,30 @@ function Select({
        setSelected(isMulti ? [] : null);
    };
 
+   const handleCreate = () => {
+       const value = query.trim();
+       if (!value) return;
+       if (isMulti) {
+           const current = Array.isArray(selected) ? selected : [];
+           if (!current.includes(value)) setSelected([...current, value]);
+       } else {
+           setSelected(value);
+           setOpen(false);
+       }
+       setQuery("");
+   };
+
    const isArraySelected = Array.isArray(selected) && selected.length > 0;
-   const selectedOption = !isMulti && selected ? safeOptions.find((o) => o.value === selected) : null;
+   const selectedOption = !isMulti && selected
+       ? safeOptions.find((o) => o.value === selected)
+         // A created value is not in options yet - render it as-is so the
+         // trigger never falls back to the placeholder for a real selection.
+         || { label: selected, value: selected }
+       : null;
    const hasValue = isMulti ? isArraySelected : Boolean(selected);
 
    return (
-       <Popover open={open} onOpenChange={setOpen}>
+       <Popover open={open} onOpenChange={(next) => { setOpen(next); if (!next) setQuery(""); }}>
            <PopoverTrigger asChild>
                <Button
                    variant="outline"
@@ -138,10 +162,26 @@ function Select({
                className="w-[var(--radix-popover-trigger-width)] min-w-[220px] p-0 shadow-lg border-border"
            >
                <Command>
-                   <CommandInput placeholder="Search..." className="h-9 text-sm" />
+                   <CommandInput
+                       placeholder={creatable ? "Search or type a new value..." : "Search..."}
+                       className="h-9 text-sm"
+                       value={query}
+                       onValueChange={setQuery}
+                   />
                    <CommandList className="max-h-60 overflow-y-auto admin-scroll">
                        <CommandEmpty className="py-4 text-center text-xs text-muted-foreground">
-                           No options found.
+                           {creatable && query.trim() ? (
+                               <button
+                                   type="button"
+                                   onClick={handleCreate}
+                                   className="mx-auto flex items-center gap-1.5 rounded px-2 py-1 text-foreground hover:bg-muted"
+                               >
+                                   <PlusIcon className="h-3.5 w-3.5" />
+                                   {createLabel(query.trim())}
+                               </button>
+                           ) : (
+                               "No options found."
+                           )}
                        </CommandEmpty>
                        <CommandGroup>
                            {safeOptions.map((option) => {
@@ -166,6 +206,20 @@ function Select({
                                );
                            })}
                        </CommandGroup>
+                       {creatable
+                           && query.trim()
+                           && !safeOptions.some((o) => o.value.toLowerCase() === query.trim().toLowerCase()) && (
+                           <CommandGroup>
+                               <CommandItem
+                                   value={`__create__${query}`}
+                                   onSelect={handleCreate}
+                                   className="flex items-center gap-1.5 text-sm py-2 px-2.5 cursor-pointer aria-selected:bg-muted"
+                               >
+                                   <PlusIcon className="h-3.5 w-3.5" />
+                                   <span>{createLabel(query.trim())}</span>
+                               </CommandItem>
+                           </CommandGroup>
+                       )}
                    </CommandList>
                </Command>
            </PopoverContent>

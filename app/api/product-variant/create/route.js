@@ -78,7 +78,7 @@ export async function POST(request) {
             product: variantData.product,
             color: variantData.color,
             colorHex: variantData.colorHex || '',
-            size: variantData.size,
+            size: variantData.size || '',
             sku,
             mrp: variantData.mrp,
             sellingPrice: variantData.sellingPrice,

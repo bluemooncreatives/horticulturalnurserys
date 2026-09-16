@@ -30,7 +30,7 @@ export async function POST(request) {
                 variantId: variant._id,
                 name: variant.product.name,
                 url: variant.product.slug,
-                size: variant.size,
+                size: variant.size || '',
                 color: variant.color,
                 mrp: variant.mrp,
                 sellingPrice: variant.sellingPrice,

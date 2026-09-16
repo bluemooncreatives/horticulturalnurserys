@@ -1,10 +1,15 @@
 import ServiceDetailContent from '../ServiceDetailContent'
 import { NURSERY_BIGHAS, POLYSHED_SQM, OPERATING_SINCE_YEAR } from '@/lib/companyInfo'
+import JsonLd from '@/components/Application/Website/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/buildBreadcrumbSchema'
 
 export const metadata = {
   title: 'Roof Garden Design - Services',
   description:
     'Specialist roof garden systems with geotextile net and drain-cell layers that protect the structural slab, planted with lightweight media and weather-proof planters across Kolkata.',
+  alternates: {
+    canonical: '/services/roof-garden',
+  },
 }
 
 const SERVICE = {
@@ -219,6 +224,28 @@ const SERVICE = {
   },
 }
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: SERVICE.title,
+  name: SERVICE.title,
+  description: SERVICE.intro,
+  provider: { '@type': 'GardenStore', name: 'Horticultural Development Centre' },
+  areaServed: { '@type': 'City', name: 'Kolkata' },
+}
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+  { name: SERVICE.title },
+])
+
 export default function RoofGardenPage() {
-  return <ServiceDetailContent service={SERVICE} />
+  return (
+    <>
+      <JsonLd data={serviceSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <ServiceDetailContent service={SERVICE} />
+    </>
+  )
 }

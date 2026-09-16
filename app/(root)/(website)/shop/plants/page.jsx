@@ -1,11 +1,22 @@
 import ShopClient from '@/components/Application/Website/ShopClient'
 import { getDefaultShopProducts, getShopFilters, getShopProducts } from '@/lib/services/shopService'
 import WebsiteBreadcrumb from '@/components/Application/Website/WebsiteBreadcrumb'
+import JsonLd from '@/components/Application/Website/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/buildBreadcrumbSchema'
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Shop', path: '/shop' },
+  { name: 'Plants' },
+])
 
 export const metadata = {
   title: 'Plants - Shop',
   description:
     'Browse our full range of nursery plants - seasonal flowers, ornamental shrubs, specimen trees and select imported varieties, all grown on our 50-bigha farm at Bibirhut.',
+  alternates: {
+    canonical: '/shop/plants',
+  },
 }
 
 const PlantsPage = async ({ searchParams }) => {
@@ -40,6 +51,7 @@ const PlantsPage = async ({ searchParams }) => {
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema} />
       <WebsiteBreadcrumb props={{ title: 'Plants' }} />
       <ShopClient
         initialFilters={filters}

@@ -21,6 +21,9 @@ export const metadata = {
     title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
     description:
         'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance by qualified horticulturists, plus ornamental plants, seasonal flowers, lawn grass, manure, pots, garden implements and roof-garden materials - buy online or at our Alipore counter.',
+    alternates: {
+        canonical: '/',
+    },
     openGraph: {
         title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
         description:

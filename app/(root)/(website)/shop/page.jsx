@@ -1,6 +1,17 @@
 import ShopClient from '@/components/Application/Website/ShopClient'
 import { getDefaultShopProducts, getShopFilters, getShopProducts } from '@/lib/services/shopService'
 
+export const metadata = {
+    title: 'Shop - Plants, Pots & Garden Materials',
+    description:
+        'Shop ornamental plants, seasonal flowers, lawn grass, manure, planters and garden implements from Horticultural Development Centre\'s 50-bigha nursery - order online or collect at our Alipore counter.',
+    alternates: {
+        // Filter/sort/pagination query params all resolve to the same canonical
+        // listing so they don't get indexed as separate duplicate pages.
+        canonical: '/shop',
+    },
+}
+
 const buildSearchParamString = (searchParams) => {
     if (!searchParams) return ''
     const params = new URLSearchParams()

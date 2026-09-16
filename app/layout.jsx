@@ -1,16 +1,62 @@
 import GlobalProvider from "@/components/Application/GlobalProvider";
 import LenisProvider from '@/components/Application/LenisProvider'
 import { Toaster } from "@/components/ui/sonner";
+import JsonLd from "@/components/Application/Website/JsonLd";
+import { FORMED_YEAR } from "@/lib/companyInfo";
 import "./globals.css";
 
+const SITE_URL = 'https://www.horticulturaldevelopmentcentre.com'
+
+// GardenStore (schema.org's dedicated type for nurseries/garden centres) doubling
+// as the LocalBusiness record - powers the knowledge-panel-style rich result
+// (address, hours, phone, map pin) for brand-name searches. Rendered once, here,
+// so every page carries it without repeating the same facts per route.
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'GardenStore',
+  '@id': `${SITE_URL}/#business`,
+  name: 'Horticultural Development Centre',
+  image: `${SITE_URL}/assets/images/hero/01.jpg`,
+  url: SITE_URL,
+  telephone: '+91-33-2479-5710',
+  email: 'horticulturaldc@gmail.com',
+  foundingDate: String(FORMED_YEAR),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '2/5 Judges Court Road, Alipore',
+    addressLocality: 'Kolkata',
+    addressRegion: 'West Bengal',
+    postalCode: '700027',
+    addressCountry: 'IN',
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    opens: '10:00',
+    closes: '19:00',
+  },
+  sameAs: [
+    'https://www.instagram.com/horticulturaldevelopmentcentre/',
+    'https://www.facebook.com/horticulturaldevelopmentcentre',
+    'https://wa.me/919088275576',
+  ],
+  areaServed: {
+    '@type': 'City',
+    name: 'Kolkata',
+  },
+}
+
 export const metadata = {
-  metadataBase: new URL('https://www.horticulturaldevelopmentcentre.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
     template: '%s | Horticultural Development Centre',
   },
   description:
     'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance, plus a 50-bigha nursery and an Alipore outlet stocking plants, manure, pots, garden implements and roof-garden materials under one roof.',
+  alternates: {
+    canonical: '/',
+  },
   robots: {
     index: true,
     follow: true,
@@ -72,6 +118,7 @@ export default function RootLayout({ children }) {
         <link rel="preload" href="/assets/font/PPNeueMontreal-Book.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body className="antialiased">
+        <JsonLd data={localBusinessSchema} />
         <GlobalProvider>
           <Toaster />
           <LenisProvider>

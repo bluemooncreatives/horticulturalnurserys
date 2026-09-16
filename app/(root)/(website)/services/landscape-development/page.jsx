@@ -5,6 +5,9 @@ export const metadata = {
   title: 'Garden Development & Landscaping - Services',
   description:
     'Garden development and landscaping for residential and commercial sites - planting plans, lawn laying in Selection-I, Mexican and Doob grass, garden structures and statues in FRP, iron and Astroturf. Township gardens, government parks, IT campus grounds, lake fronts and tourist lodges across West Bengal.',
+  alternates: {
+    canonical: '/services/landscape-development',
+  },
 }
 
 const SERVICE = {

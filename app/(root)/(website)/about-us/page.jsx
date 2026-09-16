@@ -6,6 +6,9 @@ export const metadata = {
   title: "About Us",
   description:
     "Horticultural Development Centre has grown plants and built gardens from Kolkata since 1989 - a 50-bigha nursery at Bibirhut, qualified horticulturists, and landscaping credentials with State Government departments and CPWD.",
+  alternates: {
+    canonical: "/about-us",
+  },
 };
 
 // Re-render per request so the random picks vary on each visit (the bestseller

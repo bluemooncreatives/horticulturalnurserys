@@ -1,10 +1,15 @@
 import ServiceDetailContent from '../ServiceDetailContent'
 import { NURSERY_BIGHAS, POLYSHED_SQM, OPERATING_SINCE_YEAR } from '@/lib/companyInfo'
+import JsonLd from '@/components/Application/Website/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/buildBreadcrumbSchema'
 
 export const metadata = {
   title: 'Vertical Garden Systems - Services',
   description:
     'Modular living-wall and trellis systems for building facades, interiors and boundary screens across Kolkata - custom-designed for light, irrigation and plant species.',
+  alternates: {
+    canonical: '/services/vertical-garden',
+  },
 }
 
 const SERVICE = {

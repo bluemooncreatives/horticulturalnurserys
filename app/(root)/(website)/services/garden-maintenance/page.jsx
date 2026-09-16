@@ -1,10 +1,15 @@
 import ServiceDetailContent from '../ServiceDetailContent'
 import { NURSERY_BIGHAS, POLYSHED_SQM, OPERATING_SINCE_YEAR } from '@/lib/companyInfo'
+import JsonLd from '@/components/Application/Website/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/buildBreadcrumbSchema'
 
 export const metadata = {
   title: 'Garden Maintenance & Aftercare - Services',
   description:
     'Annual maintenance contracts (AMC) covering pruning, feeding, pest management, lawn upkeep and seasonal replanting for residential and commercial gardens across Kolkata and West Bengal.',
+  alternates: {
+    canonical: '/services/garden-maintenance',
+  },
 }
 
 const SERVICE = {
@@ -220,6 +225,28 @@ const SERVICE = {
   },
 }
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: SERVICE.title,
+  name: SERVICE.title,
+  description: SERVICE.intro,
+  provider: { '@type': 'GardenStore', name: 'Horticultural Development Centre' },
+  areaServed: { '@type': 'City', name: 'Kolkata' },
+}
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+  { name: SERVICE.title },
+])
+
 export default function GardenMaintenancePage() {
-  return <ServiceDetailContent service={SERVICE} />
+  return (
+    <>
+      <JsonLd data={serviceSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <ServiceDetailContent service={SERVICE} />
+    </>
+  )
 }

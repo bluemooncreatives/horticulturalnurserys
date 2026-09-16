@@ -1,6 +1,15 @@
 import WebsiteBreadcrumb from '@/components/Application/Website/WebsiteBreadcrumb'
 import Link from 'next/link'
 
+export const metadata = {
+    title: 'Terms & Conditions',
+    description:
+        'Terms and conditions governing orders, site visits, service contracts and use of the Horticultural Development Centre website.',
+    alternates: {
+        canonical: '/terms-and-conditions',
+    },
+}
+
 const breadcrumb = {
     title: 'Terms & Conditions',
     links: [

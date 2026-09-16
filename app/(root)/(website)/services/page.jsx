@@ -5,6 +5,9 @@ export const metadata = {
   title: 'Services - Horticultural Development Centre',
   description:
     'Garden development and landscaping for residential and commercial sites, garden maintenance, roof garden design and vertical garden systems - Horticultural Development Centre, Kolkata.',
+  alternates: {
+    canonical: '/services',
+  },
 }
 
 // Hero bento - two photos flanking an accent card over a dark card.

@@ -1,11 +1,22 @@
 import ShopClient from '@/components/Application/Website/ShopClient'
 import { getShopFilters, getShopProducts } from '@/lib/services/shopService'
 import WebsiteBreadcrumb from '@/components/Application/Website/WebsiteBreadcrumb'
+import JsonLd from '@/components/Application/Website/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/buildBreadcrumbSchema'
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Shop', path: '/shop' },
+  { name: 'Pots' },
+])
 
 export const metadata = {
   title: 'Pots - Shop',
   description:
     'Browse our collection of planters, pots and containers - terracotta, glazed ceramic, fibreglass and resin, sized from windowsill to statement specimen.',
+  alternates: {
+    canonical: '/shop/pots',
+  },
 }
 
 const PotsPage = async ({ searchParams }) => {
@@ -39,6 +50,7 @@ const PotsPage = async ({ searchParams }) => {
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema} />
       <WebsiteBreadcrumb props={{ title: 'Pots' }} />
       <ShopClient
         initialFilters={filters}

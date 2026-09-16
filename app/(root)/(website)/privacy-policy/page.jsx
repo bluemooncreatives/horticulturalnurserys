@@ -1,6 +1,15 @@
 import WebsiteBreadcrumb from '@/components/Application/Website/WebsiteBreadcrumb'
 import Link from 'next/link'
 
+export const metadata = {
+    title: 'Privacy Policy',
+    description:
+        'How Horticultural Development Centre collects, uses and protects your personal information across our website and enquiry forms.',
+    alternates: {
+        canonical: '/privacy-policy',
+    },
+}
+
 const breadcrumb = {
     title: 'Privacy Policy',
     links: [

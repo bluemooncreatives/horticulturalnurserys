@@ -25,18 +25,6 @@ const productSchema = new mongoose.Schema({
         required: true
     },
 
-    mrp: {
-        type: Number,
-        required: true,
-    },
-    sellingPrice: {
-        type: Number,
-        required: true,
-    },
-    discountPercentage: {
-        type: Number,
-        required: true,
-    },
     media: [
         {
             type: mongoose.Schema.Types.ObjectId,

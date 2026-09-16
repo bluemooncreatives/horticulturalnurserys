@@ -14,7 +14,6 @@ import {
 import { Input } from '@/components/ui/input'
 import ButtonLoading from '@/components/Application/ButtonLoading'
 import { zSchema } from '@/lib/zodSchema'
-import { computeDiscountPercentage, validatePricing } from '@/lib/pricing'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { use, useEffect, useState, useMemo } from 'react'
@@ -71,9 +70,6 @@ const EditProductVariant = ({ params }) => {
     color: true,
     colorHex: true,
     size: true,
-    mrp: true,
-    sellingPrice: true,
-    discountPercentage: true,
   })
 
   const form = useForm({
@@ -85,9 +81,6 @@ const EditProductVariant = ({ params }) => {
       color: '',
       colorHex: '',
       size: '',
-      mrp: '',
-      sellingPrice: '',
-      discountPercentage: '',
     },
   })
 
@@ -101,9 +94,6 @@ const EditProductVariant = ({ params }) => {
         color: variant.color,
         colorHex: variant.colorHex || '',
         size: variant.size || '',
-        mrp: variant.mrp,
-        sellingPrice: variant.sellingPrice,
-        discountPercentage: variant.discountPercentage,
       })
 
       if (variant.media) {
@@ -113,12 +103,6 @@ const EditProductVariant = ({ params }) => {
     }
   }, [getVariant])
 
-  // Discount is always derived from MRP & Selling Price (single source of truth
-  // in lib/pricing). Recompute on every change so 0% (SP == MRP) and later edits
-  // are reflected instead of leaving a stale value behind.
-  useEffect(() => {
-    form.setValue('discountPercentage', computeDiscountPercentage(form.getValues('mrp'), form.getValues('sellingPrice')))
-  }, [form.watch('mrp'), form.watch('sellingPrice')])
 
   const onSubmit = async (values) => {
     setLoading(true)
@@ -126,13 +110,6 @@ const EditProductVariant = ({ params }) => {
       if (selectedMedia.length <= 0) {
         return showToast('error', 'Please select media.')
       }
-
-      const pricing = validatePricing(values.mrp, values.sellingPrice)
-      if (!pricing.ok) {
-        form.setError(pricing.field, { type: 'manual', message: pricing.message })
-        return showToast('error', pricing.message)
-      }
-      values.discountPercentage = pricing.discountPercentage
 
       values.media = selectedMedia.map((media) => media._id)
 
@@ -270,59 +247,8 @@ const EditProductVariant = ({ params }) => {
                 />
               </div>
 
-              <div>
-                <FormField
-                  control={form.control}
-                  name="mrp"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        MRP <span className="text-destructive" aria-hidden>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="number" placeholder="Enter MRP" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
 
-              <div>
-                <FormField
-                  control={form.control}
-                  name="sellingPrice"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Selling Price <span className="text-destructive" aria-hidden>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="number" placeholder="Enter Selling Price" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
 
-              <div className="mb-3">
-                <FormField
-                  control={form.control}
-                  name="discountPercentage"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Discount Percentage <span className="text-destructive" aria-hidden>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="number" readOnly placeholder="Enter Discount Percentage" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
             </div>
 
             <div className="md:col-span-2 space-y-3 pt-2">

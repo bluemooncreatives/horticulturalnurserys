@@ -41,9 +41,6 @@ export async function POST(req) {
 
             for (let i = 0; i < 5; i++) {
 
-                const mrp = Number(faker.commerce.price(500, 2000, 0));
-                const discountPercentage = faker.number.int({ min: 10, max: 50 });
-                const sellingPrice = Math.round(mrp - (mrp * discountPercentage) / 100);
 
 
                 const productId = new mongoose.Types.ObjectId();
@@ -53,9 +50,6 @@ export async function POST(req) {
                     name: faker.commerce.productName(),
                     slug: faker.lorem.slug(),
                     category: category._id,
-                    mrp: mrp,
-                    sellingPrice: sellingPrice,
-                    discountPercentage: discountPercentage,
                     media: selectedMedia,
                     description: faker.commerce.productDescription(),
                     deletedAt: null,
@@ -75,9 +69,6 @@ export async function POST(req) {
                             product: productId,
                             color,
                             size,
-                            mrp: product.mrp,
-                            sellingPrice: product.sellingPrice,
-                            discountPercentage: product.discountPercentage,
                             sku: `${product.slug}-${color}-${size}-${faker.number.int({ min: 1000, max: 9999 })}`,
                             stock: faker.number.int({ min: 10, max: 100 }),
                             media: variantMedia,

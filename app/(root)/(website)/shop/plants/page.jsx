@@ -40,8 +40,6 @@ const PlantsPage = async ({ searchParams }) => {
       category:       resolvedSearchParams?.category,
       size:           resolvedSearchParams?.size,
       color:          resolvedSearchParams?.color,
-      minPrice:       resolvedSearchParams?.minPrice,
-      maxPrice:       resolvedSearchParams?.maxPrice,
       bestseller:     resolvedSearchParams?.bestseller,
       freshlyArrived: resolvedSearchParams?.freshlyArrived,
       q:              resolvedSearchParams?.q,

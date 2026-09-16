@@ -119,7 +119,22 @@ const AdminLoginPage = () => {
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[56%] bg-[linear-gradient(0deg,rgba(255,255,255,0.18),transparent_74%)] blur-2xl" />
                     <div className="relative z-20 flex h-full flex-col justify-between">
                         <div className='mb-8'>
-                            <Image src={Logo.src} width={Logo.width} height={Logo.height} alt='logo' className='max-w-[60px] brightness-0 invert' unoptimized />
+                            {/* The mark is a filled dark-green disc with a white motif
+                                inside it. `brightness-0 invert` flattened every opaque
+                                pixel to white, so the whole badge rendered as a blank
+                                white circle. Show it unfiltered on a white chip instead -
+                                its own green is too close to the panel (#1D4020) to read
+                                on its own. */}
+                            <span className='inline-flex size-16 items-center justify-center rounded-full bg-white p-2 shadow-sm ring-1 ring-white/25'>
+                                <Image
+                                    src={Logo}
+                                    width={96}
+                                    height={96}
+                                    alt='Horticultural Development Centre'
+                                    className='size-full rounded-full object-contain'
+                                    priority
+                                />
+                            </span>
                             <p className="mt-6 max-w-sm text-sm text-white/75">
                                 Admin access for dashboard, products, orders, and store operations.
                             </p>

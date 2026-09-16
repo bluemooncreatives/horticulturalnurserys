@@ -38,18 +38,6 @@ const ProductVariantSchema = new mongoose.Schema({
         default: '',
     },
 
-    mrp: {
-        type: Number,
-        required: true,
-    },
-    sellingPrice: {
-        type: Number,
-        required: true,
-    },
-    discountPercentage: {
-        type: Number,
-        required: true,
-    },
     sku: {
         type: String,
         required: true,
@@ -72,7 +60,6 @@ const ProductVariantSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 ProductVariantSchema.index({ product: 1, color: 1, size: 1, deletedAt: 1 })
-ProductVariantSchema.index({ product: 1, sellingPrice: 1, deletedAt: 1 })
 
 const ProductVariantModel = mongoose.models.ProductVariant || mongoose.model('ProductVariant', ProductVariantSchema, 'productvariants')
 export default ProductVariantModel

@@ -32,8 +32,6 @@ export async function POST(request) {
                 url: variant.product.slug,
                 size: variant.size || '',
                 color: variant.color,
-                mrp: variant.mrp,
-                sellingPrice: variant.sellingPrice,
                 media: variant?.media[0]?.secure_url,
                 qty: cartItem.qty,
             }

@@ -3,7 +3,6 @@ import { isAuthenticated } from "@/lib/authentication"
 import { connectDB } from "@/lib/databaseConnection"
 import { catchError, response } from "@/lib/helperFunction"
 import { zSchema } from "@/lib/zodSchema"
-import { validatePricing } from "@/lib/pricing"
 import ProductModel from "@/models/Product.model"
 import ProductVariantModel from "@/models/ProductVariant.model"
 
@@ -24,9 +23,6 @@ export async function PUT(request) {
             color: true,
             colorHex: true,
             size: true,
-            mrp: true,
-            sellingPrice: true,
-            discountPercentage: true,
             media: true
         })
 
@@ -36,13 +32,6 @@ export async function PUT(request) {
         }
 
         const validatedData = validate.data
-
-        // Server is authoritative on pricing: enforce SP <= MRP and derive the
-        // discount, ignoring whatever the client sent.
-        const pricing = validatePricing(validatedData.mrp, validatedData.sellingPrice)
-        if (!pricing.ok) {
-            return response(false, 400, pricing.message)
-        }
 
         const getProductVariant = await ProductVariantModel.findOne({ deletedAt: null, _id: validatedData._id })
         if (!getProductVariant) {
@@ -84,9 +73,6 @@ export async function PUT(request) {
         getProductVariant.colorHex = validatedData.colorHex || ''
         getProductVariant.size = validatedData.size || ''
         getProductVariant.sku = sku
-        getProductVariant.mrp = validatedData.mrp
-        getProductVariant.sellingPrice = validatedData.sellingPrice
-        getProductVariant.discountPercentage = pricing.discountPercentage
         getProductVariant.media = validatedData.media
         await getProductVariant.save()
 

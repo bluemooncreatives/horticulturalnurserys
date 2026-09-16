@@ -62,15 +62,6 @@ const ProductPage = async ({ params, searchParams }) => {
             '@type': 'Brand',
             name: 'Horticultural Development Centre',
         },
-        offers: {
-            '@type': 'Offer',
-            url: `${SITE_URL}/product/${slug}`,
-            priceCurrency: 'INR',
-            price: variant?.sellingPrice,
-            // No inventory/quantity tracking in the catalogue - a live variant
-            // (not soft-deleted) is always sellable.
-            availability: 'https://schema.org/InStock',
-        },
         // Only claim a rating when there's at least one real review - an
         // aggregateRating with zero reviews violates Google's structured data
         // guidelines and can trigger a manual action.

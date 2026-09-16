@@ -8,6 +8,11 @@
 // 'unsafe-inline' is required for Next.js' inline bootstrap/hydration scripts and
 // inline style attributes; tightening to a nonce-based strict-dynamic CSP is a
 // future step.
+// React's development build uses eval() for its debugging features (rebuilding
+// callstacks across environments). Production React never does, so 'unsafe-eval'
+// is granted in dev only - shipping it would weaken the policy for no benefit.
+const isDev = process.env.NODE_ENV === 'development'
+
 const contentSecurityPolicy = [
     "default-src 'self'",
     "base-uri 'self'",
@@ -18,7 +23,7 @@ const contentSecurityPolicy = [
     "media-src 'self' https://res.cloudinary.com",
     "font-src 'self'",
     "style-src 'self' 'unsafe-inline'",
-    "script-src 'self' 'unsafe-inline' https://upload-widget.cloudinary.com",
+    `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://upload-widget.cloudinary.com`,
     "connect-src 'self' https://api.cloudinary.com https://upload-widget.cloudinary.com",
     "frame-src 'self' https://upload-widget.cloudinary.com",
     "upgrade-insecure-requests",

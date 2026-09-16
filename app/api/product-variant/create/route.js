@@ -3,7 +3,6 @@ import { isAuthenticated } from "@/lib/authentication"
 import { connectDB } from "@/lib/databaseConnection"
 import { catchError, response } from "@/lib/helperFunction"
 import { zSchema } from "@/lib/zodSchema"
-import { validatePricing } from "@/lib/pricing"
 import ProductModel from "@/models/Product.model"
 import ProductVariantModel from "@/models/ProductVariant.model"
 
@@ -23,9 +22,6 @@ export async function POST(request) {
             color: true,
             colorHex: true,
             size: true,
-            mrp: true,
-            sellingPrice: true,
-            discountPercentage: true,
             media: true
         })
 
@@ -36,13 +32,6 @@ export async function POST(request) {
         }
 
         const variantData = validate.data
-
-        // Server is authoritative on pricing: enforce SP <= MRP and derive the
-        // discount, ignoring whatever the client sent.
-        const pricing = validatePricing(variantData.mrp, variantData.sellingPrice)
-        if (!pricing.ok) {
-            return response(false, 400, pricing.message)
-        }
 
         const product = await ProductModel.findOne({ _id: variantData.product, deletedAt: null }).select('parentSku').lean()
 
@@ -80,9 +69,6 @@ export async function POST(request) {
             colorHex: variantData.colorHex || '',
             size: variantData.size || '',
             sku,
-            mrp: variantData.mrp,
-            sellingPrice: variantData.sellingPrice,
-            discountPercentage: pricing.discountPercentage,
             media: variantData.media,
         })
 

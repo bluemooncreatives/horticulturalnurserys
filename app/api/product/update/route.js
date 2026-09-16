@@ -3,7 +3,6 @@ import { isAuthenticated } from "@/lib/authentication"
 import { connectDB } from "@/lib/databaseConnection"
 import { catchError, response } from "@/lib/helperFunction"
 import { zSchema } from "@/lib/zodSchema"
-import { validatePricing } from "@/lib/pricing"
 import ProductModel from "@/models/Product.model"
 import { encode } from "entities"
 
@@ -22,9 +21,6 @@ export async function PUT(request) {
             name: true,
             slug: true,
             category: true,
-            mrp: true,
-            sellingPrice: true,
-            discountPercentage: true,
             description: true,
             media: true
         })
@@ -35,13 +31,6 @@ export async function PUT(request) {
 
         const validatedData = validate.data
 
-        // Server is authoritative on pricing: enforce SP <= MRP and derive the
-        // discount, ignoring whatever the client sent.
-        const pricing = validatePricing(validatedData.mrp, validatedData.sellingPrice)
-        if (!pricing.ok) {
-            return response(false, 400, pricing.message)
-        }
-
         const getProduct = await ProductModel.findOne({ deletedAt: null, _id: validatedData._id })
         if (!getProduct) {
             return response(false, 404, 'Data not found.')
@@ -50,9 +39,6 @@ export async function PUT(request) {
         getProduct.name = validatedData.name
         getProduct.slug = validatedData.slug
         getProduct.category = validatedData.category
-        getProduct.mrp = validatedData.mrp
-        getProduct.sellingPrice = validatedData.sellingPrice
-        getProduct.discountPercentage = pricing.discountPercentage
         getProduct.description = encode(validatedData.description)
         getProduct.media = validatedData.media
         await getProduct.save()

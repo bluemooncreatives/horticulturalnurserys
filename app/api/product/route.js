@@ -39,44 +39,13 @@ export async function GET(request) {
                 { name: { $regex: safeGlobalFilter, $options: 'i' } },
                 { slug: { $regex: safeGlobalFilter, $options: 'i' } },
                 { "categoryData.name": { $regex: safeGlobalFilter, $options: 'i' } },
-                {
-                    $expr: {
-                        $regexMatch: {
-                            input: { $toString: "$mrp" },
-                            regex: safeGlobalFilter,
-                            options: 'i'
-                        }
-                    }
-                },
-                {
-                    $expr: {
-                        $regexMatch: {
-                            input: { $toString: "$sellingPrice" },
-                            regex: safeGlobalFilter,
-                            options: 'i'
-                        }
-                    }
-                },
-                {
-                    $expr: {
-                        $regexMatch: {
-                            input: { $toString: "$discountPercentage" },
-                            regex: safeGlobalFilter,
-                            options: 'i'
-                        }
-                    }
-                },
             ]
         }
 
         //  Column filteration
 
         filters.forEach(filter => {
-            if (filter.id === 'mrp' || filter.id === 'sellingPrice' || filter.id === 'discountPercentage') {
-                matchQuery[filter.id] = Number(filter.value)
-            } else {
-                matchQuery[filter.id] = { $regex: escapeRegex(String(filter.value)), $options: 'i' }
-            }
+            matchQuery[filter.id] = { $regex: escapeRegex(String(filter.value)), $options: 'i' }
         });
 
         //   Sorting  
@@ -111,9 +80,6 @@ export async function GET(request) {
                     _id: 1,
                     name: 1,
                     slug: 1,
-                    mrp: 1,
-                    sellingPrice: 1,
-                    discountPercentage: 1,
                     category: "$categoryData.name",
                     createdAt: 1,
                     updatedAt: 1,

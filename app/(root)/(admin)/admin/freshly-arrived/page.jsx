@@ -23,9 +23,6 @@ const breadcrumbData = [
   { href: ADMIN_FRESHLY_ARRIVED_SHOW, label: 'Freshly Arrived' },
 ]
 
-const formatPrice = (price) =>
-  typeof price === 'number' ? `₹${price.toLocaleString('en-IN')}` : '-'
-
 const ShowFreshlyArrived = () => {
   const [items, setItems] = useState([])
   const [available, setAvailable] = useState([])
@@ -241,7 +238,6 @@ const ShowFreshlyArrived = () => {
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{product.name}</p>
-                    <p className="text-xs text-muted-foreground">{formatPrice(product.sellingPrice)}</p>
                   </div>
                   {!onStorefront && (
                     <span className="hidden shrink-0 rounded-full border border-border/70 bg-muted/80 px-2.5 py-0.5 text-xs font-medium text-muted-foreground sm:inline">

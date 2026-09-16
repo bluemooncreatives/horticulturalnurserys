@@ -10,7 +10,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-/** Turns `sellingPrice` / `product_name` into `Selling price`, `Product name`. */
+/** Turns `parentSku` / `product_name` into `Parent sku`, `Product name`. */
 const humanise = (id) =>
     id
         .replace(/[_-]+/g, ' ')

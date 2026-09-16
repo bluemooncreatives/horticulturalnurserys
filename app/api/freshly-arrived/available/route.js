@@ -24,7 +24,7 @@ export async function GET(request) {
         const products = await ProductModel.find(matchQuery)
             .sort({ createdAt: -1 })
             .limit(100)
-            .select('name slug sellingPrice')
+            .select('name slug')
             .lean()
 
         return response(true, 200, 'Available products fetched.', products)

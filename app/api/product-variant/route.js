@@ -40,42 +40,13 @@ export async function GET(request) {
                 { size: { $regex: globalFilter, $options: 'i' } },
                 { sku: { $regex: globalFilter, $options: 'i' } },
                 { "productData.name": { $regex: globalFilter, $options: 'i' } },
-                {
-                    $expr: {
-                        $regexMatch: {
-                            input: { $toString: "$mrp" },
-                            regex: globalFilter,
-                            options: 'i'
-                        }
-                    }
-                },
-                {
-                    $expr: {
-                        $regexMatch: {
-                            input: { $toString: "$sellingPrice" },
-                            regex: globalFilter,
-                            options: 'i'
-                        }
-                    }
-                },
-                {
-                    $expr: {
-                        $regexMatch: {
-                            input: { $toString: "$discountPercentage" },
-                            regex: globalFilter,
-                            options: 'i'
-                        }
-                    }
-                },
             ]
         }
 
         //  Column filteration  
 
         filters.forEach(filter => {
-            if (filter.id === 'mrp' || filter.id === 'sellingPrice' || filter.id === 'discountPercentage') {
-                matchQuery[filter.id] = Number(filter.value)
-            } else if (filter.id === 'product') {
+            if (filter.id === 'product') {
                 matchQuery["productData.name"] = { $regex: filter.value, $options: 'i' }
             }
             else {
@@ -117,9 +88,6 @@ export async function GET(request) {
                     color: 1,
                     size: 1,
                     sku: 1,
-                    mrp: 1,
-                    sellingPrice: 1,
-                    discountPercentage: 1,
                     createdAt: 1,
                     updatedAt: 1,
                     deletedAt: 1

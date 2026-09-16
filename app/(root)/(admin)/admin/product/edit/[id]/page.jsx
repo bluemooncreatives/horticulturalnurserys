@@ -6,7 +6,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import ButtonLoading from '@/components/Application/ButtonLoading'
 import { zSchema } from '@/lib/zodSchema'
-import { computeDiscountPercentage, validatePricing } from '@/lib/pricing'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { use, useEffect, useState } from 'react'
@@ -60,9 +59,6 @@ const EditProduct = ({ params }) => {
     name: true,
     slug: true,
     category: true,
-    mrp: true,
-    sellingPrice: true,
-    discountPercentage: true,
     description: true,
   })
 
@@ -73,9 +69,6 @@ const EditProduct = ({ params }) => {
       name: "",
       slug: "",
       category: "",
-      mrp: 0,
-      sellingPrice: 0,
-      discountPercentage: 0,
       description: "",
     },
   })
@@ -89,9 +82,6 @@ const EditProduct = ({ params }) => {
         name: product?.name,
         slug: product?.slug,
         category: product?.category,
-        mrp: product?.mrp,
-        sellingPrice: product?.sellingPrice,
-        discountPercentage: product?.discountPercentage,
         description: product?.description,
       })
 
@@ -110,12 +100,6 @@ const EditProduct = ({ params }) => {
     }
   }, [form.watch('name')])
 
-  // Discount is always derived from MRP & Selling Price (single source of truth
-  // in lib/pricing). Recompute on every change so 0% (SP == MRP) and later edits
-  // are reflected instead of leaving a stale value behind.
-  useEffect(() => {
-    form.setValue('discountPercentage', computeDiscountPercentage(form.getValues('mrp'), form.getValues('sellingPrice')))
-  }, [form.watch('mrp'), form.watch('sellingPrice')])
 
   const editor = (event, editor) => {
     const data = editor.getData()
@@ -128,13 +112,6 @@ const EditProduct = ({ params }) => {
       if (selectedMedia.length <= 0) {
         return showToast('error', 'Please select media.')
       }
-
-      const pricing = validatePricing(values.mrp, values.sellingPrice)
-      if (!pricing.ok) {
-        form.setError(pricing.field, { type: 'manual', message: pricing.message })
-        return showToast('error', pricing.message)
-      }
-      values.discountPercentage = pricing.discountPercentage
 
       const mediaIds = selectedMedia.map(media => media._id)
       values.media = mediaIds
@@ -222,57 +199,6 @@ const EditProduct = ({ params }) => {
                 />
               </div>
 
-              <div>
-                <FormField
-                  control={form.control}
-                  name="mrp"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        MRP <span className="text-destructive" aria-hidden>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="number" placeholder="Enter MRP" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div>
-                <FormField
-                  control={form.control}
-                  name="sellingPrice"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Selling Price <span className="text-destructive" aria-hidden>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="number" placeholder="Enter Selling Price" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div>
-                <FormField
-                  control={form.control}
-                  name="discountPercentage"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Discount Percentage <span className="text-destructive" aria-hidden>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="number" readOnly placeholder="Enter Discount Percentage" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
               <div className="mb-5 md:col-span-2">
                 <FormLabel className="mb-2">
                   Description <span className="text-destructive" aria-hidden>*</span>

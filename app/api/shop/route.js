@@ -12,8 +12,6 @@ export async function GET(request) {
         const result = await getShopProducts({
             size: searchParams.get('size'),
             color: searchParams.get('color'),
-            minPrice: searchParams.get('minPrice'),
-            maxPrice: searchParams.get('maxPrice'),
             category: searchParams.get('category'),
             parent: searchParams.get('parent'),
             bestseller: searchParams.get('bestseller'),

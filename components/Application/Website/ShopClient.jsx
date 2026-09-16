@@ -119,13 +119,24 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
         retry: 1,
     })
 
+    // React Query reports an optimistic `isFetching: true` while server-rendering
+    // (it is describing the fetch it *would* start on mount), but the first
+    // client render sees the fresh initialData and reports false. Anything drawn
+    // from it therefore differs between the two passes - that is what made the
+    // pagination emit `disabled` on the server and not on the client, and React
+    // bailed out of hydrating the subtree. Treat the list as idle until mounted;
+    // from then on `busy` tracks isFetching exactly.
+    const [mounted, setMounted] = useState(false)
+    useEffect(() => setMounted(true), [])
+    const busy = mounted && isFetching
+
     const products = data?.products ?? []
     const total = data?.total ?? 0
     const totalPages = data?.totalPages ?? 0
 
     // If the result set shrank below the current page (e.g. tighter filter),
     // fall back to the last valid page.
-    const pageOutOfRange = !isFetching && totalPages > 0 && page > totalPages - 1
+    const pageOutOfRange = !busy && totalPages > 0 && page > totalPages - 1
     useEffect(() => {
         if (pageOutOfRange) {
             setPage(totalPages - 1)
@@ -134,7 +145,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
 
     // No cached data for this page yet, or we're about to clamp → show skeletons.
     const showSkeleton = isPending || pageOutOfRange
-    const showEmptyState = !isFetching && !error && total === 0
+    const showEmptyState = !busy && !error && total === 0
     const resultCount = error ? null : total
 
     const handlePageChange = (nextPageIndex) => {
@@ -298,7 +309,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                                     page={page}
                                     totalPages={totalPages}
                                     onPageChange={handlePageChange}
-                                    disabled={isFetching}
+                                    disabled={busy}
                                     siblings={isMobile ? 0 : 1}
                                 />
                                 {total > 0 && (

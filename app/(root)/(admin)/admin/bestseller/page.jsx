@@ -21,9 +21,6 @@ const breadcrumbData = [
   { href: ADMIN_BESTSELLER_SHOW, label: 'Bestsellers' },
 ]
 
-const formatPrice = (price) =>
-  typeof price === 'number' ? `₹${price.toLocaleString('en-IN')}` : '-'
-
 const ShowBestseller = () => {
   const [bestsellers, setBestsellers] = useState([])
   const [available, setAvailable] = useState([])
@@ -223,7 +220,6 @@ const ShowBestseller = () => {
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{product.name}</p>
-                    <p className="text-xs text-muted-foreground">{formatPrice(product.sellingPrice)}</p>
                   </div>
                   <div className="flex shrink-0 items-center gap-1">
                     <Button

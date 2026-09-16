@@ -170,8 +170,6 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
             url: product.slug,
             size: variant.size || '',
             color: variant.color,
-            mrp: variant.mrp,
-            sellingPrice: variant.sellingPrice,
             media: media[0]?.secure_url || imgPlaceholder.src,
             qty: qty,
         }))

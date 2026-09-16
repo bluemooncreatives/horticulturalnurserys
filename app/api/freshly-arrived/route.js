@@ -36,7 +36,7 @@ export async function GET() {
 
         const items = await ProductModel.find({ deletedAt: null, isFreshlyArrived: true })
             .sort({ freshlyArrivedSortOrder: 1, createdAt: -1, _id: 1 })
-            .select('name slug sellingPrice mrp media freshlyArrivedSortOrder')
+            .select('name slug media freshlyArrivedSortOrder')
             .populate('media', 'secure_url alt')
             .lean()
 

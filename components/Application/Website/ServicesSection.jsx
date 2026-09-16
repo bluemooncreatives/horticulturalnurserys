@@ -320,7 +320,7 @@ const ServicesSection = () => {
                     <p className="max-w-md text-[0.85rem] leading-relaxed text-white lg:justify-self-end lg:text-right">
                         Kolkata&apos;s landscaper since 1989 - {yearsInBusiness()}+ years, {NURSERY_BIGHAS} bighas of our own farm at Bibirhut and {UNDER_COVER_SQM.toLocaleString('en-US')} m² under cover. From residential terraces and living walls to State Government and CPWD public grounds, our four specialized divisions carry every project from site survey to lifelong aftercare.
                     </p>
-                    <div className="flex flex-wrap justify-start gap-2 lg:col-span-2 lg:mt-2">
+                    <div className="hidden flex-wrap justify-start gap-2 sm:flex lg:col-span-2 lg:mt-2">
                         {FLAGSHIP_PROJECTS.map((label) => (
                             <span key={label} className="tag-chip">
                                 {label}
@@ -346,10 +346,16 @@ const ServicesSection = () => {
                                         }
                                     }}
                                     aria-expanded={isOpen}
-                                    className="group flex w-full cursor-pointer items-start gap-4 py-7 text-left sm:gap-6 lg:gap-10 lg:py-9"
+                                    className="group flex w-full cursor-pointer items-center gap-3 py-5 text-left sm:items-start sm:gap-6 sm:py-7 lg:gap-10 lg:py-9"
                                 >
-                                    {/* number - pinned top-left, extra margin so it doesn't crowd the title */}
-                                    <span className="mr-4 w-6 shrink-0 pt-1 text-[0.8rem] font-medium text-white/80 sm:mr-8 sm:w-9 lg:mr-14 lg:pt-1.5">
+                                    {/* mobile: round step badge, centred against the single-line
+                                        title/toggle header row */}
+                                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/25 text-[0.7rem] font-semibold text-white/80 transition-colors group-hover:border-[var(--brand-lime)]/70 sm:hidden">
+                                        {service.num}
+                                    </span>
+
+                                    {/* tablet/desktop: original bracketed number, pinned top-left */}
+                                    <span className="mr-4 hidden w-6 shrink-0 pt-1 text-[0.8rem] font-medium text-white/80 sm:mr-8 sm:block sm:w-9 lg:mr-14 lg:pt-1.5">
                                         [{service.num}]
                                     </span>
 
@@ -357,14 +363,14 @@ const ServicesSection = () => {
                                     <div className="min-w-0 flex-1">
                                         <RollTitle
                                             text={service.title}
-                                            className="block text-[1.15rem] font-medium text-white lg:text-[1.55rem]"
+                                            className="block text-[1.05rem] font-medium text-white sm:text-[1.15rem] lg:text-[1.55rem]"
                                         />
                                         <div
                                             ref={(el) => (tagsRefs.current[i] = el)}
                                             className="block overflow-hidden"
                                             style={i === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
                                         >
-                                            <p className="max-w-sm pt-3 text-[0.82rem] leading-relaxed text-white/45 md:max-w-md lg:max-w-lg">
+                                            <p className="pt-3 text-[0.85rem] leading-relaxed text-white/55 sm:max-w-sm sm:text-[0.82rem] sm:text-white/45 md:max-w-md lg:max-w-lg">
                                                 {service.description}
                                             </p>
                                             {/* mobile-only CTA */}
@@ -372,7 +378,7 @@ const ServicesSection = () => {
                                                 <Link
                                                     href={service.href}
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="group/mbtn relative inline-flex items-center gap-2 rounded-full border border-[var(--brand-lime)]/45 bg-[var(--brand-lime)]/10 px-4 py-2 text-[1rem] font-medium text-[var(--brand-lime)] transition-colors hover:bg-[var(--brand-lime)] hover:text-[var(--brand-lime-ink)]"
+                                                    className="group/mbtn relative flex w-full items-center justify-center gap-2 rounded-full border border-[var(--brand-lime)]/45 bg-[var(--brand-lime)]/10 px-4 py-3 text-[0.95rem] font-medium text-[var(--brand-lime)] transition-colors active:bg-[var(--brand-lime)] active:text-[var(--brand-lime-ink)]"
                                                 >
                                                     <span>Explore</span>
                                                     <ArrowUpRight className="size-4" />
@@ -462,11 +468,14 @@ const ServicesSection = () => {
                                         </div>
                                     </div>
 
-                                    {/* toggle - pinned top-right. Dashed ring spins slowly at rest;
-                                        the solid inner badge is what pops on click. Lime on hover
-                                        (desktop) and while the row is open (mobile has no hover, so
-                                        `isOpen` is what carries the same lime accent on tap there). */}
-                                    <span className="relative flex size-11 shrink-0 items-center justify-center">
+                                    {/* toggle - sits inline with the badge/title header row on mobile
+                                        (row is items-center there, so it centres naturally); pinned
+                                        top-right again from sm: up, matching the original desktop
+                                        layout. Dashed ring spins slowly at rest; the solid inner badge is
+                                        what pops on click. Lime on hover (desktop) and while the row is
+                                        open (mobile has no hover, so `isOpen` carries the same lime
+                                        accent on tap there). */}
+                                    <span className="relative flex size-8 shrink-0 items-center justify-center sm:size-11">
                                         <span
                                             ref={(el) => (ringRefs.current[i] = el)}
                                             aria-hidden
@@ -474,9 +483,9 @@ const ServicesSection = () => {
                                         />
                                         <span
                                             ref={(el) => (iconRefs.current[i] = el)}
-                                            className={`relative flex size-7 items-center justify-center rounded-full transition-colors group-hover:bg-[var(--brand-lime)] group-hover:text-[var(--brand-lime-ink)] ${isOpen ? 'bg-[var(--brand-lime)] text-[var(--brand-lime-ink)]' : 'bg-white/10 text-white'}`}
+                                            className={`relative flex size-6 items-center justify-center rounded-full transition-colors group-hover:bg-[var(--brand-lime)] group-hover:text-[var(--brand-lime-ink)] sm:size-7 ${isOpen ? 'bg-[var(--brand-lime)] text-[var(--brand-lime-ink)]' : 'bg-white/10 text-white'}`}
                                         >
-                                            {isOpen ? <Minus className="size-3.5" strokeWidth={1.75} /> : <Plus className="size-3.5" strokeWidth={1.75} />}
+                                            {isOpen ? <Minus className="size-3" strokeWidth={1.75} /> : <Plus className="size-3" strokeWidth={1.75} />}
                                         </span>
                                     </span>
                                 </div>
@@ -499,7 +508,7 @@ const ServicesSection = () => {
                         </span>
                     </Link>
                     <Link
-                        href="/contact"
+                        href="/services#enquiry-form"
                         className="group flex h-14 items-center gap-3 rounded-full border border-white/20 bg-white/5 px-7 font-neue text-[1.05rem] font-medium tracking-tight text-white transition-colors hover:border-white/40 hover:bg-white/10"
                     >
                         <span>Request a Site Visit</span>

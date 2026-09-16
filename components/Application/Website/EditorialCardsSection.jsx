@@ -29,7 +29,7 @@ const CARDS = [
         heading: 'Plan a Garden',
         description: 'Tell us about the site - terrace, courtyard, campus or township - and our horticulturists will come and see it.',
         cta: 'Request a Site Visit',
-        href: '/contact',
+        href: '/services#enquiry-form',
         image: '/assets/images/hero/01.jpg',
         overlay: 'bg-gradient-to-t from-black/85 via-black/35 to-black/10',
     },

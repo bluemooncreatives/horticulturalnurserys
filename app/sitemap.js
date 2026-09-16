@@ -11,6 +11,8 @@ export default async function sitemap() {
     const staticPages = [
         { url: `${BASE_URL}/`, changeFrequency: 'daily', priority: 1 },
         { url: `${BASE_URL}/shop`, changeFrequency: 'daily', priority: 0.9 },
+        { url: `${BASE_URL}/shop/plants`, changeFrequency: 'daily', priority: 0.8 },
+        { url: `${BASE_URL}/shop/pots`, changeFrequency: 'daily', priority: 0.8 },
         { url: `${BASE_URL}/services`, changeFrequency: 'monthly', priority: 0.8 },
         { url: `${BASE_URL}/services/landscape-development`, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${BASE_URL}/services/garden-maintenance`, changeFrequency: 'monthly', priority: 0.7 },

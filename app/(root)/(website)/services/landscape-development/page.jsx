@@ -1,5 +1,7 @@
 import LandscapeDevelopmentContent from './LandscapeDevelopmentContent'
 import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM, OPERATING_SINCE_YEAR } from '@/lib/companyInfo'
+import JsonLd from '@/components/Application/Website/JsonLd'
+import { buildBreadcrumbSchema } from '@/lib/buildBreadcrumbSchema'
 
 export const metadata = {
   title: 'Garden Development & Landscaping - Services',
@@ -198,6 +200,28 @@ const SERVICE = {
   ],
 }
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: SERVICE.title,
+  name: SERVICE.title,
+  description: SERVICE.intro,
+  provider: { '@type': 'GardenStore', name: 'Horticultural Development Centre' },
+  areaServed: { '@type': 'City', name: 'Kolkata' },
+}
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+  { name: SERVICE.title },
+])
+
 export default function LandscapeDevelopmentPage() {
-  return <LandscapeDevelopmentContent service={SERVICE} />
+  return (
+    <>
+      <JsonLd data={serviceSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <LandscapeDevelopmentContent service={SERVICE} />
+    </>
+  )
 }

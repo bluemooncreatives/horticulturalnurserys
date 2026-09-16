@@ -224,6 +224,28 @@ const SERVICE = {
   },
 }
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: SERVICE.title,
+  name: SERVICE.title,
+  description: SERVICE.intro,
+  provider: { '@type': 'GardenStore', name: 'Horticultural Development Centre' },
+  areaServed: { '@type': 'City', name: 'Kolkata' },
+}
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+  { name: SERVICE.title },
+])
+
 export default function VerticalGardenPage() {
-  return <ServiceDetailContent service={SERVICE} />
+  return (
+    <>
+      <JsonLd data={serviceSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <ServiceDetailContent service={SERVICE} />
+    </>
+  )
 }

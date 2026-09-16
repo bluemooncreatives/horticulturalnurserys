@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import styles from "./contact.module.css";
 import { PhoneInput } from "@/components/ui/phone-input";
+import { TRANSPORT_MODES, WHOLESALE_PHONE_DISPLAY, WHOLESALE_WHATSAPP_URL } from "@/lib/companyInfo";
 
 const ContactPageClient = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", address: "", subject: "", message: "" });
@@ -275,6 +276,18 @@ const ContactPageClient = () => {
               <div className={styles.sectionLabel}><p>Hours</p></div>
               <div className={styles.divider} />
               <div className={styles.item}><p>Mon &ndash; Sat &middot; 10:00 &ndash; 19:00</p></div>
+            </div>
+
+            <div>
+              <div className={styles.sectionLabel}><p>Wholesale</p></div>
+              <div className={styles.divider} />
+              <div className={styles.item}><p>Supply all over India</p></div>
+              <div className={styles.item}><p>{TRANSPORT_MODES.join(' · ')} despatch</p></div>
+              <div className={styles.item}>
+                <a href={WHOLESALE_WHATSAPP_URL} target="_blank" rel="noreferrer">
+                  WhatsApp / Call {WHOLESALE_PHONE_DISPLAY}
+                </a>
+              </div>
             </div>
           </div>
 

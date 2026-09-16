@@ -15,19 +15,20 @@ const AboutUsSection = dynamic(() => import('@/components/Application/Website/Ab
 const ServicesSection = dynamic(() => import('@/components/Application/Website/ServicesSection'))
 const EditorialCardsSection = dynamic(() => import('@/components/Application/Website/EditorialCardsSection'))
 const BenefitsSection = dynamic(() => import('@/components/Application/Website/BenefitsSection'))
+const WholesaleSection = dynamic(() => import('@/components/Application/Website/WholesaleSection'))
 const FAQSection = dynamic(() => import('@/components/Application/Website/FAQSection'))
 
 export const metadata = {
     title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
     description:
-        'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance by qualified horticulturists, plus ornamental plants, seasonal flowers, lawn grass, manure, pots, garden implements and roof-garden materials - buy online or at our Alipore counter.',
+        'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance by qualified horticulturists, plus ornamental plants, seasonal flowers, lawn grass, manure, pots, garden implements and roof-garden materials - buy online or at our Alipore counter. Wholesale plant supply across India by bus, train and courier.',
     alternates: {
         canonical: '/',
     },
     openGraph: {
         title: 'Horticultural Development Centre - Landscaping & Plant Nursery in Kolkata',
         description:
-            'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance by qualified horticulturists, plus ornamental plants, seasonal flowers, lawn grass, manure, pots, garden implements and roof-garden materials.',
+            'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance by qualified horticulturists, plus ornamental plants, seasonal flowers, lawn grass, manure, pots, garden implements and roof-garden materials. Wholesale supply across India.',
     },
 }
 
@@ -80,6 +81,10 @@ const Home = () => {
 
             <LazyHydrate>
                 <BenefitsSection />
+            </LazyHydrate>
+
+            <LazyHydrate>
+                <WholesaleSection />
             </LazyHydrate>
 
             <LazyHydrate>

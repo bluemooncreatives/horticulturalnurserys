@@ -2,7 +2,7 @@ import GlobalProvider from "@/components/Application/GlobalProvider";
 import LenisProvider from '@/components/Application/LenisProvider'
 import { Toaster } from "@/components/ui/sonner";
 import JsonLd from "@/components/Application/Website/JsonLd";
-import { FORMED_YEAR } from "@/lib/companyInfo";
+import { FORMED_YEAR, WHOLESALE_PHONE_TEL } from "@/lib/companyInfo";
 import "./globals.css";
 
 const SITE_URL = 'https://www.horticulturaldevelopmentcentre.com'
@@ -21,6 +21,16 @@ const localBusinessSchema = {
   telephone: '+91-33-2479-5710',
   email: 'horticulturaldc@gmail.com',
   foundingDate: String(FORMED_YEAR),
+  // Bulk/wholesale plant orders (nurseries, landscapers, garden centres,
+  // farmers) are quoted and despatched pan-India, distinct from the local
+  // Alipore sale-counter line above.
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    telephone: WHOLESALE_PHONE_TEL,
+    areaServed: 'IN',
+    availableLanguage: ['en', 'hi', 'bn'],
+  },
   address: {
     '@type': 'PostalAddress',
     streetAddress: '2/5 Judges Court Road, Alipore',
@@ -40,10 +50,12 @@ const localBusinessSchema = {
     'https://www.facebook.com/horticulturaldevelopmentcentre',
     'https://wa.me/919088275576',
   ],
-  areaServed: {
-    '@type': 'City',
-    name: 'Kolkata',
-  },
+  // Landscaping/maintenance is Kolkata-local, but wholesale plant supply
+  // (bus/train/courier despatch) reaches customers across the country.
+  areaServed: [
+    { '@type': 'City', name: 'Kolkata' },
+    { '@type': 'Country', name: 'India' },
+  ],
 }
 
 export const metadata = {
@@ -53,7 +65,7 @@ export const metadata = {
     template: '%s | Horticultural Development Centre',
   },
   description:
-    'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance, plus a 50-bigha nursery and an Alipore outlet stocking plants, manure, pots, garden implements and roof-garden materials under one roof.',
+    'Kolkata\'s leading landscaper since 1989. Garden design, development and maintenance, plus a 50-bigha nursery and an Alipore outlet stocking plants, manure, pots, garden implements and roof-garden materials under one roof. Wholesale plant supply across India.',
   alternates: {
     canonical: '/',
   },

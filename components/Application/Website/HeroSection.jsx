@@ -39,6 +39,7 @@ const CRAFT_MARKS = [
   "Green & Polyshed Houses",
   "Drip · Fogger · Sprinkler",
   "Imported Plants",
+  "Wholesale Supply Across India",
 ];
 
 // The hero frames. The big screen shows HERO_IMAGES[i]; the floating

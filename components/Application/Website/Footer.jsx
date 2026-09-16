@@ -1,9 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { MapPin, Phone, Clock, Sprout, Instagram, MessageCircle, Facebook, ArrowUp } from 'lucide-react'
+import { MapPin, Phone, Clock, Sprout, Instagram, MessageCircle, Facebook, ArrowUp, Truck } from 'lucide-react'
 
 import { WEBSITE_HOME, WEBSITE_SHOP } from '@/routes/WebsiteRoute'
+import { TRANSPORT_MODES } from '@/lib/companyInfo'
 
 const CONTACT_EMAIL = 'horticulturaldc@gmail.com'
 
@@ -72,7 +73,8 @@ const Footer = ({ categoryLinks = [] }) => {
                 <div className="footer-cols grid gap-x-8 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
                     <div className="footer-col">
                         <p className="max-w-xs text-[0.95rem] leading-relaxed text-white/55">
-                            Designing, growing and maintaining gardens across West Bengal since 1989.
+                            Designing, growing and maintaining gardens across West Bengal since 1989 -
+                            and supplying plants wholesale, all over India.
                         </p>
                         <Link
                             href={`mailto:${CONTACT_EMAIL}`}
@@ -106,6 +108,7 @@ const Footer = ({ categoryLinks = [] }) => {
 
                 {/* ── Contact strip + back-to-top ── */}
                 <div className="flex flex-col gap-8 border-t border-white/10 pt-8 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="flex flex-col gap-6">
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4">
                         <div>
                             <p className="flex items-center gap-1.5 text-[0.8rem] uppercase text-white/35">
@@ -145,6 +148,14 @@ const Footer = ({ categoryLinks = [] }) => {
                             <p className="mt-2 text-[0.95rem] text-white/70">Mon – Sat · 10:00 – 19:00</p>
                         </div>
                     </div>
+
+                    <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.85rem] text-white/40">
+                        <Truck className="size-3.5" />
+                        Wholesale despatch all over India
+                        <span aria-hidden className="text-white/20">·</span>
+                        {TRANSPORT_MODES.join(' · ')}
+                    </p>
+                  </div>
 
                     <button
                         type="button"

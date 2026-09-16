@@ -3,6 +3,7 @@
 import Image from "next/image";
 import ShopAllButton from "@/components/Application/Website/ShopAllButton";
 import ProductBox from "@/components/Application/Website/ProductBox";
+import { yearsInBusiness } from "@/lib/companyInfo";
 import styles from "./about-us.module.css";
 
 // ── Scroll-controlled middle image ──────────────────────────────────
@@ -18,6 +19,7 @@ const STORY = [
   "Horticultural Development Centre began in Kolkata as a plant nursery, opened in 1990 by a small group of people who had spent their working lives in horticulture. The idea was modest: grow good planting material properly, and sell it honestly. Everything since has grown out of that one decision.",
   "The nursery came first, and it is still the foundation. Our farm at Bibirhut, Ramdevpur in South 24 Parganas runs to roughly fifty bighas, developed scientifically over the years - 2,500 sqm of polyshed house, 2,000 sqm of green house and a 200 sqm fanpad house, served by sprinkler, fogger and drip irrigation. It exists to propagate and produce plants and grasses suited to tropical and subtropical conditions, and to send out material that establishes rather than merely survives the journey.",
   "Landscaping followed naturally. Our qualified horticulturists and skilled field staff design, execute and maintain gardens, and we have built credentials in parks, gardens and beautification work under State Government departments, CPWD and private clients across the country. Alongside it we run a showroom and sale counter at Alipore - the one place in West Bengal where plants, seeds, pots, hanging baskets, nutrients, plant protection chemicals, garden implements and every accessory sit under one roof.",
+  `${yearsInBusiness()} years in, the nursery now supplies well beyond Kolkata. We despatch exotic, ornamental and fruit plants in wholesale quantity to nurseries, landscapers, garden centres, farmers and plant lovers across India, by bus, train or courier depending on what the order needs - sold online and at the counter alike, with our customer care team on hand for every enquiry.`,
 ];
 
 // The people behind the organisation. `reverse` flips the image/text order.

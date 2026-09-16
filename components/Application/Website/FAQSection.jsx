@@ -1,7 +1,7 @@
 'use client'
 
 import { FAQ } from '@/components/ui/faq-tabs'
-import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM } from '@/lib/companyInfo'
+import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM, WHOLESALE_PHONE_DISPLAY } from '@/lib/companyInfo'
 
 // The three groups the section header used to advertise as a static caption
 // ("Plants · Landscaping · Supplies") - now navigable tabs instead.
@@ -68,6 +68,14 @@ const FAQ_DATA = {
         {
             question: 'Can I visit before ordering?',
             answer: 'Please do. Our sale counter at 2/5 Judges Court Road, Alipore, Kolkata 700027 keeps plants, pots, nutrients, chemicals and implements together in one place, and our staff can walk you through the options.',
+        },
+        {
+            question: 'Do you supply plants in wholesale quantity, and to which parts of India?',
+            answer: `Yes. We supply exotic, ornamental and fruit plants in wholesale quantity anywhere in India - to nurseries, landscapers, garden centres, farmers and individual plant lovers alike. Reach our customer care team on WhatsApp or call at ${WHOLESALE_PHONE_DISPLAY} for an enquiry.`,
+        },
+        {
+            question: 'How are wholesale orders shipped?',
+            answer: 'By whichever mode suits the order and destination - bus, train or courier - so both bulk consignments and smaller parcels reach you safely. We sell both online and offline, and our customer care team can advise on transport before you order.',
         },
     ],
 }

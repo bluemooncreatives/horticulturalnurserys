@@ -348,7 +348,7 @@ export default function ServiceDetailContent({ service }) {
                   className="group flex flex-col gap-5 rounded-[var(--radius-4xl)] border border-white/10 bg-white/[0.035] p-7 transition-all duration-300 hover:border-[var(--brand-lime)]/40 hover:bg-white/[0.07] lg:p-8"
                 >
                   <div className="flex items-baseline justify-between gap-3">
-                    <h3 className="font-neue text-[1.3rem] font-medium tracking-[-0.02em] text-white">
+                    <h3 className="font-neue text-[1.3rem] font-medium leading-[1.2] tracking-[-0.02em] text-white lg:leading-normal">
                       {item.name}
                     </h3>
                     {item.sub && (

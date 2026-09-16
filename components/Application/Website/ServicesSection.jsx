@@ -363,7 +363,7 @@ const ServicesSection = () => {
                                     <div className="min-w-0 flex-1">
                                         <RollTitle
                                             text={service.title}
-                                            className="block text-[1.05rem] font-medium text-white sm:text-[1.15rem] lg:text-[1.55rem]"
+                                            className="block text-[1.05rem] font-medium leading-[1.2] text-white sm:text-[1.15rem] lg:text-[1.55rem] lg:leading-normal"
                                         />
                                         <div
                                             ref={(el) => (tagsRefs.current[i] = el)}

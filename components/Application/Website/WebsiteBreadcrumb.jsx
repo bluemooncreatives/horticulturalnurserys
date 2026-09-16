@@ -54,8 +54,11 @@ const WebsiteBreadcrumb = ({ props }) => {
 
     return (
         <section className="relative isolate h-[180px] overflow-hidden sm:h-[160px] lg:h-[200px]">
-            {/* Brand background */}
-            <div className="absolute inset-0 bg-[var(--brand-ink-soft)]" />
+            {/* Light background. The fixed header's logo and nav links are
+                brand-green, so a dark fill here rendered them near-invisible
+                until the user scrolled - the banner is light and the watermark
+                carries the colour instead. */}
+            <div className="absolute inset-0 bg-background" />
 
             {/* Watermark title - measured + scaled to fill the banner width. On
                 mobile it sits below the fixed header so it isn't clipped by it. */}
@@ -65,12 +68,11 @@ const WebsiteBreadcrumb = ({ props }) => {
             >
                 <div
                     ref={textRef}
-                    className="pointer-events-none select-none whitespace-nowrap font-neue font-semibold uppercase leading-[0.8] tracking-tighter text-white"
+                    className="pointer-events-none select-none whitespace-nowrap font-neue font-semibold uppercase leading-[0.8] tracking-tighter text-[var(--brand-primary)]"
                     style={{
                         fontSize: fontSize != null ? `${fontSize}px` : FALLBACK_FONT,
                         WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)',
                         maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)',
-                        textShadow: '0 12px 32px rgba(0,0,0,0.18)',
                     }}
                     aria-hidden
                 >
@@ -78,7 +80,9 @@ const WebsiteBreadcrumb = ({ props }) => {
                 </div>
             </div>
 
-            {/* Gradient fade to background */}
+            {/* Short titles scale to MAX_FONT_PX and overflow the banner's fixed
+                height, so the glyph bottoms would otherwise be hard-clipped by
+                `overflow-hidden`. This ramp dissolves them into the page. */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-16 bg-gradient-to-b from-transparent via-background/50 to-background sm:h-36" />
         </section>
     )

@@ -1,6 +1,5 @@
 import ShopClient from '@/components/Application/Website/ShopClient'
 import { getDefaultShopProducts, getShopFilters, getShopProducts } from '@/lib/services/shopService'
-import WebsiteBreadcrumb from '@/components/Application/Website/WebsiteBreadcrumb'
 import JsonLd from '@/components/Application/Website/JsonLd'
 import { buildBreadcrumbSchema } from '@/lib/buildBreadcrumbSchema'
 
@@ -52,8 +51,8 @@ const PlantsPage = async ({ searchParams }) => {
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
-      <WebsiteBreadcrumb props={{ title: 'Plants' }} />
       <ShopClient
+        heading="Plants"
         initialFilters={filters}
         initialProducts={products}
         initialTotal={total}

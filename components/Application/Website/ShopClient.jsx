@@ -30,7 +30,7 @@ import { PackageSearch, RotateCcw, SlidersHorizontal, Store } from 'lucide-react
 const DESKTOP_PAGE_SIZE = 9
 const MOBILE_PAGE_SIZE = 10
 
-const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages = 0, initialFilters, initialSearchParamsString = '' }) => {
+const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages = 0, initialFilters, initialSearchParamsString = '', heading = 'All Products' }) => {
     const searchParams = useSearchParams()
     const searchParamString = searchParams.toString()
     const [sorting, setSorting] = useState('default_sorting')
@@ -158,7 +158,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                         }}
                         aria-hidden
                     >
-                        All Products
+                        {heading}
                     </div>
                 </div>
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-5 bg-gradient-to-b from-transparent via-background/50 to-background sm:h-7" />

@@ -1,9 +1,9 @@
 'use client'
 
-import Link from 'next/link'
-import { Ruler, Sprout, Store, CalendarCheck, ArrowUpRight } from 'lucide-react'
+import { Ruler, Sprout, Store, CalendarCheck } from 'lucide-react'
 
 import { WEBSITE_SHOP } from '@/routes/WebsiteRoute'
+import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
 
 const BENEFITS = [
     { num: '01', Icon: Ruler, title: 'Survey & Design', description: 'Qualified horticulturists read your site - light, soil, drainage - before a single plant is chosen.' },
@@ -59,10 +59,7 @@ const BenefitsSection = () => {
 
                 {/* CTA */}
                 <div className="mt-6 flex justify-center sm:mt-12 lg:mt-14">
-                    <Link href={WEBSITE_SHOP} className="pill pill-lime group">
-                        Browse the Catalogue
-                        <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
+                    <LimeArrowButton href={WEBSITE_SHOP}>Browse the Catalogue</LimeArrowButton>
                 </div>
             </div>
         </section>

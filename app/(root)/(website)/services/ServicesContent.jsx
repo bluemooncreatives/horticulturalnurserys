@@ -19,6 +19,7 @@ import {
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { RevealLines, RevealUp } from '@/components/ui/reveal'
+import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
 import ServiceEnquiryForm from '@/components/Application/Website/ServiceEnquiryForm'
 
 /* ────────────────────────────────────────────────────────────────
@@ -509,13 +510,7 @@ export default function ServicesContent({
                 {credentials.heading}
               </RevealUp>
               <RevealUp delay={130} className="shrink-0">
-                <Link
-                  href="/about-us"
-                  className="group inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-[var(--brand-lime)] px-6 py-3 text-[0.85rem] font-semibold text-[var(--brand-lime-ink)] transition-all duration-300 hover:bg-[var(--brand-lime-hover)]"
-                >
-                  See more
-                  <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
+                <LimeArrowButton href="/about-us">See more</LimeArrowButton>
               </RevealUp>
             </div>
 

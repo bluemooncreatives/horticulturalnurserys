@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import {
     Boxes,
     Globe2,
@@ -11,7 +10,6 @@ import {
     Headset,
     MonitorSmartphone,
     Leaf,
-    ArrowUpRight,
     MessageCircle,
 } from 'lucide-react'
 import {
@@ -21,6 +19,7 @@ import {
     WHOLESALE_PHONE_DISPLAY,
     WHOLESALE_AUDIENCE,
 } from '@/lib/companyInfo'
+import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
 
 // The despatch card carries three icons rather than three separate cards -
 // bus, train and courier are one capability (how an order travels), not three.
@@ -171,16 +170,17 @@ const WholesaleSection = () => {
 
                 {/* self-start keeps the pill hugging its label when the strip
                     stacks; on lg the strip is a row, so it re-centres instead. */}
-                <Link
+                <LimeArrowButton
                     href={WHOLESALE_WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pill pill-compact-m pill-lime group shrink-0 self-start lg:self-center"
+                    external
+                    icon={MessageCircle}
+                    className="shrink-0 self-start lg:self-center"
                 >
-                    <MessageCircle className="size-4" strokeWidth={1.8} />
-                    WhatsApp / Call {WHOLESALE_PHONE_DISPLAY}
-                    <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Link>
+                    {/* The full label is too wide for a nowrap pill on a
+                        narrow phone; the icon already says WhatsApp there. */}
+                    <span className="sm:hidden">{WHOLESALE_PHONE_DISPLAY}</span>
+                    <span className="hidden sm:inline">WhatsApp / Call {WHOLESALE_PHONE_DISPLAY}</span>
+                </LimeArrowButton>
             </div>
         </section>
     )

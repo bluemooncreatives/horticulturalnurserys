@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Plus, Minus, ArrowUpRight } from 'lucide-react'
 import gsap from 'gsap'
+import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
 import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM, UNDER_COVER_SQM, FLAGSHIP_PROJECTS, yearsInBusiness } from '@/lib/companyInfo'
 
 // Row title, hover-rolled - same glyph-roll technique as the hero's
@@ -496,17 +497,7 @@ const ServicesSection = () => {
 
                 {/* CTA - Explore All Services + Request a Site Visit */}
                 <div className="relative mt-10 flex flex-wrap items-center justify-center gap-4 lg:mt-12">
-                    <Link
-                        href="/services"
-                        className="group flex h-14 items-center gap-4 rounded-full bg-[var(--brand-lime)] py-2 pl-7 pr-2.5 transition-colors hover:bg-[var(--brand-lime-hover)]"
-                    >
-                        <span className="font-neue text-[1.05rem] font-medium tracking-tight text-[var(--brand-lime-ink)]">
-                            Explore All Services
-                        </span>
-                        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[var(--brand-primary)] text-white transition-transform duration-300 ease-out group-hover:rotate-45">
-                            <ArrowUpRight className="size-4" />
-                        </span>
-                    </Link>
+                    <LimeArrowButton href="/services">Explore All Services</LimeArrowButton>
                     <Link
                         href="/services#enquiry-form"
                         className="group flex h-14 items-center gap-3 rounded-full border border-white/20 bg-white/5 px-7 font-neue text-[1.05rem] font-medium tracking-tight text-white transition-colors hover:border-white/40 hover:bg-white/10"

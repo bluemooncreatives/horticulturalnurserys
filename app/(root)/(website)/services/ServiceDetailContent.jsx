@@ -15,6 +15,7 @@ import {
 import { RevealLines, RevealUp } from '@/components/ui/reveal'
 import { SectionHeading, SectionLabel } from './SectionHeader'
 import ServiceEnquiryForm from '@/components/Application/Website/ServiceEnquiryForm'
+import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
 
 const DEFAULT_STEP_ICONS = [ClipboardList, PencilRuler, Calculator, Hammer]
 
@@ -612,13 +613,9 @@ export default function ServiceDetailContent({ service }) {
               {service.cta?.desc || 'No obligation. One of our qualified horticulturists comes out, reads the space and gives you an honest brief and an estimate before anything is committed.'}
             </RevealUp>
             <RevealUp delay={200}>
-              <Link
-                href="#enquiry"
-                className="group inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--brand-lime)] px-5 py-3 text-[0.8rem] font-semibold text-[var(--brand-lime-ink)] transition-all duration-300 hover:bg-[var(--brand-lime-hover)] hover:shadow-[0_12px_36px_-10px_rgba(201,242,78,0.45)] sm:px-7 sm:py-3.5 sm:text-[0.88rem]"
-              >
+              <LimeArrowButton href="#enquiry">
                 {service.cta?.buttonText || 'Request a site visit'}
-                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45" />
-              </Link>
+              </LimeArrowButton>
             </RevealUp>
           </div>
         </div>

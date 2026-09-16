@@ -4,11 +4,12 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
-import { Check, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Check, ShoppingCart, Eye, ChevronLeft, ChevronRight } from 'lucide-react'
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import { WEBSITE_CART, WEBSITE_PRODUCT_DETAILS } from '@/routes/WebsiteRoute'
 import { addIntoCart } from '@/store/reducer/cartReducer'
 import { showToast } from '@/lib/showToast'
+import { Button } from '@/components/ui/button'
 import styles from './BestsellersSection.module.css'
 
 const BestsellersSectionClient = ({ products = [] }) => {
@@ -100,31 +101,46 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                     </Link>
 
                                     <div className={styles.cardButtons}>
-                                        <Link
-                                            href={href}
-                                            className={styles.viewBtn}
-                                            aria-label={product ? `View ${product.name}` : 'View product'}
-                                        >
-                                            View Product
-                                        </Link>
                                         {product && isInCart(product) ? (
-                                            <Link
-                                                href={WEBSITE_CART}
-                                                className={styles.cartBtn}
-                                                aria-label="Go to cart"
+                                            <Button
+                                                asChild
+                                                variant="brand"
+                                                size="pill"
+                                                className="h-9 min-w-0 flex-1 gap-1.5 rounded-lg px-4 text-[0.72rem] uppercase tracking-wide"
                                             >
-                                                <Check size={17} strokeWidth={2} />
-                                            </Link>
+                                                <Link href={WEBSITE_CART} aria-label="Go to cart">
+                                                    <Check size={15} strokeWidth={2} />
+                                                    Added to Cart
+                                                </Link>
+                                            </Button>
                                         ) : (
-                                            <button
-                                                className={styles.cartBtn}
+                                            <Button
+                                                type="button"
+                                                variant="brand"
+                                                size="pill"
+                                                className="h-9 min-w-0 flex-1 gap-1.5 rounded-lg px-4 text-[0.72rem] uppercase tracking-wide"
                                                 onClick={(e) => handleAddToCart(e, product)}
                                                 disabled={!product?.defaultVariant}
                                                 aria-label="Add to enquiry list"
                                             >
-                                                <ShoppingCart size={17} strokeWidth={1.8} />
-                                            </button>
+                                                <ShoppingCart size={15} strokeWidth={1.8} />
+                                                Add to Cart
+                                            </Button>
                                         )}
+
+                                        <Button
+                                            asChild
+                                            variant="brand-outline"
+                                            size="icon-lg"
+                                            className="shrink-0 rounded-lg bg-white"
+                                        >
+                                            <Link
+                                                href={href}
+                                                aria-label={product ? `View ${product.name}` : 'View product'}
+                                            >
+                                                <Eye size={17} strokeWidth={1.8} />
+                                            </Link>
+                                        </Button>
                                     </div>
                                 </div>
 

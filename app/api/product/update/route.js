@@ -5,6 +5,7 @@ import { catchError, response } from "@/lib/helperFunction"
 import { zSchema } from "@/lib/zodSchema"
 import ProductModel from "@/models/Product.model"
 import { encode } from "entities"
+import { decodeHTMLDeep } from "@/lib/utils"
 
 export async function PUT(request) {
     try {
@@ -39,7 +40,10 @@ export async function PUT(request) {
         getProduct.name = validatedData.name
         getProduct.slug = validatedData.slug
         getProduct.category = validatedData.category
-        getProduct.description = encode(validatedData.description)
+        // Decode before encoding so re-saving an already-encoded description
+        // is a no-op. Without it every save added an encoding layer, producing
+        // the `&amp;lt;p&amp;gt;` rows `decodeHTMLDeep` exists to clean up.
+        getProduct.description = encode(decodeHTMLDeep(validatedData.description))
         getProduct.media = validatedData.media
         await getProduct.save()
 

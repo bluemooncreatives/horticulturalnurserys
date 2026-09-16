@@ -3,7 +3,10 @@ import { useEffect, useMemo, useState } from "react"
 
 const useFetch = (url, method = "GET", options = {}) => {
     const [data, setData] = useState(null)
-    const [loading, setLoading] = useState(false)
+    // Starts true: the request is fired from an effect, so there is always one
+    // render before it begins. Reporting "not loading" there made consumers
+    // treat the empty initial state as a settled, genuinely-empty response.
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [refreshIndex, setRefreshIndex] = useState(0)
 

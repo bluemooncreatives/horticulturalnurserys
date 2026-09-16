@@ -18,6 +18,7 @@ import Editor from '@/components/Application/Admin/LazyEditor'
 import MediaModal from '@/components/Application/Admin/MediaModal'
 import Image from 'next/image'
 import { ImageIcon, Plus, X } from 'lucide-react'
+import { decodeHTMLDeep } from '@/lib/utils'
 const breadcrumbData = [
   { href: ADMIN_DASHBOARD, label: 'Home' },
   { href: ADMIN_PRODUCT_SHOW, label: 'Products' },
@@ -31,7 +32,12 @@ const EditProduct = ({ params }) => {
   const [loading, setLoading] = useState(false)
   const [categoryOption, setCategoryOption] = useState([])
   const { data: getCategory } = useFetch('/api/category?deleteType=SD&&size=10000')
-  const { data: getProduct, loading: getProductLoading } = useFetch(`/api/product/get/${id}`)
+  const { data: getProduct, error: getProductError } = useFetch(`/api/product/get/${id}`)
+
+  // The editor can only be seeded once, at mount, so it must not be rendered
+  // until the fetched description is actually in hand. `null` means "still
+  // unknown"; `''` is a product that legitimately has no description yet.
+  const [editorInitialData, setEditorInitialData] = useState(null)
 
 
 
@@ -77,13 +83,17 @@ const EditProduct = ({ params }) => {
   useEffect(() => {
     if (getProduct && getProduct.success) {
       const product = getProduct.data
+      // Hold the form value as real markup, matching what the editor emits, so
+      // saving without touching the editor cannot re-encode an encoded string.
+      const description = decodeHTMLDeep(product?.description)
       form.reset({
         _id: product?._id,
         name: product?.name,
         slug: product?.slug,
         category: product?.category,
-        description: product?.description,
+        description,
       })
+      setEditorInitialData(description)
 
       if (product.media) {
         const media = product.media.map((media) => ({ _id: media._id, url: media.secure_url }))
@@ -92,6 +102,14 @@ const EditProduct = ({ params }) => {
 
     }
   }, [getProduct])
+
+  // Without this the editor would never mount on a failed fetch, leaving the
+  // admin with a label and nothing to type into.
+  useEffect(() => {
+    if (getProductError) {
+      setEditorInitialData('')
+    }
+  }, [getProductError])
 
   useEffect(() => {
     const name = form.getValues('name')
@@ -203,7 +221,11 @@ const EditProduct = ({ params }) => {
                 <FormLabel className="mb-2">
                   Description <span className="text-destructive" aria-hidden>*</span>
                 </FormLabel>
-                {!getProductLoading && <Editor onChange={editor} initialData={form.getValues('description')} />}
+                {editorInitialData === null ? (
+                  <div className="min-h-[300px] animate-pulse rounded-md border border-border/60 bg-muted/20" />
+                ) : (
+                  <Editor onChange={editor} initialData={editorInitialData} />
+                )}
                 <FormMessage></FormMessage>
               </div>
             </div>

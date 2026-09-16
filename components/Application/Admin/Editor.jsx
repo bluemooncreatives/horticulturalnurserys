@@ -1,5 +1,5 @@
 'use client'
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 import {
@@ -25,7 +25,7 @@ import {
 } from 'ckeditor5';
 import '@/app/ckeditor5.css';
  
-import { decode } from 'entities';
+import { decodeHTMLDeep } from '@/lib/utils';
 
 
 /**
@@ -35,7 +35,57 @@ const LICENSE_KEY = 'GPL'; // or <YOUR_LICENSE_KEY>.
 
 export default function Editor({ onChange, initialData }) {
     const [hasEditorError, setHasEditorError] = useState(false);
-    const [fallbackValue, setFallbackValue] = useState(initialData ? decode(initialData) : '');
+
+    // Descriptions are persisted HTML-entity encoded (see the product create /
+    // update routes), so what arrives here has to be peeled back to real markup
+    // before CKEditor can load it. `decodeHTMLDeep` also repairs legacy rows
+    // that were encoded more than once.
+    const decodedInitialData = useMemo(() => decodeHTMLDeep(initialData), [initialData]);
+
+    const [fallbackValue, setFallbackValue] = useState(decodedInitialData);
+
+    // CKEditor only reads `config.initialData` when it boots. Its React wrapper
+    // hard-returns `false` from `shouldComponentUpdate`, so a later prop change
+    // is silently dropped and the editor stays on whatever it mounted with.
+    // The edit page mounts us before its fetch has resolved, so we have to push
+    // the description in ourselves once it arrives.
+    const editorRef = useRef(null);
+    const appliedDataRef = useRef(decodedInitialData);
+
+    const syncData = useCallback((editor, next) => {
+        if (!editor || appliedDataRef.current === next) return;
+
+        const current = editor.getData();
+        if (current === next) {
+            appliedDataRef.current = next;
+            return;
+        }
+
+        // Never clobber what the admin has already typed: only adopt the
+        // incoming value while the editor still holds the (empty) placeholder
+        // content it booted with.
+        if (current !== '' && current !== appliedDataRef.current) return;
+
+        appliedDataRef.current = next;
+        editor.data.set(next);
+    }, []);
+
+    useEffect(() => {
+        syncData(editorRef.current, decodedInitialData);
+    }, [decodedInitialData, syncData]);
+
+    const handleReady = useCallback((editor) => {
+        editorRef.current = editor;
+        syncData(editor, decodedInitialData);
+    }, [decodedInitialData, syncData]);
+
+    // Same late-arrival problem for the plain-textarea fallback we swap in when
+    // CKEditor fails to boot - its state was seeded from the first (empty) prop.
+    const fallbackTouchedRef = useRef(false);
+    useEffect(() => {
+        if (fallbackTouchedRef.current) return;
+        setFallbackValue(decodedInitialData);
+    }, [decodedInitialData]);
 
     const { editorConfig } = useMemo(() => {
         return {
@@ -117,7 +167,7 @@ export default function Editor({ onChange, initialData }) {
                         'resizeImage'
                     ]
                 },
-                initialData: initialData && initialData != '' ? decode(initialData) : '',
+                initialData: decodedInitialData,
                 licenseKey: LICENSE_KEY,
                 link: {
                     addTargetToExternalLinks: true,
@@ -142,7 +192,7 @@ export default function Editor({ onChange, initialData }) {
                 }
             }
         };
-    }, [initialData]);
+    }, [decodedInitialData]);
 
     if (hasEditorError) {
         return (
@@ -151,6 +201,7 @@ export default function Editor({ onChange, initialData }) {
                 placeholder="Write product description..."
                 value={fallbackValue}
                 onChange={(event) => {
+                    fallbackTouchedRef.current = true;
                     setFallbackValue(event.target.value);
                     if (typeof onChange === 'function') {
                         onChange(event, {
@@ -168,6 +219,7 @@ export default function Editor({ onChange, initialData }) {
                 editor={ClassicEditor}
                 config={editorConfig}
                 onChange={onChange}
+                onReady={handleReady}
                 onError={() => setHasEditorError(true)}
             />
         </div>

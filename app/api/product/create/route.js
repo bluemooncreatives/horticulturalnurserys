@@ -5,6 +5,7 @@ import { catchError, response } from "@/lib/helperFunction"
 import { zSchema } from "@/lib/zodSchema"
 import ProductModel from "@/models/Product.model"
 import { encode } from "entities"
+import { decodeHTMLDeep } from "@/lib/utils"
 
 export async function POST(request) {
     try {
@@ -39,7 +40,7 @@ export async function POST(request) {
             parentSku: productData.parentSku,
             slug: productData.slug,
             category: productData.category,
-            description: encode(productData.description),
+            description: encode(decodeHTMLDeep(productData.description)),
             media: productData.media,
         })
 

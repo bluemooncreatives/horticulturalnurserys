@@ -10,6 +10,7 @@ import { WEBSITE_CART, WEBSITE_PRODUCT_DETAILS } from '@/routes/WebsiteRoute'
 import { addIntoCart } from '@/store/reducer/cartReducer'
 import { showToast } from '@/lib/showToast'
 import { Button } from '@/components/ui/button'
+import useHydrated from '@/hooks/useHydrated'
 import styles from './BestsellersSection.module.css'
 
 const BestsellersSectionClient = ({ products = [] }) => {
@@ -17,10 +18,12 @@ const BestsellersSectionClient = ({ products = [] }) => {
 
     const dispatch = useDispatch()
     const cartProducts = useSelector((store) => store.cartStore.products)
+    // See ProductBox - the in-cart swap must wait for rehydration.
+    const hydrated = useHydrated()
 
     const isInCart = (product) => {
         const variant = product?.defaultVariant
-        return variant
+        return hydrated && variant
             ? cartProducts.some((item) => item.productId === product._id && item.variantId === variant._id)
             : false
     }

@@ -21,6 +21,8 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
+import useHydrated from '@/hooks/useHydrated'
+import { Skeleton } from '@/components/ui/skeleton'
 import { BadgeCheck, ClipboardList, Leaf, Minus, Plus, ShieldCheck, Trash2, User } from 'lucide-react'
 import { z } from 'zod'
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
@@ -44,6 +46,7 @@ const enquiryFormSchema = zSchema
 const Enquiry = () => {
     const dispatch = useDispatch()
     const cart = useSelector((store) => store.cartStore)
+    const hydrated = useHydrated()
 
     const [submitting, setSubmitting] = useState(false)
     const [result, setResult] = useState(null) // { ticketId } after a successful submit
@@ -124,6 +127,25 @@ const Enquiry = () => {
                                 <Link href={WEBSITE_SHOP}>Continue Browsing</Link>
                             </BrandButton>
                         </div>
+                    </div>
+                </section>
+            </div>
+        )
+    }
+
+    // ── Pre-hydration ────────────────────────────────────────────────
+    // cart.count is 0 on the server for everyone, so branching on it before
+    // redux-persist has rehydrated renders the empty state into the HTML and
+    // then contradicts it on the client. Hold a neutral placeholder instead.
+    if (!hydrated) {
+        return (
+            <div>
+                <WebsiteBreadcrumb props={breadCrumb} />
+                <section className="website-gutter py-20 lg:py-28">
+                    <div className="mx-auto max-w-md space-y-4" aria-hidden>
+                        <Skeleton className="h-16 w-16 rounded-full" />
+                        <Skeleton className="h-8 w-3/4" />
+                        <Skeleton className="h-24 w-full rounded-xl" />
                     </div>
                 </section>
             </div>

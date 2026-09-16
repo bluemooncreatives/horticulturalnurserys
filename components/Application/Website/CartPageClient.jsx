@@ -12,11 +12,17 @@ import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import { Minus, Plus, XCircle } from 'lucide-react'
 import { decreaseQuantity, increaseQuantity, removeFromCart } from '@/store/reducer/cartReducer'
 import { MAX_CART_QTY } from '@/lib/cartConstants'
+import { Skeleton } from '@/components/ui/skeleton'
+import useHydrated from '@/hooks/useHydrated'
 
 const CartPageClient = () => {
     const dispatch = useDispatch()
     const router = useRouter()
     const cart = useSelector((store) => store.cartStore)
+    // The cart only exists in the browser (redux-persist), so until it has
+    // rehydrated this component must render something that does not depend on
+    // it - see useHydrated.
+    const hydrated = useHydrated()
 
     const isEmpty = cart.count === 0
 
@@ -44,7 +50,16 @@ const CartPageClient = () => {
 
             <section className="website-gutter bg-background pt-4 pb-10 sm:py-10 lg:py-14">
                 <div className="grid w-full gap-6 lg:grid-cols-[290px_1fr] lg:gap-8">
-                    {isEmpty ? (
+                    {!hydrated ? (
+                        /* Placeholder rather than the empty state: the server
+                           cannot know the cart is empty, and flashing "your
+                           list is empty" before the items appear reads as a
+                           bug to the shopper. */
+                        <div className="lg:col-span-2 space-y-4" aria-hidden>
+                            <Skeleton className="h-10 w-64" />
+                            <Skeleton className="h-64 w-full rounded-xl" />
+                        </div>
+                    ) : isEmpty ? (
                         <div className="lg:col-span-2">
                             <Card className="mx-auto w-full max-w-2xl border-border/60 shadow-sm">
                                 <CardHeader className="border-b border-border/60">

@@ -24,6 +24,10 @@ function Select({
    selected,
    setSelected,
    placeholder = "Select options",
+   // Optional leading label for the trigger, e.g. `Parent` renders
+   // "Parent: Orchids" so a filter chip says what it is filtering on. Only
+   // shown once something is selected, so the placeholder stays clean.
+   prefix,
    isMulti = false,
    className = "",
    // Opt-in: lets the user commit whatever they typed as a new value when it
@@ -99,7 +103,10 @@ function Select({
                        className
                    )}
                >
-                   <div className="flex flex-wrap items-center gap-1.5 pr-2">
+                   <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5 pr-2">
+                       {prefix && hasValue ? (
+                           <span className="shrink-0 text-sm text-muted-foreground">{prefix}:</span>
+                       ) : null}
                        {isMulti && isArraySelected ? (
                            selected.map((value) => {
                                const option = safeOptions.find((o) => o.value === value);
@@ -107,9 +114,9 @@ function Select({
                                    <Badge
                                        key={value}
                                        variant="secondary"
-                                       className="h-6 gap-1 rounded-md px-2 py-0.5 text-xs font-normal border border-border/60 bg-muted/70 text-foreground hover:bg-muted"
+                                       className="h-6 max-w-[14rem] gap-1 rounded-md px-2 py-0.5 text-xs font-normal border border-border/60 bg-muted/70 text-foreground hover:bg-muted"
                                    >
-                                       <span>{option?.label ?? value}</span>
+                                       <span className="truncate">{option?.label ?? value}</span>
                                        <span
                                            role="button"
                                            tabIndex={0}
@@ -128,11 +135,11 @@ function Select({
                                );
                            })
                        ) : selectedOption ? (
-                           <span className="truncate text-sm font-medium text-foreground">
+                           <span className="block min-w-0 truncate text-sm font-medium text-foreground" title={selectedOption.label}>
                                {selectedOption.label}
                            </span>
                        ) : (
-                           <span className="text-sm text-muted-foreground">{placeholder}</span>
+                           <span className="block min-w-0 truncate text-sm text-muted-foreground">{placeholder}</span>
                        )}
                    </div>
 
@@ -159,7 +166,7 @@ function Select({
            </PopoverTrigger>
            <PopoverContent
                align="start"
-               className="w-[var(--radix-popover-trigger-width)] min-w-[220px] p-0 shadow-lg border-border"
+               className="w-[var(--radix-popover-trigger-width)] min-w-[220px] max-w-[min(20rem,calc(100vw-2rem))] p-0 shadow-lg border-border"
            >
                <Command>
                    <CommandInput
@@ -168,7 +175,7 @@ function Select({
                        value={query}
                        onValueChange={setQuery}
                    />
-                   <CommandList className="max-h-60 overflow-y-auto admin-scroll">
+                   <CommandList className="max-h-[min(15rem,50vh)] overflow-y-auto admin-scroll">
                        <CommandEmpty className="py-4 text-center text-xs text-muted-foreground">
                            {creatable && query.trim() ? (
                                <button
@@ -193,9 +200,9 @@ function Select({
                                        key={option.value}
                                        value={option.label}
                                        onSelect={() => handleSelect(option)}
-                                       className="flex items-center justify-between text-sm py-2 px-2.5 cursor-pointer aria-selected:bg-muted"
+                                       className="flex items-center justify-between gap-2 text-sm py-2 px-2.5 cursor-pointer aria-selected:bg-muted"
                                    >
-                                       <span>{option.label}</span>
+                                       <span className="min-w-0 truncate" title={option.label}>{option.label}</span>
                                        <CheckIcon
                                            className={cn(
                                                "h-4 w-4 text-primary transition-opacity",

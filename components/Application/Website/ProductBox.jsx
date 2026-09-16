@@ -10,6 +10,7 @@ import { Check, ChevronLeft, ChevronRight, Crown, Eye, ShoppingCart, Sparkles } 
 import { addIntoCart } from '@/store/reducer/cartReducer'
 import { showToast } from '@/lib/showToast'
 import { Button } from '@/components/ui/button'
+import useHydrated from '@/hooks/useHydrated'
 
 /*
  * Storefront product card.
@@ -26,9 +27,13 @@ import { Button } from '@/components/ui/button'
 const ProductBox = ({ product, priority = false }) => {
     const dispatch = useDispatch()
     const cartProducts = useSelector((store) => store.cartStore.products)
+    // The cart is browser-only, so the server always renders "add". Gate the
+    // swap to "Added" on hydration or the button markup differs between the two
+    // renders and React throws away the card.
+    const hydrated = useHydrated()
 
     const variant = product?.defaultVariant
-    const isInCart = variant
+    const isInCart = hydrated && variant
         ? cartProducts.some((item) => item.productId === product._id && item.variantId === variant._id)
         : false
 

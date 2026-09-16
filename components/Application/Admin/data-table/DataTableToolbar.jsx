@@ -1,5 +1,5 @@
 'use client'
-import { Search, X } from 'lucide-react'
+import { RotateCcw, Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import DataTableViewOptions from './DataTableViewOptions'
@@ -35,8 +35,12 @@ const DataTableToolbar = ({
     }
 
     return (
-        <div className={cn('flex w-full items-center gap-2', className)}>
-            <div className="relative flex-1">
+        // The row used to be a single non-wrapping line, so a search field, a
+        // filter dropdown, Reset and View together pushed past the container on
+        // narrow viewports. It wraps now and the search field keeps a sane
+        // minimum before the controls drop to a second line.
+        <div className={cn('flex w-full flex-wrap items-center gap-2', className)}>
+            <div className="relative min-w-[12rem] flex-1 basis-64">
                 {/* The search box was a bare Input with no affordance and the
                     Reset control appeared as a separate button beside it. The
                     clear affordance now lives inside the field. */}
@@ -65,11 +69,22 @@ const DataTableToolbar = ({
                 ) : null}
             </div>
 
-            {filters ? <div className="flex shrink-0 items-center gap-2">{filters}</div> : null}
+            {filters ? <div className="flex min-w-0 shrink-0 items-center gap-2">{filters}</div> : null}
 
+            {/* Reset was a bare ghost label with no icon, which read as loose
+                text wedged between two bordered controls. It now matches the
+                View button's weight and collapses to an icon on small screens. */}
             {isFiltered && (
-                <Button variant="ghost" size="lg" onClick={reset} className="shrink-0">
-                    Reset
+                <Button
+                    type="button"
+                    variant="outline"
+                    size="lg"
+                    onClick={reset}
+                    aria-label="Reset filters"
+                    className="shrink-0 text-muted-foreground hover:text-foreground"
+                >
+                    <RotateCcw className="size-4" />
+                    <span className="max-sm:sr-only">Reset</span>
                 </Button>
             )}
 

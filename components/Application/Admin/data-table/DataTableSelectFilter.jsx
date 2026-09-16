@@ -17,6 +17,10 @@ const DataTableSelectFilter = ({
     columnId,
     options = [],
     placeholder = 'All',
+    // Shown in the trigger once a value is picked ("Parent: Orchids"), so the
+    // chip states which column it filters instead of sitting in the toolbar as
+    // an unexplained value.
+    label,
     className,
 }) => {
     const column = table.getColumn(columnId)
@@ -34,7 +38,10 @@ const DataTableSelectFilter = ({
             setSelected={(value) => column.setFilterValue(value || undefined)}
             isMulti={false}
             placeholder={placeholder}
-            className={cn('h-9 w-full sm:w-[190px]', className)}
+            prefix={label}
+            // A fixed width with no max-width let a long option name push the
+            // trigger's chevron outside the button and over the Reset control.
+            className={cn('h-9 w-full max-w-full sm:w-[230px]', className)}
         />
     )
 }

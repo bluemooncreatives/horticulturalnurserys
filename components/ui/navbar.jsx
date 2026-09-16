@@ -24,6 +24,21 @@ import NavMenuBar from "@/components/ui/NavDropdown"
 // `menu` holds only the centred links; the CTA is passed separately because it
 // renders as a button on the right of the bar. The slide-out sheet re-joins the
 // two so mobile still sees one complete list.
+// Emoji shown in the mobile accordion's icon square, keyed by Parent slug -
+// falls back to a generic sprout for any parent seeded without a mapped emoji.
+const PARENT_EMOJI = {
+  "plants": "🌿",
+  "seasonal-flowering-plants": "🌸",
+  "carpet-grass-for-lawn": "🌱",
+  "seeds-and-seedlings": "🌰",
+  "manure-and-fertilizers": "🪴",
+  "insecticide": "🧪",
+  "pots-and-planters": "🏺",
+  "roof-garden-materials": "🏙️",
+  "growing-media": "🧱",
+}
+const DEFAULT_PARENT_EMOJI = "🌿"
+
 const defaultMenu = [
   { title: "Home", url: "/" },
   {
@@ -311,7 +326,7 @@ export default function Navbar({
                             className="group mx-2 mb-0.5 flex items-center gap-3 rounded-[var(--radius-2xl)] px-3 py-2.5 text-[0.95rem] font-medium text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
                           >
                             <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[var(--secondary)] text-base transition-colors group-hover:bg-[var(--brand-primary)]/10">
-                              {child.icon}
+                              {child.icon || (child.slug ? (PARENT_EMOJI[child.slug] || DEFAULT_PARENT_EMOJI) : null)}
                             </span>
                             <span className="flex flex-col">
                               <span className="leading-tight">{child.title}</span>

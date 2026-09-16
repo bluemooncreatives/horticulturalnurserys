@@ -21,7 +21,10 @@ export const metadata = {
 const PotsPage = async ({ searchParams }) => {
   const resolvedSearchParams = (await searchParams) ?? {}
 
-  const merged = { ...resolvedSearchParams, category: 'pots' }
+  // Matches the Parent slug seeded in the catalogue ("pots-and-planters");
+  // there is no category slugged "pots", so the old category filter no-opped
+  // and this page served the whole catalogue.
+  const merged = { ...resolvedSearchParams, parent: 'pots-and-planters' }
 
   const params = new URLSearchParams()
   Object.entries(merged).forEach(([k, v]) => {
@@ -33,7 +36,8 @@ const PotsPage = async ({ searchParams }) => {
   const [filters, { products, total, totalPages }] = await Promise.all([
     getShopFilters(),
     getShopProducts({
-      category: 'pots',
+      parent: 'pots-and-planters',
+      category:       resolvedSearchParams?.category,
       size:           resolvedSearchParams?.size,
       color:          resolvedSearchParams?.color,
       minPrice:       resolvedSearchParams?.minPrice,

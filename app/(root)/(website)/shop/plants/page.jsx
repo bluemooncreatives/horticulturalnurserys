@@ -21,8 +21,10 @@ export const metadata = {
 const PlantsPage = async ({ searchParams }) => {
   const resolvedSearchParams = (await searchParams) ?? {}
 
-  // Pre-inject the category=plants filter so this page always shows plants.
-  const merged = { ...resolvedSearchParams, category: 'plants' }
+  // "Plants" is a Parent, not a Category - there is no category slugged
+  // "plants", so filtering by category here matched nothing and silently fell
+  // through to the entire catalogue.
+  const merged = { ...resolvedSearchParams, parent: 'plants' }
 
   const params = new URLSearchParams()
   Object.entries(merged).forEach(([k, v]) => {
@@ -34,7 +36,8 @@ const PlantsPage = async ({ searchParams }) => {
   const [filters, { products, total, totalPages }] = await Promise.all([
     getShopFilters(),
     getShopProducts({
-      category: 'plants',
+      parent: 'plants',
+      category:       resolvedSearchParams?.category,
       size:           resolvedSearchParams?.size,
       color:          resolvedSearchParams?.color,
       minPrice:       resolvedSearchParams?.minPrice,

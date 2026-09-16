@@ -3,40 +3,98 @@
 import Link from 'next/link'
 import { MapPin, Phone, Clock, Sprout, Instagram, MessageCircle, Facebook, ArrowUp, Truck } from 'lucide-react'
 
-import { WEBSITE_HOME, WEBSITE_SHOP } from '@/routes/WebsiteRoute'
-import { TRANSPORT_MODES } from '@/lib/companyInfo'
+import {
+    WEBSITE_HOME,
+    WEBSITE_SHOP,
+    WEBSITE_SHOP_PLANTS,
+    WEBSITE_SHOP_POTS,
+    WEBSITE_SERVICES,
+    WEBSITE_SERVICES_LANDSCAPE,
+    WEBSITE_SERVICES_MAINTENANCE,
+    WEBSITE_SERVICES_ROOF_GARDEN,
+    WEBSITE_SERVICES_VERTICAL_GARDEN,
+} from '@/routes/WebsiteRoute'
+import { TRANSPORT_MODES, WHOLESALE_WHATSAPP_URL } from '@/lib/companyInfo'
 
 const CONTACT_EMAIL = 'horticulturaldc@gmail.com'
 
-const fallbackCategoryLinks = [{ label: 'Full Catalogue', href: WEBSITE_SHOP }]
+// Shown when the category lookup returns nothing (empty catalogue / DB hiccup),
+// so the column never renders as a bare heading.
+const FALLBACK_CATEGORY_LINKS = [{ label: 'Full Catalogue', href: WEBSITE_SHOP }]
 
-const navigationLinks = [
-    { label: 'Home', href: WEBSITE_HOME },
-    { label: 'Nursery', href: WEBSITE_SHOP },
-    { label: 'About', href: '/about-us' },
-    { label: 'Contact', href: '/contact' },
+const shopLinks = [
+    { label: 'All Products', href: WEBSITE_SHOP },
+    { label: 'Plants', href: WEBSITE_SHOP_PLANTS },
+    { label: 'Pots & Planters', href: WEBSITE_SHOP_POTS },
 ]
 
-const helpLinks = [
+const serviceLinks = [
+    { label: 'All Services', href: WEBSITE_SERVICES },
+    { label: 'Landscape Development', href: WEBSITE_SERVICES_LANDSCAPE },
+    { label: 'Garden Maintenance', href: WEBSITE_SERVICES_MAINTENANCE },
+    { label: 'Roof Garden Design', href: WEBSITE_SERVICES_ROOF_GARDEN },
+    { label: 'Vertical Garden Systems', href: WEBSITE_SERVICES_VERTICAL_GARDEN },
+]
+
+const companyLinks = [
+    { label: 'Home', href: WEBSITE_HOME },
+    { label: 'About Us', href: '/about-us' },
+    { label: 'Contact', href: '/contact' },
     { label: 'Privacy Policy', href: '/privacy-policy' },
     { label: 'Terms & Conditions', href: '/terms-and-conditions' },
-    { label: 'Contact', href: '/contact' },
 ]
 
 const socialLinks = [
     { label: 'Instagram', href: 'https://www.instagram.com/horticulturaldevelopmentcentre/', Icon: Instagram },
-    { label: 'WhatsApp', href: 'https://wa.me/919088275576', Icon: MessageCircle },
+    { label: 'WhatsApp', href: WHOLESALE_WHATSAPP_URL, Icon: MessageCircle },
     { label: 'Facebook', href: 'https://www.facebook.com/horticulturaldevelopmentcentre', Icon: Facebook },
 ]
 
+const contactItems = [
+    {
+        Icon: Phone,
+        label: 'Phone',
+        lines: [
+            { text: '(033) 2479-5710', href: 'tel:+913324795710' },
+            { text: '+91 90882 75576', href: 'tel:+919088275576' },
+        ],
+    },
+    {
+        Icon: MapPin,
+        label: 'Sale Counter',
+        lines: [{ text: '2/5 Judges Court Road,' }, { text: 'Alipore, Kolkata 700027' }],
+    },
+    {
+        Icon: Sprout,
+        label: 'Farm',
+        lines: [{ text: 'Bibirhut, Ramdevpur,' }, { text: '24 Parganas (S)' }],
+    },
+    {
+        Icon: Clock,
+        label: 'Hours',
+        lines: [{ text: 'Mon – Sat' }, { text: '10:00 – 19:00' }],
+    },
+]
+
+// Small uppercase column heading. Tracking is set explicitly here rather than
+// left to `.eyebrow`, which is tuned for the light sections.
+const ColumnHeading = ({ children }) => (
+    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/40">
+        {children}
+    </p>
+)
+
 const LinkColumn = ({ title, links }) => (
-    <div className="footer-col">
-        <p className="eyebrow text-white/40">{title}</p>
+    <div>
+        <ColumnHeading>{title}</ColumnHeading>
         <nav aria-label={`${title} links`}>
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-4 space-y-2">
                 {links.map(({ label, href }) => (
                     <li key={`${title}-${label}`}>
-                        <Link href={href} className="text-[0.95rem] text-white/70 transition-colors hover:text-[var(--brand-lime)]">
+                        <Link
+                            href={href}
+                            className="inline-block py-0.5 text-[0.875rem] leading-snug tracking-normal text-white/65 transition-colors duration-200 hover:text-[var(--brand-lime)]"
+                        >
                             {label}
                         </Link>
                     </li>
@@ -47,7 +105,7 @@ const LinkColumn = ({ title, links }) => (
 )
 
 const Footer = ({ categoryLinks = [] }) => {
-    const categories = categoryLinks.length ? categoryLinks : fallbackCategoryLinks
+    const categories = categoryLinks.length ? categoryLinks : FALLBACK_CATEGORY_LINKS
 
     const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
@@ -55,41 +113,39 @@ const Footer = ({ categoryLinks = [] }) => {
         <footer className="website-gutter pt-[clamp(1.25rem,2.5vw,2rem)] pb-4" aria-label="Site footer">
             <div className="dark-panel relative overflow-hidden px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
 
-                {/* ── Top: wordmark + copyright mark ── */}
-                <div className="flex flex-col gap-6 border-b border-white/10 pb-8 sm:flex-row sm:items-start sm:justify-between">
-                    <h2 className="footer-word font-wordmark text-white leading-[0.84]">
+                {/* ── Wordmark ── */}
+                <div className="flex flex-col gap-6 border-b border-white/10 pb-8 sm:flex-row sm:items-start sm:justify-between lg:pb-10">
+                    <h2 className="font-wordmark leading-[0.84] text-white">
                         <span className="block text-[clamp(2.4rem,10vw,6.4rem)]">Horticultural</span>
-                        <span className="block text-[clamp(1.15rem,4.9vw,3.15rem)]">
-                            Development Centre
-                        </span>
+                        <span className="block text-[clamp(1.15rem,4.9vw,3.15rem)]">Development Centre</span>
                     </h2>
                     <div className="shrink-0 sm:text-right">
-                        <p className="text-sm text-white/55">© 20 - 26°</p>
+                        <p className="text-[0.8rem] tracking-[0.04em] text-white/50">Est. 1989 · Kolkata</p>
                         <span aria-hidden className="mt-3 block h-px w-24 bg-white/25 sm:ml-auto" />
                     </div>
                 </div>
 
-                {/* ── Middle: caption + email + columns ── */}
-                <div className="footer-cols grid gap-x-8 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
-                    <div className="footer-col">
-                        <p className="max-w-xs text-[0.95rem] leading-relaxed text-white/55">
-                            Designing, growing and maintaining gardens across West Bengal since 1989 -
-                            and supplying plants wholesale, all over India.
+                {/* ── Brand block + link columns ──
+                    Brand column is widest; the four link columns share the rest
+                    evenly so their headings sit on one baseline. */}
+                <div className="grid grid-cols-2 gap-x-6 gap-y-9 py-10 sm:gap-x-8 lg:grid-cols-[1.5fr_repeat(4,1fr)] lg:gap-x-10 lg:gap-y-10 lg:py-12">
+
+                    {/* Brand: blurb, email, social. Full width until the columns
+                        get their own track at lg. */}
+                    <div className="col-span-2 lg:col-span-1">
+                        <p className="max-w-xs text-[0.875rem] leading-relaxed tracking-normal text-white/55">
+                            Designing, growing and maintaining gardens across West Bengal
+                            since 1989 - and supplying plants wholesale, all over India.
                         </p>
+
                         <Link
                             href={`mailto:${CONTACT_EMAIL}`}
-                            className="mt-6 inline-block break-all border-b border-white/25 pb-2 text-[clamp(1.1rem,2.4vw,1.6rem)] font-medium tracking-[-0.01em] text-white transition-colors hover:text-[var(--brand-lime)]"
+                            className="mt-6 inline-block break-all border-b border-white/25 pb-2 text-[clamp(1rem,2.2vw,1.35rem)] font-medium tracking-[-0.01em] text-white transition-colors duration-200 hover:border-[var(--brand-lime)] hover:text-[var(--brand-lime)]"
                         >
                             {CONTACT_EMAIL}
                         </Link>
-                    </div>
 
-                    <LinkColumn title="Navigation" links={navigationLinks} />
-                    <LinkColumn title="Explore" links={categories} />
-
-                    <div className="footer-col">
-                        <p className="eyebrow text-white/40">Social</p>
-                        <div className="mt-5 flex flex-wrap gap-2.5">
+                        <div className="mt-7 flex flex-wrap gap-2.5">
                             {socialLinks.map(({ label, href, Icon }) => (
                                 <Link
                                     key={label}
@@ -97,78 +153,72 @@ const Footer = ({ categoryLinks = [] }) => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={`Horticultural Development Centre on ${label}`}
-                                    className="flex size-11 items-center justify-center rounded-[var(--radius-2xl)] border border-white/15 bg-white/[0.04] text-white/70 transition-colors hover:border-[var(--brand-lime)] hover:text-[var(--brand-lime)]"
+                                    className="flex size-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/70 transition-colors duration-200 hover:border-[var(--brand-lime)] hover:bg-[var(--brand-lime)] hover:text-[var(--brand-lime-ink)]"
                                 >
-                                    <Icon className="size-[18px]" strokeWidth={1.6} />
+                                    <Icon className="size-[17px]" strokeWidth={1.6} />
                                 </Link>
                             ))}
                         </div>
                     </div>
+
+                    <LinkColumn title="Shop" links={shopLinks} />
+                    <LinkColumn title="Categories" links={categories} />
+                    <LinkColumn title="Services" links={serviceLinks} />
+                    <LinkColumn title="Company" links={companyLinks} />
                 </div>
 
-                {/* ── Contact strip + back-to-top ── */}
-                <div className="flex flex-col gap-8 border-t border-white/10 pt-8 sm:flex-row sm:items-end sm:justify-between">
-                  <div className="flex flex-col gap-6">
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4">
-                        <div>
-                            <p className="flex items-center gap-1.5 text-[0.8rem] uppercase text-white/35">
-                                <Phone className="size-3.5" /> Phone
-                            </p>
-                            <Link href="tel:+913324795710" className="mt-2 block text-[0.95rem] text-white/70 transition-colors hover:text-[var(--brand-lime)]">
-                                (033) 2479-5710
-                            </Link>
-                            <Link href="tel:+919088275576" className="mt-1 block text-[0.95rem] text-white/70 transition-colors hover:text-[var(--brand-lime)]">
-                                +91 90882 75576
-                            </Link>
-                        </div>
-                        <div>
-                            <p className="flex items-center gap-1.5 text-[0.8rem] uppercase text-white/35">
-                                <MapPin className="size-3.5" /> Sale Counter
-                            </p>
-                            <p className="mt-2 text-[0.95rem] leading-snug text-white/70">
-                                2/5 Judges Court Road,
-                                <br />
-                                Alipore, Kolkata 700027
-                            </p>
-                        </div>
-                        <div>
-                            <p className="flex items-center gap-1.5 text-[0.8rem] uppercase text-white/35">
-                                <Sprout className="size-3.5" /> Farm
-                            </p>
-                            <p className="mt-2 text-[0.95rem] leading-snug text-white/70">
-                                Bibirhut, Ramdevpur,
-                                <br />
-                                24 Parganas (S)
-                            </p>
-                        </div>
-                        <div>
-                            <p className="flex items-center gap-1.5 text-[0.8rem] uppercase text-white/35">
-                                <Clock className="size-3.5" /> Hours
-                            </p>
-                            <p className="mt-2 text-[0.95rem] text-white/70">Mon – Sat · 10:00 – 19:00</p>
-                        </div>
+                {/* ── Contact strip ── */}
+                <div className="border-t border-white/10 pt-8 lg:pt-10">
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:gap-x-8 lg:grid-cols-4">
+                        {contactItems.map(({ Icon, label, lines }) => (
+                            <div key={label}>
+                                <p className="flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white/35">
+                                    <Icon className="size-3.5" strokeWidth={1.7} />
+                                    {label}
+                                </p>
+                                <div className="mt-2.5 space-y-1">
+                                    {lines.map(({ text, href }) =>
+                                        href ? (
+                                            <Link
+                                                key={text}
+                                                href={href}
+                                                className="block text-[0.875rem] leading-snug tracking-normal text-white/65 transition-colors duration-200 hover:text-[var(--brand-lime)]"
+                                            >
+                                                {text}
+                                            </Link>
+                                        ) : (
+                                            <p key={text} className="text-[0.875rem] leading-snug tracking-normal text-white/65">
+                                                {text}
+                                            </p>
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        ))}
                     </div>
 
-                    <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.85rem] text-white/40">
-                        <Truck className="size-3.5" />
-                        Wholesale despatch all over India
-                        <span aria-hidden className="text-white/20">·</span>
-                        {TRANSPORT_MODES.join(' · ')}
-                    </p>
-                  </div>
+                    {/* Wholesale despatch note + back-to-top */}
+                    <div className="mt-8 flex items-center justify-between gap-4 rounded-[var(--radius-2xl)] border border-white/10 bg-white/[0.03] px-5 py-4 lg:mt-10">
+                        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.82rem] tracking-normal text-white/50">
+                            <Truck className="size-4 shrink-0 text-[var(--brand-lime)]" strokeWidth={1.7} />
+                            Wholesale despatch all over India
+                            <span aria-hidden className="text-white/20">·</span>
+                            <span className="text-white/40">{TRANSPORT_MODES.join(' · ')}</span>
+                        </p>
 
-                    <button
-                        type="button"
-                        onClick={toTop}
-                        aria-label="Back to top"
-                        className="icon-round shrink-0 border-white/25 text-white transition-colors hover:bg-white hover:text-[var(--brand-ink)]"
-                    >
-                        <ArrowUp className="size-5" />
-                    </button>
+                        <button
+                            type="button"
+                            onClick={toTop}
+                            aria-label="Back to top"
+                            className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/25 text-white transition-colors duration-200 hover:bg-white hover:text-[var(--brand-ink)]"
+                        >
+                            <ArrowUp className="size-[18px]" strokeWidth={1.8} />
+                        </button>
+                    </div>
                 </div>
 
                 {/* ── Bottom bar ── */}
-                <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 text-[0.8rem] text-white/40 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-8 flex flex-col gap-2 border-t border-white/10 pt-6 text-[0.8rem] tracking-normal text-white/40 sm:flex-row sm:items-center sm:justify-between">
                     <p>© {new Date().getFullYear()} Horticultural Development Centre. All rights reserved.</p>
                     <p>
                         Crafted by{' '}
@@ -176,7 +226,7 @@ const Footer = ({ categoryLinks = [] }) => {
                             href="https://www.instagram.com/bluemoon.creatives/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-white/70 underline decoration-white/25 underline-offset-2 transition-colors hover:text-[var(--brand-lime)]"
+                            className="text-white/70 underline decoration-white/25 underline-offset-2 transition-colors duration-200 hover:text-[var(--brand-lime)]"
                         >
                             Blue Moon Creatives
                         </Link>

@@ -155,7 +155,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                 <RevealUp
                   key={stat.label}
                   delay={340 + i * 70}
-                  className={`border-white/10 py-5 lg:py-6 ${STAT_CELL_EDGES[i % 4]}`}
+                  className={`border-white/10 py-5 lg:py-6 ${STAT_CELL_EDGES[i % 4]} ${i > 1 ? 'hidden lg:block' : ''}`}
                 >
                   <dt className="text-[0.8rem] font-semibold uppercase text-white/40">
                     {stat.label}
@@ -195,7 +195,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           {service.intro}
         </RevealUp>
 
-        <div className="mt-12 grid gap-x-14 gap-y-6 lg:grid-cols-2">
+        <div className="mt-12 hidden gap-x-14 gap-y-6 lg:grid lg:grid-cols-2">
           {service.body.map((para, i) => (
             <RevealUp
               key={i}

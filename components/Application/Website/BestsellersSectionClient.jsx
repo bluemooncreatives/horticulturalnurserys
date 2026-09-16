@@ -106,7 +106,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                 asChild
                                                 variant="brand"
                                                 size="pill"
-                                                className="h-9 min-w-0 flex-1 gap-1.5 rounded-lg px-4 text-[0.72rem] uppercase tracking-wide"
+                                                className="h-8 min-w-0 flex-1 gap-1 rounded-lg px-2.5 text-[0.64rem] uppercase tracking-wide sm:h-9 sm:gap-1.5 sm:px-4 sm:text-[0.72rem]"
                                             >
                                                 <Link href={WEBSITE_CART} aria-label="Go to cart">
                                                     <Check size={15} strokeWidth={2} />
@@ -118,7 +118,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                 type="button"
                                                 variant="brand"
                                                 size="pill"
-                                                className="h-9 min-w-0 flex-1 gap-1.5 rounded-lg px-4 text-[0.72rem] uppercase tracking-wide"
+                                                className="h-8 min-w-0 flex-1 gap-1 rounded-lg px-2.5 text-[0.64rem] uppercase tracking-wide sm:h-9 sm:gap-1.5 sm:px-4 sm:text-[0.72rem]"
                                                 onClick={(e) => handleAddToCart(e, product)}
                                                 disabled={!product?.defaultVariant}
                                                 aria-label="Add to enquiry list"
@@ -131,14 +131,14 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                         <Button
                                             asChild
                                             variant="brand-outline"
-                                            size="icon-lg"
-                                            className="shrink-0 rounded-lg bg-white"
+                                            size="icon"
+                                            className="size-8 shrink-0 rounded-lg bg-white sm:size-9"
                                         >
                                             <Link
                                                 href={href}
                                                 aria-label={product ? `View ${product.name}` : 'View product'}
                                             >
-                                                <Eye size={17} strokeWidth={1.8} />
+                                                <Eye size={16} strokeWidth={1.8} className="sm:size-4.25" />
                                             </Link>
                                         </Button>
                                     </div>
@@ -147,9 +147,6 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                 <div className={styles.cardBody}>
                                     <p className={styles.productName}>
                                         {product?.name || 'Product Name'}
-                                    </p>
-                                    <p className={styles.productPrice}>
-                                        Price on enquiry
                                     </p>
                                 </div>
 

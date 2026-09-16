@@ -69,6 +69,8 @@
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
     align-items: flex-start;
 }
 
@@ -82,6 +84,7 @@
 .card {
     flex-shrink: 0;
     width: clamp(200px, 21vw, 260px);
+    scroll-snap-align: start;
 }
 
 .imgContainer {
@@ -117,25 +120,20 @@
 }
 
 .productName {
-    margin: 0 0 0.35rem;
-    font-size: clamp(0.78rem, 0.9vw, 0.875rem);
-    font-weight: 400;
+    /* No trailing margin - the section's own bottom padding is the gap to the
+       next section, so a margin here would read as extra, uneven space. */
+    margin: 0;
+    font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+    font-weight: 500;
     color: var(--brand-ink-soft);
-    line-height: 1.4;
+    line-height: 1.35;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     overflow: hidden;
-}
-
-.productPrice {
-    /* No trailing margin - the section's own bottom padding is the gap to the
-       next section, so a margin here would read as extra, uneven space. */
-    margin: 0;
-    font-size: clamp(0.82rem, 0.95vw, 0.9rem);
-    font-weight: 600;
-    color: var(--brand-ink-soft);
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 /* ── Card buttons - overlaid bottom edge of image ────────────────── */
@@ -186,5 +184,26 @@
 
 /* ── Mobile ≤ 480px ──────────────────────────────────────────────── */
 @media (max-width: 480px) {
-    .card { width: clamp(150px, 46vw, 195px); }
+    .section {
+        padding-top: 1.25rem;
+        padding-bottom: 2rem;
+    }
+
+    .track {
+        gap: 0.65rem;
+        padding-bottom: 0.25rem;
+    }
+
+    .card { width: clamp(160px, 47vw, 195px); }
+
+    .navBtn {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+/* ── Small mobile ≤ 360px ────────────────────────────────────────── */
+@media (max-width: 360px) {
+    .heading { font-size: 1.5rem; }
+    .card { width: 68vw; }
 }

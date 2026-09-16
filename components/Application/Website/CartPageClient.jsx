@@ -79,7 +79,7 @@ const CartPageClient = () => {
                     ) : (
                         <>
                             <aside className="w-full">
-                                <div className="sticky top-6">
+                                <div className="lg:sticky lg:top-24">
                                     <Card className="border-border/60 shadow-sm">
                                         <CardHeader className="border-b border-border/60">
                                             <CardTitle className="text-lg font-semibold uppercase">Enquiry Summary</CardTitle>

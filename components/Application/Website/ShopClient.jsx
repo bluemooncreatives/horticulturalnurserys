@@ -186,7 +186,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                         Filter itself still mounts only on desktop so mobile never
                         downloads its chunk. */}
                     <aside className='hidden w-full lg:block'>
-                        <div className='sticky top-6'>
+                        <div className='sticky top-24'>
                             {isDesktop && <Filter filters={initialFilters} />}
                         </div>
                     </aside>

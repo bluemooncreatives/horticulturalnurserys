@@ -296,20 +296,30 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
 
                 {/* `items-start` is load-bearing: a stretched grid item fills the row,
                     which leaves the sticky gallery nothing to travel through. The
-                    minmax(0,…) tracks stop long words / wide tables in the
-                    description from forcing the column past its share. */}
-                <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12 xl:gap-16">
+                    info column gets the wider track now that it carries the full
+                    description, and the minmax(0,…) floors stop a long word or a
+                    wide table in that description forcing the track past its
+                    share. */}
+                <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-8 xl:gap-10">
 
                     {/* ── GALLERY ─────────────────────────────────────────────
                         Sticky against the (much taller) info column. `top-24`
-                        clears the fixed header; the height cap matters just as
-                        much - a sticky box taller than the viewport only pins
-                        once its own bottom arrives, which reads as "not sticky
-                        at all". Heights differ per breakpoint because the thumb
-                        strip sits below the photo on lg and beside it on xl. */}
+                        clears the fixed header; fitting the gallery inside the
+                        viewport matters just as much - a sticky box taller than
+                        the screen only pins once its own bottom arrives, which
+                        reads as "not sticky at all". See the size cap below. */}
                     <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-                        <div className="flex flex-col-reverse gap-3 xl:flex-row xl:gap-4">
-                            <div className="-mx-3 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-3 pb-1 sm:mx-0 sm:gap-3 sm:px-0 xl:max-h-[calc(100dvh-9rem)] xl:w-[84px] xl:flex-col xl:overflow-y-auto xl:pb-0 no-scrollbar">
+                        {/* Capping width - not height - is what keeps the 3/4 crop
+                            intact while still fitting the pinned gallery on screen:
+                            a max-height would just override the aspect-ratio and
+                            flatten the photo towards square. w = h x 3/4, where h is
+                            the viewport minus the sticky offset (and, on lg, minus
+                            the thumb strip that sits below rather than beside). The
+                            max() floor stops a short window shrinking the photo to a
+                            stamp - past that point the gallery is simply taller than
+                            the screen and pins with its bottom off-view. */}
+                        <div className="flex flex-col-reverse gap-3 lg:mx-auto lg:max-w-[max(18rem,calc((100dvh-14rem)*0.75))] xl:max-w-none xl:flex-row xl:gap-4">
+                            <div className="-mx-3 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-3 pb-1 sm:mx-0 sm:gap-3 sm:px-0 xl:max-h-[calc(100dvh-7rem)] xl:w-[84px] xl:flex-col xl:overflow-y-auto xl:pb-0 no-scrollbar">
                                 {media.length > 0 ? media.map((thumb, index) => (
                                     <button
                                         type="button"
@@ -337,7 +347,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             </div>
 
                             <div
-                                className="group relative flex-1"
+                                className="group relative flex-1 xl:max-w-[max(24rem,calc((100dvh-7rem)*0.75))]"
                                 role="group"
                                 aria-roledescription="carousel"
                                 aria-label={`${product?.name} images`}
@@ -355,7 +365,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                             role="group"
                                             aria-roledescription="slide"
                                             aria-label={`Image ${index + 1} of ${slides.length}`}
-                                            className="relative aspect-[5/6] w-full shrink-0 snap-center snap-always sm:aspect-[4/5] lg:aspect-auto lg:h-[max(420px,calc(100dvh-15rem))] xl:h-[max(440px,calc(100dvh-9rem))]"
+                                            className="relative aspect-[4/5] w-full shrink-0 snap-center snap-always sm:aspect-[3/4]"
                                         >
                                             {/* fetchPriority must be passed explicitly - in Next 15
                                                 `priority` alone emits the preload but not

@@ -12,8 +12,15 @@ const Layout = async ({ children }) => {
         getHomeParents(),
     ])
 
+    // `overflow-x-clip`, never `-hidden`: overflow-x:hidden forces overflow-y to
+    // compute to `auto`, which turns this wrapper into a scroll container. Every
+    // `position: sticky` descendant then resolves against THIS box instead of
+    // the viewport - and since it is content-sized and never scrolls, sticky
+    // silently does nothing site-wide (it broke the product page's pinned
+    // gallery). `clip` contains the same horizontal overflow without creating a
+    // scrollport, which is why html/body in design-system.css use it too.
     return (
-        <div className='font-neue overflow-x-hidden'>
+        <div className='font-neue overflow-x-clip'>
             <LoaderProvider>
                 <Header shopParents={shopParents} />
                 <main id="main-content" className='relative min-h-screen bg-background'>

@@ -272,7 +272,7 @@ const Enquiry = () => {
 
                     {/* RIGHT: enquiry list */}
                     <aside className="w-full">
-                        <div className="space-y-4 lg:sticky lg:top-6">
+                        <div className="space-y-4 lg:sticky lg:top-24">
                             <div className="overflow-hidden rounded-md border border-border/60 bg-background shadow-sm">
                                 <div className="flex items-center justify-between border-b border-border/60 px-5 py-4">
                                     <h2 className="font-neue text-lg font-semibold uppercase">Your Enquiry</h2>

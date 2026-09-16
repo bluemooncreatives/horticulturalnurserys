@@ -4,19 +4,9 @@ import * as React from "react"
 import { useRef, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import {
-  Leaf,
-  Package,
-  Mountain,
-  Scissors,
-  Building2,
-  Layers,
-  Flower2,
-  Sprout,
-  FlaskConical,
-  SprayCan,
-} from "lucide-react"
 import gsap from "gsap"
+
+import { getNavIcon } from "@/components/ui/navIcons"
 
 import {
   NavigationMenu,
@@ -40,32 +30,9 @@ import RollingLink, { RollingText } from "@/components/ui/RollingLink"
      - NO background box behind the trigger on hover/open
    ──────────────────────────────────────────────────────────────── */
 
-const ICON_MAP = {
-  "/services/landscape-development": Mountain,
-  "/services/garden-maintenance":    Scissors,
-  "/services/roof-garden":           Building2,
-  "/services/vertical-garden":       Layers,
-}
-
-// Shop dropdown items are Parent records loaded from the DB (routed to
-// /shop?parent=<slug>), keyed here by slug rather than the static URL map
-// above. Any parent seeded without a mapped icon still gets a sensible one.
-const PARENT_ICON_MAP = {
-  "plants":                     Leaf,
-  "seasonal-flowering-plants":  Flower2,
-  "carpet-grass-for-lawn":      Sprout,
-  "seeds-and-seedlings":        Sprout,
-  "manure-and-fertilizers":     FlaskConical,
-  "insecticide":                SprayCan,
-  "pots-and-planters":          Package,
-  "roof-garden-materials":      Building2,
-  "growing-media":              Layers,
-}
-const DEFAULT_PARENT_ICON = Leaf
-
 // Single dropdown item - clean outline icon + non-wrapping title
 function DropdownItem({ item }) {
-  const Icon = ICON_MAP[item.url] ?? (item.slug ? (PARENT_ICON_MAP[item.slug] ?? DEFAULT_PARENT_ICON) : undefined)
+  const Icon = getNavIcon(item)
   return (
     <Link
       href={item.url}

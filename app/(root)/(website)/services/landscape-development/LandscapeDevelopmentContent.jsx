@@ -77,7 +77,7 @@ export default function LandscapeDevelopmentContent({ service }) {
     <main className="min-h-screen bg-[var(--background)]">
 
       {/* ══ Hero ═══════════════════════════════════════════════ */}
-      <section className="relative flex h-[88vh] min-h-[560px] flex-col overflow-hidden bg-[var(--brand-ink-soft)]">
+      <section className="relative flex min-h-[34rem] flex-col overflow-hidden lg:h-[88svh] lg:min-h-[560px] bg-[var(--brand-ink-soft)]">
         <div
           ref={heroImgRef}
           className="absolute inset-x-0 will-change-transform"
@@ -95,7 +95,7 @@ export default function LandscapeDevelopmentContent({ service }) {
         </div>
 
         {/* Layered scrims - vertical for legibility, radial for accent warmth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E0D] via-[#0B1E0D]/60 to-[#0B1E0D]/15" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E0D] via-[#0B1E0D]/65 to-[#0B1E0D]/45" />
         <div
           aria-hidden
           className="absolute inset-0 opacity-[0.10]"
@@ -116,7 +116,7 @@ export default function LandscapeDevelopmentContent({ service }) {
         </div>
 
         {/* Headline block */}
-        <div className="lumora-shell relative z-10 mt-auto pb-10 lg:pb-12">
+        <div className="lumora-shell relative z-10 mt-9 pb-10 lg:mt-auto lg:pb-12">
           <RevealUp
             as="p"
             delay={60}
@@ -141,7 +141,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           <RevealUp
             as="p"
             delay={280}
-            className="mt-5 max-w-xl text-[0.98rem] leading-relaxed text-white/60"
+            className="mt-5 max-w-xl text-[0.98rem] leading-relaxed text-white/75"
           >
             {service.tagline}
           </RevealUp>

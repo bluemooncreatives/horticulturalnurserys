@@ -3,6 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { Search as SearchIcon, ShoppingCart, ArrowUpRight, ChevronDown } from "lucide-react"
 import { useSelector } from "react-redux"
 import logoMark from "@/public/assets/images/logo-horti.png"
@@ -20,43 +21,29 @@ import GlobalSearch from "@/components/Application/Website/GlobalSearch"
 import RollingLink from "@/components/ui/RollingLink"
 import CircleReveal from "@/components/ui/CircleReveal"
 import NavMenuBar from "@/components/ui/NavDropdown"
+import { getNavIcon } from "@/components/ui/navIcons"
 
 // `menu` holds only the centred links; the CTA is passed separately because it
 // renders as a button on the right of the bar. The slide-out sheet re-joins the
 // two so mobile still sees one complete list.
-// Emoji shown in the mobile accordion's icon square, keyed by Parent slug -
-// falls back to a generic sprout for any parent seeded without a mapped emoji.
-const PARENT_EMOJI = {
-  "plants": "🌿",
-  "seasonal-flowering-plants": "🌸",
-  "carpet-grass-for-lawn": "🌱",
-  "seeds-and-seedlings": "🌰",
-  "manure-and-fertilizers": "🪴",
-  "insecticide": "🧪",
-  "pots-and-planters": "🏺",
-  "roof-garden-materials": "🏙️",
-  "growing-media": "🧱",
-}
-const DEFAULT_PARENT_EMOJI = "🌿"
-
 const defaultMenu = [
   { title: "Home", url: "/" },
   {
     title: "Shop",
     url: "/shop",
     children: [
-      { title: "Plants", url: "/shop/plants", icon: "🌿", desc: "Flowers, shrubs & trees" },
-      { title: "Pots",   url: "/shop/pots",   icon: "🏺", desc: "Planters & containers" },
+      { title: "Plants", url: "/shop/plants", desc: "Flowers, shrubs & trees" },
+      { title: "Pots",   url: "/shop/pots",   desc: "Planters & containers" },
     ],
   },
   {
     title: "Services",
     url: "/services",
     children: [
-      { title: "Landscape Development",        url: "/services/landscape-development", icon: "🌄", desc: "Gardens, lawns, parks & townships" },
-      { title: "Garden Maintenance",           url: "/services/garden-maintenance",    icon: "✂️", desc: "AMC, pruning & aftercare"  },
-      { title: "Roof Garden Design",           url: "/services/roof-garden",           icon: "🏠", desc: "Geotextile & drain-cell systems" },
-      { title: "Vertical Garden Systems",      url: "/services/vertical-garden",       icon: "🌾", desc: "Living walls & trellises"  },
+      { title: "Landscape Development",        url: "/services/landscape-development", desc: "Gardens, lawns, parks & townships" },
+      { title: "Garden Maintenance",           url: "/services/garden-maintenance",    desc: "AMC, pruning & aftercare"  },
+      { title: "Roof Garden Design",           url: "/services/roof-garden",           desc: "Geotextile & drain-cell systems" },
+      { title: "Vertical Garden Systems",      url: "/services/vertical-garden",       desc: "Living walls & trellises"  },
     ],
   },
   { title: "About", url: "/about-us" },
@@ -105,6 +92,14 @@ export default function Navbar({
   // Track which mobile accordion item is expanded
   const [expandedMobile, setExpandedMobile] = React.useState(null)
 
+  // Service detail pages (/services/<slug>) open with a full-bleed dark photo
+  // hero. The default brand-green logo and links are near-invisible against it
+  // until the bar picks up its own background on scroll, so the nav flips to
+  // white while it is sitting over that hero.
+  const pathname = usePathname()
+  const overDarkHero = /^\/services\/[^/]+$/.test(pathname ?? '')
+  const lightNav = overDarkHero && !scrolled
+
   const rawCount = useSelector((store) => store.cartStore?.count ?? 0)
   const cartCount = mounted ? rawCount : 0
 
@@ -143,7 +138,13 @@ export default function Navbar({
     setTimeout(open, 80)
   }
 
-  const LINK_CLASS = "text-[0.95rem] font-semibold text-[var(--brand-primary)]"
+  const LINK_CLASS = cn(
+    "text-[0.95rem] font-semibold transition-colors duration-300",
+    lightNav ? "text-white" : "text-[var(--brand-primary)]"
+  )
+  // Shared by the logo, the icon buttons and the hamburger.
+  const barItemClass = lightNav ? "text-white" : "text-[var(--brand-primary)]"
+  const barHoverClass = lightNav ? "hover:bg-white/10" : "hover:bg-black/[0.05]"
 
   return (
     <div
@@ -161,7 +162,10 @@ export default function Navbar({
         {/* ── Logo ── */}
         <Link
           href={logo.url}
-          className="flex shrink-0 items-center gap-2 text-lg text-[var(--brand-primary)] transition-opacity hover:opacity-70 sm:text-xl"
+          className={cn(
+            "flex shrink-0 items-center gap-2 text-lg transition-colors duration-300 hover:opacity-70 sm:text-xl",
+            barItemClass
+          )}
           aria-label={logo.alt}
         >
           <Image
@@ -193,7 +197,7 @@ export default function Navbar({
             type="button"
             onClick={() => setOpenSearch(true)}
             aria-label="Search"
-            className="hidden size-10 items-center justify-center rounded-full text-[var(--brand-primary)] transition-colors hover:bg-black/[0.05] lg:flex"
+            className={cn("hidden size-10 items-center justify-center rounded-full transition-colors duration-300 lg:flex", barItemClass, barHoverClass)}
           >
             <SearchIcon className="size-[1.15rem]" strokeWidth={1.75} />
           </button>
@@ -202,11 +206,16 @@ export default function Navbar({
             type="button"
             onClick={() => setOpenCart(true)}
             aria-label={cartCount > 0 ? `Cart, ${cartCount} item${cartCount === 1 ? '' : 's'}` : 'Cart'}
-            className="relative hidden size-10 items-center justify-center rounded-full text-[var(--brand-primary)] transition-colors hover:bg-black/[0.05] lg:flex"
+            className={cn("relative hidden size-10 items-center justify-center rounded-full transition-colors duration-300 lg:flex", barItemClass, barHoverClass)}
           >
             <ShoppingCart className="size-[1.15rem]" strokeWidth={1.75} />
             {cartCount > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full bg-[var(--brand-primary)] px-1 text-[0.8rem] font-semibold tabular-nums text-white ring-2 ring-[var(--background)]">
+              <span className={cn(
+                "absolute -right-0.5 -top-0.5 flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full px-1 text-[0.8rem] font-semibold tabular-nums ring-2",
+                lightNav
+                  ? "bg-[var(--brand-lime)] text-[var(--brand-lime-ink)] ring-transparent"
+                  : "bg-[var(--brand-primary)] text-white ring-[var(--background)]"
+              )}>
                 {cartCount}
               </span>
             )}
@@ -233,14 +242,17 @@ export default function Navbar({
             type="button"
             onClick={() => setOpenMenu(true)}
             aria-label="Open menu"
-            className="relative flex size-10 shrink-0 items-center justify-center rounded-full text-[var(--brand-primary)] transition-colors hover:bg-black/[0.05] lg:hidden"
+            className={cn("relative flex size-10 shrink-0 items-center justify-center rounded-full transition-colors duration-300 lg:hidden", barItemClass, barHoverClass)}
           >
             <span aria-hidden className="flex flex-col items-center gap-[6px]">
               <span className="block h-[2px] w-[26px] rounded-full bg-current" />
               <span className="block h-[2px] w-[26px] rounded-full bg-current" />
             </span>
             {cartCount > 0 && (
-              <span className="absolute right-0.5 top-0.5 size-2 rounded-full bg-[var(--brand-primary)] ring-2 ring-[var(--background)]" />
+              <span className={cn(
+                "absolute right-0.5 top-0.5 size-2 rounded-full ring-2",
+                lightNav ? "bg-[var(--brand-lime)] ring-transparent" : "bg-[var(--brand-primary)] ring-[var(--background)]"
+              )} />
             )}
           </button>
         </div>
@@ -302,42 +314,57 @@ export default function Navbar({
                       />
                     </button>
 
-                    {/* Collapsible sub-items */}
+                    {/* Collapsible sub-items. Animated with grid-template-rows
+                        rather than a max-height: the Shop list is built from
+                        however many parents the DB returns, and a fixed
+                        max-h clipped it to the first few entries. 0fr→1fr
+                        resolves to the exact content height at any length. */}
                     <div
                       className={cn(
-                        "overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)]",
-                        isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                        "grid transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)]",
+                        isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                       )}
                     >
-                      {/* Parent page link at the top */}
-                      <SheetClose asChild>
-                        <Link
-                          href={item.url}
-                          className="group mx-2 mb-0.5 flex items-center gap-2 rounded-[var(--radius-xl)] px-3 py-2 text-[0.82rem] font-semibold uppercase text-[var(--brand-primary)]/60 transition-colors hover:text-[var(--brand-primary)]"
-                        >
-                          View all {item.title} →
-                        </Link>
-                      </SheetClose>
-
-                      {item.children.map((child) => (
-                        <SheetClose asChild key={child.url}>
+                      <div className="overflow-hidden">
+                        {/* Parent page link at the top */}
+                        <SheetClose asChild>
                           <Link
-                            href={child.url}
-                            className="group mx-2 mb-0.5 flex items-center gap-3 rounded-[var(--radius-2xl)] px-3 py-2.5 text-[0.95rem] font-medium text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
+                            href={item.url}
+                            className="group mx-2 mb-0.5 flex items-center gap-2 rounded-[var(--radius-xl)] px-3 py-2 text-[0.82rem] font-semibold uppercase text-[var(--brand-primary)]/60 transition-colors hover:text-[var(--brand-primary)]"
                           >
-                            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[var(--secondary)] text-base transition-colors group-hover:bg-[var(--brand-primary)]/10">
-                              {child.icon || (child.slug ? (PARENT_EMOJI[child.slug] || DEFAULT_PARENT_EMOJI) : null)}
-                            </span>
-                            <span className="flex flex-col">
-                              <span className="leading-tight">{child.title}</span>
-                              {child.desc && (
-                                <span className="text-[0.8rem] text-[var(--muted-foreground)]">{child.desc}</span>
-                              )}
-                            </span>
-                            <ArrowUpRight className="ml-auto size-4 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                            View all {item.title} →
                           </Link>
                         </SheetClose>
-                      ))}
+
+                        {item.children.map((child) => {
+                          const ChildIcon = getNavIcon(child)
+                          return (
+                            <SheetClose asChild key={child.url}>
+                              <Link
+                                href={child.url}
+                                className="group mx-2 mb-0.5 flex items-center gap-3 rounded-[var(--radius-2xl)] px-3 py-2.5 text-[0.95rem] font-medium text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
+                              >
+                                <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[var(--secondary)] transition-colors group-hover:bg-[var(--brand-primary)]/10">
+                                  {ChildIcon && (
+                                    <ChildIcon
+                                      className="size-[18px] text-[var(--brand-primary)]"
+                                      strokeWidth={1.6}
+                                      aria-hidden
+                                    />
+                                  )}
+                                </span>
+                                <span className="flex min-w-0 flex-col">
+                                  <span className="leading-tight">{child.title}</span>
+                                  {child.desc && (
+                                    <span className="text-[0.8rem] text-[var(--muted-foreground)]">{child.desc}</span>
+                                  )}
+                                </span>
+                                <ArrowUpRight className="ml-auto size-4 shrink-0 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                              </Link>
+                            </SheetClose>
+                          )
+                        })}
+                      </div>
                     </div>
                   </div>
                 )

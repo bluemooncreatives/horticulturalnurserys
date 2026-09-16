@@ -30,16 +30,19 @@ const chipClass = (active) =>
 const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
     const searchParams = useSearchParams()
 
+    const [selectedParent, setSelectedParent] = useState([])
     const [selectedCategory, setSelectedCategory] = useState([])
     const [selectedColor, setSelectedColor] = useState([])
     const [bestsellerOnly, setBestsellerOnly] = useState(false)
     const [freshlyArrivedOnly, setFreshlyArrivedOnly] = useState(false)
 
     const categories = filters?.categories ?? null
+    const parents = filters?.parents ?? null
     const colors = filters?.colors ?? null
     const sizes = filters?.sizes ?? null
 
     const categoriesReady = Array.isArray(categories)
+    const parentsReady = Array.isArray(parents)
     const colorsReady = Array.isArray(colors)
     const sizesReady = Array.isArray(sizes)
 
@@ -47,6 +50,8 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
     const router = useRouter()
 
     useEffect(() => {
+        searchParams.get('parent') ? setSelectedParent(searchParams.get('parent').split(',')) : setSelectedParent([])
+
         searchParams.get('category') ? setSelectedCategory(searchParams.get('category').split(',')) : setSelectedCategory([])
 
         searchParams.get('color') ? setSelectedColor(searchParams.get('color').split(',')) : setSelectedColor([])
@@ -56,6 +61,25 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
         setFreshlyArrivedOnly(['true', '1', 'yes'].includes((searchParams.get('freshlyArrived') || '').toLowerCase()))
 
     }, [searchParams])
+
+    const handleParentFilter = (parentSlug) => {
+        let newSelectedParent = [...selectedParent]
+        if (newSelectedParent.includes(parentSlug)) {
+            newSelectedParent = newSelectedParent.filter((slug) => slug !== parentSlug)
+        } else {
+            newSelectedParent.push(parentSlug)
+        }
+
+        setSelectedParent(newSelectedParent)
+
+        newSelectedParent.length > 0 ? urlSearchParams.set('parent', newSelectedParent.join(',')) : urlSearchParams.delete('parent')
+
+        // Switching department invalidates the page cursor, and any category
+        // chip already picked may not live under the new parent.
+        urlSearchParams.delete('page')
+
+        router.push(`${WEBSITE_SHOP}?${urlSearchParams}`)
+    }
 
     const handleCategoryFilter = (categorySlug) => {
         let newSelectedCategory = [...selectedCategory]
@@ -123,7 +147,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
     // Total count drives the "N Active" badge and the per-section counts below -
     // lets someone scanning the sidebar see what's applied without opening every
     // accordion first.
-    const activeFilterCount = selectedCategory.length + selectedColor.length
+    const activeFilterCount = selectedParent.length + selectedCategory.length + selectedColor.length
         + (bestsellerOnly ? 1 : 0) + (freshlyArrivedOnly ? 1 : 0)
 
 
@@ -174,9 +198,47 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
 
             <Accordion
                 type="multiple"
-                defaultValue={['category', 'color']}
+                defaultValue={['parent', 'category', 'color']}
                 className="space-y-1"
             >
+                {(!parentsReady || parents.length > 0) && (
+                    <AccordionItem value="parent" className="border-b border-border/60 py-1">
+                        <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                            <span className="flex items-center gap-2">
+                                By Type
+                                {selectedParent.length > 0 && (
+                                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 px-1.5 text-[0.8rem] font-semibold text-[var(--brand-primary)]">
+                                        {selectedParent.length}
+                                    </span>
+                                )}
+                            </span>
+                            <ChevronDown className="size-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                        </AccordionTrigger>
+                        <AccordionContent className="px-2 pb-4">
+                            {!parentsReady ? (
+                                <ChipSkeletons count={5} />
+                            ) : (
+                                <div className="flex flex-wrap gap-2">
+                                    {parents.map((parent) => (
+                                        <button
+                                            key={parent._id}
+                                            type="button"
+                                            onClick={() => handleParentFilter(parent.slug)}
+                                            aria-pressed={selectedParent.includes(parent.slug)}
+                                            className={chipClass(selectedParent.includes(parent.slug))}
+                                        >
+                                            {parent.name}
+                                            <span className="ml-1.5 text-[0.7rem] font-medium opacity-60">
+                                                {parent.productCount}
+                                            </span>
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </AccordionContent>
+                    </AccordionItem>
+                )}
+
                 {(!categoriesReady || categories.length > 0) && (
                     <AccordionItem value="category" className="border-b border-border/60 py-1">
                         <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">

@@ -16,8 +16,8 @@ import {
 // Static fallback so the Shop dropdown still renders something if the Parent
 // lookup ever comes back empty (DB hiccup, no parents seeded yet).
 const FALLBACK_SHOP_CHILDREN = [
-  { title: 'Plants', url: WEBSITE_SHOP_PLANTS, icon: '🌿' },
-  { title: 'Pots',   url: WEBSITE_SHOP_POTS,   icon: '🏺' },
+  { title: 'Plants', url: WEBSITE_SHOP_PLANTS },
+  { title: 'Pots',   url: WEBSITE_SHOP_POTS },
 ]
 
 const pluralize = (count) => `${count} product${count === 1 ? '' : 's'}`
@@ -53,10 +53,10 @@ const Header = ({ shopParents = [] }) => {
       title: 'Services',
       url: WEBSITE_SERVICES,
       children: [
-        { title: 'Landscape Development',   url: WEBSITE_SERVICES_LANDSCAPE,       icon: '🌄' },
-        { title: 'Garden Maintenance',      url: WEBSITE_SERVICES_MAINTENANCE,     icon: '✂️' },
-        { title: 'Roof Garden Design',      url: WEBSITE_SERVICES_ROOF_GARDEN,     icon: '🏠' },
-        { title: 'Vertical Garden Systems', url: WEBSITE_SERVICES_VERTICAL_GARDEN, icon: '🌾' },
+        { title: 'Landscape Development',   url: WEBSITE_SERVICES_LANDSCAPE },
+        { title: 'Garden Maintenance',      url: WEBSITE_SERVICES_MAINTENANCE },
+        { title: 'Roof Garden Design',      url: WEBSITE_SERVICES_ROOF_GARDEN },
+        { title: 'Vertical Garden Systems', url: WEBSITE_SERVICES_VERTICAL_GARDEN },
       ],
     },
     { title: 'About', url: '/about-us' },

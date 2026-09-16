@@ -14,7 +14,7 @@ const BENEFITS = [
 
 const BenefitsSection = () => {
     return (
-        <section className="lumora-shell pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
+        <section className="w-full mx-auto px-(--website-gutter) sm:px-[calc(var(--website-gutter)+clamp(0rem,4vw,var(--space-12)))] pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
             <div className="dark-panel relative overflow-hidden p-5 sm:p-8 lg:p-14">
 
                 {/* watermark */}

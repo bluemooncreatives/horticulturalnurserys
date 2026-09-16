@@ -6,6 +6,14 @@
     overflow-x: clip;
 }
 
+/* Mobile: plain website gutter instead of the wider shell inset */
+@media (max-width: 639px) {
+    .section {
+        padding-left: var(--website-gutter);
+        padding-right: var(--website-gutter);
+    }
+}
+
 /* ── Inner: flex ROW - sidebar | track ───────────────────────────── */
 .inner {
     display: flex;

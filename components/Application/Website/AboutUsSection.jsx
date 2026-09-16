@@ -387,7 +387,7 @@ const AboutUsSection = () => {
 
     return (
         <section ref={rootRef} id="about-us" className="about-section relative z-[2] bg-[var(--background)]">
-            <div className="lumora-shell flex min-h-svh flex-col justify-center pt-20 pb-10 sm:pt-22 sm:pb-12 lg:pt-24 lg:pb-14">
+            <div className="w-full mx-auto px-(--website-gutter) sm:px-[calc(var(--website-gutter)+clamp(0rem,4vw,var(--space-12)))] flex min-h-svh flex-col justify-center pt-20 pb-10 sm:pt-22 sm:pb-12 lg:pt-24 lg:pb-14">
 
                 {/* ── Statement (parallax layer A) ── */}
                 <div ref={statementRef} className="about-statement grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_1.85fr] lg:gap-8">

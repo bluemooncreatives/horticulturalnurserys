@@ -41,7 +41,7 @@ export const FAQ = ({
     return (
         <section
             className={cn(
-                'lumora-shell bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]',
+                'w-full mx-auto px-(--website-gutter) sm:px-[calc(var(--website-gutter)+clamp(0rem,4vw,var(--space-12)))] bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]',
                 className
             )}
             {...props}

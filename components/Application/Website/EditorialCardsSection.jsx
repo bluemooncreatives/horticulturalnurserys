@@ -37,7 +37,7 @@ const CARDS = [
 
 const EditorialCardsSection = () => {
     return (
-        <section className="lumora-shell bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
+        <section className="w-full mx-auto px-(--website-gutter) sm:px-[calc(var(--website-gutter)+clamp(0rem,4vw,var(--space-12)))] bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
 
             {/* section header */}
             <div className="mb-4 flex items-end justify-between lg:mb-6">

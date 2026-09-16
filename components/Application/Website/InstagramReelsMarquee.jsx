@@ -52,7 +52,7 @@ const InstagramReelsMarquee = () => {
 
     return (
         <section className="relative overflow-hidden bg-background pt-[clamp(1.25rem,2.5vw,2rem)] pb-[clamp(2rem,4vw,3.5rem)]">
-            <div className="lumora-shell relative z-20 mb-6 flex items-center justify-between gap-6">
+            <div className="w-full mx-auto px-(--website-gutter) sm:px-[calc(var(--website-gutter)+clamp(0rem,4vw,var(--space-12)))] relative z-20 mb-6 flex items-center justify-between gap-6">
                 <h2 className="text-left text-[clamp(1.7rem,4.2vw,3rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)] z-50">
                     From the Field
                 </h2>

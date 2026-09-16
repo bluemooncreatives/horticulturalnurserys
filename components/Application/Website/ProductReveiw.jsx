@@ -38,90 +38,130 @@ const ProductReveiw = ({ productId }) => {
         queryFn: async ({ pageParam }) => await fetchReview(pageParam),
         initialPageParam: 0,
         getNextPageParam: (lastPage) => {
-            return lastPage.nextPage
+            // fetchReview resolves undefined when the API reports failure, so
+            // this must not assume a page object came back.
+            return lastPage?.nextPage
         }
     })
 
-
+    const totalReview = reviewCount?.totalReview ?? null
+    const averageRating = reviewCount?.averageRating ?? '0.0'
+    const roundedRating = Math.round(Number(averageRating) || 0)
+    const hasLoadedList = Boolean(data)
+    const isEmpty = hasLoadedList && (data?.pages?.[0]?.totalReview ?? 0) === 0
 
     return (
         <div className="mb-12 rounded-[var(--admin-shell-radius)] border border-border/60 bg-background shadow-sm lg:mb-20">
-            <div className="border-b border-border/60 px-4 py-4 sm:px-5 lg:px-6 lg:py-5">
-                <p className="eyebrow flex items-center gap-2">
-                    <span aria-hidden className="h-px w-6 bg-current opacity-40" />
-                    What Shoppers Say
-                </p>
-                <h2 className="mt-2 font-neue text-[clamp(1.4rem,2.6vw,2rem)] font-medium tracking-[-0.02em] leading-[1.1] text-[var(--brand-primary)]">
-                    Rating &amp; Reviews
-                </h2>
+            <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-border/60 px-4 py-4 sm:px-5 lg:px-6 lg:py-5">
+                <div>
+                    <p className="eyebrow flex items-center gap-2">
+                        <span aria-hidden className="h-px w-6 bg-current opacity-40" />
+                        What Shoppers Say
+                    </p>
+                    <h2 className="mt-1.5 font-neue text-[clamp(1.2rem,2vw,1.6rem)] font-medium tracking-[-0.02em] leading-[1.1] text-[var(--brand-primary)]">
+                        Rating &amp; Reviews
+                    </h2>
+                </div>
+                {totalReview !== null && (
+                    <p className="text-sm text-muted-foreground">
+                        {totalReview} {totalReview === 1 ? 'review' : 'reviews'}
+                    </p>
+                )}
             </div>
-            <div className="p-4 sm:p-5 lg:p-6">
-                {/* Score and the per-star breakdown sit side by side from the
-                    smallest screen up - stacking them pushed the review list a
-                    full extra screen down on a phone. */}
-                <div className='flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8 lg:w-1/2 lg:gap-10'>
-                    <div className='w-full shrink-0 sm:w-[150px] md:w-[180px]'>
-                        <h4 className='text-center text-5xl font-semibold sm:text-6xl md:text-7xl'>{reviewCount?.averageRating ?? '0.0'}</h4>
-                        <div className='mt-1 flex justify-center gap-1 text-[var(--dark-red)]'>
+
+            {/* The summary sits in a fixed rail beside the list instead of above
+                it. Stacked, the score block and the five bars pushed the first
+                review most of a screen down while the right half of the row sat
+                empty - the rail is both shorter and actually uses the width. */}
+            <div className="grid gap-6 p-4 sm:p-5 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:gap-8 lg:p-6">
+                <div className="lg:border-r lg:border-border/60 lg:pr-8">
+                    <div className="flex items-center gap-4">
+                        <p className="font-neue text-[2.75rem] font-semibold leading-none tabular-nums text-foreground">
+                            {averageRating}
+                        </p>
+                        <div className="min-w-0">
+                            <div className="flex gap-0.5">
                                 {Array.from({ length: 5 }).map((_, index) => (
                                     <Star
                                         key={index}
-                                        className={`size-4 ${index < Math.round(Number(reviewCount?.averageRating || 0)) ? 'fill-[var(--dark-red)] text-[var(--dark-red)]' : 'text-foreground/25'}`}
+                                        className={`size-4 ${index < roundedRating ? 'fill-[var(--dark-red)] text-[var(--dark-red)]' : 'text-foreground/25'}`}
                                     />
                                 ))}
                             </div>
-
-                        <p className='text-center mt-3 text-sm text-muted-foreground'>
-                            ({reviewCount?.totalReview || 0} Rating &amp; Reviews)
-                        </p>
+                            <p className="mt-1.5 text-xs text-muted-foreground">
+                                {totalReview ?? 0} rating{totalReview === 1 ? '' : 's'} &amp; reviews
+                            </p>
+                        </div>
                     </div>
 
-                    {/* min-w-0 so the bars shrink inside the flex row instead of
-                        widening it past the card on narrow screens. */}
-                    <div className='min-w-0 flex-1'>
+                    <div className="mt-5 space-y-2">
                         {[5, 4, 3, 2, 1].map(rating => (
-                            <div key={rating} className='mb-2 flex items-center gap-2'>
-                                <div className='flex shrink-0 items-center gap-1 text-[var(--dark-red)]'>
-                                    <p className='w-3 text-foreground'>{rating}</p>
-                                    <Star className="size-3 fill-[var(--dark-red)] text-[var(--dark-red)]" />
-                                </div>
-                                <Progress className='min-w-0 flex-1' value={reviewCount?.percentage?.[rating] || 0} />
-                                <span className='w-6 shrink-0 text-right text-sm text-muted-foreground'>{reviewCount?.rating?.[rating] || 0}</span>
+                            <div key={rating} className="flex items-center gap-2.5">
+                                <span className="w-2.5 text-right text-xs tabular-nums text-muted-foreground">{rating}</span>
+                                <Star aria-hidden className="size-3 shrink-0 fill-[var(--dark-red)] text-[var(--dark-red)]" />
+                                {/* The primitive hard-codes bg-primary on its indicator,
+                                    so the brand tint has to be applied to the child. */}
+                                <Progress
+                                    className="h-1.5 min-w-0 flex-1 [&>*]:bg-[var(--dark-red)]"
+                                    value={reviewCount?.percentage?.[rating] || 0}
+                                    aria-label={`${rating} star reviews`}
+                                />
+                                <span className="w-5 shrink-0 text-right text-xs tabular-nums text-muted-foreground">
+                                    {reviewCount?.rating?.[rating] || 0}
+                                </span>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className='mt-8 border-t border-border/60 pt-5 lg:mt-10'>
-                    <h5 className='font-neue text-[clamp(1.1rem,2vw,1.4rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]'>{data?.pages[0]?.totalReview || 0} Reviews</h5>
+                <div className="min-w-0">
+                    {error && (
+                        <p className="rounded-md border border-dashed border-border/70 bg-muted/20 px-4 py-6 text-center text-sm text-muted-foreground">
+                            Reviews could not be loaded right now.
+                        </p>
+                    )}
 
-                    <div className='mt-6 lg:mt-10'>
-                        {(data?.pages?.[0]?.totalReview ?? 0) === 0 && !isFetching && (
-                            <div className='rounded-md border border-dashed border-border/70 bg-muted/20 px-4 py-8 text-center sm:px-5 sm:py-10'>
-                                <Star className='mx-auto mb-3 size-7 text-foreground/25' />
-                                <p className='font-semibold text-foreground'>No reviews yet</p>
-                                <p className='mt-1 text-sm text-muted-foreground'>Be the first to share your thoughts on this product.</p>
-                            </div>
-                        )}
+                    {!error && !hasLoadedList && (
+                        <div className="space-y-3" aria-hidden>
+                            {[0, 1].map(index => (
+                                <div key={index} className="h-24 animate-pulse rounded-md border border-border/60 bg-muted/20" />
+                            ))}
+                        </div>
+                    )}
 
-                        {data && data.pages.map(page => (
-                            page.reviews.map(review => (
-                                <div className='mb-5' key={review._id}>
-                                    <ReviewList review={review} />
-                                </div>
-                            ))
-                        ))}
+                    {!error && isEmpty && (
+                        <div className="flex flex-col items-center justify-center rounded-md border border-dashed border-border/70 bg-muted/20 px-4 py-8 text-center">
+                            <Star className="mb-2 size-6 text-foreground/25" />
+                            <p className="text-sm font-semibold text-foreground">No reviews yet</p>
+                            <p className="mt-0.5 text-xs text-muted-foreground">
+                                Be the first to share your thoughts on this product.
+                            </p>
+                        </div>
+                    )}
 
-                        {hasNextPage &&
-                            <ButtonLoading text="Load More" type="button" loading={isFetching} onClick={fetchNextPage} variant="brand" className="h-10 text-[0.8rem] font-semibold uppercase" />
-                        }
+                    {!error && hasLoadedList && !isEmpty && (
+                        <div className="space-y-3">
+                            {data?.pages?.map(page => (
+                                page?.reviews?.map(review => (
+                                    <ReviewList key={review._id} review={review} />
+                                ))
+                            ))}
+                        </div>
+                    )}
 
-                    </div>
-
+                    {hasNextPage && (
+                        <div className="mt-4">
+                            <ButtonLoading
+                                text="Load More"
+                                type="button"
+                                loading={isFetching}
+                                onClick={fetchNextPage}
+                                variant="brand"
+                                className="h-10 text-[0.8rem] font-semibold uppercase"
+                            />
+                        </div>
+                    )}
                 </div>
-
-
-
             </div>
         </div>
     )

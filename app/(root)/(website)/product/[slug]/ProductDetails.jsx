@@ -306,19 +306,16 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                         Sticky against the (much taller) info column. `top-24`
                         clears the fixed header; fitting the gallery inside the
                         viewport matters just as much - a sticky box taller than
-                        the screen only pins once its own bottom arrives, which
-                        reads as "not sticky at all". See the size cap below. */}
+                        the screen only pins once its own bottom arrives - here it
+                        pins immediately and the tail of the photo stays below the
+                        fold, which is the trade for a full-width portrait crop. */}
                     <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-                        {/* Capping width - not height - is what keeps the 3/4 crop
-                            intact while still fitting the pinned gallery on screen:
-                            a max-height would just override the aspect-ratio and
-                            flatten the photo towards square. w = h x 3/4, where h is
-                            the viewport minus the sticky offset (and, on lg, minus
-                            the thumb strip that sits below rather than beside). The
-                            max() floor stops a short window shrinking the photo to a
-                            stamp - past that point the gallery is simply taller than
-                            the screen and pins with its bottom off-view. */}
-                        <div className="flex flex-col-reverse gap-3 lg:mx-auto lg:max-w-[max(18rem,calc((100dvh-14rem)*0.75))] xl:max-w-none xl:flex-row xl:gap-4">
+                        {/* No width cap: the photo uses the full track and its 3/4
+                            ratio sets the height, even when that runs past the fold.
+                            Capping either axis was worse - a max-height overrode the
+                            aspect-ratio and flattened the crop towards square, and a
+                            max-width stranded dead space beside it in the track. */}
+                        <div className="flex flex-col-reverse gap-3 xl:flex-row xl:gap-4">
                             <div className="-mx-3 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-3 pb-1 sm:mx-0 sm:gap-3 sm:px-0 xl:max-h-[calc(100dvh-7rem)] xl:w-[84px] xl:flex-col xl:overflow-y-auto xl:pb-0 no-scrollbar">
                                 {media.length > 0 ? media.map((thumb, index) => (
                                     <button
@@ -347,7 +344,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             </div>
 
                             <div
-                                className="group relative flex-1 xl:max-w-[max(24rem,calc((100dvh-7rem)*0.75))]"
+                                className="group relative flex-1"
                                 role="group"
                                 aria-roledescription="carousel"
                                 aria-label={`${product?.name} images`}
@@ -678,33 +675,51 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                     </div>
                 </div>
 
-                {/* ── Full-width How Enquiries Work ────────────────────── */}
+                {/* ── How Enquiries Work ───────────────────────────────────
+                    Reference material, not a feature section, so it is sized like
+                    a footnote: one panel with the title set beside the steps and
+                    the steps running across. As a page-width heading above a stack of
+                    four full-width rows it burned ~440px of height while leaving
+                    most of each line empty. Shares the border/surface tokens with
+                    the trust badges so the two read as the same family. */}
                 <section className="mt-10 lg:mt-14">
-                    <div className="mb-6 lg:mb-8">
-                        <p className="text-[0.85rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[1rem]">
-                            Good To Know
-                        </p>
-                        <h2 className="mt-1.5 font-neue text-[clamp(1.35rem,6vw,2.6rem)] font-medium uppercase leading-[1.15] text-[var(--dark-red-2)]">
-                            How Enquiries Work
-                        </h2>
-                    </div>
-                    <dl className="w-full divide-y divide-border/50">
-                        {[
-                            { label: 'Step 1', text: 'Add the plants and supplies you need to your enquiry list - no account required.' },
-                            { label: 'Step 2', text: 'Submit the enquiry with your contact details and the quantities you want.' },
-                            { label: 'Step 3', text: 'Our team gets back to you with availability and pricing for your requirement.' },
-                            { label: 'Step 4', text: 'We arrange delivery or nursery pickup once the details are confirmed.' },
-                        ].map(({ label, text }) => (
-                            <div key={label} className="flex flex-col gap-1 py-4 first:pt-0 last:pb-0 sm:flex-row sm:gap-6">
-                                <dt className="shrink-0 pt-0.5 text-[0.8rem] font-semibold uppercase text-foreground/45 sm:w-24">
-                                    {label}
-                                </dt>
-                                <dd className="font-neue text-[0.9rem] leading-[1.8] text-[var(--text-body)] sm:text-[0.95rem] sm:leading-[1.85]">
-                                    {text}
-                                </dd>
+                    <div className="rounded-[var(--radius-lg)] border border-border/50 bg-muted/20 px-5 py-5 sm:px-6 sm:py-6 lg:px-7">
+                        <div className="grid gap-5 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:items-center lg:gap-10">
+                            <div>
+                                <p className="text-[0.75rem] font-semibold uppercase text-[var(--dark-red)]/60">
+                                    Good To Know
+                                </p>
+                                <h2 className="mt-1 font-neue text-[1.15rem] font-medium uppercase leading-[1.2] text-[var(--dark-red-2)] sm:text-[1.3rem]">
+                                    How Enquiries Work
+                                </h2>
                             </div>
-                        ))}
-                    </dl>
+
+                            <ol className="grid gap-x-6 gap-y-3.5 sm:grid-cols-2 lg:grid-cols-4">
+                                {[
+                                    'Add the plants and supplies you need to your enquiry list - no account required.',
+                                    'Submit the enquiry with your contact details and the quantities you want.',
+                                    'Our team gets back to you with availability and pricing for your requirement.',
+                                    'We arrange delivery or nursery pickup once the details are confirmed.',
+                                ].map((text, index) => (
+                                    <li key={index} className="flex min-w-0 items-start gap-2.5">
+                                        {/* Preflight strips the list marker, so the numeral is
+                                            drawn here and re-announced via the sr-only label -
+                                            Safari also drops list semantics at list-style:none. */}
+                                        <span
+                                            aria-hidden
+                                            className="mt-px flex size-[1.375rem] shrink-0 items-center justify-center rounded-full bg-[var(--dark-red)]/10 text-[0.7rem] font-semibold tabular-nums text-[var(--dark-red)]"
+                                        >
+                                            {index + 1}
+                                        </span>
+                                        <p className="min-w-0 font-neue text-[0.85rem] leading-[1.5] text-[var(--text-body)]">
+                                            <span className="sr-only">Step {index + 1}: </span>
+                                            {text}
+                                        </p>
+                                    </li>
+                                ))}
+                            </ol>
+                        </div>
+                    </div>
                 </section>
 
 

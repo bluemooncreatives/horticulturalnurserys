@@ -40,7 +40,7 @@ import LazyHydrate from "@/components/Application/LazyHydrate"
 // renders nothing until its own client fetches resolve, so there is no SSR
 // markup to lose.
 const ProductReveiw = dynamic(() => import("@/components/Application/Website/ProductReveiw"), { ssr: false })
-import { cn, decodeHTMLDeep, htmlToText, NO_SIZE_PARAM, normalizeColor } from "@/lib/utils"
+import { cn, decodeHTMLDeep, NO_SIZE_PARAM, normalizeColor } from "@/lib/utils"
 import { resolveColorStyle } from "@/lib/colorMap"
 import { MAX_CART_QTY } from "@/lib/cartConstants"
 
@@ -250,7 +250,10 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
         return query ? `${WEBSITE_PRODUCT_DETAILS(product.slug)}?${query}` : WEBSITE_PRODUCT_DETAILS(product.slug)
     }
 
-    const shortDescription = htmlToText(product?.description)
+    // The full description now lives inside the info column rather than in a
+    // band below the fold, so the clamped teaser that used to sit up here was
+    // dropped - it repeated its own opening lines a few hundred pixels above.
+    const descriptionHtml = decodeHTMLDeep(product?.description)
     const swatches = colorEntries?.length ? colorEntries : (colors || []).map((name) => ({ name, hex: '' }))
 
     const scrollToReviews = () => {
@@ -291,12 +294,22 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                     </Breadcrumb>
                 </div>
 
-                <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12 xl:gap-16">
+                {/* `items-start` is load-bearing: a stretched grid item fills the row,
+                    which leaves the sticky gallery nothing to travel through. The
+                    minmax(0,…) tracks stop long words / wide tables in the
+                    description from forcing the column past its share. */}
+                <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12 xl:gap-16">
 
-                    {/* ── GALLERY ─────────────────────────────────────────── */}
-                    <div className="min-w-0 lg:sticky lg:top-6">
+                    {/* ── GALLERY ─────────────────────────────────────────────
+                        Sticky against the (much taller) info column. `top-24`
+                        clears the fixed header; the height cap matters just as
+                        much - a sticky box taller than the viewport only pins
+                        once its own bottom arrives, which reads as "not sticky
+                        at all". Heights differ per breakpoint because the thumb
+                        strip sits below the photo on lg and beside it on xl. */}
+                    <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
                         <div className="flex flex-col-reverse gap-3 xl:flex-row xl:gap-4">
-                            <div className="-mx-3 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-3 pb-1 sm:mx-0 sm:gap-3 sm:px-0 xl:max-h-[620px] xl:w-[84px] xl:flex-col xl:overflow-y-auto xl:pb-0 no-scrollbar">
+                            <div className="-mx-3 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-3 pb-1 sm:mx-0 sm:gap-3 sm:px-0 xl:max-h-[calc(100dvh-9rem)] xl:w-[84px] xl:flex-col xl:overflow-y-auto xl:pb-0 no-scrollbar">
                                 {media.length > 0 ? media.map((thumb, index) => (
                                     <button
                                         type="button"
@@ -342,7 +355,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                             role="group"
                                             aria-roledescription="slide"
                                             aria-label={`Image ${index + 1} of ${slides.length}`}
-                                            className="relative aspect-[5/6] w-full shrink-0 snap-center snap-always sm:aspect-[4/5]"
+                                            className="relative aspect-[5/6] w-full shrink-0 snap-center snap-always sm:aspect-[4/5] lg:aspect-auto lg:h-[max(420px,calc(100dvh-15rem))] xl:h-[max(440px,calc(100dvh-9rem))]"
                                         >
                                             {/* fetchPriority must be passed explicitly - in Next 15
                                                 `priority` alone emits the preload but not
@@ -434,19 +447,6 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 {ratingAvg > 0 ? `${ratingAvg} · ` : ''}{reviewCount} {reviewCount === 1 ? 'Review' : 'Reviews'}
                             </span>
                         </button>
-
-                        <div className="mt-5 flex flex-wrap items-center gap-3">
-                            <span className="rounded-md bg-[var(--brand-cream)] px-3 py-1.5 text-[13px] font-semibold uppercase text-[var(--dark-red)]">
-                                Price on enquiry
-                            </span>
-                        </div>
-                        <p className="mt-1.5 text-xs text-muted-foreground">Add to your enquiry list and our team will share availability &amp; pricing.</p>
-
-                        {shortDescription && (
-                            <p className="mt-5 line-clamp-3 break-words text-sm leading-relaxed text-[var(--text-body)]">
-                                {shortDescription}
-                            </p>
-                        )}
 
                         <div className="my-6 h-px w-full bg-border/60" />
 
@@ -644,24 +644,29 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             ))}
                         </div>
 
+                        {/* ── Product Details ──────────────────────────────
+                            Kept in this column (not a full-width band below)
+                            so there is enough copy for the gallery to stay
+                            pinned against while it scrolls. The heading is a
+                            step down from the page-level section headings
+                            because it is set in a half-width column. */}
+                        {descriptionHtml && (
+                            <section className="mt-8 border-t border-border/60 pt-7 sm:mt-9 sm:pt-8">
+                                <p className="text-[0.8rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[0.85rem]">
+                                    The Details
+                                </p>
+                                <h2 className="mt-1.5 mb-5 font-neue text-[clamp(1.25rem,4.5vw,1.75rem)] font-medium uppercase leading-[1.15] text-[var(--dark-red-2)]">
+                                    Product Details
+                                </h2>
+                                <div
+                                    className="w-full overflow-hidden break-words font-neue text-[0.9rem] font-normal leading-[1.8] text-[var(--text-body)] sm:text-[0.95rem] sm:leading-[1.85] [&_a]:break-all [&_a]:text-[var(--dark-red)] [&_a]:underline [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[var(--radius-sm)] [&_iframe]:aspect-video [&_iframe]:h-auto [&_iframe]:w-full [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-4 [&_pre]:overflow-x-auto [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5"
+                                    dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+                                />
+                            </section>
+                        )}
+
                     </div>
                 </div>
-
-                {/* ── Full-width Product Details ───────────────────────── */}
-                <section className="mt-10 lg:mt-14">
-                    <div className="mb-6 lg:mb-8">
-                        <p className="text-[0.85rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[1rem]">
-                            The Details
-                        </p>
-                        <h2 className="mt-1.5 font-neue text-[clamp(1.35rem,6vw,2.6rem)] font-medium uppercase leading-[1.15] text-[var(--dark-red-2)]">
-                            Product Details
-                        </h2>
-                    </div>
-                    <div
-                        className="w-full overflow-hidden break-words font-neue text-[0.9rem] font-normal leading-[1.8] text-[var(--text-body)] sm:text-[0.95rem] sm:leading-[1.85] [&_a]:break-all [&_a]:text-[var(--dark-red)] [&_a]:underline [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[var(--radius-sm)] [&_iframe]:aspect-video [&_iframe]:h-auto [&_iframe]:w-full [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-4 [&_pre]:overflow-x-auto [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5"
-                        dangerouslySetInnerHTML={{ __html: decodeHTMLDeep(product?.description) }}
-                    />
-                </section>
 
                 {/* ── Full-width How Enquiries Work ────────────────────── */}
                 <section className="mt-10 lg:mt-14">

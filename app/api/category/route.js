@@ -95,6 +95,9 @@ export async function GET(request) {
                     name: 1,
                     slug: 1,
                     parent: "$parentData.name",
+                    // The id as well as the name: a toolbar that filters
+                    // categories by parent needs something exact to group on.
+                    parentId: "$parentData._id",
                     createdAt: 1,
                     updatedAt: 1,
                     deletedAt: 1

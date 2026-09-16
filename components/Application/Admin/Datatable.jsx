@@ -267,11 +267,11 @@ const Datatable = ({
                 <DataTableToolbar
                     table={table}
                     searchPlaceholder="Search in table..."
-                    className="xl:max-w-2xl"
+                    className="min-w-0 xl:flex-1"
                     filters={typeof toolbarFilters === 'function' ? toolbarFilters(table) : toolbarFilters}
                 />
 
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex shrink-0 flex-wrap items-center gap-2">
                     {deleteType !== 'PD' && trashView && (
                         <Button asChild variant="outline" size="lg">
                             <Link href={trashView}>

@@ -37,10 +37,11 @@ const DataTableToolbar = ({
     return (
         // The row used to be a single non-wrapping line, so a search field, a
         // filter dropdown, Reset and View together pushed past the container on
-        // narrow viewports. It wraps now and the search field keeps a sane
-        // minimum before the controls drop to a second line.
+        // narrow viewports. It wraps now, and the search field holds a fixed
+        // width instead of flexing - as a flex-1 child it resized every time a
+        // filter chip grew or the Reset button appeared.
         <div className={cn('flex w-full flex-wrap items-center gap-2', className)}>
-            <div className="relative min-w-[12rem] flex-1 basis-64">
+            <div className="relative w-full sm:w-72 sm:flex-none">
                 {/* The search box was a bare Input with no affordance and the
                     Reset control appeared as a separate button beside it. The
                     clear affordance now lives inside the field. */}

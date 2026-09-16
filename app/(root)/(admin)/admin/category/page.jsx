@@ -40,7 +40,6 @@ const ShowCategory = () => {
                 table={table}
                 columnId="parent"
                 options={parentOptions}
-                label="Parent"
                 placeholder="All parents"
             />
         ),

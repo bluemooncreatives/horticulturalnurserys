@@ -24,10 +24,6 @@ function Select({
    selected,
    setSelected,
    placeholder = "Select options",
-   // Optional leading label for the trigger, e.g. `Parent` renders
-   // "Parent: Orchids" so a filter chip says what it is filtering on. Only
-   // shown once something is selected, so the placeholder stays clean.
-   prefix,
    isMulti = false,
    className = "",
    // Opt-in: lets the user commit whatever they typed as a new value when it
@@ -103,10 +99,7 @@ function Select({
                        className
                    )}
                >
-                   <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5 pr-2">
-                       {prefix && hasValue ? (
-                           <span className="shrink-0 text-sm text-muted-foreground">{prefix}:</span>
-                       ) : null}
+                   <div className={cn("flex min-w-0 flex-1 items-center gap-1.5 pr-2", isMulti && "flex-wrap")}>
                        {isMulti && isArraySelected ? (
                            selected.map((value) => {
                                const option = safeOptions.find((o) => o.value === value);
@@ -166,7 +159,7 @@ function Select({
            </PopoverTrigger>
            <PopoverContent
                align="start"
-               className="w-[var(--radix-popover-trigger-width)] min-w-[220px] max-w-[min(20rem,calc(100vw-2rem))] p-0 shadow-lg border-border"
+               className="w-auto min-w-[var(--radix-popover-trigger-width)] max-w-[min(24rem,calc(100vw-2rem))] p-0 shadow-lg border-border"
            >
                <Command>
                    <CommandInput

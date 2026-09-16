@@ -17,10 +17,9 @@ const DataTableSelectFilter = ({
     columnId,
     options = [],
     placeholder = 'All',
-    // Shown in the trigger once a value is picked ("Parent: Orchids"), so the
-    // chip states which column it filters instead of sitting in the toolbar as
-    // an unexplained value.
-    label,
+    // Fired after the column filter is updated, for filters that depend on
+    // each other (picking a parent clears a now-unrelated category).
+    onValueChange,
     className,
 }) => {
     const column = table.getColumn(columnId)
@@ -35,13 +34,15 @@ const DataTableSelectFilter = ({
             // undefined (not '') drops the entry from columnFilters entirely, so
             // the request omits it and the toolbar's Reset control disappears
             // once nothing is filtered.
-            setSelected={(value) => column.setFilterValue(value || undefined)}
+            setSelected={(value) => {
+                column.setFilterValue(value || undefined)
+                onValueChange?.(value || undefined)
+            }}
             isMulti={false}
             placeholder={placeholder}
-            prefix={label}
-            // A fixed width with no max-width let a long option name push the
-            // trigger's chevron outside the button and over the Reset control.
-            className={cn('h-9 w-full max-w-full sm:w-[230px]', className)}
+            // Sized to its content: a fixed 190px width clipped longer parent
+            // names and pushed the chevron out of the button, over Reset.
+            className={cn('h-9 w-full sm:w-auto sm:min-w-[11rem] sm:max-w-[20rem]', className)}
         />
     )
 }

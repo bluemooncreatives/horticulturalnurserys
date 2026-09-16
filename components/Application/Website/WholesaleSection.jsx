@@ -175,7 +175,7 @@ const WholesaleSection = () => {
                     href={WHOLESALE_WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="pill pill-lime group shrink-0 self-start lg:self-center"
+                    className="pill pill-compact-m pill-lime group shrink-0 self-start lg:self-center"
                 >
                     <MessageCircle className="size-4" strokeWidth={1.8} />
                     WhatsApp / Call {WHOLESALE_PHONE_DISPLAY}

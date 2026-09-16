@@ -459,7 +459,7 @@ export default function ServiceDetailContent({ service }) {
                 delay={80 + i * 100}
                 className="flex flex-col rounded-[var(--radius-4xl)] bg-[var(--secondary)] p-8 lg:p-10"
               >
-                <h3 className="font-neue text-[clamp(1.3rem,2.4vw,1.75rem)] font-medium tracking-[-0.02em] text-[var(--brand-primary)]">
+                <h3 className="font-neue text-[clamp(1.3rem,2.4vw,1.75rem)] font-medium leading-[1.2] tracking-[-0.02em] text-[var(--brand-primary)] lg:leading-normal">
                   {sector.title}
                 </h3>
                 <p className="mt-4 text-[0.88rem] leading-[1.8] text-[var(--muted-foreground)]">

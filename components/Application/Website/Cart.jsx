@@ -40,7 +40,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                 <SheetTrigger aria-label="Open cart" className="relative flex items-center justify-center rounded-md px-1.5 py-1.5 transition hover:bg-muted/40 sm:px-2.5 sm:py-2">
                     <ShoppingCart className="h-4 w-4 text-foreground sm:h-5 sm:w-5" strokeWidth={1.75} />
                     {cartCount > 0 && (
-                        <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--dark-red)] px-1 text-[0.8rem] font-semibold text-white tabular-nums sm:-right-2 sm:-top-2 sm:h-5 sm:min-w-5 sm:text-[0.8rem]">
+                        <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--dark-red)] px-1 text-[0.8rem] font-semibold text-white tabular-nums sm:-right-2 sm:-top-2 sm:h-5 sm:min-w-5">
                             {cartCount}
                         </span>
                     )}
@@ -57,7 +57,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                             My Enquiry
                         </SheetTitle>
                         {cartCount > 0 && (
-                            <span className="rounded-full bg-[var(--brand-cream)]/60 px-2.5 py-0.5 text-xs font-semibold uppercase text-[var(--brand-primary)] sm:bg-muted/60 sm:text-muted-foreground">
+                            <span className="rounded-[var(--radius-sm)] bg-[var(--brand-cream)]/60 px-2.5 py-0.5 text-xs font-semibold uppercase text-[var(--brand-primary)] sm:bg-muted/60 sm:text-muted-foreground">
                                 {cartCount} {cartCount === 1 ? 'item' : 'items'}
                             </span>
                         )}
@@ -108,7 +108,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                     {/* Details */}
                                     <div className="flex min-w-0 flex-1 flex-col justify-center gap-1.5">
                                         <div className="flex items-start justify-between gap-2">
-                                            <h4 className="line-clamp-2 font-neue text-[13px] font-semibold leading-snug text-foreground">
+                                            <h4 className="line-clamp-2 font-neue text-[0.8rem] font-semibold leading-snug text-foreground">
                                                 {product.name}
                                             </h4>
                                             <button
@@ -124,13 +124,13 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                             </button>
                                         </div>
                                         {(product.size || product.color) && (
-                                            <span className="w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase text-muted-foreground">
+                                            <span className="w-fit rounded-[var(--radius-sm)] bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase text-muted-foreground">
                                                 {[product.size, product.color].filter(Boolean).join(' / ')}
                                             </span>
                                         )}
                                         <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5 pt-1">
                                             {/* Quantity stepper: gainable (+) and deducible (-) */}
-                                            <div className="inline-flex h-7 items-center rounded-full border border-border/70 bg-background shadow-xs">
+                                            <div className="inline-flex h-7 items-center rounded-[var(--radius-sm)] border border-border/70 bg-background shadow-xs">
                                                 <button
                                                     type="button"
                                                     aria-label={product.qty <= 1 ? "Remove from enquiry list" : "Decrease quantity"}
@@ -142,7 +142,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                                             dispatch(decreaseQuantity({ productId: product.productId, variantId: product.variantId }))
                                                         }
                                                     }}
-                                                    className="flex h-7 w-7 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-muted hover:text-foreground cursor-pointer"
+                                                    className="flex h-7 w-7 items-center justify-center rounded-[var(--radius-sm)] text-foreground/70 transition-colors hover:bg-muted hover:text-foreground cursor-pointer"
                                                 >
                                                     {product.qty <= 1 ? <Trash2 className="size-3 text-[var(--dark-red)]" /> : <Minus className="size-3" />}
                                                 </button>
@@ -154,12 +154,12 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                                     aria-label="Increase quantity"
                                                     disabled={product.qty >= MAX_CART_QTY}
                                                     onClick={() => dispatch(increaseQuantity({ productId: product.productId, variantId: product.variantId }))}
-                                                    className="flex h-7 w-7 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
+                                                    className="flex h-7 w-7 items-center justify-center rounded-[var(--radius-sm)] text-foreground/70 transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
                                                 >
                                                     <Plus className="size-3" />
                                                 </button>
                                             </div>
-                                            <span className="font-neue text-[0.72rem] sm:text-[0.75rem] font-medium uppercase text-muted-foreground whitespace-nowrap">
+                                            <span className="font-neue text-[0.75rem] font-medium uppercase text-muted-foreground whitespace-nowrap">
                                                 Price on enquiry
                                             </span>
                                         </div>
@@ -175,17 +175,17 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                     {cart.count > 0 && (
                         <div className="space-y-1.5">
                             <div className="flex items-center justify-between">
-                                <span className="font-neue text-[13px] sm:text-[14px] text-muted-foreground">Items in list</span>
-                                <span className="font-neue text-[13px] sm:text-[14px] font-semibold text-foreground tabular-nums">{cartCount}</span>
+                                <span className="font-neue text-[0.8rem] sm:text-[0.875rem] text-muted-foreground">Items in list</span>
+                                <span className="font-neue text-[0.8rem] sm:text-[0.875rem] font-semibold text-foreground tabular-nums">{cartCount}</span>
                             </div>
                             <div className="flex items-center justify-between">
-                                <span className="font-neue text-[13px] sm:text-[14px] text-muted-foreground">Total quantity</span>
-                                <span className="font-neue text-[13px] sm:text-[14px] font-semibold text-foreground tabular-nums">{totalUnits}</span>
+                                <span className="font-neue text-[0.8rem] sm:text-[0.875rem] text-muted-foreground">Total quantity</span>
+                                <span className="font-neue text-[0.8rem] sm:text-[0.875rem] font-semibold text-foreground tabular-nums">{totalUnits}</span>
                             </div>
                         </div>
                     )}
 
-                    <p className="mt-2.5 rounded-lg bg-muted/40 px-3 py-2 text-center text-[0.78rem] font-medium text-muted-foreground">
+                    <p className="mt-2.5 rounded-lg bg-muted/40 px-3 py-2 text-center text-[0.8rem] font-medium text-muted-foreground">
                         No payment now - submit the list and our team will share pricing.
                     </p>
 
@@ -194,7 +194,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                         <BrandButton
                             type="button"
                             asChild
-                            className="w-full text-sm font-semibold uppercase sm:order-2"
+                            className="h-12 w-full text-[0.9375rem] font-semibold sm:order-2"
                             onClick={() => setOpen(false)}
                         >
                             {cart.count ? (
@@ -208,7 +208,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                         <BrandOutlineButton
                             type="button"
                             asChild
-                            className="w-full text-sm font-semibold uppercase sm:order-1"
+                            className="h-12 w-full text-[0.9375rem] font-semibold sm:order-1"
                             onClick={() => setOpen(false)}
                         >
                             <Link href={WEBSITE_CART}>View List</Link>

@@ -15,14 +15,14 @@ import {
     SheetTitle,
 } from "@/components/ui/sheet"
 import axios from 'axios'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import ProductBox from '@/components/Application/Website/ProductBox'
 import ProductBoxSkeleton from '@/components/Application/Website/ProductBoxSkeleton'
 import ShopPagination from '@/components/Application/Website/ShopPagination'
 import { BrandButton } from '@/components/Application/Website/BrandButton'
 import Link from 'next/link'
-import { PackageSearch, RotateCcw, SlidersHorizontal, Store } from 'lucide-react'
+import { PackageSearch, RotateCcw, SlidersHorizontal, Store, X } from 'lucide-react'
 
 // Storefront shows a denser 5-row (2-col) grid on phones and a 3×3 grid on
 // larger screens. The server pre-renders the first page at the desktop size,
@@ -33,6 +33,7 @@ const MOBILE_PAGE_SIZE = 12
 const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages = 0, initialFilters, initialSearchParamsString = '', heading = 'All Products' }) => {
     const searchParams = useSearchParams()
     const searchParamString = searchParams.toString()
+    const router = useRouter()
     const [sorting, setSorting] = useState('default_sorting')
     const [page, setPage] = useState(0)
     const [isMobileFilter, setIsMobileFilter] = useState(false)
@@ -148,6 +149,47 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
     const showEmptyState = !busy && !error && total === 0
     const resultCount = error ? null : total
 
+    // Applied filters, resolved to display labels. The URL carries slugs
+    // (?parent=plants&category=orchids); the panel has the name lists, so this
+    // maps one to the other and falls back to the raw value for anything it
+    // cannot resolve rather than dropping the chip.
+    const FACET_LABELS = { bestseller: 'Bestsellers', freshly: 'Freshly Arrived', q: 'Search' }
+
+    const activeFilters = (() => {
+        const params = new URLSearchParams(searchParamString)
+        const nameFor = (list, slug) =>
+            (list ?? []).find((entry) => entry?.slug === slug)?.name ?? slug
+        const out = []
+        for (const [key, raw] of params.entries()) {
+            for (const value of String(raw).split(',').filter(Boolean)) {
+                let label = value
+                if (key === 'parent') label = nameFor(initialFilters?.parents, value)
+                else if (key === 'category') label = nameFor(initialFilters?.categories, value)
+                else if (key === 'color') label = value
+                else if (FACET_LABELS[key]) label = key === 'q' ? `"${value}"` : FACET_LABELS[key]
+                out.push({ key, value, label })
+            }
+        }
+        return out
+    })()
+
+    // Number of distinct facets the shopper has applied - drives the count
+    // badge on the mobile Filter trigger and the drawer header.
+    const activeFilterCount = activeFilters.length
+
+    // Drop a single value from a possibly multi-value param, then push the
+    // rewritten query (or the bare shop URL once nothing is left).
+    const removeFilter = (key, value) => {
+        const params = new URLSearchParams(searchParamString)
+        const remaining = String(params.get(key) ?? '')
+            .split(',')
+            .filter((entry) => entry && entry !== value)
+        if (remaining.length) params.set(key, remaining.join(','))
+        else params.delete(key)
+        const qs = params.toString()
+        router.push(qs ? `${WEBSITE_SHOP}?${qs}` : WEBSITE_SHOP, { scroll: false })
+    }
+
     const handlePageChange = (nextPageIndex) => {
         setPage(nextPageIndex)
         requestAnimationFrame(() => {
@@ -157,26 +199,21 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
 
     return (
         <div>
-            <section className="relative isolate h-[105px] overflow-hidden sm:h-[120px] lg:h-[150px]">
-                <div className="absolute inset-0 bg-background" />
-                <div className="absolute inset-x-0 top-14 z-10 flex justify-center sm:top-12 lg:top-16">
-                    <div
-                        className="pointer-events-none select-none font-neue font-semibold uppercase text-[var(--brand-primary)]/90"
-                        style={{
-                            fontSize: "clamp(2.25rem, 8vw, 6.5rem)",
-                            lineHeight: 0.78,
-                            WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)",
-                            maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)",
-                        }}
-                        aria-hidden
-                    >
-                        {heading}
-                    </div>
-                </div>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-5 bg-gradient-to-b from-transparent via-background/50 to-background sm:h-7" />
+            {/* Page title. Previously an aria-hidden div whose gradient mask cut
+                the descenders off mid-letterform on phones and left the page
+                with no h1 at all. Now a real heading: full-opacity type, no
+                mask, and vertical space that comes from padding rather than a
+                fixed pixel height, so it can never clip its own text. */}
+            <section className="website-gutter bg-background pt-24 pb-4 sm:pt-28 sm:pb-5 lg:pt-32 lg:pb-6">
+                <h1
+                    className="font-neue font-semibold uppercase leading-[1.1] tracking-[-0.02em] text-[var(--brand-primary)]"
+                    style={{ fontSize: "clamp(2rem, 6.5vw, 4rem)" }}
+                >
+                    {heading}
+                </h1>
             </section>
 
-            <section className='website-gutter bg-background pt-2 pb-20 sm:pt-4 sm:pb-10 lg:pt-6 lg:pb-14'>
+            <section className='website-gutter bg-background pt-0 pb-20 sm:pb-10 lg:pb-14'>
                 <div className="grid w-full gap-6 lg:grid-cols-[290px_1fr] lg:gap-8">
                     {/* The aside shell always renders (CSS-hidden below lg) so the
                         sidebar column is occupied from the server-rendered first
@@ -195,22 +232,61 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                             <SheetContent side='left' className="flex w-[86%] max-w-sm flex-col gap-0 bg-background p-0">
                                 {/* Header - matches the hamburger menu's sheet chrome (icon + title
                                     stack, same title scale) so the two slide-out panels read as one
-                                    family of components. */}
-                                <SheetHeader className="flex-shrink-0 gap-0 border-b border-black/[0.06] px-5 py-3.5 pr-12">
+                                    family of components. The strapline is screen-reader-only: it
+                                    satisfies Radix's description requirement without spending ~30px
+                                    of a phone's panel on copy that tells the user nothing. */}
+                                <SheetHeader className="flex-shrink-0 gap-0 border-b border-[var(--border)] px-5 py-3.5 pr-12">
                                     <div className="flex items-center gap-2.5">
                                         <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[var(--brand-cream)]/60 text-[var(--brand-primary)]">
                                             <SlidersHorizontal className="size-3.5" strokeWidth={1.75} />
                                         </span>
-                                        <div className="min-w-0">
-                                            <SheetTitle className="font-neue text-[1.125rem] font-semibold leading-tight text-[var(--brand-primary)]">
-                                                Filter
-                                            </SheetTitle>
-                                            <SheetDescription className="mt-0.5 font-neue text-[12px] text-muted-foreground">
-                                                Refine your results quickly.
-                                            </SheetDescription>
-                                        </div>
+                                        <SheetTitle className="flex min-w-0 items-center gap-2 font-neue text-[1.125rem] font-semibold leading-tight text-[var(--brand-primary)]">
+                                            Filter
+                                            {activeFilterCount > 0 && (
+                                                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--brand-primary)] px-1.5 text-[0.75rem] font-semibold text-[var(--brand-white)]">
+                                                    {activeFilterCount}
+                                                </span>
+                                            )}
+                                        </SheetTitle>
+                                        <SheetDescription className="sr-only">
+                                            Refine the product list by type, category and colour.
+                                        </SheetDescription>
                                     </div>
                                 </SheetHeader>
+
+                                {/* Applied filters. Without this the only way to see or undo a
+                                    selection was to scroll the accordions and hunt for the filled
+                                    chip - the panel gave no running summary of its own state. */}
+                                {activeFilters.length > 0 && (
+                                    <div className="flex-shrink-0 border-b border-[var(--border)] bg-background px-4 py-2.5">
+                                        <div className="mb-2 flex items-center justify-between gap-3">
+                                            <span className="font-neue text-[0.75rem] font-semibold uppercase tracking-[0.04em] text-muted-foreground">
+                                                Applied
+                                            </span>
+                                            <Link
+                                                href={WEBSITE_SHOP}
+                                                onClick={() => setIsMobileFilter(false)}
+                                                className="-my-2 flex h-11 shrink-0 items-center px-1 font-neue text-[0.75rem] font-semibold text-[var(--brand-primary)] underline underline-offset-2"
+                                            >
+                                                Clear all
+                                            </Link>
+                                        </div>
+                                        <div className="-mx-4 flex flex-nowrap gap-2 overflow-x-auto px-4 no-scrollbar">
+                                            {activeFilters.map((f) => (
+                                                <button
+                                                    key={f.key + '-' + f.value}
+                                                    type="button"
+                                                    onClick={() => removeFilter(f.key, f.value)}
+                                                    aria-label={'Remove filter ' + f.label}
+                                                    className="inline-flex min-h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-[var(--radius-sm)] border border-[var(--form-field-border)] bg-[var(--brand-white)] px-3 font-neue text-[0.8rem] font-medium text-[var(--brand-primary)]"
+                                                >
+                                                    {f.label}
+                                                    <X className="size-3.5 shrink-0" />
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
 
                                 {/* Scrollable filter body */}
                                 <div className="shop-filter-panel min-h-0 flex-1 overflow-y-auto px-4 py-4">
@@ -220,17 +296,8 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                                 {/* Sticky action footer - one dominant full-width action (matches
                                     the hamburger menu's pinned Cart bar) with Clear All demoted to a
                                     small link above it, rather than two equal-weight buttons. */}
-                                <div className="flex-shrink-0 border-t border-black/[0.06] bg-background p-4">
-                                    {searchParams.size > 0 && (
-                                        <Link
-                                            href={WEBSITE_SHOP}
-                                            onClick={() => setIsMobileFilter(false)}
-                                            className="mb-2.5 block text-center font-neue text-[13px] font-semibold text-muted-foreground transition-colors hover:text-[var(--brand-primary)]"
-                                        >
-                                            Clear All Filters
-                                        </Link>
-                                    )}
-                                    <BrandButton type="button" onClick={() => setIsMobileFilter(false)} className="w-full text-[1rem] tracking-normal">
+                                <div className="flex-shrink-0 border-t border-[var(--border)] bg-background p-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
+                                    <BrandButton type="button" onClick={() => setIsMobileFilter(false)} className="h-12 w-full rounded-[var(--radius-sm)] text-[0.9375rem] font-semibold tracking-normal">
                                         {typeof resultCount === 'number'
                                             ? `Show ${resultCount} ${resultCount === 1 ? 'item' : 'items'}`
                                             : 'Show Results'}
@@ -248,6 +315,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                                 mobileFilterOpen={isMobileFilter}
                                 setMobileFilterOpen={setIsMobileFilter}
                                 resultCount={resultCount}
+                                activeFilterCount={activeFilterCount}
                             />
                         </div>
 

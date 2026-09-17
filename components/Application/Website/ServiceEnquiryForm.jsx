@@ -199,7 +199,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
           Request an on-site horticultural audit
         </h3>
 
-        <p className="mt-3 max-w-2xl text-sm leading-[1.7] text-[var(--muted-foreground)]">
+        <p className="mt-3 max-w-2xl text-sm leading-[1.75] text-[var(--muted-foreground)]">
           {lockService
             ? `A senior horticulturist will examine light, soil, and drainage on your site for ${currentService.title} and draw an itemised plan with zero obligation.`
             : 'Choose a service below. A senior horticulturist will examine light, soil, and drainage on your site and draw an itemised plan with zero obligation.'}
@@ -217,7 +217,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
             Enquiry received for {submittedService?.title || 'Service'}
           </h4>
 
-          <p className="mx-auto mt-2 max-w-lg text-sm leading-[1.7] text-[var(--muted-foreground)]">
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-[1.75] text-[var(--muted-foreground)]">
             Thank you for reaching out. We have registered your request and emailed a confirmation to your address.
             Our supervising horticulturist will contact you within 24 hours to coordinate the site inspection.
           </p>
@@ -314,7 +314,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
                         <h4 className="font-neue text-sm font-medium leading-tight text-[var(--foreground)]">
                           {s.title}
                         </h4>
-                        <p className="mt-0.5 text-xs leading-[1.4] text-[var(--muted-foreground)] line-clamp-1">
+                        <p className="mt-0.5 text-xs leading-[1.35] text-[var(--muted-foreground)] line-clamp-1">
                           {s.tagline}
                         </p>
                       </div>
@@ -509,7 +509,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
             <button
               type="submit"
               disabled={isPending}
-              className="group inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:opacity-60 cursor-pointer"
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--brand-primary)] px-8 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:opacity-60 cursor-pointer"
             >
               {isPending ? (
                 <>

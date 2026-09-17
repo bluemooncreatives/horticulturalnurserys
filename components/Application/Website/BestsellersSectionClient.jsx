@@ -146,7 +146,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                     >
                                                         {cartQty <= 1 ? <Trash2 className="size-3 sm:size-3.5 text-[var(--dark-red)]" /> : <Minus className="size-3 sm:size-3.5" />}
                                                     </button>
-                                                    <span className="flex h-full w-full select-none items-center justify-center text-center font-neue text-[11px] sm:text-xs font-bold leading-none tabular-nums text-foreground">
+                                                    <span className="flex h-full w-full select-none items-center justify-center text-center font-neue text-[0.75rem] sm:text-xs font-bold leading-none tabular-nums text-foreground">
                                                         {cartQty}
                                                     </span>
                                                     <button
@@ -164,7 +164,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                     asChild
                                                     variant="brand"
                                                     size="icon"
-                                                    className="size-8 shrink-0 rounded-lg p-0 sm:h-9 sm:w-auto sm:flex-1 sm:gap-1.5 sm:px-3 sm:text-[0.7rem] uppercase tracking-wide"
+                                                    className="size-8 shrink-0 rounded-lg p-0 sm:h-9 sm:w-auto sm:flex-1 sm:gap-1.5 sm:px-3 sm:text-[0.75rem] uppercase tracking-wide"
                                                 >
                                                     <Link href={WEBSITE_CART} aria-label="Go to cart" title="View Enquiry List" onClick={(e) => e.stopPropagation()}>
                                                         <Check size={14} strokeWidth={2.2} />
@@ -177,7 +177,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                 type="button"
                                                 variant="brand"
                                                 size="pill"
-                                                className="h-8 min-w-0 flex-1 gap-1 rounded-lg px-2.5 text-[0.64rem] uppercase tracking-wide sm:h-9 sm:gap-1.5 sm:px-4 sm:text-[0.72rem]"
+                                                className="h-8 min-w-0 flex-1 gap-1 rounded-lg px-2.5 text-[0.75rem] uppercase tracking-wide sm:h-9 sm:gap-1.5 sm:px-4"
                                                 onClick={(e) => handleAddToCart(e, product)}
                                                 disabled={!product?.defaultVariant}
                                                 aria-label="Add to enquiry list"

@@ -247,9 +247,9 @@
     /* Cards are 2-up here, so the badge is scaled down to match - at the
        full size it crowded the top-left corner of a half-width card. */
     .fp-tag {
-        height: 1.25rem;
-        padding: 0 0.5rem;
-        font-size: 0.6rem;
+        height: 1.5rem;
+        padding: 0 0.625rem;
+        font-size: 0.75rem;
         letter-spacing: 0.1em;
     }
 

@@ -78,7 +78,7 @@ export const FAQ = ({
                             onClick={() => setSelected(key)}
                             className={cn(
                                 'relative overflow-hidden rounded-[var(--radius-pill)] border px-2.5 py-1 sm:px-4 sm:py-2',
-                                'text-[0.62rem] font-semibold uppercase tracking-[0.03em] sm:text-[0.8rem] sm:tracking-normal',
+                                'text-[0.75rem] font-semibold uppercase tracking-[0.03em] sm:text-[0.8rem] sm:tracking-normal',
                                 'transition-colors duration-300',
                                 active
                                     ? 'border-[var(--brand-primary)] text-white'
@@ -144,7 +144,7 @@ const FAQItem = ({ faq }) => {
             >
                 <span
                     className={cn(
-                        'font-neue text-[0.82rem] font-medium leading-[1.3] tracking-[-0.01em] transition-colors duration-300 sm:text-[0.95rem] sm:leading-normal lg:text-[1rem]',
+                        'font-neue text-[0.8rem] font-medium leading-[1.35] tracking-[-0.01em] transition-colors duration-300 sm:text-[0.9375rem] sm:leading-normal lg:text-[1rem]',
                         isOpen ? 'text-[var(--brand-primary)]' : 'text-foreground/80'
                     )}
                 >
@@ -166,7 +166,7 @@ const FAQItem = ({ faq }) => {
                 <div className="overflow-hidden">
                     {/* rows span the full width, but the answer is capped so the
                         line length stays readable on a wide viewport */}
-                    <p className="max-w-3xl px-3 pb-3 text-[0.75rem] leading-snug text-[var(--text-body)] sm:px-4 sm:pb-4 sm:text-[0.84rem] sm:leading-relaxed">
+                    <p className="max-w-3xl px-3 pb-3 text-[0.75rem] leading-snug text-[var(--text-body)] sm:px-4 sm:pb-4 sm:text-[0.875rem] sm:leading-relaxed">
                         {faq.answer}
                     </p>
                 </div>

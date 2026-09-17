@@ -242,7 +242,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+  font-size: clamp(0.75rem, 0.95vw, 0.875rem);
   color: var(--about-accent);
 }
 .profileName {

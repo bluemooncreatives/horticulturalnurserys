@@ -25,11 +25,11 @@ const BenefitsSection = () => {
                 {/* header */}
                 <div className="relative flex flex-col gap-2 sm:gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                        <h2 className="text-[clamp(1.4rem,5vw,2.9rem)] font-medium leading-[1.15] tracking-[-0.02em] text-white sm:mt-3">
+                        <h2 className="text-[clamp(1.4rem,5vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.02em] text-white sm:mt-3">
                             From First Survey To Season After Season
                         </h2>
                     </div>
-                    <p className="max-w-xs text-[0.78rem] leading-relaxed text-white/45 sm:text-[0.82rem]">
+                    <p className="max-w-xs text-[0.8rem] leading-relaxed text-white/45">
                         Landscaping, nursery and supply sit in one house - so nothing is
                         handed off and nothing gets lost between them.
                     </p>
@@ -49,10 +49,10 @@ const BenefitsSection = () => {
                                 <span className="flex size-9 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] sm:size-11">
                                     <item.Icon className="size-4 text-[var(--brand-lime)] sm:size-[18px]" strokeWidth={1.6} />
                                 </span>
-                                <span className="text-[0.72rem] font-medium text-white/30 sm:text-[0.8rem]">[{item.num}]</span>
+                                <span className="text-[0.75rem] font-medium text-white/30 sm:text-[0.8rem]">[{item.num}]</span>
                             </div>
-                            <h3 className="text-[0.9rem] font-medium tracking-[-0.01em] text-white sm:text-[1.05rem]">{item.title}</h3>
-                            <p className="mt-1.5 text-[0.75rem] leading-relaxed text-white/45 sm:mt-2.5 sm:text-[0.82rem]">{item.description}</p>
+                            <h3 className="text-[0.9375rem] font-medium tracking-[-0.01em] text-white sm:text-[1.05rem]">{item.title}</h3>
+                            <p className="mt-1.5 text-[0.75rem] leading-relaxed text-white/45 sm:mt-2.5 sm:text-[0.8rem]">{item.description}</p>
                         </div>
                     ))}
                 </div>

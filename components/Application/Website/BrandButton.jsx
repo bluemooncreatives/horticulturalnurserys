@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-const BASE = 'h-10 w-full rounded-full text-sm font-medium tracking-[-0.01em]'
+const BASE = 'h-10 w-full rounded-[var(--radius-sm)] text-sm font-medium tracking-[-0.01em]'
 
 export const BrandButton = ({ className, ...props }) => (
     <Button

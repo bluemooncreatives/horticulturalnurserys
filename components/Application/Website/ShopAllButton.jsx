@@ -20,7 +20,7 @@ const ShopAllButton = ({
     const router = useRouter()
 
     const { border, fill, hoverText } = SCHEMES[colorScheme] ?? SCHEMES.black
-    const radiusClass = radius === "sm" ? "rounded-sm" : radius === "md" ? "rounded-md" : "rounded-full"
+    const radiusClass = radius === "sm" ? "rounded-sm" : radius === "md" ? "rounded-md" : "rounded-[var(--radius-sm)]"
 
     return (
         <button

@@ -74,10 +74,10 @@ function TestimonialCard({ item, index }) {
       </div>
 
       <figcaption className="mt-7 border-t border-black/[0.08] pt-4">
-        <span className="block text-[0.95rem] font-semibold text-[#111111]">
+        <span className="block text-[0.9375rem] font-semibold text-[#111111]">
           {item.name}
         </span>
-        <span className="mt-0.5 block text-[0.825rem] font-normal text-black/50">
+        <span className="mt-0.5 block text-[0.8rem] font-normal text-black/50">
           {roleText}
         </span>
       </figcaption>
@@ -123,7 +123,7 @@ export default function TestimonialClient({ testimonials = [] }) {
 
         <h2
           id="testimonials-title"
-          className="mt-4 font-neue text-4xl font-medium leading-[0.95] tracking-tight text-[#111111] sm:text-5xl lg:text-[3.6rem] text-center"
+          className="mt-4 font-neue text-4xl font-medium leading-[0.9] tracking-tight text-[#111111] sm:text-5xl lg:text-[3.6rem] text-center"
         >
           <RevealLines items={['Loved by', 'our garden owners']} className="text-center" />
         </h2>

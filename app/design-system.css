@@ -294,10 +294,10 @@
 
    Deliberately NOT reduced:
      --radius-full  true circles (avatars, icon buttons, dots, badges)
-     --radius-pill  pill buttons and filter chips
-   Both are shape choices rather than radius magnitudes; shrinking
-   them turns circles into squircles rather than tightening corners.
-   To flatten those too, give them a fixed value (e.g. 8px).
+   --radius-pill used to sit alongside it at 9999px, but the button
+   language is no longer capsule-shaped, so it now resolves to the
+   tight radius. Anything that must stay a true circle reads
+   --radius-full directly (see .icon-round).
    ──────────────────────────────────────────────────────────────── */
 :root {
   --radius:    var(--admin-shell-radius);              /* 4px - admin/shadcn base */
@@ -312,7 +312,7 @@
   --radius-full:9999px;
 
   /* ── Website-scale semantic radii ── */
-  --radius-pill:    9999px;   /* fully-round buttons & filter chips             */
+  --radius-pill:    var(--radius-sm);   /* buttons & filter chips - tight, not capsule */
   --radius-card:    0.5rem;   /* 8px   default card                            */
   --radius-panel:   0.5rem;   /* 8px   large panel / nav container             */
   --radius-section: 0.625rem; /* 10px  full-bleed dark section                 */
@@ -765,6 +765,23 @@ body {
   to   { background-position:  200% 0; }
 }
 
+/* Instagram reels marquee - the track holds two copies of the reel list and
+   translates by exactly half its width, so the loop is seamless. Lives here
+   rather than in a styled-jsx block inside the component so the animation and
+   the track's layout are both present in the server-rendered first paint. */
+@keyframes insta-marquee {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.instagram-track {
+  animation: insta-marquee 36s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .instagram-track { animation: none; }
+}
+
 
 /* ────────────────────────────────────────────────────────────────
    22. LUMÓRA COMPONENT UTILITIES
@@ -829,17 +846,21 @@ body {
   }
 }
 
-/* Tag / filter chip - small pill, outlined by default. Lime at rest, lifts
+/* Tag / filter chip - small capsule, outlined by default. Lime at rest, lifts
    and brightens to the hover shade on hover - same colour/transform
    transitions (`--transition-colors` + `--transition-transform`) already
-   used for the pill buttons and card hovers elsewhere in this file. */
+   used for the card hovers elsewhere in this file.
+
+   Reads --radius-full rather than --radius-pill: these chips are deliberately
+   still capsule-shaped, whereas --radius-pill now resolves to the tight
+   radius for the squared-off button language. */
 .tag-chip {
   display:         inline-flex;
   align-items:     center;
   gap:             0.375rem;
   height:          1.9rem;
   padding-inline:  0.85rem;
-  border-radius:   var(--radius-pill);
+  border-radius:   var(--radius-full);
   border:          1px solid color-mix(in srgb, currentColor 26%, transparent);
   color:           var(--brand-lime);
   font-size:       var(--text-sm);
@@ -860,14 +881,16 @@ body {
   border-radius:  var(--radius-section);
 }
 
-/* Circular icon button (back-to-top, arrows) */
+/* Circular icon button (back-to-top, arrows). Uses --radius-full, not
+   --radius-pill: this one is a true circle and must stay one even though
+   the pill token now resolves to the tight square-ish radius. */
 .icon-round {
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
   width:           2.75rem;
   height:          2.75rem;
-  border-radius:   var(--radius-pill);
+  border-radius:   var(--radius-full);
   border:          1px solid color-mix(in srgb, currentColor 26%, transparent);
   transition:      var(--transition-colors), transform var(--duration-normal) var(--ease-out);
 }

@@ -162,7 +162,7 @@
 /* ── Caption Typography with Padding ─────────────────────────────────────── */
 .itemName {
   margin-top: 1rem;
-  font-size: clamp(0.76rem, 0.9vw, 0.86rem);
+  font-size: clamp(0.75rem, 0.9vw, 0.875rem);
   font-weight: 600;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -236,7 +236,7 @@
 
   .itemName {
     margin-top: 0.85rem;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
   }
 }
 

@@ -6,26 +6,50 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Skeleton } from '@/components/ui/skeleton'
-import { ChevronDown, Crown, Sparkles, X } from 'lucide-react'
+import { Check, ChevronDown, Crown, Sparkles, X } from 'lucide-react'
 import { resolveColorStyle } from '@/lib/colorMap'
 
-// Pulsing pill placeholders shown while a facet's options are still loading -
+// Pulsing placeholders shown while a facet's options are still loading -
 // reads as "content incoming" rather than the dead "Loading..." text it replaces.
 const ChipSkeletons = ({ count = 4 }) => (
-    <div className="flex flex-wrap gap-2">
+    <div className="space-y-1">
         {Array.from({ length: count }).map((_, index) => (
-            <Skeleton key={index} className="h-8 w-20 rounded-full" />
+            <Skeleton key={index} className="h-9 w-full rounded-[var(--radius-sm)] lg:h-8" />
         ))}
     </div>
 )
 
-// Shared pill-chip look for the Category facet - filled brand-green
-// when selected, outlined neutral otherwise.
-const chipClass = (active) =>
-    `inline-flex items-center rounded-full border px-3.5 py-1.5 text-[0.8rem] font-semibold transition ${active
-        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
-        : 'border-border/70 bg-background text-[var(--brand-primary)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]'
+// A facet option is a plain row: small square indicator, label, count. No
+// capsule, no per-item border - the only chrome is the checkbox and a hover
+// wash, so a long option reads as a line of text rather than a lozenge.
+const rowClass = (active) =>
+    `flex min-h-11 w-full items-center gap-2.5 rounded-[var(--radius-sm)] px-2 text-left text-[0.875rem] transition-colors lg:min-h-9 lg:text-[0.8rem] ${active
+        ? 'bg-[var(--secondary)] font-semibold text-[var(--brand-primary)]'
+        : 'font-medium text-[var(--brand-primary)]/80 hover:bg-[var(--secondary)]/60'
     }`
+
+// 16px square that fills in when the option is on. Deliberately square, not
+// round - a circle would read as a radio (pick one) rather than a checkbox.
+const Tick = ({ active }) => (
+    <span
+        aria-hidden
+        className={`flex size-4 shrink-0 items-center justify-center rounded-[2px] border transition-colors ${active
+            ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-[var(--brand-white)]'
+            : 'border-[var(--form-field-border)] bg-[var(--brand-white)]'
+        }`}
+    >
+        {active && <Check className="size-3" strokeWidth={3} />}
+    </span>
+)
+
+// Count sits right-aligned so the numbers form a column down the panel.
+const RowCount = ({ value }) => (
+    value === undefined || value === null ? null : (
+        <span className="ml-auto shrink-0 text-[0.75rem] font-medium tabular-nums text-muted-foreground">
+            {value}
+        </span>
+    )
+)
 
 const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
     const searchParams = useSearchParams()
@@ -153,6 +177,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
 
     return (
         <div className="space-y-6 text-sm font-neue">
+            {(showTitle || (hasFilters && showClearLink)) && (
             <div className="flex items-center justify-between gap-3">
                 {showTitle && (
                     <h3 className="flex items-center gap-2 font-header text-xl font-semibold tracking-tight text-[var(--brand-primary)]">
@@ -173,15 +198,17 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                     </Button>
                 )}
             </div>
+            )}
 
-            <div className="flex flex-wrap gap-2">
+            <div className="space-y-0.5">
                 <button
                     type="button"
                     onClick={handleBestsellerFilter}
                     aria-pressed={bestsellerOnly}
-                    className={chipClass(bestsellerOnly) + ' gap-1.5'}
+                    className={rowClass(bestsellerOnly)}
                 >
-                    <Crown className="size-3.5" />
+                    <Tick active={bestsellerOnly} />
+                    <Crown className="size-4 shrink-0 opacity-70" />
                     Bestsellers
                 </button>
 
@@ -189,9 +216,10 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                     type="button"
                     onClick={handleFreshlyArrivedFilter}
                     aria-pressed={freshlyArrivedOnly}
-                    className={chipClass(freshlyArrivedOnly) + ' gap-1.5'}
+                    className={rowClass(freshlyArrivedOnly)}
                 >
-                    <Sparkles className="size-3.5" />
+                    <Tick active={freshlyArrivedOnly} />
+                    <Sparkles className="size-4 shrink-0 opacity-70" />
                     Freshly Arrived
                 </button>
             </div>
@@ -202,8 +230,8 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                 className="space-y-1"
             >
                 {(!parentsReady || parents.length > 0) && (
-                    <AccordionItem value="parent" className="border-b border-border/60 py-1">
-                        <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                    <AccordionItem value="parent" className="border-b border-[var(--border)] py-1">
+                        <AccordionTrigger className="group flex min-h-11 w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[1rem] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline lg:min-h-0 lg:text-[0.9375rem] [&_[data-slot=accordion-trigger-icon]]:hidden">
                             <span className="flex items-center gap-2">
                                 By Type
                                 {selectedParent.length > 0 && (
@@ -218,21 +246,23 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                             {!parentsReady ? (
                                 <ChipSkeletons count={5} />
                             ) : (
-                                <div className="flex flex-wrap gap-2">
-                                    {parents.map((parent) => (
-                                        <button
-                                            key={parent._id}
-                                            type="button"
-                                            onClick={() => handleParentFilter(parent.slug)}
-                                            aria-pressed={selectedParent.includes(parent.slug)}
-                                            className={chipClass(selectedParent.includes(parent.slug))}
-                                        >
-                                            {parent.name}
-                                            <span className="ml-1.5 text-[0.7rem] font-medium opacity-60">
-                                                {parent.productCount}
-                                            </span>
-                                        </button>
-                                    ))}
+                                <div className="space-y-0.5">
+                                    {parents.map((parent) => {
+                                        const active = selectedParent.includes(parent.slug)
+                                        return (
+                                            <button
+                                                key={parent._id}
+                                                type="button"
+                                                onClick={() => handleParentFilter(parent.slug)}
+                                                aria-pressed={active}
+                                                className={rowClass(active)}
+                                            >
+                                                <Tick active={active} />
+                                                <span className="min-w-0">{parent.name}</span>
+                                                <RowCount value={parent.productCount} />
+                                            </button>
+                                        )
+                                    })}
                                 </div>
                             )}
                         </AccordionContent>
@@ -240,8 +270,8 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                 )}
 
                 {(!categoriesReady || categories.length > 0) && (
-                    <AccordionItem value="category" className="border-b border-border/60 py-1">
-                        <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                    <AccordionItem value="category" className="border-b border-[var(--border)] py-1">
+                        <AccordionTrigger className="group flex min-h-11 w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[1rem] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline lg:min-h-0 lg:text-[0.9375rem] [&_[data-slot=accordion-trigger-icon]]:hidden">
                             <span className="flex items-center gap-2">
                                 By Category
                                 {selectedCategory.length > 0 && (
@@ -256,18 +286,22 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                             {!categoriesReady ? (
                                 <ChipSkeletons />
                             ) : (
-                                <div className="flex flex-wrap gap-2">
-                                    {categories.map((category) => (
-                                        <button
-                                            key={category._id}
-                                            type="button"
-                                            onClick={() => handleCategoryFilter(category.slug)}
-                                            aria-pressed={selectedCategory.includes(category.slug)}
-                                            className={chipClass(selectedCategory.includes(category.slug))}
-                                        >
-                                            {category.name}
-                                        </button>
-                                    ))}
+                                <div className="space-y-0.5">
+                                    {categories.map((category) => {
+                                        const active = selectedCategory.includes(category.slug)
+                                        return (
+                                            <button
+                                                key={category._id}
+                                                type="button"
+                                                onClick={() => handleCategoryFilter(category.slug)}
+                                                aria-pressed={active}
+                                                className={rowClass(active)}
+                                            >
+                                                <Tick active={active} />
+                                                <span className="min-w-0">{category.name}</span>
+                                            </button>
+                                        )
+                                    })}
                                 </div>
                             )}
                         </AccordionContent>
@@ -275,8 +309,8 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                 )}
 
                 {(!colorsReady || colors.length > 0) && (
-                    <AccordionItem value="color" className="border-b border-border/60 py-1">
-                        <AccordionTrigger className="group flex w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[15px] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                    <AccordionItem value="color" className="border-b border-[var(--border)] py-1">
+                        <AccordionTrigger className="group flex min-h-11 w-full items-center justify-between rounded-[var(--radius-2xl)] px-2 py-2.5 text-[1rem] font-semibold text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)] hover:no-underline lg:min-h-0 lg:text-[0.9375rem] [&_[data-slot=accordion-trigger-icon]]:hidden">
                             <span className="flex items-center gap-2">
                                 Color
                                 {selectedColor.length > 0 && (
@@ -291,7 +325,7 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                             {!colorsReady ? (
                                 <ChipSkeletons count={6} />
                             ) : (
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-2">
                                 {colors.map((colorItem, index) => {
                                     // Colors arrive as { name, hex }. Older cached payloads may still
                                     // be plain strings, so accept both shapes defensively.
@@ -309,17 +343,17 @@ const Filter = ({ filters, showClearLink = true, showTitle = true }) => {
                                             onClick={() => handleColorFilter(colorName)}
                                             aria-pressed={active}
                                             title={colorName}
-                                            className={`flex size-9 items-center justify-center rounded-full border-2 transition ${active ? 'border-[var(--brand-primary)]' : 'border-transparent hover:border-border'}`}
+                                            className={`relative flex size-11 items-center justify-center rounded-[var(--radius-sm)] border transition lg:size-9 ${active ? 'border-[var(--brand-primary)] ring-1 ring-[var(--brand-primary)]' : 'border-[var(--form-field-border)] hover:border-[var(--brand-primary)]'}`}
                                         >
                                             {swatchStyle ? (
                                                 <span
-                                                    className="size-7 rounded-full border border-black/15"
+                                                    className="size-7 rounded-[2px] border border-black/15 lg:size-6"
                                                     style={swatchStyle}
                                                     aria-hidden
                                                 />
                                             ) : (
                                                 <span
-                                                    className="size-7 rounded-full border border-black/15 bg-[repeating-linear-gradient(45deg,#e5e7eb,#e5e7eb_2px,#fff_2px,#fff_4px)]"
+                                                    className="size-7 rounded-[2px] border border-black/15 bg-[repeating-linear-gradient(45deg,#e5e7eb,#e5e7eb_2px,#fff_2px,#fff_4px)] lg:size-6"
                                                     aria-hidden
                                                 />
                                             )}

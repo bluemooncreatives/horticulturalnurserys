@@ -327,60 +327,84 @@ const AboutUsSection = () => {
         // and while pinned the heading illuminates line by line and the stat
         // cards play their live reveals/counters. Once the hold finishes, the
         // pin releases and the following sections open up on scroll.
-        mm.add('(prefers-reduced-motion: no-preference)', () => {
-            gsap.fromTo(
-                statementRef.current,
-                { yPercent: 12 },
-                { yPercent: 0, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
-            )
-            gsap.fromTo(
-                statsRef.current,
-                { yPercent: 6, scale: 0.98, autoAlpha: 0.8 },
-                { yPercent: 0, scale: 1, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
-            )
+        // Desktop pins the section and plays the scrubs against that held
+        // frame. Phones keep every scrub but drop the pin: locking a small
+        // viewport for 140% of its height reads as the page having frozen, and
+        // `pinSpacing` adds that much empty scroll on top. Unpinned, the same
+        // timelines are keyed to the content's own travel through the viewport,
+        // so the heading still illuminates line by line as it passes - it is
+        // driven by scroll position either way, just without the hold.
+        mm.add(
+            {
+                motionOk:  '(prefers-reduced-motion: no-preference)',
+                isDesktop: '(min-width: 1024px)',
+            },
+            (ctx) => {
+                const { motionOk, isDesktop } = ctx.conditions
+                if (!motionOk) return
 
-            // Pin the section to lock the screen
-            const pin = ScrollTrigger.create({
-                trigger: root,
-                start: 'top top',
-                end: '+=140%',
-                pin: true,
-                pinSpacing: true,
-            })
+                gsap.fromTo(
+                    statementRef.current,
+                    { yPercent: 12 },
+                    { yPercent: 0, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
+                )
+                gsap.fromTo(
+                    statsRef.current,
+                    { yPercent: 6, scale: 0.98, autoAlpha: 0.8 },
+                    { yPercent: 0, scale: 1, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: root, start: 'top bottom', end: 'top top', scrub: true } }
+                )
 
-            // Heading line brighten scrub across the pinned hold
-            const disposeFill = makeLineFill({
-                trigger: root,
-                start: 'top top',
-                end: '+=140%',
-                scrub: true,
-            })
+                // Pin the section to lock the screen - desktop only.
+                const pin = isDesktop
+                    ? ScrollTrigger.create({
+                        trigger: root,
+                        start: 'top top',
+                        end: '+=140%',
+                        pin: true,
+                        pinSpacing: true,
+                    })
+                    : null
 
-            makeCardOne({
-                pass: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
-                settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
-                drift: 4,
-            })
-            makeCardTwo({
-                pass: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
-                settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
-                count: { trigger: root, start: 'top top', end: '+=140%', scrub: true },
-            })
-            makeCardThree({
-                settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
-                hold: { trigger: root, start: 'top top', end: '+=140%', scrub: true },
-            })
-            makeCardFour({
-                settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
-                hold: { trigger: root, start: 'top top', end: '+=140%', scrub: true },
-            })
+                // The pinned hold gives desktop a fixed 140% window to scrub
+                // through. Without it, each scrub runs over the element's own
+                // pass through the viewport so it still completes on screen.
+                const headingScrub = isDesktop
+                    ? { trigger: root, start: 'top top', end: '+=140%', scrub: true }
+                    : { trigger: statementRef.current, start: 'top 85%', end: 'bottom 50%', scrub: true }
 
-            ScrollTrigger.refresh()
-            return () => {
-                disposeFill()
-                pin.kill()
+                const statsScrub = isDesktop
+                    ? { trigger: root, start: 'top top', end: '+=140%', scrub: true }
+                    : { trigger: statsRef.current, start: 'top 90%', end: 'bottom 60%', scrub: true }
+
+                // Heading line brighten scrub
+                const disposeFill = makeLineFill(headingScrub)
+
+                makeCardOne({
+                    pass: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
+                    settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
+                    drift: 4,
+                })
+                makeCardTwo({
+                    pass: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
+                    settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
+                    count: statsScrub,
+                })
+                makeCardThree({
+                    settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
+                    hold: statsScrub,
+                })
+                makeCardFour({
+                    settle: { trigger: root, start: 'top 80%', end: 'top 30%', scrub: true },
+                    hold: statsScrub,
+                })
+
+                ScrollTrigger.refresh()
+                return () => {
+                    disposeFill()
+                    pin?.kill()
+                }
             }
-        })
+        )
 
         return () => mm.revert()
     }, [])
@@ -396,7 +420,7 @@ const AboutUsSection = () => {
                         About Company
                     </span>
                     <div>
-                    <h2 className="max-w text-[clamp(1.5rem,3.4vw,2.35rem)] font-medium leading-[1.32] tracking-[-0.01em] text-[var(--brand-primary)]">
+                    <h2 className="max-w text-[clamp(1.5rem,3.4vw,2.35rem)] font-medium leading-[1.35] tracking-[-0.01em] text-[var(--brand-primary)]">
                         {HEADING.split(' ').map((word, wi, arr) => (
                             <span
                                 key={wi}
@@ -407,7 +431,7 @@ const AboutUsSection = () => {
                             </span>
                         ))}
                     </h2>
-                    <p className="mt-3 text-[0.85rem] text-[var(--muted-foreground)]">
+                    <p className="mt-3 text-[0.875rem] text-[var(--muted-foreground)]">
                         {NOTABLE_PROJECTS}
                     </p>
                     </div>
@@ -516,7 +540,7 @@ const AboutUsSection = () => {
                         className="about-stat about-card-three flex min-h-[11.5rem] flex-col justify-between rounded-[var(--radius-card)] border border-[var(--border)] bg-white p-4 will-change-transform lg:min-h-[13rem] lg:p-5"
                         style={{ perspective: '900px' }}
                     >
-                        <p className="about-c3-copy text-[0.92rem] leading-snug text-[var(--brand-ink)]">
+                        <p className="about-c3-copy text-[0.9375rem] leading-snug text-[var(--brand-ink)]">
                             One potted plant at the Alipore counter or an entire township
                             landscape - both are grown on the same farm at Bibirhut.
                         </p>

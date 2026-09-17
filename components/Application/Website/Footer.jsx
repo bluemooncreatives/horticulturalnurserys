@@ -79,7 +79,7 @@ const contactItems = [
 // Small uppercase column heading. Tracking is set explicitly here rather than
 // left to `.eyebrow`, which is tuned for the light sections.
 const ColumnHeading = ({ children }) => (
-    <p className="text-[0.7rem] font-semibold uppercase tracking-normal text-white/40">
+    <p className="text-[0.75rem] font-semibold uppercase tracking-normal text-white/40">
         {children}
     </p>
 )
@@ -115,7 +115,7 @@ const Footer = ({ categoryLinks = [] }) => {
 
                 {/* ── Wordmark ── */}
                 <div className="flex flex-col gap-4 border-b border-white/10 pb-6 sm:gap-6 sm:pb-8 sm:flex-row sm:items-start sm:justify-between lg:pb-10">
-                    <h2 className="font-wordmark leading-[0.84] text-white">
+                    <h2 className="font-wordmark leading-[0.9] text-white">
                         <span className="block text-[clamp(2.4rem,10vw,6.4rem)]">Horticultural</span>
                         <span className="block text-[clamp(1.15rem,4.9vw,3.15rem)]">Development Centre</span>
                     </h2>
@@ -172,7 +172,7 @@ const Footer = ({ categoryLinks = [] }) => {
                     <div className="grid grid-cols-2 gap-x-5 gap-y-5 sm:gap-x-8 sm:gap-y-7 lg:grid-cols-4">
                         {contactItems.map(({ Icon, label, lines }) => (
                             <div key={label}>
-                                <p className="flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-normal text-white/35">
+                                <p className="flex items-center gap-1.5 text-[0.75rem] font-semibold uppercase tracking-normal text-white/35">
                                     <Icon className="size-3.5" strokeWidth={1.7} />
                                     {label}
                                 </p>
@@ -199,7 +199,7 @@ const Footer = ({ categoryLinks = [] }) => {
 
                     {/* Wholesale despatch note + back-to-top */}
                     <div className="mt-6 flex items-center justify-between gap-3 rounded-[var(--radius-2xl)] border border-white/10 bg-white/[0.03] px-4 py-3 sm:mt-8 sm:gap-4 sm:px-5 sm:py-4 lg:mt-10">
-                        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.82rem] tracking-normal text-white/50">
+                        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8rem] tracking-normal text-white/50">
                             <Truck className="size-4 shrink-0 text-[var(--brand-lime)]" strokeWidth={1.7} />
                             Wholesale despatch all over India
                             <span aria-hidden className="text-white/20">·</span>

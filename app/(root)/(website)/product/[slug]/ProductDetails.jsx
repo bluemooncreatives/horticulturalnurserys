@@ -266,9 +266,9 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
         <section className="website-gutter bg-[linear-gradient(180deg,rgba(11,11,11,0.03),transparent_18%)] pb-8 pt-20 lg:pb-12 lg:pt-24">
             <div className="w-full font-neue">
 
-                <div className="mb-6 lg:mb-8">
+                <div className="mb-6 -mx-[var(--website-gutter)] overflow-x-auto px-[var(--website-gutter)] no-scrollbar lg:mx-0 lg:overflow-visible lg:px-0 lg:mb-8">
                     <Breadcrumb>
-                        <BreadcrumbList>
+                        <BreadcrumbList className="flex-nowrap whitespace-nowrap text-[0.75rem] sm:text-sm">
                             <BreadcrumbItem>
                                 <BreadcrumbLink href="/">Home</BreadcrumbLink>
                             </BreadcrumbItem>
@@ -298,7 +298,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             )}
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>
-                                <BreadcrumbPage className="max-w-[50vw] truncate sm:max-w-none">{product?.name}</BreadcrumbPage>
+                                <BreadcrumbPage className="whitespace-nowrap">{product?.name}</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
@@ -463,7 +463,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             )}
                         </div>
 
-                        <h1 className="font-header mt-2 break-words text-[1.6rem] leading-[1.15] tracking-[-0.02em] text-foreground sm:text-[2rem] sm:leading-[1.1] lg:text-[2.25rem]">
+                        <h1 className="font-header mt-2 break-words text-[1.6rem] leading-[1.1] tracking-[-0.02em] text-foreground sm:text-[2rem] sm:leading-[1.1] lg:text-[2.25rem]">
                             {product?.name}
                         </h1>
 
@@ -573,7 +573,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 type="button"
                                 variant="brand"
                                 disabled
-                                className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-2 text-[0.72rem] font-semibold uppercase sm:px-4 sm:text-[0.8rem]"
+                                className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-3 text-[0.875rem] font-semibold uppercase tracking-[0.04em] sm:px-4"
                             >
                                 Unavailable
                             </Button>
@@ -607,7 +607,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                         type="button"
                                         text="Add To Enquiry"
                                         variant="brand"
-                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-2 text-[0.72rem] font-semibold uppercase sm:px-4 sm:text-[0.8rem]"
+                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-3 text-[0.875rem] font-semibold uppercase tracking-[0.04em] sm:px-4"
                                         onClick={handleAddToCart}
                                     />
                                 </div>
@@ -639,7 +639,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 <div className="flex-1">
                                     <Button
                                         variant="brand"
-                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-2 text-[0.72rem] font-semibold uppercase sm:px-4 sm:text-[0.8rem]"
+                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-3 text-[0.875rem] font-semibold uppercase tracking-[0.04em] sm:px-4"
                                         type="button"
                                         asChild
                                     >
@@ -682,14 +682,14 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             because it is set in a half-width column. */}
                         {descriptionHtml && (
                             <section className="mt-8 border-t border-border/60 pt-7 sm:mt-9 sm:pt-8">
-                                <p className="text-[0.8rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[0.85rem]">
+                                <p className="text-[0.8rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[0.875rem]">
                                     The Details
                                 </p>
-                                <h2 className="mt-1.5 mb-5 font-neue text-[clamp(1.25rem,4.5vw,1.75rem)] font-medium uppercase leading-[1.15] text-[var(--dark-red-2)]">
+                                <h2 className="mt-1.5 mb-5 font-neue text-[clamp(1.25rem,4.5vw,1.75rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]">
                                     Product Details
                                 </h2>
                                 <div
-                                    className="w-full overflow-hidden break-words font-neue text-[0.9rem] font-normal leading-[1.8] text-[var(--text-body)] sm:text-[0.95rem] sm:leading-[1.85] [&_a]:break-all [&_a]:text-[var(--dark-red)] [&_a]:underline [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[var(--radius-sm)] [&_iframe]:aspect-video [&_iframe]:h-auto [&_iframe]:w-full [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-4 [&_pre]:overflow-x-auto [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5"
+                                    className="w-full overflow-hidden break-words font-neue text-[0.9375rem] font-normal leading-[1.75] text-[var(--text-body)] sm:leading-[1.75] [&_a]:break-all [&_a]:text-[var(--dark-red)] [&_a]:underline [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[var(--radius-sm)] [&_iframe]:aspect-video [&_iframe]:h-auto [&_iframe]:w-full [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-4 [&_pre]:overflow-x-auto [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5"
                                     dangerouslySetInnerHTML={{ __html: descriptionHtml }}
                                 />
                             </section>
@@ -730,11 +730,11 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                             Safari also drops list semantics at list-style:none. */}
                                         <span
                                             aria-hidden
-                                            className="mt-px flex size-[1.375rem] shrink-0 items-center justify-center rounded-full bg-[var(--dark-red)]/10 text-[0.7rem] font-semibold tabular-nums text-[var(--dark-red)]"
+                                            className="mt-px flex size-[1.375rem] shrink-0 items-center justify-center rounded-full bg-[var(--dark-red)]/10 text-[0.75rem] font-semibold tabular-nums text-[var(--dark-red)]"
                                         >
                                             {index + 1}
                                         </span>
-                                        <p className="min-w-0 font-neue text-[0.85rem] leading-[1.5] text-[var(--text-body)]">
+                                        <p className="min-w-0 font-neue text-[0.875rem] leading-[1.6] text-[var(--text-body)]">
                                             <span className="sr-only">Step {index + 1}: </span>
                                             {text}
                                         </p>
@@ -757,10 +757,10 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                 {relatedProducts.length > 0 && (
                     <section className="mt-10 lg:mt-16">
                         <div className="mb-6 lg:mb-10">
-                            <p className="text-[0.85rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[1rem]">
+                            <p className="text-[0.875rem] font-semibold uppercase text-[var(--dark-red)]/60 sm:text-[1rem]">
                                 Curated For You
                             </p>
-                            <h2 className="mt-1.5 font-neue text-[clamp(1.35rem,6vw,2.6rem)] font-medium uppercase leading-[1.15] text-[var(--dark-red-2)]">
+                            <h2 className="mt-1.5 font-neue text-[clamp(1.35rem,6vw,2.6rem)] font-medium uppercase leading-[1.1] text-[var(--dark-red-2)]">
                                 You May Also Like
                             </h2>
                         </div>

@@ -93,7 +93,7 @@ const ProductBox = ({ product, priority = false }) => {
     const ActionControls = ({ isMobile = false }) => {
         const btnHeight = isMobile ? 'h-8' : 'h-9'
         const iconSize = isMobile ? 'size-8' : 'size-9'
-        const textSize = isMobile ? 'text-[0.62rem]' : 'text-[0.7rem]'
+        const textSize = 'text-[0.75rem]'
 
         if (isInCart) {
             return (
@@ -111,7 +111,7 @@ const ProductBox = ({ product, priority = false }) => {
                         >
                             {cartQty <= 1 ? <Trash2 className="size-3 sm:size-3.5 text-[var(--dark-red)]" /> : <Minus className="size-3 sm:size-3.5" />}
                         </button>
-                        <span className="flex h-full w-full select-none items-center justify-center text-center font-neue text-[11px] sm:text-xs font-bold leading-none tabular-nums text-foreground">
+                        <span className="flex h-full w-full select-none items-center justify-center text-center font-neue text-[0.75rem] sm:text-xs font-bold leading-none tabular-nums text-foreground">
                             {cartQty}
                         </span>
                         <button
@@ -158,7 +158,7 @@ const ProductBox = ({ product, priority = false }) => {
                     type="button"
                     variant="brand"
                     size="pill"
-                    className={`${btnHeight} min-w-0 flex-1 gap-1.5 rounded-lg ${isMobile ? 'px-2.5 text-[0.64rem]' : 'px-4 text-[0.72rem]'} uppercase tracking-wide`}
+                    className={`${btnHeight} min-w-0 flex-1 gap-1.5 rounded-lg ${isMobile ? 'px-2.5' : 'px-4'} text-[0.75rem] uppercase tracking-wide`}
                     onClick={handleAddToCart}
                     disabled={!variant}
                     aria-label={`Add ${product?.name} to enquiry list`}
@@ -197,13 +197,13 @@ const ProductBox = ({ product, priority = false }) => {
                 {/* Badges - top-left, stacked */}
                 <div className="absolute left-2.5 top-2.5 z-20 flex flex-col items-start gap-1.5">
                     {product?.isBestseller && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-primary)] px-2 py-0.5 text-[0.6rem] font-semibold uppercase text-white shadow-sm sm:px-2.5 sm:py-1 sm:text-[0.7rem]">
+                        <span className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] bg-[var(--brand-primary)] px-2 py-0.5 text-[0.75rem] font-semibold uppercase text-white shadow-sm sm:px-2.5 sm:py-1">
                             <Crown className="size-2.5 sm:size-3" />
                             Best Seller
                         </span>
                     )}
                     {product?.isFreshlyArrived && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-lime)] px-2 py-0.5 text-[0.6rem] font-semibold uppercase text-[var(--brand-lime-ink)] shadow-sm sm:px-2.5 sm:py-1 sm:text-[0.7rem]">
+                        <span className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] bg-[var(--brand-lime)] px-2 py-0.5 text-[0.75rem] font-semibold uppercase text-[var(--brand-lime-ink)] shadow-sm sm:px-2.5 sm:py-1">
                             <Sparkles className="size-2.5 sm:size-3" />
                             New
                         </span>

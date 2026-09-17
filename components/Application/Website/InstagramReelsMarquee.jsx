@@ -78,10 +78,10 @@ const InstagramReelsMarquee = () => {
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background via-background/70 to-transparent sm:w-24" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background via-background/70 to-transparent sm:w-24" />
 
-            <div className="instagram-marquee">
-                <div className="instagram-track" ref={trackRef}>
+            <div className="w-full overflow-hidden">
+                <div className="instagram-track flex w-max items-center gap-[18px] will-change-transform" ref={trackRef}>
                     {reels.map((video, index) => (
-                        <div key={`${video}-${index}`} className="instagram-card">
+                        <div key={`${video}-${index}`} className="aspect-[9/16] w-[200px] shrink-0 overflow-hidden rounded-[var(--radius-3xl)] bg-[var(--brand-warm-bg)] shadow-[0_10px_24px_rgba(0,0,0,0.08)] sm:w-[230px] lg:w-[260px]">
                             <video
                                 src={video}
                                 muted
@@ -98,46 +98,9 @@ const InstagramReelsMarquee = () => {
                 </div>
             </div>
 
-            <style jsx>{`
-                .instagram-marquee {
-                    width: 100%;
-                    overflow: hidden;
-                }
-                .instagram-track {
-                    display: flex;
-                    align-items: center;
-                    gap: 18px;
-                    width: max-content;
-                    animation: insta-marquee 36s linear infinite;
-                    will-change: transform;
-                }
-                .instagram-card {
-                    width: 200px;
-                    aspect-ratio: 9 / 16;
-                    border-radius: var(--radius-3xl);
-                    overflow: hidden;
-                    background: var(--brand-warm-bg);
-                    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-                }
-                @media (min-width: 640px) {
-                    .instagram-card {
-                        width: 230px;
-                    }
-                }
-                @media (min-width: 1024px) {
-                    .instagram-card {
-                        width: 260px;
-                    }
-                }
-                @keyframes insta-marquee {
-                    0% {
-                        transform: translateX(0%);
-                    }
-                    100% {
-                        transform: translateX(-50%);
-                    }
-                }
-            `}</style>
+            {/* Marquee keyframes live in design-system.css (section 21) so the
+                animation is available at first paint - a styled-jsx block here
+                only injected after hydration, leaving a collapsed gap. */}
         </section>
     )
 }

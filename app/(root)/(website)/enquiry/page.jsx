@@ -156,7 +156,7 @@ const Enquiry = () => {
         return (
             <div>
                 <WebsiteBreadcrumb props={breadCrumb} />
-                <section className="website-gutter py-20 lg:py-28">
+                <section className="website-gutter pt-6 pb-20 sm:py-10 lg:py-14">
                     <div className="mx-auto max-w-md space-y-4" aria-hidden>
                         <Skeleton className="h-16 w-16 rounded-full" />
                         <Skeleton className="h-8 w-3/4" />
@@ -172,7 +172,7 @@ const Enquiry = () => {
         return (
             <div>
                 <WebsiteBreadcrumb props={breadCrumb} />
-                <section className="website-gutter py-20 lg:py-28">
+                <section className="website-gutter pt-6 pb-20 sm:py-10 lg:py-14">
                     <div className="mx-auto flex max-w-md flex-col items-center rounded-2xl border border-border/60 bg-background px-8 py-14 text-center shadow-sm">
                         <div className="flex size-16 items-center justify-center rounded-full bg-[var(--brand-cream)]/60 text-[var(--dark-red)]">
                             <ClipboardList className="size-8" strokeWidth={1.5} />
@@ -197,7 +197,7 @@ const Enquiry = () => {
         <div>
             <WebsiteBreadcrumb props={breadCrumb} />
 
-            <section className="website-gutter py-6 pb-20 lg:py-14 lg:pb-14">
+            <section className="website-gutter pt-6 pb-20 sm:py-10 lg:py-14">
                 <div className="mx-auto flex flex-col items-start gap-6 lg:grid lg:grid-cols-[1fr_minmax(360px,420px)] lg:gap-10">
 
                     {/* MOBILE FIRST: Enquiry summary block at the top on mobile, sticky sidebar on desktop */}
@@ -226,14 +226,14 @@ const Enquiry = () => {
                                         </div>
                                         <div>
                                             <h2 className="font-neue text-base sm:text-lg font-semibold uppercase tracking-tight">Your Enquiry</h2>
-                                            <p className="text-[11px] text-muted-foreground lg:hidden">
+                                            <p className="text-[0.75rem] text-muted-foreground lg:hidden">
                                                 {totalUnits} {totalUnits === 1 ? 'unit' : 'units'} • Price on enquiry
                                             </p>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-2">
-                                        <span className="rounded-full bg-muted/70 px-2.5 py-0.5 text-[0.78rem] font-medium uppercase text-muted-foreground">
+                                        <span className="rounded-full bg-muted/70 px-2.5 py-0.5 text-[0.8rem] font-medium uppercase text-muted-foreground">
                                             {cart.count} {cart.count === 1 ? 'item' : 'items'}
                                         </span>
                                         {/* Mobile toggle arrow */}
@@ -263,7 +263,7 @@ const Enquiry = () => {
                                                     : `${cart.count} plants selected`}
                                             </p>
                                         </div>
-                                        <span className="text-[11px] font-semibold text-[var(--dark-red)] flex-shrink-0">
+                                        <span className="text-[0.75rem] font-semibold text-[var(--dark-red)] flex-shrink-0">
                                             View details
                                         </span>
                                     </div>
@@ -279,7 +279,7 @@ const Enquiry = () => {
                                                 </Link>
                                                 <div className="flex min-w-0 flex-1 flex-col">
                                                     <div className="flex items-start justify-between gap-2">
-                                                        <h4 className="line-clamp-2 font-neue text-[13px] font-semibold leading-snug text-foreground">
+                                                        <h4 className="line-clamp-2 font-neue text-[0.8rem] font-semibold leading-snug text-foreground">
                                                             <Link href={WEBSITE_PRODUCT_DETAILS(product.url)} className="hover:text-[var(--dark-red)] transition-colors">{product.name}</Link>
                                                         </h4>
                                                         <button
@@ -387,7 +387,7 @@ const Enquiry = () => {
                                         <User className="size-[18px] text-[var(--dark-red)]" strokeWidth={1.75} />
                                         <h2 className="font-neue text-base font-semibold uppercase tracking-tight">Your Contact Details</h2>
                                     </div>
-                                    <span className="text-[11px] font-medium uppercase text-muted-foreground tracking-wider">Required</span>
+                                    <span className="text-[0.75rem] font-medium uppercase text-muted-foreground tracking-wider">Required</span>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -418,7 +418,7 @@ const Enquiry = () => {
                                         <Leaf className="size-[18px] text-[var(--dark-red)]" strokeWidth={1.75} />
                                         <h2 className="font-neue text-base font-semibold uppercase tracking-tight">Delivery Location</h2>
                                     </div>
-                                    <span className="text-[11px] font-medium uppercase text-muted-foreground tracking-wider">Optional</span>
+                                    <span className="text-[0.75rem] font-medium uppercase text-muted-foreground tracking-wider">Optional</span>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -491,7 +491,7 @@ const Enquiry = () => {
                             <span>{cart.count} {cart.count === 1 ? 'item' : 'items'}</span>
                             <span className="text-muted-foreground font-normal">({totalUnits} {totalUnits === 1 ? 'unit' : 'units'})</span>
                         </div>
-                        <p className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">
+                        <p className="text-[0.75rem] font-medium text-muted-foreground whitespace-nowrap">
                             No payment required &bull; Free quote
                         </p>
                     </div>

@@ -67,7 +67,7 @@ const Wordmark = ({ title, subtitle, className = "" }) => (
       {title}
     </span>
     {subtitle && (
-      <span className="mt-[0.25em] text-[0.58rem] font-medium uppercase opacity-60">
+      <span className="mt-[0.25em] text-[0.75rem] font-medium uppercase opacity-60">
         {subtitle}
       </span>
     )}
@@ -139,7 +139,7 @@ export default function Navbar({
   }
 
   const LINK_CLASS = cn(
-    "text-[0.95rem] font-semibold transition-colors duration-300",
+    "text-[0.9375rem] font-semibold transition-colors duration-300",
     lightNav ? "text-white" : "text-[var(--brand-primary)]"
   )
   // Shared by the logo, the icon buttons and the hamburger.
@@ -230,7 +230,7 @@ export default function Navbar({
                 href={cta.url}
                 underline={false}
                 background={<CircleReveal color="var(--brand-lime)" />}
-                className="h-8 items-center justify-center overflow-hidden rounded-full bg-[var(--brand-primary-deep)] px-6 text-[0.85rem] font-medium text-white transition-colors duration-500 hover:text-[var(--brand-primary-deep)]"
+                className="h-8 items-center justify-center overflow-hidden rounded-full bg-[var(--brand-primary-deep)] px-6 text-[0.875rem] font-medium text-white transition-colors duration-500 hover:text-[var(--brand-primary-deep)]"
               >
                 {cta.title}
               </RollingLink>
@@ -282,7 +282,7 @@ export default function Navbar({
             <button
               type="button"
               onClick={() => openFromMenu(() => setOpenSearch(true))}
-              className="flex w-full items-center gap-3 rounded-[var(--radius-2xl)] border border-[var(--border)] bg-white px-4 py-3 text-left text-[0.95rem] text-[var(--muted-foreground)] transition-colors hover:border-[var(--brand-primary)]/30 hover:bg-[var(--secondary)]"
+              className="flex w-full items-center gap-3 rounded-[var(--radius-2xl)] border border-[var(--border)] bg-white px-4 py-3 text-left text-[0.9375rem] text-[var(--muted-foreground)] transition-colors hover:border-[var(--brand-primary)]/30 hover:bg-[var(--secondary)]"
             >
               <SearchIcon className="size-[1.1rem] shrink-0 text-[var(--brand-primary)]" strokeWidth={1.75} />
               <span className="flex-1 truncate">Search products…</span>
@@ -330,7 +330,7 @@ export default function Navbar({
                         <SheetClose asChild>
                           <Link
                             href={item.url}
-                            className="group mx-2 mb-0.5 flex items-center gap-2 rounded-[var(--radius-xl)] px-3 py-2 text-[0.82rem] font-semibold uppercase text-[var(--brand-primary)]/60 transition-colors hover:text-[var(--brand-primary)]"
+                            className="group mx-2 mb-0.5 flex items-center gap-2 rounded-[var(--radius-xl)] px-3 py-2 text-[0.8rem] font-semibold uppercase text-[var(--brand-primary)]/60 transition-colors hover:text-[var(--brand-primary)]"
                           >
                             View all {item.title} →
                           </Link>
@@ -342,7 +342,7 @@ export default function Navbar({
                             <SheetClose asChild key={child.url}>
                               <Link
                                 href={child.url}
-                                className="group mx-2 mb-0.5 flex items-center gap-3 rounded-[var(--radius-2xl)] px-3 py-2.5 text-[0.95rem] font-medium text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
+                                className="group mx-2 mb-0.5 flex items-center gap-3 rounded-[var(--radius-2xl)] px-3 py-2.5 text-[0.9375rem] font-medium text-[var(--brand-primary)] transition-colors hover:bg-[var(--secondary)]"
                               >
                                 <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[var(--secondary)] transition-colors group-hover:bg-[var(--brand-primary)]/10">
                                   {ChildIcon && (
@@ -391,7 +391,7 @@ export default function Navbar({
             <button
               type="button"
               onClick={() => openFromMenu(() => setOpenCart(true))}
-              className="relative flex w-full items-center justify-center gap-2 rounded-[var(--radius-2xl)] bg-[var(--brand-primary)] px-4 py-3.5 text-[1rem] font-medium text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+              className="relative flex h-12 w-full items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--brand-primary)] px-4 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
             >
               <ShoppingCart className="size-[1.05rem]" strokeWidth={1.75} />
               Cart

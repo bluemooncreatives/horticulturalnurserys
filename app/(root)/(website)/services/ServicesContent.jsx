@@ -66,7 +66,7 @@ function PrimaryButton({ href, children, className = '' }) {
   return (
     <Link
       href={href}
-      className={`group inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-[var(--brand-primary)] px-6 py-3 text-[0.85rem] font-medium text-white transition-all duration-300 hover:bg-[var(--brand-primary-hover)] hover:shadow-[0_12px_30px_-12px_rgba(29,64,32,0.6)] ${className}`}
+      className={`group inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-[var(--brand-primary)] px-6 py-3 text-[0.875rem] font-medium text-white transition-all duration-300 hover:bg-[var(--brand-primary-hover)] hover:shadow-[0_12px_30px_-12px_rgba(29,64,32,0.6)] ${className}`}
     >
       {children}
       <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -103,36 +103,70 @@ function ScrollFillStatement({ chip, text }) {
     // rather than gating on `no-preference` matters: a browser that doesn't
     // support the query matches neither, and gating the other way would leave
     // the paragraph stuck at the dim base colour with nothing to fill it.
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    // matchMedia rather than a one-off `.matches` read: a tablet rotating
+    // across the 1024px line has to tear down the pinned build and set up the
+    // unpinned one, which GSAP does here automatically on every change.
+    const mm = gsap.matchMedia()
 
-    const ctx = gsap.context(() => {
-      const targets = gsap.utils.toArray('.sv-fill-word')
-      if (!targets.length) return
+    mm.add(
+      {
+        reduced:   '(prefers-reduced-motion: reduce)',
+        isDesktop: '(min-width: 1024px)',
+        // isMobile is not read below, but it guarantees at least one condition
+        // always matches. gsap.matchMedia only runs the callback while some
+        // query is active - with only `reduced` and `isDesktop` listed, a
+        // phone with motion enabled matched nothing and the fill never built.
+        isMobile:  '(max-width: 1023px)',
+      },
+      (self) => {
+        const { reduced, isDesktop } = self.conditions
+        const targets = gsap.utils.toArray('.sv-fill-word', root)
+        if (!targets.length) return
 
-      // Reduced motion gets the finished state and no pin - locking the
-      // viewport is precisely the effect that setting asks us to drop.
-      if (reduced) {
-        gsap.set(targets, { color: deep })
-        return
+        // Reduced motion gets the finished state and no pin - locking the
+        // viewport is precisely the effect that setting asks us to drop.
+        if (reduced) {
+          gsap.set(targets, { color: deep })
+          return
+        }
+
+        gsap.set(targets, { color: dim })
+        gsap
+          .timeline({
+            defaults: { ease: 'none' },
+            // Desktop holds the block still and scrubs the fill through that
+            // pinned window. Phones keep the scroll-driven fill but drop the
+            // pin: freezing a small viewport for 120% of its height reads as
+            // the page having stalled, and the pin spacer adds that much blank
+            // scroll after it. Unpinned, the scrub runs over the block's own
+            // pass through the viewport, so the paragraph still fills word by
+            // word as the reader scrolls it past.
+            scrollTrigger: isDesktop
+              ? {
+                  trigger: root,
+                  start: 'top top',
+                  end: '+=120%',
+                  scrub: 0.4,
+                  pin: true,
+                  anticipatePin: 1,
+                }
+              : {
+                  // Anchored to the paragraph, not the min-h-screen wrapper:
+                  // the wrapper starts entering long before its centred text
+                  // does, so a wrapper-based range finished the fill while the
+                  // paragraph was still below the fold. This runs the sweep
+                  // over the paragraph's own climb up the screen.
+                  trigger: targets[0].parentElement,
+                  start: 'top 85%',
+                  end: 'top 35%',
+                  scrub: 0.4,
+                },
+          })
+          // Each word crosses over quickly; `amount` spreads their start times
+          // across the whole scrub so the fill sweeps the paragraph once.
+          .to(targets, { color: deep, duration: 0.25, stagger: { amount: 1 } })
       }
-
-      gsap.set(targets, { color: dim })
-      gsap
-        .timeline({
-          defaults: { ease: 'none' },
-          scrollTrigger: {
-            trigger: root,
-            start: 'top top',
-            end: '+=120%',
-            scrub: 0.4,
-            pin: true,
-            anticipatePin: 1,
-          },
-        })
-        // Each word crosses over quickly; `amount` spreads their start times
-        // across the whole scrub so the fill sweeps the paragraph once.
-        .to(targets, { color: deep, duration: 0.25, stagger: { amount: 1 } })
-    }, root)
+    )
 
     // Pin distance is derived from the element's height, which moves once the
     // display face swaps in - recompute rather than pin against fallback metrics.
@@ -143,7 +177,7 @@ function ScrollFillStatement({ chip, text }) {
 
     return () => {
       disposed = true
-      ctx.revert()
+      mm.revert()
     }
   }, [])
 
@@ -173,7 +207,7 @@ function GhostButton({ href, children, className = '' }) {
   return (
     <Link
       href={href}
-      className={`inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/25 bg-[var(--card)] px-6 py-3 text-[0.85rem] font-medium text-[var(--brand-primary)] transition-all duration-300 hover:border-[var(--brand-primary)]/50 hover:bg-[var(--secondary)] ${className}`}
+      className={`inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/25 bg-[var(--card)] px-6 py-3 text-[0.875rem] font-medium text-[var(--brand-primary)] transition-all duration-300 hover:border-[var(--brand-primary)]/50 hover:bg-[var(--secondary)] ${className}`}
     >
       {children}
     </Link>
@@ -207,7 +241,7 @@ export default function ServicesContent({
           <RevealUp
             as="p"
             delay={260}
-            className="mt-6 max-w-xl text-[0.92rem] leading-[1.8] text-[var(--muted-foreground)]"
+            className="mt-6 max-w-xl text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
           >
             From a single balcony to a township-scale landscape - designed, planted and maintained
             by qualified horticulturists across Kolkata and West Bengal.
@@ -242,7 +276,7 @@ export default function ServicesContent({
               delay={160}
               className="flex flex-1 flex-col justify-between gap-8 rounded-[var(--radius-4xl)] bg-[var(--brand-primary)] p-7 lg:p-8"
             >
-              <p className="text-[0.82rem] leading-[1.65] text-white/75">{bento.accent.caption}</p>
+              <p className="text-[0.8rem] leading-[1.6] text-white/75">{bento.accent.caption}</p>
               <p className="font-neue text-[clamp(2.4rem,5vw,3.4rem)] font-medium leading-none tracking-[-0.035em] text-white">
                 {bento.accent.figure}
               </p>
@@ -258,7 +292,7 @@ export default function ServicesContent({
               <p className="font-neue text-[clamp(2.4rem,5vw,3.4rem)] font-medium leading-none tracking-[-0.035em] text-white">
                 {bento.dark.figure}
               </p>
-              <p className="text-[0.82rem] leading-[1.65] text-white/50">{bento.dark.caption}</p>
+              <p className="text-[0.8rem] leading-[1.6] text-white/50">{bento.dark.caption}</p>
             </RevealUp>
           </div>
 
@@ -348,7 +382,7 @@ export default function ServicesContent({
             <RevealUp
               as="p"
               delay={130}
-              className="mt-5 max-w-sm text-[0.88rem] leading-[1.8] text-[var(--muted-foreground)]"
+              className="mt-5 max-w-sm text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]"
             >
               Four service lines, all carried by one nursery - from the first site survey through
               planting, construction and the aftercare that keeps it alive.
@@ -420,7 +454,7 @@ export default function ServicesContent({
                         {service.title}
                       </h3>
                       <p
-                        className={`mt-3 text-[0.83rem] leading-[1.7] ${
+                        className={`mt-3 text-[0.8rem] leading-[1.75] ${
                           accent ? 'text-white/65' : 'text-[var(--muted-foreground)]'
                         }`}
                       >
@@ -476,7 +510,7 @@ export default function ServicesContent({
                   <h3 className="text-[1.02rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)]">
                     {step.title}
                   </h3>
-                  <p className="text-[0.84rem] leading-[1.7] text-[var(--muted-foreground)]">
+                  <p className="text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
                     {step.desc}
                   </p>
                 </RevealUp>
@@ -517,7 +551,7 @@ export default function ServicesContent({
             <RevealUp
               as="p"
               delay={170}
-              className="mt-6 max-w-2xl text-[0.9rem] leading-[1.8] text-white/55"
+              className="mt-6 max-w-2xl text-[0.9375rem] leading-[1.75] text-white/55"
             >
               {credentials.desc}
             </RevealUp>
@@ -545,14 +579,14 @@ export default function ServicesContent({
           <RevealUp
             as="h2"
             delay={70}
-            className="mt-7 font-neue text-[clamp(1.7rem,4.2vw,2.9rem)] font-medium leading-[1.08] tracking-[-0.03em] text-[var(--brand-primary)]"
+            className="mt-7 font-neue text-[clamp(1.7rem,4.2vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.03em] text-[var(--brand-primary)]"
           >
             Let&apos;s build your green space.
           </RevealUp>
           <RevealUp
             as="p"
             delay={130}
-            className="mt-5 max-w-md text-[0.9rem] leading-[1.8] text-[var(--muted-foreground)]"
+            className="mt-5 max-w-md text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
           >
             Every project starts with a site visit and a conversation - no obligation, just honest
             advice from qualified horticulturists.

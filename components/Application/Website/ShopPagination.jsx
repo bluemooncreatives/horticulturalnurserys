@@ -49,7 +49,7 @@ const ShopPagination = ({ page, totalPages, onPageChange, disabled = false, sibl
     }
 
     const cell =
-        'inline-flex h-8 min-w-8 items-center justify-center rounded-sm border px-1.5 font-neue text-xs font-semibold transition-colors disabled:pointer-events-none disabled:opacity-40 sm:h-9 sm:min-w-9 sm:px-2 sm:text-[13px]'
+        'inline-flex h-8 min-w-8 items-center justify-center rounded-sm border px-1.5 font-neue text-xs font-semibold transition-colors disabled:pointer-events-none disabled:opacity-40 sm:h-9 sm:min-w-9 sm:px-2 sm:text-[0.8rem]'
     const idle =
         'border-border/70 bg-background text-[var(--brand-primary)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]'
 
@@ -71,7 +71,7 @@ const ShopPagination = ({ page, totalPages, onPageChange, disabled = false, sibl
                         <span
                             key={`dots-${index}`}
                             aria-hidden
-                            className="inline-flex h-8 min-w-6 items-center justify-center text-xs text-muted-foreground sm:h-9 sm:min-w-9 sm:text-[13px]"
+                            className="inline-flex h-8 min-w-6 items-center justify-center text-xs text-muted-foreground sm:h-9 sm:min-w-9 sm:text-[0.8rem]"
                         >
                             …
                         </span>

@@ -314,11 +314,11 @@ const ServicesSection = () => {
                             <span aria-hidden className="mt-1.5 size-1.5 rounded-full border border-current" />
                             Our Services
                         </span>
-                        <h2 className="mt-3 max-w-xl text-[clamp(1.8rem,3.8vw,3rem)] font-medium leading-[1.12] text-white">
+                        <h2 className="mt-3 max-w-xl text-[clamp(1.8rem,3.8vw,3rem)] font-medium leading-[1.1] text-white">
                             Rooted In Craft, Grown Into Every Garden
                         </h2>
                     </div>
-                    <p className="max-w-md text-[0.85rem] leading-relaxed text-white lg:justify-self-end lg:text-right">
+                    <p className="max-w-md text-[0.875rem] leading-relaxed text-white lg:justify-self-end lg:text-right">
                         Kolkata&apos;s landscaper since 1989 - {yearsInBusiness()}+ years, {NURSERY_BIGHAS} bighas of our own farm at Bibirhut and {UNDER_COVER_SQM.toLocaleString('en-US')} m² under cover. From residential terraces and living walls to State Government and CPWD public grounds, our four specialized divisions carry every project from site survey to lifelong aftercare.
                     </p>
                     <div className="hidden flex-wrap justify-start gap-2 sm:flex lg:col-span-2 lg:mt-2">
@@ -351,7 +351,7 @@ const ServicesSection = () => {
                                 >
                                     {/* mobile: round step badge, centred against the single-line
                                         title/toggle header row */}
-                                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/25 text-[0.7rem] font-semibold text-white/80 transition-colors group-hover:border-[var(--brand-lime)]/70 sm:hidden">
+                                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/25 text-[0.75rem] font-semibold text-white/80 transition-colors group-hover:border-[var(--brand-lime)]/70 sm:hidden">
                                         {service.num}
                                     </span>
 
@@ -371,7 +371,7 @@ const ServicesSection = () => {
                                             className="block overflow-hidden"
                                             style={i === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
                                         >
-                                            <p className="pt-3 text-[0.85rem] leading-relaxed text-white/55 sm:max-w-sm sm:text-[0.82rem] sm:text-white/45 md:max-w-md lg:max-w-lg">
+                                            <p className="pt-3 text-[0.875rem] leading-relaxed text-white/55 sm:max-w-sm sm:text-[0.8rem] sm:text-white/45 md:max-w-md lg:max-w-lg">
                                                 {service.description}
                                             </p>
                                             {/* mobile-only CTA */}
@@ -379,7 +379,7 @@ const ServicesSection = () => {
                                                 <Link
                                                     href={service.href}
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="group/mbtn relative flex w-full items-center justify-center gap-2 rounded-full border border-[var(--brand-lime)]/45 bg-[var(--brand-lime)]/10 px-4 py-3 text-[0.95rem] font-medium text-[var(--brand-lime)] transition-colors active:bg-[var(--brand-lime)] active:text-[var(--brand-lime-ink)]"
+                                                    className="group/mbtn relative flex w-full items-center justify-center gap-2 rounded-full border border-[var(--brand-lime)]/45 bg-[var(--brand-lime)]/10 px-4 py-3 text-[0.9375rem] font-medium text-[var(--brand-lime)] transition-colors active:bg-[var(--brand-lime)] active:text-[var(--brand-lime-ink)]"
                                                 >
                                                     <span>Explore</span>
                                                     <ArrowUpRight className="size-4" />
@@ -505,7 +505,7 @@ const ServicesSection = () => {
                     </LimeArrowButton>
                     <Link
                         href="/services#enquiry-form"
-                        className="group inline-flex h-11 sm:h-14 w-full max-w-[260px] sm:w-auto items-center justify-center gap-2.5 sm:gap-3 rounded-full border border-white/20 bg-white/5 px-5 sm:px-7 font-neue text-[0.85rem] sm:text-[1.05rem] font-medium tracking-tight text-white transition-colors hover:border-white/40 hover:bg-white/10"
+                        className="group inline-flex h-11 sm:h-14 w-full max-w-[260px] sm:w-auto items-center justify-center gap-2.5 sm:gap-3 rounded-full border border-white/20 bg-white/5 px-5 sm:px-7 font-neue text-[0.875rem] sm:text-[1.05rem] font-medium tracking-tight text-white transition-colors hover:border-white/40 hover:bg-white/10"
                     >
                         <span>Request a Site Visit</span>
                         <ArrowUpRight className="size-3.5 sm:size-4 opacity-70 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

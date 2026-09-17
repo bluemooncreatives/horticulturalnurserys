@@ -14,6 +14,7 @@ import {
     Loader2,
     PackageSearch,
     RotateCcw,
+    X,
 } from 'lucide-react'
 
 import {
@@ -337,7 +338,7 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                                         <button
                                             type="button"
                                             onClick={() => refetch()}
-                                            className="inline-flex items-center gap-1.5 rounded-full border border-border/70 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]"
+                                            className="inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-border/70 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]"
                                         >
                                             <RotateCcw className="size-3.5" /> Try again
                                         </button>
@@ -370,7 +371,7 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                                                             <p className="truncate text-sm font-semibold text-foreground">
                                                                 {product?.name}
                                                             </p>
-                                                            <p className="flex items-center gap-2 text-[13px]">
+                                                            <p className="flex items-center gap-2 text-[0.8rem]">
                                                                 <span className="text-[0.8rem] font-semibold uppercase text-[var(--dark-red)]">
                                                                     Price on enquiry
                                                                 </span>
@@ -402,8 +403,19 @@ const GlobalSearch = ({ open, setOpen, isLoggedIn = false }) => {
                     </CommandPrimitive.List>
 
                     {/* ── Footer hint bar ── */}
-                    <div className="flex shrink-0 items-center justify-end border-t border-border/70 px-4 py-2.5 text-[0.8rem] text-muted-foreground">
-                        <span className="flex items-center gap-1">
+                    <div className="flex shrink-0 items-center justify-end border-t border-border/70 px-4 py-2 text-[0.8rem] text-muted-foreground">
+                        {/* Touch devices have no Esc key, so the hint becomes a
+                            real 44px tap target there; the keyboard hint is kept
+                            for pointer devices where Esc actually applies. */}
+                        <button
+                            type="button"
+                            onClick={() => setOpen(false)}
+                            className="flex h-11 items-center gap-1 px-2 transition-colors hover:text-foreground lg:hidden"
+                        >
+                            <X className="size-4" />
+                            <span>Close</span>
+                        </button>
+                        <span className="hidden items-center gap-1 lg:flex">
                             <Kbd>esc</Kbd>
                             <span className="ml-0.5">close</span>
                         </span>

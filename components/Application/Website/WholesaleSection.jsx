@@ -78,13 +78,13 @@ const WholesaleSection = () => {
                         <span aria-hidden className="size-1.5 rounded-full border border-current" />
                         Wholesale &amp; Pan-India Supply
                     </span>
-                    <h2 className="mt-4 text-[clamp(1.7rem,4.2vw,3rem)] font-medium leading-[1.08] tracking-[-0.02em] text-[var(--brand-primary)]">
+                    <h2 className="mt-4 text-[clamp(1.7rem,4.2vw,3rem)] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--brand-primary)]">
                         {yearsInBusiness()} years supplying quality
                         <br className="hidden sm:block" />{' '}
                         plants, nationwide.
                     </h2>
                 </div>
-                <p className="text-[0.9rem] leading-relaxed text-[var(--muted-foreground)] lg:pb-2">
+                <p className="text-[0.9375rem] leading-relaxed text-[var(--muted-foreground)] lg:pb-2">
                     Exotic, ornamental and fruit plants, grown on our own farm and
                     despatched in wholesale quantity to anywhere in India - bought
                     online or across our Alipore counter.
@@ -149,7 +149,7 @@ const WholesaleSection = () => {
                             <h3 className="mt-5 text-[1rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)] lg:text-[1.05rem]">
                                 {title}
                             </h3>
-                            <p className="mt-2 text-[0.82rem] leading-relaxed text-[var(--muted-foreground)]">
+                            <p className="mt-2 text-[0.8rem] leading-relaxed text-[var(--muted-foreground)]">
                                 {description}
                             </p>
                         </div>

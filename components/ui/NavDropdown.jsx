@@ -176,7 +176,7 @@ export default function NavMenuBar({ menu = [], linkClassName = "" }) {
             {index < menu.length - 1 && (
               <span
                 aria-hidden
-                className="select-none text-[0.85rem] font-light text-[var(--muted-foreground)]/40"
+                className="select-none text-[0.875rem] font-light text-[var(--muted-foreground)]/40"
               >
                 +
               </span>

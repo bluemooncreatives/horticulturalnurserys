@@ -53,7 +53,7 @@ const WebsiteBreadcrumb = ({ props }) => {
     }, [fit, props.title])
 
     return (
-        <section className="relative isolate h-[180px] overflow-hidden sm:h-[160px] lg:h-[200px]">
+        <section className="relative isolate h-[150px] overflow-hidden sm:h-[160px] lg:h-[200px]">
             {/* Light background. The fixed header's logo and nav links are
                 brand-green, so a dark fill here rendered them near-invisible
                 until the user scrolled - the banner is light and the watermark
@@ -64,11 +64,11 @@ const WebsiteBreadcrumb = ({ props }) => {
                 mobile it sits below the fixed header so it isn't clipped by it. */}
             <div
                 ref={boxRef}
-                className="absolute inset-x-0 top-20 z-10 flex justify-center sm:top-10 lg:top-16"
+                className="absolute inset-x-0 top-14 z-10 flex justify-center sm:top-10 lg:top-16"
             >
                 <div
                     ref={textRef}
-                    className="pointer-events-none select-none whitespace-nowrap font-neue font-semibold uppercase leading-[0.8] tracking-tighter text-[var(--brand-primary)]"
+                    className="pointer-events-none select-none whitespace-nowrap font-neue font-semibold uppercase leading-[0.9] tracking-tighter text-[var(--brand-primary)]"
                     style={{
                         fontSize: fontSize != null ? `${fontSize}px` : FALLBACK_FONT,
                         WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)',
@@ -83,7 +83,7 @@ const WebsiteBreadcrumb = ({ props }) => {
             {/* Short titles scale to MAX_FONT_PX and overflow the banner's fixed
                 height, so the glyph bottoms would otherwise be hard-clipped by
                 `overflow-hidden`. This ramp dissolves them into the page. */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-16 bg-gradient-to-b from-transparent via-background/50 to-background sm:h-36" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-10 bg-gradient-to-b from-transparent via-background/50 to-background sm:h-36" />
         </section>
     )
 }

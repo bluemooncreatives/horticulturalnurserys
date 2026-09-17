@@ -72,7 +72,7 @@ const FeaturedProductClient = ({ products = [] }) => {
                             In Stock, Ready to Ship
                         </h2>
                     </div>
-                    <p className="max-w-xs text-[0.85rem] leading-relaxed text-[var(--muted-foreground)]">
+                    <p className="max-w-xs text-[0.875rem] leading-relaxed text-[var(--muted-foreground)]">
                         A live snapshot of what's on hand at Alipore right now.
                     </p>
                 </div>

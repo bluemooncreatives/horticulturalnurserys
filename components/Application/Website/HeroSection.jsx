@@ -112,10 +112,10 @@ const HeroSection = () => {
   const currentCard = HERO_CARDS[index % HERO_CARDS.length];
 
   return (
-    <section className="website-gutter pt-[2.75rem] pb-[clamp(2rem,4vw,3.5rem)] sm:pt-[3.5rem]">
+    <section className="website-gutter pt-12 pb-4 sm:pt-14 sm:pb-8">
       <div className="mx-auto max-w">
         {/* ── Framed hero card - image fills the whole card, content overlaid ── */}
-        <div className="hero-frame relative flex min-h-[calc(100svh_-_2.75rem)] flex-col justify-between overflow-hidden rounded-[var(--radius-section)] bg-[var(--background)] sm:min-h-[calc(100svh_-_3.5rem)]">
+        <div className="hero-frame relative flex min-h-[calc(100svh_-_4rem)] flex-col justify-between overflow-hidden rounded-[var(--radius-section)] bg-[var(--background)] sm:min-h-[calc(100svh_-_5.5rem)]">
 
           {/* Full-bleed background - the hero frames cross-fade here (frame i).
               Advanced GSAP fade in / fade out: the incoming (top) frame fades
@@ -164,7 +164,7 @@ const HeroSection = () => {
             {/* Two-line lockup: the trading name is far too long for a single
                 nowrap line, so the first word carries the display size and the
                 rest sits under it at roughly half scale. */}
-            <h1 className="hero-word font-wordmark text-[var(--brand-primary)] leading-[0.88]">
+            <h1 className="hero-word font-wordmark text-[var(--brand-primary)] leading-[0.9]">
               {/* The upper clamp bound is what governs the dead space to the
                   right: below ~1370px the vw term wins and the headline tracks
                   the viewport, but once the cap binds the headline stops while
@@ -228,7 +228,7 @@ const HeroSection = () => {
                   [ Kolkata · Since {OPERATING_SINCE_YEAR} ]
                 </span>
               </div>
-              <p className="mt-2 text-justify text-[0.88rem] leading-[1.22] text-[var(--brand-primary)] sm:mt-3.5 sm:leading-[1.4]">
+              <p className="mt-2 text-[0.875rem] leading-[1.35] text-[var(--brand-primary)] sm:mt-3.5">
                 Qualified horticulturists designing, building and maintaining
                 gardens across West Bengal - backed by our own {NURSERY_BIGHAS}-bigha nursery
                 and an Alipore counter that stocks every plant, tool and input a
@@ -241,7 +241,7 @@ const HeroSection = () => {
           {/* Bottom inset matches the horizontal one at every breakpoint so the
               floating card sits the same distance from the card's bottom edge
               as it does from its right edge (was pb-6/pb-8 against px-8/px-11). */}
-          <div className="relative z-[2] flex flex-col items-stretch gap-4 px-5 pb-5 sm:flex-row sm:items-end sm:justify-between sm:px-8 sm:pb-8 lg:px-11 lg:pb-11">
+          <div className="relative z-[2] flex flex-col items-stretch gap-4 px-5 pb-6 sm:flex-row sm:items-end sm:justify-between sm:px-8 sm:pb-8 lg:px-11 lg:pb-11">
             {/* bottom-left: trusted-by + craft marks - hidden on mobile, the
                 floating product card below is the only bottom-row content there */}
             <RevealUp
@@ -250,7 +250,7 @@ const HeroSection = () => {
               duration={REVEAL.trustDuration}
               className="hero-overlay hidden sm:block"
             >
-              <p className="max-w-xs text-[0.8rem] leading-snug text-white/85 sm:text-[0.8rem]">
+              <p className="max-w-xs text-[0.8rem] leading-snug text-white/85">
                 Entrusted with the Assembly House, National Library, Alipore Zoo
                 and Rabindra Sarobar.
               </p>
@@ -258,7 +258,7 @@ const HeroSection = () => {
                 {CRAFT_MARKS.map((mark) => (
                   <span
                     key={mark}
-                    className="hero-mark flex items-center gap-1.5 text-[0.8rem] font-medium text-white/80 sm:text-[0.8rem]"
+                    className="hero-mark flex items-center gap-1.5 text-[0.8rem] font-medium text-white/80"
                   >
                     <span aria-hidden className="text-[var(--brand-lime)]">✦</span>
                     {mark}
@@ -381,7 +381,7 @@ const HeroSection = () => {
                       cleanly between words on narrow mobile screens. */}
                   <span
                     aria-label={currentCard.title}
-                    className="block text-[0.8rem] font-semibold leading-[1.05] text-[var(--brand-primary)] sm:text-[0.9rem] sm:leading-tight"
+                    className="block text-[0.8rem] font-semibold leading-[1.1] text-[var(--brand-primary)] sm:text-[0.9375rem] sm:leading-tight"
                   >
                     {currentCard.title.split(" ").flatMap((word, wi, words) => [
                       <span key={wi} aria-hidden className="inline-block whitespace-nowrap">
@@ -414,7 +414,7 @@ const HeroSection = () => {
                   </span>
                   {/* Description: gentler counterpart - colour deepens and the
                       line eases inward as the card is hovered. */}
-                  <p className="mt-1.5 hidden text-[0.8rem] leading-[1.4] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)] sm:block">
+                  <p className="mt-1.5 hidden text-[0.8rem] leading-[1.35] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)] sm:block">
                     {currentCard.description}
                   </p>
                 </div>

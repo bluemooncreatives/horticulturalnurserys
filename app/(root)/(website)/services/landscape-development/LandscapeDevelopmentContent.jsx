@@ -142,7 +142,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           <RevealUp
             as="p"
             delay={280}
-            className="mt-5 max-w-xl text-[0.98rem] leading-relaxed text-white/75"
+            className="mt-5 max-w-xl text-[1rem] leading-relaxed text-white/75"
           >
             {service.tagline}
           </RevealUp>
@@ -158,10 +158,10 @@ export default function LandscapeDevelopmentContent({ service }) {
                   delay={340 + i * 70}
                   className={`border-white/10 py-3.5 sm:py-5 lg:py-6 ${STAT_CELL_EDGES[i % 4]} ${i > 1 ? 'hidden lg:block' : ''}`}
                 >
-                  <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.05em] text-white/40 sm:text-[0.8rem] sm:tracking-normal">
+                  <dt className="text-[0.75rem] font-semibold uppercase tracking-[0.05em] text-white/40 sm:text-[0.8rem] sm:tracking-normal">
                     {stat.label}
                   </dt>
-                  <dd className="mt-1 font-neue text-[0.85rem] font-medium leading-snug tracking-[-0.01em] text-white sm:mt-1.5 sm:text-[clamp(1.05rem,2vw,1.4rem)] sm:leading-tight">
+                  <dd className="mt-1 font-neue text-[0.875rem] font-medium leading-snug tracking-[-0.01em] text-white sm:mt-1.5 sm:text-[clamp(1.05rem,2vw,1.4rem)] sm:leading-tight">
                     {stat.value}
                   </dd>
                 </RevealUp>
@@ -191,7 +191,7 @@ export default function LandscapeDevelopmentContent({ service }) {
         <RevealUp
           as="p"
           delay={80}
-          className="mt-8 max-w-4xl font-neue text-[clamp(1.25rem,2.6vw,2rem)] font-medium leading-[1.32] tracking-[-0.02em] text-[var(--brand-primary)]"
+          className="mt-8 max-w-4xl font-neue text-[clamp(1.25rem,2.6vw,2rem)] font-medium leading-[1.35] tracking-[-0.02em] text-[var(--brand-primary)]"
         >
           {service.intro}
         </RevealUp>
@@ -202,7 +202,7 @@ export default function LandscapeDevelopmentContent({ service }) {
               key={i}
               as="p"
               delay={120 + i * 60}
-              className="text-[0.92rem] leading-[1.85] text-[var(--muted-foreground)]"
+              className="text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
             >
               {para}
             </RevealUp>
@@ -213,7 +213,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           {service.tags.map((tag) => (
             <span
               key={tag}
- className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-2.5 py-0.5 text-[0.62rem] font-medium uppercase tracking-[0.02em] text-[var(--brand-primary)] sm:px-4 sm:py-1.5 sm:text-[0.8rem] sm:tracking-normal"
+ className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-2.5 py-0.5 text-[0.75rem] font-medium uppercase tracking-[0.02em] text-[var(--brand-primary)] sm:px-4 sm:py-1.5 sm:text-[0.8rem] sm:tracking-normal"
             >
               {tag}
             </span>
@@ -256,7 +256,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                 <h3 className="text-[1.02rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)]">
                   {step.title}
                 </h3>
-                <p className="text-[0.84rem] leading-[1.7] text-[var(--muted-foreground)]">
+                <p className="text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
                   {step.desc}
                 </p>
               </RevealUp>
@@ -295,7 +295,7 @@ export default function LandscapeDevelopmentContent({ service }) {
 
               <span aria-hidden className="relative my-5 block h-px w-10 bg-[var(--brand-lime)]" />
 
-              <p className="relative text-[0.88rem] leading-[1.8] text-[var(--muted-foreground)]">
+              <p className="relative text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
                 {cap.desc}
               </p>
 
@@ -303,7 +303,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                 {cap.tags.map((t) => (
                   <li
                     key={t}
-                    className="rounded-[var(--radius-pill)] bg-[var(--secondary)] px-2.5 py-0.5 text-[0.62rem] font-medium text-[var(--brand-primary)]/75 sm:px-3 sm:py-1 sm:text-[0.8rem]"
+                    className="rounded-[var(--radius-pill)] bg-[var(--secondary)] px-2.5 py-0.5 text-[0.75rem] font-medium text-[var(--brand-primary)]/75 sm:px-3 sm:py-1 sm:text-[0.8rem]"
                   >
                     {t}
                   </li>
@@ -326,7 +326,7 @@ export default function LandscapeDevelopmentContent({ service }) {
             <RevealUp
               as="p"
               delay={100}
-              className="max-w-sm text-[0.88rem] leading-[1.75] text-white/50"
+              className="max-w-sm text-[0.875rem] leading-[1.75] text-white/50"
             >
               Every lawn is graded, levelled and soil-prepared before a single roll goes down, then
               handed over with a watering and mowing schedule for its first season.
@@ -352,7 +352,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                   className="h-px w-8 bg-[var(--brand-lime)] transition-all duration-300 group-hover:w-16"
                 />
 
-                <p className="text-[0.86rem] leading-[1.75] text-white/55">{grass.note}</p>
+                <p className="text-[0.875rem] leading-[1.75] text-white/55">{grass.note}</p>
 
                 <dl className="mt-auto flex flex-col gap-2.5 border-t border-white/10 pt-5">
                   {grass.specs.map((spec) => (
@@ -360,7 +360,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                       <dt className="text-[0.8rem] font-semibold uppercase text-white/35">
                         {spec.label}
                       </dt>
-                      <dd className="text-right text-[0.82rem] font-medium text-white/85">
+                      <dd className="text-right text-[0.8rem] font-medium text-white/85">
                         {spec.value}
                       </dd>
                     </div>
@@ -383,7 +383,7 @@ export default function LandscapeDevelopmentContent({ service }) {
             <RevealUp
               as="p"
               delay={100}
-              className="mt-6 max-w-md text-[0.92rem] leading-[1.85] text-[var(--muted-foreground)]"
+              className="mt-6 max-w-md text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
             >
               Pergolas, screens, edging, water features, planters and statuary - fabricated to your
               choice of material, weighed against exposure, upkeep and budget before anything is
@@ -400,7 +400,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                   <span className="shrink-0 pt-0.5 text-[0.8rem] font-semibold uppercase text-[var(--brand-primary)] sm:w-28">
                     {mat.name}
                   </span>
-                  <span className="text-[0.85rem] leading-[1.7] text-[var(--muted-foreground)]">
+                  <span className="text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
                     {mat.desc}
                   </span>
                 </RevealUp>
@@ -445,14 +445,14 @@ export default function LandscapeDevelopmentContent({ service }) {
               <h3 className="font-neue text-[clamp(1.3rem,2.4vw,1.75rem)] font-medium leading-[1.2] tracking-[-0.02em] text-[var(--brand-primary)] lg:leading-normal">
                 {sector.title}
               </h3>
-              <p className="mt-4 text-[0.88rem] leading-[1.8] text-[var(--muted-foreground)]">
+              <p className="mt-4 text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
                 {sector.desc}
               </p>
               <ul className="mt-7 flex flex-col gap-3 border-t border-[var(--brand-primary)]/10 pt-6">
                 {sector.points.map((point) => (
                   <li
                     key={point}
-                    className="flex items-start gap-3 text-[0.85rem] leading-[1.6] text-[var(--brand-primary)]/80"
+                    className="flex items-start gap-3 text-[0.875rem] leading-[1.6] text-[var(--brand-primary)]/80"
                   >
                     <span
                       aria-hidden
@@ -482,7 +482,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           <RevealUp
             as="p"
             delay={100}
-            className="mt-6 max-w-2xl text-[0.92rem] leading-[1.85] text-white/55"
+            className="mt-6 max-w-2xl text-[0.9375rem] leading-[1.75] text-white/55"
           >
             {service.credentials.desc}
           </RevealUp>
@@ -491,7 +491,7 @@ export default function LandscapeDevelopmentContent({ service }) {
             {service.credentials.projects.map((project) => (
               <span
                 key={project}
-                className="rounded-[var(--radius-pill)] border border-white/15 px-2.5 py-0.5 text-[0.62rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white sm:px-4 sm:py-2 sm:text-[0.8rem]"
+                className="rounded-[var(--radius-pill)] border border-white/15 px-2.5 py-0.5 text-[0.75rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white sm:px-4 sm:py-2 sm:text-[0.8rem]"
               >
                 {project}
               </span>
@@ -509,7 +509,7 @@ export default function LandscapeDevelopmentContent({ service }) {
           <RevealUp
             as="p"
             delay={100}
-            className="text-[0.92rem] leading-[1.85] text-[var(--muted-foreground)]"
+            className="text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
           >
             {service.farm.desc}
           </RevealUp>
@@ -522,13 +522,13 @@ export default function LandscapeDevelopmentContent({ service }) {
               delay={80 + i * 80}
               className="bg-[var(--brand-white)] px-4 py-5 sm:px-6 sm:py-8 lg:px-8 lg:py-10"
             >
-              <dt className="text-[0.62rem] font-semibold uppercase tracking-[0.04em] text-[var(--muted-foreground)] sm:text-[0.8rem] sm:tracking-normal">
+              <dt className="text-[0.75rem] font-semibold uppercase tracking-[0.04em] text-[var(--muted-foreground)] sm:text-[0.8rem] sm:tracking-normal">
                 {figure.label}
               </dt>
               <dd className="mt-2 font-neue text-[1.3rem] font-medium leading-none tracking-[-0.03em] text-[var(--brand-primary)] sm:mt-3 sm:text-[clamp(1.5rem,3.2vw,2.25rem)]">
                 {figure.value}
               </dd>
-              <dd className="mt-1.5 text-[0.65rem] leading-snug text-[var(--muted-foreground)] sm:mt-2 sm:text-[0.8rem] sm:leading-relaxed">
+              <dd className="mt-1.5 text-[0.75rem] leading-snug text-[var(--muted-foreground)] sm:mt-2 sm:text-[0.8rem] sm:leading-relaxed">
                 {figure.note}
               </dd>
             </RevealUp>
@@ -547,7 +547,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                   href={`/services/${rel.slug}`}
                   className="group flex h-full items-center justify-between gap-4 rounded-[var(--radius-4xl)] border border-[var(--border)] bg-[var(--brand-white)] px-6 py-5 transition-all duration-300 hover:border-[var(--brand-primary)]/25 hover:bg-[var(--secondary)]"
                 >
-                  <span className="text-[0.92rem] font-medium leading-snug text-[var(--brand-primary)]">
+                  <span className="text-[0.9375rem] font-medium leading-snug text-[var(--brand-primary)]">
                     {rel.title}
                   </span>
                   <ArrowUpRight className="size-4 shrink-0 -translate-x-1 text-[var(--muted-foreground)] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
@@ -576,11 +576,11 @@ export default function LandscapeDevelopmentContent({ service }) {
             <RevealUp
               as="h2"
               delay={70}
-              className="font-neue text-[clamp(1.7rem,4.5vw,3rem)] font-medium leading-[1.05] tracking-[-0.03em] text-white"
+              className="font-neue text-[clamp(1.7rem,4.5vw,3rem)] font-medium leading-[1.1] tracking-[-0.03em] text-white"
             >
               It begins with a site visit.
             </RevealUp>
-            <RevealUp as="p" delay={140} className="max-w-md text-[0.92rem] leading-[1.8] text-white/50">
+            <RevealUp as="p" delay={140} className="max-w-md text-[0.9375rem] leading-[1.75] text-white/50">
               No obligation. One of our qualified horticulturists comes out, reads the space and
               gives you an honest brief and an estimate before anything is committed.
             </RevealUp>

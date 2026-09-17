@@ -34,7 +34,7 @@ const CartPageClient = () => {
         <div>
             <WebsiteBreadcrumb props={breadCrumb} />
 
-            <section className="website-gutter bg-background pt-4 pb-20 sm:py-10 lg:py-14">
+            <section className="website-gutter pt-6 pb-20 sm:py-10 lg:py-14 bg-background">
                 <div className="grid w-full gap-6 lg:grid-cols-[290px_1fr] lg:gap-8">
                     {!hydrated ? (
                         /* Placeholder rather than the empty state: the server
@@ -56,7 +56,7 @@ const CartPageClient = () => {
                                     <p>Browse the catalogue and add the plants &amp; supplies you need to send us an enquiry.</p>
                                 </CardContent>
                                 <CardFooter className="flex justify-start">
-                                    <Button type="button" asChild variant="brand" className="px-6 text-[0.8rem] font-semibold uppercase">
+                                    <Button type="button" asChild variant="brand" className="h-12 rounded-[var(--radius-sm)] px-8 text-[0.9375rem] font-semibold">
                                         <Link href={WEBSITE_SHOP}>Browse Catalogue</Link>
                                     </Button>
                                 </CardFooter>
@@ -87,10 +87,10 @@ const CartPageClient = () => {
                                             </p>
                                         </CardContent>
                                         <CardFooter className="flex flex-col gap-2.5 pt-2">
-                                            <Button type="button" onClick={() => router.push(WEBSITE_ENQUIRY)} variant="brand" className="h-11 w-full text-[0.8rem] font-semibold uppercase cursor-pointer">
+                                            <Button type="button" onClick={() => router.push(WEBSITE_ENQUIRY)} variant="brand" className="h-12 w-full rounded-[var(--radius-sm)] text-[0.9375rem] font-semibold cursor-pointer">
                                                 Submit Enquiry
                                             </Button>
-                                            <Button type="button" variant="link" asChild className="h-auto p-0 text-[0.8rem] font-semibold uppercase text-foreground">
+                                            <Button type="button" variant="link" asChild className="h-11 p-0 text-[0.875rem] font-semibold text-foreground">
                                                 <Link href={WEBSITE_SHOP}>Continue Browsing</Link>
                                             </Button>
                                         </CardFooter>
@@ -106,7 +106,7 @@ const CartPageClient = () => {
                                         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                                             Items ({cart.count})
                                         </span>
-                                        <span className="text-[11px] text-muted-foreground">
+                                        <span className="text-[0.75rem] text-muted-foreground">
                                             {cart.products.reduce((sum, p) => sum + (p.qty || 0), 0)} total units
                                         </span>
                                     </div>
@@ -161,7 +161,7 @@ const CartPageClient = () => {
                                                         {/* Variant badge */}
                                                         {(product.color || product.size) && (
                                                             <div className="mt-1">
-                                                                <span className="inline-block rounded-full bg-muted/70 px-2.5 py-0.5 text-[0.72rem] font-medium uppercase tracking-wide text-muted-foreground">
+                                                                <span className="inline-block rounded-[var(--radius-sm)] bg-muted/70 px-2.5 py-0.5 text-[0.75rem] font-medium uppercase tracking-wide text-muted-foreground">
                                                                     {[product.color, product.size].filter(Boolean).join(' / ')}
                                                                 </span>
                                                             </div>
@@ -171,13 +171,13 @@ const CartPageClient = () => {
                                                     {/* Bottom Row: Stepper + Price */}
                                                     <div className="mt-3 flex flex-wrap items-center justify-between gap-2 pt-0.5">
                                                         {/* Pill Stepper */}
-                                                        <div className="inline-flex h-8 items-center rounded-full border border-border/70 bg-background shadow-2xs">
+                                                        <div className="inline-flex h-8 items-center rounded-[var(--radius-sm)] border border-border/70 bg-background shadow-2xs">
                                                             <button
                                                                 type="button"
                                                                 aria-label="Decrease quantity"
                                                                 disabled={product.qty <= 1}
                                                                 onClick={() => dispatch(decreaseQuantity({ productId: product.productId, variantId: product.variantId }))}
-                                                                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground active:scale-95 disabled:pointer-events-none disabled:opacity-35"
+                                                                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground active:scale-95 disabled:pointer-events-none disabled:opacity-35"
                                                             >
                                                                 <Minus className="size-3.5" />
                                                             </button>
@@ -189,7 +189,7 @@ const CartPageClient = () => {
                                                                 aria-label="Increase quantity"
                                                                 disabled={product.qty >= MAX_CART_QTY}
                                                                 onClick={() => dispatch(increaseQuantity({ productId: product.productId, variantId: product.variantId }))}
-                                                                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground active:scale-95 disabled:pointer-events-none disabled:opacity-35"
+                                                                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground active:scale-95 disabled:pointer-events-none disabled:opacity-35"
                                                             >
                                                                 <Plus className="size-3.5" />
                                                             </button>
@@ -254,12 +254,12 @@ const CartPageClient = () => {
                                                         </TableCell>
                                                         <TableCell className="px-4 py-4">
                                                             <div className="flex justify-center">
-                                                                <div className="inline-flex h-9 items-center rounded-full border border-border/70 bg-background shadow-2xs">
+                                                                <div className="inline-flex h-9 items-center rounded-[var(--radius-sm)] border border-border/70 bg-background shadow-2xs">
                                                                     <Button
                                                                         type="button"
                                                                         variant="ghost"
                                                                         size="icon-sm"
-                                                                        className="h-8 w-8 rounded-full cursor-pointer"
+                                                                        className="h-8 w-8 rounded-[var(--radius-sm)] cursor-pointer"
                                                                         disabled={product.qty <= 1}
                                                                         onClick={() => dispatch(decreaseQuantity({ productId: product.productId, variantId: product.variantId }))}
                                                                     >
@@ -272,7 +272,7 @@ const CartPageClient = () => {
                                                                         type="button"
                                                                         variant="ghost"
                                                                         size="icon-sm"
-                                                                        className="h-8 w-8 rounded-full cursor-pointer"
+                                                                        className="h-8 w-8 rounded-[var(--radius-sm)] cursor-pointer"
                                                                         disabled={product.qty >= MAX_CART_QTY}
                                                                         onClick={() => dispatch(increaseQuantity({ productId: product.productId, variantId: product.variantId }))}
                                                                     >

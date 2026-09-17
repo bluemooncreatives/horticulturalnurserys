@@ -60,7 +60,7 @@ const MobileStickyCartBar = () => {
                         <span>{cart.count} {cart.count === 1 ? 'item' : 'items'}</span>
                         <span className="text-muted-foreground font-normal">({totalUnits} {totalUnits === 1 ? 'unit' : 'units'})</span>
                     </div>
-                    <p className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">
+                    <p className="text-[0.75rem] font-medium text-muted-foreground whitespace-nowrap">
                         {subtitle}
                     </p>
                 </div>

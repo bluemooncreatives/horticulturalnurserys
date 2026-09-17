@@ -29,7 +29,7 @@ export function SectionHeading({ children, tone = 'light', className = '' }) {
     <RevealUp
       as="h2"
       delay={60}
-      className={`font-neue text-[clamp(1.6rem,4vw,2.9rem)] font-medium leading-[1.05] tracking-[-0.025em] ${color} ${className}`}
+      className={`font-neue text-[clamp(1.6rem,4vw,2.9rem)] font-medium leading-[1.1] tracking-[-0.025em] ${color} ${className}`}
     >
       {children}
     </RevealUp>

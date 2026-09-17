@@ -25,7 +25,25 @@ import OTPVerification from '@/components/Application/OTPVerification'
 import { useDispatch } from 'react-redux'
 import { login } from '@/store/reducer/authReducer'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
+import { ADMIN_DASHBOARD, ADMIN_LOGIN } from '@/routes/AdminPanelRoute'
+
+// The proxy puts the blocked path in ?callback so login can return the admin
+// there. It is user-supplied, so only same-origin admin paths are honoured -
+// anything else (an absolute URL, a protocol-relative //evil.com, or the login
+// and register screens themselves, which would bounce straight back) falls
+// through to the dashboard.
+const safeCallback = (callback) => {
+    if (!callback || !callback.startsWith('/') || callback.startsWith('//')) {
+        return ADMIN_DASHBOARD
+    }
+
+    const path = callback.split('?')[0].split('#')[0]
+    if (!path.startsWith('/admin') || path === ADMIN_LOGIN || path === '/admin/register') {
+        return ADMIN_DASHBOARD
+    }
+
+    return callback
+}
 
 const AdminLoginPage = () => {
     const dispatch = useDispatch()
@@ -95,11 +113,7 @@ const AdminLoginPage = () => {
             showToast('success', otpResponse.message)
             dispatch(login(otpResponse.data))
 
-            if (searchParams.has('callback')) {
-                router.push(searchParams.get('callback'))
-            } else {
-                router.push(ADMIN_DASHBOARD)
-            }
+            router.push(safeCallback(searchParams.get('callback')))
         } catch (error) {
             showToast('error', error.message)
         } finally {

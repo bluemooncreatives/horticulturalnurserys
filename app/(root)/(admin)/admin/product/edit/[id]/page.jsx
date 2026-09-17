@@ -64,6 +64,7 @@ const EditProduct = ({ params }) => {
     _id: true,
     name: true,
     slug: true,
+    parentSku: true,
     category: true,
     description: true,
   })
@@ -74,6 +75,7 @@ const EditProduct = ({ params }) => {
       _id: id,
       name: "",
       slug: "",
+      parentSku: "",
       category: "",
       description: "",
     },
@@ -90,6 +92,10 @@ const EditProduct = ({ params }) => {
         _id: product?._id,
         name: product?.name,
         slug: product?.slug,
+        // `?? ''` keeps the input controlled: a product saved before parentSku
+        // existed has no value, and `undefined` would make React drop the field
+        // back to uncontrolled and warn.
+        parentSku: product?.parentSku ?? '',
         category: product?.category,
         description,
       })
@@ -188,6 +194,23 @@ const EditProduct = ({ params }) => {
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="Enter slug" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="parentSku"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Parent SKU <span className="text-destructive" aria-hidden>*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input type="text" placeholder="Enter parent SKU" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

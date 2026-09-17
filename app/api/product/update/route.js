@@ -21,6 +21,7 @@ export async function PUT(request) {
             _id: true,
             name: true,
             slug: true,
+            parentSku: true,
             category: true,
             description: true,
             media: true
@@ -39,6 +40,7 @@ export async function PUT(request) {
 
         getProduct.name = validatedData.name
         getProduct.slug = validatedData.slug
+        getProduct.parentSku = validatedData.parentSku
         getProduct.category = validatedData.category
         // Decode before encoding so re-saving an already-encoded description
         // is a no-op. Without it every save added an encoding layer, producing

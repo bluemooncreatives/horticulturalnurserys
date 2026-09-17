@@ -134,7 +134,7 @@ const HeroSection = () => {
           />
 
           {/* Top region: wordmark + tagline (overlaid) */}
-          <div className="relative z-[2] grid grid-cols-1 gap-6 px-5 pt-8 sm:px-8 sm:pt-10 lg:grid-cols-[1fr_auto] lg:items-start lg:gap-10 lg:px-11 lg:pt-12">
+          <div className="relative z-[2] grid grid-cols-1 gap-3 px-5 pt-6 sm:gap-6 sm:px-8 sm:pt-10 lg:grid-cols-[1fr_auto] lg:items-start lg:gap-10 lg:px-11 lg:pt-12">
             {/* Two-line lockup: the trading name is far too long for a single
                 nowrap line, so the first word carries the display size and the
                 rest sits under it at roughly half scale. */}
@@ -173,7 +173,7 @@ const HeroSection = () => {
               duration={REVEAL.tagDuration}
               className="hero-tag w-full max-w-md lg:w-[16rem] lg:pt-3 xl:w-[18rem] 2xl:w-[20rem]"
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5 sm:gap-3">
                 <div className="flex -space-x-2.5">
                   {/* "Up next" preview - queued frames behind the big screen.
                       On each advance they circular-wipe to their new frame:
@@ -197,12 +197,12 @@ const HeroSection = () => {
                     </span>
                   ))}
                 </div>
-                <span aria-hidden className="h-px w-6 bg-black/25" />
+                <span aria-hidden className="h-px w-5 bg-black/25 sm:w-6" />
                 <span className="text-[0.8rem] font-medium uppercase text-[var(--muted-foreground)]">
                   [ Kolkata · Since {OPERATING_SINCE_YEAR} ]
                 </span>
               </div>
-              <p className="mt-3.5 text-justify text-[0.88rem] leading-[1.4] text-[var(--brand-primary)]">
+              <p className="mt-2 text-justify text-[0.88rem] leading-[1.22] text-[var(--brand-primary)] sm:mt-3.5 sm:leading-[1.4]">
                 Qualified horticulturists designing, building and maintaining
                 gardens across West Bengal - backed by our own {NURSERY_BIGHAS}-bigha nursery
                 and an Alipore counter that stocks every plant, tool and input a

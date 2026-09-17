@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
+import { handleAnchorClick } from '@/lib/scrollToAnchor'
 
 /*
  * The site's primary CTA: a lime pill with the label on the left and a dark
@@ -21,6 +22,7 @@ import { cn } from '@/lib/utils'
 const LimeArrowButton = ({ href, children, icon: Icon, external = false, className, ...rest }) => (
     <Link
         href={href}
+        onClick={(e) => handleAnchorClick(e, href)}
         {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         className={cn(
             'group inline-flex h-11 max-w-full items-center gap-2.5 rounded-full bg-[var(--brand-lime)] py-1.5 pl-5 pr-1.5 transition-colors hover:bg-[var(--brand-lime-hover)]',

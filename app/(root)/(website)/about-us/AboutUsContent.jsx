@@ -3,6 +3,7 @@
 import Image from "next/image";
 import ShopAllButton from "@/components/Application/Website/ShopAllButton";
 import ProductBox from "@/components/Application/Website/ProductBox";
+import ServiceEnquiryForm from "@/components/Application/Website/ServiceEnquiryForm";
 import { yearsInBusiness } from "@/lib/companyInfo";
 import styles from "./about-us.module.css";
 
@@ -178,12 +179,19 @@ const AboutUsContent = ({ products = [] }) => {
           <div className={styles.ctaWrap}>
             <ShopAllButton
               label="Request a site visit"
-              href="/contact"
+              href="#enquiry-form"
               colorScheme="dark-red"
               radius="sm"
             />
           </div>
         </div>
+      </div>
+
+      {/* ── Enquiry form - same-page target for the CTA above ──────────── */}
+      <div className={styles.inner}>
+        <section id="enquiry-form" className="scroll-mt-24 py-14 lg:py-20">
+          <ServiceEnquiryForm />
+        </section>
       </div>
 
       {/* ── Curated For You · You May Also Like (centered) ───────────── */}

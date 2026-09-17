@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { handleAnchorClick } from "@/lib/scrollToAnchor"
 import { WEBSITE_SHOP } from "@/routes/WebsiteRoute"
 
 const SCHEMES = {
@@ -21,25 +22,50 @@ const ShopAllButton = ({
 
     const { border, fill, hoverText } = SCHEMES[colorScheme] ?? SCHEMES.black
     const radiusClass = radius === "sm" ? "rounded-sm" : radius === "md" ? "rounded-md" : "rounded-[var(--radius-sm)]"
+    // In-page anchors (e.g. "#enquiry-form") need the browser's own hash
+    // scroll, not a router.push - a <button> has no href for that to hook into.
+    const isAnchor = href.startsWith("#")
+
+    const sharedClassName = cn(
+        "group relative inline-flex h-12 w-full min-w-0 cursor-pointer select-none items-center justify-center overflow-hidden border px-6 text-[0.8rem] font-semibold uppercase transition-colors duration-200 sm:w-auto sm:min-w-[220px] sm:px-10",
+        radiusClass,
+        className
+    )
+    const sharedProps = {
+        style: { borderColor: border, color: border },
+        onMouseEnter: (e) => { e.currentTarget.style.color = hoverText },
+        onMouseLeave: (e) => { e.currentTarget.style.color = border },
+    }
+    const fill_ = (
+        <span
+            aria-hidden
+            className="absolute inset-0 origin-left scale-x-0 transition-transform duration-[450ms] ease-out group-hover:scale-x-100"
+            style={{ background: fill }}
+        />
+    )
+
+    if (isAnchor) {
+        return (
+            <a
+                href={href}
+                className={sharedClassName}
+                onClick={(e) => handleAnchorClick(e, href)}
+                {...sharedProps}
+            >
+                {fill_}
+                <span className="relative z-10">{label}</span>
+            </a>
+        )
+    }
 
     return (
         <button
             type="button"
             onClick={() => router.push(href)}
-            className={cn(
-                "group relative inline-flex h-12 w-full min-w-0 cursor-pointer select-none items-center justify-center overflow-hidden border px-6 text-[0.8rem] font-semibold uppercase transition-colors duration-200 sm:w-auto sm:min-w-[220px] sm:px-10",
-                radiusClass,
-                className
-            )}
-            style={{ borderColor: border, color: border }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = hoverText }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = border }}
+            className={sharedClassName}
+            {...sharedProps}
         >
-            <span
-                aria-hidden
-                className="absolute inset-0 origin-left scale-x-0 transition-transform duration-[450ms] ease-out group-hover:scale-x-100"
-                style={{ background: fill }}
-            />
+            {fill_}
             <span className="relative z-10">{label}</span>
         </button>
     )

@@ -22,6 +22,7 @@ import { RevealLines, RevealUp } from '@/components/ui/reveal'
 import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
 import ServiceEnquiryForm from '@/components/Application/Website/ServiceEnquiryForm'
 import { WHOLESALE_WHATSAPP_URL } from '@/lib/companyInfo'
+import { handleAnchorClick } from '@/lib/scrollToAnchor'
 
 /* ────────────────────────────────────────────────────────────────
    ServicesContent - the /services index.
@@ -67,6 +68,7 @@ function PrimaryButton({ href, children, className = '' }) {
   return (
     <Link
       href={href}
+      onClick={(e) => handleAnchorClick(e, href)}
       className={`group inline-flex h-11 sm:h-14 items-center gap-2 rounded-full bg-[var(--brand-primary)] px-6 text-[0.875rem] font-medium text-white transition-all duration-300 hover:bg-[var(--brand-primary-hover)] hover:shadow-[0_12px_30px_-12px_rgba(29,64,32,0.6)] ${className}`}
     >
       {children}

@@ -57,27 +57,27 @@ function TestimonialCard({ item, index }) {
       ref={cardRef}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="group relative flex h-full w-[320px] shrink-0 flex-col justify-between rounded-2xl bg-[#F5F5F7] p-7 transition-colors duration-200 select-none sm:w-[380px] sm:p-8 lg:w-[420px]"
+      className="group relative flex h-full w-[46vw] shrink-0 flex-col justify-between rounded-2xl bg-[#F5F5F7] p-4 transition-colors duration-200 select-none sm:w-[380px] sm:p-8 lg:w-[420px]"
       style={{ willChange: 'transform, box-shadow' }}
     >
       <div>
         <span
           ref={quoteRef}
           aria-hidden
-          className="inline-block text-4xl font-serif leading-none text-[var(--brand-primary)] opacity-85 select-none sm:text-5xl"
+          className="inline-block text-2xl font-serif leading-none text-[var(--brand-primary)] opacity-85 select-none sm:text-5xl"
         >
           &ldquo;
         </span>
-        <blockquote className="mt-4 text-[1rem] font-normal leading-relaxed text-[#111111] sm:text-[1.08rem]">
+        <blockquote className="mt-2 line-clamp-5 text-[0.85rem] font-normal leading-relaxed text-[#111111] sm:mt-4 sm:line-clamp-none sm:text-[1.08rem]">
           {quoteText}
         </blockquote>
       </div>
 
-      <figcaption className="mt-7 border-t border-black/[0.08] pt-4">
-        <span className="block text-[0.9375rem] font-semibold text-[#111111]">
+      <figcaption className="mt-4 border-t border-black/[0.08] pt-3 sm:mt-7 sm:pt-4">
+        <span className="block text-[0.8rem] font-semibold text-[#111111] sm:text-[0.9375rem]">
           {item.name}
         </span>
-        <span className="mt-0.5 block text-[0.8rem] font-normal text-black/50">
+        <span className="mt-0.5 block text-[0.7rem] font-normal text-black/50 sm:text-[0.8rem]">
           {roleText}
         </span>
       </figcaption>
@@ -123,20 +123,21 @@ export default function TestimonialClient({ testimonials = [] }) {
 
         <h2
           id="testimonials-title"
-          className="mt-4 font-neue text-4xl font-medium leading-[0.9] tracking-tight text-[#111111] sm:text-5xl lg:text-[3.6rem] text-center"
+          className="mt-3 font-neue text-4xl font-medium leading-[0.9] tracking-tight text-[#111111] sm:mt-4 sm:text-5xl lg:text-[3.6rem] text-center"
         >
           <RevealLines items={['Loved by', 'our garden owners']} className="text-center" />
         </h2>
       </div>
 
       {/* ── Infinite auto-scrolling marquee (Left to Right) ── */}
-      <div className="testimonial-marquee-wrapper relative mt-12 w-full overflow-hidden sm:mt-14">
-        {/* Soft edge fade masks on both sides */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent sm:w-28" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent sm:w-28" />
+      <div className="testimonial-marquee-wrapper relative mt-8 w-full overflow-hidden sm:mt-14">
+        {/* Soft edge fade masks on both sides - narrower on mobile so a
+            sliver of the next card stays visible instead of eating into it */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-background to-transparent sm:w-28" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-gradient-to-l from-background to-transparent sm:w-28" />
 
         {/* Moving track */}
-        <div className="testimonial-track flex w-max items-stretch gap-5 pt-2 pl-5">
+        <div className="testimonial-track flex w-max items-stretch gap-3 pt-2 pl-3 sm:gap-5 sm:pl-5">
           {trackItems.map((item, index) => (
             <TestimonialCard
               key={`${item.name}-${index}`}

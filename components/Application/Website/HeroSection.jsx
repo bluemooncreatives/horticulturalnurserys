@@ -228,7 +228,7 @@ const HeroSection = () => {
                   [ Kolkata · Since {OPERATING_SINCE_YEAR} ]
                 </span>
               </div>
-              <p className="mt-2 text-[0.875rem] leading-[1.35] text-[var(--brand-primary)] sm:mt-3.5">
+              <p className="mt-2 text-[0.875rem] leading-[1.35] text-[var(--brand-primary)] sm:mt-3.5 font-medium">
                 Qualified horticulturists designing, building and maintaining
                 gardens across West Bengal - backed by our own {NURSERY_BIGHAS}-bigha nursery
                 and an Alipore counter that stocks every plant, tool and input a

@@ -51,13 +51,13 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
             <SheetContent className="data-[side=right]:w-[88vw] gap-0 border-l border-border/40 bg-background p-0 shadow-2xl sm:data-[side=right]:w-full sm:data-[side=right]:max-w-[440px]">
 
                 {/* Header */}
-                <SheetHeader className="flex-shrink-0 border-b border-border/50 px-5 py-4 sm:px-6 sm:py-5">
+                <SheetHeader className="flex-shrink-0 border-b border-border/50 px-5 py-3.5 sm:px-6 sm:py-5">
                     <div className="flex items-center justify-between pr-8">
-                        <SheetTitle className="font-header text-2xl leading-none text-[var(--brand-primary)] sm:font-neue sm:text-xl sm:font-semibold sm:leading-normal sm:text-foreground">
+                        <SheetTitle className="font-neue text-[1.125rem] font-semibold leading-tight text-[var(--brand-primary)] sm:text-xl sm:text-foreground">
                             My Enquiry
                         </SheetTitle>
                         {cartCount > 0 && (
-                            <span className="rounded-full bg-[var(--brand-cream)]/60 px-2.5 py-0.5 text-[0.8rem] font-medium uppercase text-[var(--brand-primary)] sm:bg-muted/60 sm:text-muted-foreground">
+                            <span className="rounded-full bg-[var(--brand-cream)]/60 px-2.5 py-0.5 text-xs font-semibold uppercase text-[var(--brand-primary)] sm:bg-muted/60 sm:text-muted-foreground">
                                 {cartCount} {cartCount === 1 ? 'item' : 'items'}
                             </span>
                         )}

@@ -264,12 +264,12 @@ export default function Navbar({
           side="right"
           className="flex w-[88%] max-w-md flex-col gap-0 border-l border-black/[0.06] bg-[var(--background)] p-0"
         >
-          <SheetHeader className="flex-shrink-0 border-b border-black/[0.06] px-6 py-6">
-            <SheetTitle className="flex items-center gap-2.5 text-[1.7rem] text-[var(--brand-primary)]">
+          <SheetHeader className="flex-shrink-0 border-b border-black/[0.06] px-5 py-3.5 sm:px-6 sm:py-5">
+            <SheetTitle className="flex items-center gap-2.5 text-[1.25rem] text-[var(--brand-primary)]">
               <Image
                 src={logoMark}
                 alt=""
-                className="size-9 shrink-0 rounded-full"
+                className="size-8 shrink-0 rounded-full sm:size-9"
               />
               <Wordmark title={logo.title} subtitle={logo.subtitle} />
             </SheetTitle>

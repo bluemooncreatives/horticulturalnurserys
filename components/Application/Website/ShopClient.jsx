@@ -196,16 +196,16 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                                 {/* Header - matches the hamburger menu's sheet chrome (icon + title
                                     stack, same title scale) so the two slide-out panels read as one
                                     family of components. */}
-                                <SheetHeader className="flex-shrink-0 gap-0 border-b border-black/[0.06] px-5 py-4 pr-12">
-                                    <div className="flex items-center gap-3">
-                                        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[var(--brand-cream)]/60 text-[var(--brand-primary)]">
-                                            <SlidersHorizontal className="size-4" strokeWidth={1.75} />
+                                <SheetHeader className="flex-shrink-0 gap-0 border-b border-black/[0.06] px-5 py-3.5 pr-12">
+                                    <div className="flex items-center gap-2.5">
+                                        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[var(--brand-cream)]/60 text-[var(--brand-primary)]">
+                                            <SlidersHorizontal className="size-3.5" strokeWidth={1.75} />
                                         </span>
                                         <div className="min-w-0">
-                                            <SheetTitle className="text-[1.7rem] leading-none text-[var(--brand-primary)]">
+                                            <SheetTitle className="font-neue text-[1.125rem] font-semibold leading-tight text-[var(--brand-primary)]">
                                                 Filter
                                             </SheetTitle>
-                                            <SheetDescription className="mt-1 font-neue text-[13px] text-muted-foreground">
+                                            <SheetDescription className="mt-0.5 font-neue text-[12px] text-muted-foreground">
                                                 Refine your results quickly.
                                             </SheetDescription>
                                         </div>

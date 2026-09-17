@@ -334,7 +334,7 @@ const Enquiry = () => {
 
                                     {/* Trust & payment note */}
                                     <div className="border-t border-border/60 bg-muted/20 px-5 py-3.5">
-                                        <p className="flex items-start gap-2 text-[0.8rem] leading-relaxed text-muted-foreground">
+                                        <p className="flex items-start gap-2 text-[0.8rem] leading-normal text-muted-foreground">
                                             <ShieldCheck className="mt-0.5 size-4 flex-shrink-0 text-[var(--dark-red)]" />
                                             No payment is taken now. Submit your enquiry and our team will contact you with availability and a quote.
                                         </p>

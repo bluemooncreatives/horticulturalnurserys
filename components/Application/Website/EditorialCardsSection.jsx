@@ -92,7 +92,7 @@ const EditorialCardsSection = () => {
                             <div className="my-3 h-px w-8 bg-[var(--brand-lime)]" />
 
                             {/* description */}
-                            <p className="line-clamp-2 text-[0.8rem] leading-relaxed text-white/70">
+                            <p className="line-clamp-2 text-[0.8rem] leading-normal text-white/70">
                                 {card.description}
                             </p>
 

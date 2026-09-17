@@ -318,7 +318,7 @@ const ServicesSection = () => {
                             Rooted In Craft, Grown Into Every Garden
                         </h2>
                     </div>
-                    <p className="max-w-md text-[0.875rem] leading-relaxed text-white lg:justify-self-end lg:text-right">
+                    <p className="max-w-md text-[0.875rem] leading-normal text-white lg:justify-self-end lg:text-right">
                         Kolkata&apos;s landscaper since 1989 - {yearsInBusiness()}+ years, {NURSERY_BIGHAS} bighas of our own farm at Bibirhut and {UNDER_COVER_SQM.toLocaleString('en-US')} m² under cover. From residential terraces and living walls to State Government and CPWD public grounds, our four specialized divisions carry every project from site survey to lifelong aftercare.
                     </p>
                     <div className="hidden flex-wrap justify-start gap-2 sm:flex lg:col-span-2 lg:mt-2">
@@ -371,7 +371,7 @@ const ServicesSection = () => {
                                             className="block overflow-hidden"
                                             style={i === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
                                         >
-                                            <p className="pt-3 text-[0.875rem] leading-relaxed text-white/55 sm:max-w-sm sm:text-[0.8rem] sm:text-white/45 md:max-w-md lg:max-w-lg">
+                                            <p className="pt-3 text-[0.875rem] leading-normal text-white/55 sm:max-w-sm sm:text-[0.8rem] sm:text-white/45 md:max-w-md lg:max-w-lg">
                                                 {service.description}
                                             </p>
                                             {/* mobile-only CTA */}

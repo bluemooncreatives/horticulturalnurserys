@@ -84,7 +84,7 @@ const WholesaleSection = () => {
                         plants, nationwide.
                     </h2>
                 </div>
-                <p className="text-[0.9375rem] leading-relaxed text-[var(--muted-foreground)] lg:pb-2">
+                <p className="text-[0.9375rem] leading-normal text-[var(--muted-foreground)] lg:pb-2">
                     Exotic, ornamental and fruit plants, grown on our own farm and
                     despatched in wholesale quantity to anywhere in India - bought
                     online or across our Alipore counter.
@@ -120,7 +120,7 @@ const WholesaleSection = () => {
                             <span className="pb-1 text-[1rem] font-medium text-white/70">bighas</span>
                         </p>
                         <div className="my-3 h-px w-8 bg-[var(--brand-lime)]" />
-                        <p className="text-[0.8rem] leading-relaxed text-white/70">
+                        <p className="text-[0.8rem] leading-normal text-white/70">
                             At Bibirhut, South 24 Parganas - where every consignment is
                             grown, hardened and packed before it travels.
                         </p>
@@ -149,7 +149,7 @@ const WholesaleSection = () => {
                             <h3 className="mt-5 text-[1rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)] lg:text-[1.05rem]">
                                 {title}
                             </h3>
-                            <p className="mt-2 text-[0.8rem] leading-relaxed text-[var(--muted-foreground)]">
+                            <p className="mt-2 text-[0.8rem] leading-normal text-[var(--muted-foreground)]">
                                 {description}
                             </p>
                         </div>

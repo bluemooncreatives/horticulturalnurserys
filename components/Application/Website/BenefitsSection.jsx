@@ -29,7 +29,7 @@ const BenefitsSection = () => {
                             From First Survey To Season After Season
                         </h2>
                     </div>
-                    <p className="max-w-xs text-[0.8rem] leading-relaxed text-white/45">
+                    <p className="max-w-xs text-[0.8rem] leading-normal text-white/45">
                         Landscaping, nursery and supply sit in one house - so nothing is
                         handed off and nothing gets lost between them.
                     </p>
@@ -52,7 +52,7 @@ const BenefitsSection = () => {
                                 <span className="text-[0.75rem] font-medium text-white/30 sm:text-[0.8rem]">[{item.num}]</span>
                             </div>
                             <h3 className="text-[0.9375rem] font-medium tracking-[-0.01em] text-white sm:text-[1.05rem]">{item.title}</h3>
-                            <p className="mt-1.5 text-[0.75rem] leading-relaxed text-white/45 sm:mt-2.5 sm:text-[0.8rem]">{item.description}</p>
+                            <p className="mt-1.5 text-[0.75rem] leading-normal text-white/45 sm:mt-2.5 sm:text-[0.8rem]">{item.description}</p>
                         </div>
                     ))}
                 </div>

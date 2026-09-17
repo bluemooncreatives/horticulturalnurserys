@@ -22,7 +22,7 @@ const Section = ({ number, title, children }) => (
         <h2 className='text-lg lg:text-xl font-semibold text-[var(--dark-red-2)] mb-3'>
             {number}. {title}
         </h2>
-        <div className='space-y-3 text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+        <div className='space-y-3 text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
             {children}
         </div>
     </div>
@@ -38,16 +38,16 @@ const PrivacyPolicy = () => {
                 <div className='border-b border-gray-200 pb-8'>
                     <h1 className='text-3xl lg:text-4xl font-semibold mb-2'>Privacy Policy</h1>
                     <p className='text-sm text-gray-500'>Last Updated: July 22, 2026 &nbsp;|&nbsp; Effective Date: July 22, 2026</p>
-                    <p className='mt-5 text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+                    <p className='mt-5 text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
                         At <strong>Horticultural Development Centre</strong>, we are committed to protecting your privacy and handling your personal data with transparency,
                         integrity, and care. This Privacy Policy explains what information we collect, how we use it, who we share it with,
                         and the rights you have over your data.
                     </p>
-                    <p className='mt-3 text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+                    <p className='mt-3 text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
                         By visiting <strong>horticulturaldevelopmentcentre.com</strong> (the &quot;Website&quot;) or placing an order with us, you acknowledge
                         that you have read and understood this Privacy Policy. If you do not agree, please discontinue use of the Website.
                     </p>
-                    <p className='mt-3 text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+                    <p className='mt-3 text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
                         This Policy applies to all users of the Website worldwide and complies with applicable data protection laws including the
                         <strong> GDPR</strong> (EU/EEA), <strong>UK GDPR</strong>, <strong>CCPA</strong> (California, USA),
                         <strong> India DPDP Act 2023</strong>, and <strong>Australian Privacy Act 1988</strong>.
@@ -276,7 +276,7 @@ const PrivacyPolicy = () => {
                 {/* Contact */}
                 <div className='mt-12 border-t border-gray-200 pt-8'>
                     <h2 className='text-lg lg:text-xl font-semibold text-[var(--dark-red-2)] mb-3'>Contact Us & Grievance Redressal</h2>
-                    <p className='text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+                    <p className='text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
                         For any questions, concerns, or requests related to this Privacy Policy or your personal data, please contact our Data Protection Officer:
                     </p>
                     <ul className='mt-4 space-y-2 text-base lg:text-[1.0625rem] text-gray-700'>
@@ -292,7 +292,7 @@ const PrivacyPolicy = () => {
                         </li>
                         <li><strong>Address:</strong> Horticultural Development Centre, 2/5 Judges Court Road, Alipore, Kolkata, West Bengal, India – 700027</li>
                     </ul>
-                    <p className='mt-4 text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+                    <p className='mt-4 text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
                         You may also review our{' '}
                         <Link href="/terms-and-conditions" className='text-[var(--dark-red-2)] underline underline-offset-2'>
                             Terms &amp; Conditions

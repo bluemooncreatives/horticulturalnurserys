@@ -68,7 +68,7 @@ function TestimonialCard({ item, index }) {
         >
           &ldquo;
         </span>
-        <blockquote className="mt-2 line-clamp-5 text-[0.85rem] font-normal leading-relaxed text-[#111111] sm:mt-4 sm:line-clamp-none sm:text-[1.08rem]">
+        <blockquote className="mt-2 line-clamp-5 text-[0.85rem] font-normal leading-normal text-[#111111] sm:mt-4 sm:line-clamp-none sm:text-[1.08rem]">
           {quoteText}
         </blockquote>
       </div>

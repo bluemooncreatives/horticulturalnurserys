@@ -35,7 +35,7 @@ export default function NotFound() {
                 <h1 className="font-neue text-3xl font-semibold tracking-tight text-[var(--dark-red-2)]">
                     Page not found
                 </h1>
-                <p className="mx-auto max-w-md text-base leading-relaxed text-[var(--dark-red)]/60">
+                <p className="mx-auto max-w-md text-base leading-normal text-[var(--dark-red)]/60">
                     The page you&apos;re looking for doesn&apos;t exist or may have been moved.
                     Let&apos;s get you back to something beautiful.
                 </p>

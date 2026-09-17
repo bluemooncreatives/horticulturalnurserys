@@ -142,7 +142,7 @@ export default function ServiceDetailContent({ service }) {
           <RevealUp
             as="p"
             delay={280}
-            className="mt-5 max-w-xl text-[1rem] leading-relaxed text-white/75"
+            className="mt-5 max-w-xl text-[1rem] leading-normal text-white/75"
           >
             {service.tagline}
           </RevealUp>
@@ -203,7 +203,7 @@ export default function ServiceDetailContent({ service }) {
                 key={i}
                 as="p"
                 delay={120 + i * 60}
-                className="text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
+                className="text-[0.9375rem] leading-[1.6] text-[var(--muted-foreground)]"
               >
                 {para}
               </RevealUp>
@@ -277,7 +277,7 @@ export default function ServiceDetailContent({ service }) {
                   <h3 className="text-[1.02rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)]">
                     {step.title}
                   </h3>
-                  <p className="text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
+                  <p className="text-[0.875rem] leading-[1.6] text-[var(--muted-foreground)]">
                     {step.desc}
                   </p>
                 </RevealUp>
@@ -318,7 +318,7 @@ export default function ServiceDetailContent({ service }) {
 
                 <span aria-hidden className="relative my-5 block h-px w-10 bg-[var(--brand-lime)]" />
 
-                <p className="relative text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
+                <p className="relative text-[0.875rem] leading-[1.6] text-[var(--muted-foreground)]">
                   {cap.desc}
                 </p>
 
@@ -357,7 +357,7 @@ export default function ServiceDetailContent({ service }) {
                 <RevealUp
                   as="p"
                   delay={100}
-                  className="max-w-sm text-[0.875rem] leading-[1.75] text-white/50"
+                  className="max-w-sm text-[0.875rem] leading-[1.6] text-white/50"
                 >
                   {featureBand.desc}
                 </RevealUp>
@@ -385,7 +385,7 @@ export default function ServiceDetailContent({ service }) {
                     className="h-px w-8 bg-[var(--brand-lime)] transition-all duration-300 group-hover:w-16"
                   />
 
-                  <p className="text-[0.875rem] leading-[1.75] text-white/55">{item.note || item.desc}</p>
+                  <p className="text-[0.875rem] leading-[1.6] text-white/55">{item.note || item.desc}</p>
 
                   {item.specs && item.specs.length > 0 && (
                     <dl className="mt-auto flex flex-col gap-2.5 border-t border-white/10 pt-5">
@@ -421,7 +421,7 @@ export default function ServiceDetailContent({ service }) {
                 <RevealUp
                   as="p"
                   delay={100}
-                  className="mt-6 max-w-md text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
+                  className="mt-6 max-w-md text-[0.9375rem] leading-[1.6] text-[var(--muted-foreground)]"
                 >
                   {materialsData.desc}
                 </RevealUp>
@@ -437,7 +437,7 @@ export default function ServiceDetailContent({ service }) {
                     <span className="shrink-0 pt-0.5 text-[0.8rem] font-semibold uppercase text-[var(--brand-primary)] sm:w-32">
                       {mat.name}
                     </span>
-                    <span className="text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
+                    <span className="text-[0.875rem] leading-[1.6] text-[var(--muted-foreground)]">
                       {mat.desc}
                     </span>
                   </RevealUp>
@@ -486,7 +486,7 @@ export default function ServiceDetailContent({ service }) {
                 <h3 className="font-neue text-[clamp(1.3rem,2.4vw,1.75rem)] font-medium leading-[1.2] tracking-[-0.02em] text-[var(--brand-primary)] lg:leading-normal">
                   {sector.title}
                 </h3>
-                <p className="mt-4 text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
+                <p className="mt-4 text-[0.875rem] leading-[1.6] text-[var(--muted-foreground)]">
                   {sector.desc}
                 </p>
                 {sector.points && sector.points.length > 0 && (
@@ -494,7 +494,7 @@ export default function ServiceDetailContent({ service }) {
                     {sector.points.map((point) => (
                       <li
                         key={point}
-                        className="flex items-start gap-3 text-[0.875rem] leading-[1.6] text-[var(--brand-primary)]/80"
+                        className="flex items-start gap-3 text-[0.875rem] leading-[1.5] text-[var(--brand-primary)]/80"
                       >
                         <span
                           aria-hidden
@@ -527,7 +527,7 @@ export default function ServiceDetailContent({ service }) {
             <RevealUp
               as="p"
               delay={100}
-              className="mt-6 max-w-2xl text-[0.9375rem] leading-[1.75] text-white/55"
+              className="mt-6 max-w-2xl text-[0.9375rem] leading-[1.6] text-white/55"
             >
               {service.credentials.desc}
             </RevealUp>
@@ -558,7 +558,7 @@ export default function ServiceDetailContent({ service }) {
             <RevealUp
               as="p"
               delay={100}
-              className="text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
+              className="text-[0.9375rem] leading-[1.6] text-[var(--muted-foreground)]"
             >
               {service.farm.desc}
             </RevealUp>
@@ -578,7 +578,7 @@ export default function ServiceDetailContent({ service }) {
                   <dd className="mt-2 font-neue text-[1.3rem] font-medium leading-none tracking-[-0.03em] text-[var(--brand-primary)] sm:mt-3 sm:text-[clamp(1.5rem,3.2vw,2.25rem)]">
                     {figure.value}
                   </dd>
-                  <dd className="mt-1.5 text-[0.75rem] leading-snug text-[var(--muted-foreground)] sm:mt-2 sm:text-[0.8rem] sm:leading-relaxed">
+                  <dd className="mt-1.5 text-[0.75rem] leading-snug text-[var(--muted-foreground)] sm:mt-2 sm:text-[0.8rem] sm:leading-normal">
                     {figure.note}
                   </dd>
                 </RevealUp>
@@ -632,7 +632,7 @@ export default function ServiceDetailContent({ service }) {
             >
               {service.cta?.heading || 'It begins with a site visit.'}
             </RevealUp>
-            <RevealUp as="p" delay={140} className="max-w-md text-[0.9375rem] leading-[1.75] text-white/50">
+            <RevealUp as="p" delay={140} className="max-w-md text-[0.9375rem] leading-[1.6] text-white/50">
               {service.cta?.desc || 'No obligation. One of our qualified horticulturists comes out, reads the space and gives you an honest brief and an estimate before anything is committed.'}
             </RevealUp>
             <RevealUp delay={200} className="flex flex-wrap items-center gap-3">

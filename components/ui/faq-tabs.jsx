@@ -166,7 +166,7 @@ const FAQItem = ({ faq }) => {
                 <div className="overflow-hidden">
                     {/* rows span the full width, but the answer is capped so the
                         line length stays readable on a wide viewport */}
-                    <p className="max-w-3xl px-3 pb-3 text-[0.75rem] leading-snug text-[var(--text-body)] sm:px-4 sm:pb-4 sm:text-[0.875rem] sm:leading-relaxed">
+                    <p className="max-w-3xl px-3 pb-3 text-[0.75rem] leading-snug text-[var(--text-body)] sm:px-4 sm:pb-4 sm:text-[0.875rem] sm:leading-normal">
                         {faq.answer}
                     </p>
                 </div>

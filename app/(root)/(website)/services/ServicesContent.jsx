@@ -244,7 +244,7 @@ export default function ServicesContent({
           <RevealUp
             as="p"
             delay={260}
-            className="mt-6 max-w-xl text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
+            className="mt-6 max-w-xl text-[0.9375rem] leading-[1.6] text-[var(--muted-foreground)]"
           >
             From a single balcony to a township-scale landscape - designed, planted and maintained
             by qualified horticulturists across Kolkata and West Bengal.
@@ -279,7 +279,7 @@ export default function ServicesContent({
               delay={160}
               className="flex flex-1 flex-col justify-between gap-8 rounded-[var(--radius-4xl)] bg-[var(--brand-primary)] p-7 lg:p-8"
             >
-              <p className="text-[0.8rem] leading-[1.6] text-white/75">{bento.accent.caption}</p>
+              <p className="text-[0.8rem] leading-[1.5] text-white/75">{bento.accent.caption}</p>
               <p className="font-neue text-[clamp(2.4rem,5vw,3.4rem)] font-medium leading-none tracking-[-0.035em] text-white">
                 {bento.accent.figure}
               </p>
@@ -295,7 +295,7 @@ export default function ServicesContent({
               <p className="font-neue text-[clamp(2.4rem,5vw,3.4rem)] font-medium leading-none tracking-[-0.035em] text-white">
                 {bento.dark.figure}
               </p>
-              <p className="text-[0.8rem] leading-[1.6] text-white/50">{bento.dark.caption}</p>
+              <p className="text-[0.8rem] leading-[1.5] text-white/50">{bento.dark.caption}</p>
             </RevealUp>
           </div>
 
@@ -355,7 +355,7 @@ export default function ServicesContent({
                 delay={80 + i * 80}
                 className="flex flex-col-reverse items-center text-center"
               >
-                <dt className="mt-3 max-w-[18ch] text-[0.8rem] leading-[1.6] text-[var(--muted-foreground)]">
+                <dt className="mt-3 max-w-[18ch] text-[0.8rem] leading-[1.5] text-[var(--muted-foreground)]">
                   {stat.label}
                 </dt>
                 <dd className="font-neue text-[clamp(1.8rem,4vw,2.7rem)] font-medium leading-none tracking-[-0.035em] text-[var(--brand-primary)]">
@@ -385,7 +385,7 @@ export default function ServicesContent({
             <RevealUp
               as="p"
               delay={130}
-              className="mt-5 max-w-sm text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]"
+              className="mt-5 max-w-sm text-[0.875rem] leading-[1.6] text-[var(--muted-foreground)]"
             >
               Four service lines, all carried by one nursery - from the first site survey through
               planting, construction and the aftercare that keeps it alive.
@@ -457,7 +457,7 @@ export default function ServicesContent({
                         {service.title}
                       </h3>
                       <p
-                        className={`mt-3 text-[0.8rem] leading-[1.75] ${
+                        className={`mt-3 text-[0.8rem] leading-[1.6] ${
                           accent ? 'text-white/65' : 'text-[var(--muted-foreground)]'
                         }`}
                       >
@@ -513,7 +513,7 @@ export default function ServicesContent({
                   <h3 className="text-[1.02rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)]">
                     {step.title}
                   </h3>
-                  <p className="text-[0.875rem] leading-[1.75] text-[var(--muted-foreground)]">
+                  <p className="text-[0.875rem] leading-[1.6] text-[var(--muted-foreground)]">
                     {step.desc}
                   </p>
                 </RevealUp>
@@ -554,7 +554,7 @@ export default function ServicesContent({
             <RevealUp
               as="p"
               delay={170}
-              className="mt-6 max-w-2xl text-[0.9375rem] leading-[1.75] text-white/55"
+              className="mt-6 max-w-2xl text-[0.9375rem] leading-[1.6] text-white/55"
             >
               {credentials.desc}
             </RevealUp>
@@ -589,7 +589,7 @@ export default function ServicesContent({
           <RevealUp
             as="p"
             delay={130}
-            className="mt-5 max-w-md text-[0.9375rem] leading-[1.75] text-[var(--muted-foreground)]"
+            className="mt-5 max-w-md text-[0.9375rem] leading-[1.6] text-[var(--muted-foreground)]"
           >
             Every project starts with a site visit and a conversation - no obligation, just honest
             advice from qualified horticulturists.

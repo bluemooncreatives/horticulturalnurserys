@@ -22,7 +22,7 @@ const Section = ({ number, title, children }) => (
         <h2 className='text-lg lg:text-xl font-semibold text-[var(--dark-red-2)] mb-3'>
             {number}. {title}
         </h2>
-        <div className='space-y-3 text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+        <div className='space-y-3 text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
             {children}
         </div>
     </div>
@@ -38,13 +38,13 @@ const TermsAndConditions = () => {
                 <div className='border-b border-gray-200 pb-8'>
                     <h1 className='text-3xl lg:text-4xl font-semibold mb-2'>Terms & Conditions</h1>
                     <p className='text-sm text-gray-500'>Last Updated: July 22, 2026 &nbsp;|&nbsp; Effective Date: July 22, 2026</p>
-                    <p className='mt-5 text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+                    <p className='mt-5 text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
                         Welcome to <strong>Horticultural Development Centre</strong> (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). By accessing or placing an order on{' '}
                         <strong>horticulturaldevelopmentcentre.com</strong> (the &quot;Website&quot;), you agree to be legally bound by these Terms &amp; Conditions
                         (&quot;Terms&quot;). Please read them carefully before using our services. If you do not agree with any part of
                         these Terms, please discontinue use of the Website immediately.
                     </p>
-                    <p className='mt-3 text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+                    <p className='mt-3 text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
                         These Terms apply to all visitors, customers, and other users of the Website regardless of their location.
                     </p>
                 </div>
@@ -272,7 +272,7 @@ const TermsAndConditions = () => {
                 {/* Contact */}
                 <div className='mt-12 border-t border-gray-200 pt-8'>
                     <h2 className='text-lg lg:text-xl font-semibold text-[var(--dark-red-2)] mb-3'>Contact Us</h2>
-                    <p className='text-base lg:text-[1.0625rem] leading-relaxed text-gray-700'>
+                    <p className='text-base lg:text-[1.0625rem] leading-normal text-gray-700'>
                         If you have any questions, concerns, or requests regarding these Terms &amp; Conditions, please reach out to us:
                     </p>
                     <ul className='mt-4 space-y-2 text-base lg:text-[1.0625rem] text-gray-700'>

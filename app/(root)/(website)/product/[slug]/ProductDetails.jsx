@@ -689,7 +689,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                     Product Details
                                 </h2>
                                 <div
-                                    className="w-full overflow-hidden break-words font-neue text-[0.9375rem] font-normal leading-[1.75] text-[var(--text-body)] sm:leading-[1.75] [&_a]:break-all [&_a]:text-[var(--dark-red)] [&_a]:underline [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[var(--radius-sm)] [&_iframe]:aspect-video [&_iframe]:h-auto [&_iframe]:w-full [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-4 [&_pre]:overflow-x-auto [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5"
+                                    className="w-full overflow-hidden break-words font-neue text-[0.9375rem] font-normal leading-[1.6] text-[var(--text-body)] sm:leading-[1.6] [&_a]:break-all [&_a]:text-[var(--dark-red)] [&_a]:underline [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[var(--radius-sm)] [&_iframe]:aspect-video [&_iframe]:h-auto [&_iframe]:w-full [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-4 [&_pre]:overflow-x-auto [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5"
                                     dangerouslySetInnerHTML={{ __html: descriptionHtml }}
                                 />
                             </section>
@@ -734,7 +734,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                         >
                                             {index + 1}
                                         </span>
-                                        <p className="min-w-0 font-neue text-[0.875rem] leading-[1.6] text-[var(--text-body)]">
+                                        <p className="min-w-0 font-neue text-[0.875rem] leading-[1.5] text-[var(--text-body)]">
                                             <span className="sr-only">Step {index + 1}: </span>
                                             {text}
                                         </p>

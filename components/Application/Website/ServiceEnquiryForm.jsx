@@ -199,7 +199,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
           Request an on-site horticultural audit
         </h3>
 
-        <p className="mt-3 max-w-2xl text-sm leading-[1.75] text-[var(--muted-foreground)]">
+        <p className="mt-3 max-w-2xl text-sm leading-[1.6] text-[var(--muted-foreground)]">
           {lockService
             ? `A senior horticulturist will examine light, soil, and drainage on your site for ${currentService.title} and draw an itemised plan with zero obligation.`
             : 'Choose a service below. A senior horticulturist will examine light, soil, and drainage on your site and draw an itemised plan with zero obligation.'}
@@ -217,7 +217,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
             Enquiry received for {submittedService?.title || 'Service'}
           </h4>
 
-          <p className="mx-auto mt-2 max-w-lg text-sm leading-[1.75] text-[var(--muted-foreground)]">
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-[1.6] text-[var(--muted-foreground)]">
             Thank you for reaching out. We have registered your request and emailed a confirmation to your address.
             Our supervising horticulturist will contact you within 24 hours to coordinate the site inspection.
           </p>

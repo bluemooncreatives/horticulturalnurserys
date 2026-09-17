@@ -133,7 +133,7 @@ const Footer = ({ categoryLinks = [] }) => {
                     {/* Brand: blurb, email, social. Full width until the columns
                         get their own track at lg. */}
                     <div className="col-span-2 lg:col-span-1">
-                        <p className="max-w-xs text-[0.875rem] leading-relaxed tracking-normal text-white/55">
+                        <p className="max-w-xs text-[0.875rem] leading-normal tracking-normal text-white/55">
                             Designing, growing and maintaining gardens across West Bengal
                             since 1989 - and supplying plants wholesale, all over India.
                         </p>

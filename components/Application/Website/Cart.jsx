@@ -1,5 +1,5 @@
 'use client'
-import { ShoppingBag, ShoppingCart, ShoppingCartIcon } from 'lucide-react'
+import { ShoppingBag, ShoppingCart, ShoppingCartIcon, Minus, Plus, Trash2 } from 'lucide-react'
 import {
     Sheet,
     SheetContent,
@@ -11,7 +11,8 @@ import {
 import { useDispatch, useSelector } from "react-redux"
 import Image from "next/image"
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
-import { removeFromCart } from "@/store/reducer/cartReducer"
+import { removeFromCart, increaseQuantity, decreaseQuantity } from "@/store/reducer/cartReducer"
+import { MAX_CART_QTY } from "@/lib/cartConstants"
 import Link from "next/link"
 import { WEBSITE_CART, WEBSITE_ENQUIRY, WEBSITE_SHOP } from "@/routes/WebsiteRoute"
 import { BrandButton, BrandOutlineButton } from "@/components/Application/Website/BrandButton"
@@ -30,6 +31,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
     const cart = useSelector(store => store.cartStore)
     const dispatch = useDispatch()
     const cartCount = mounted ? cart.count : 0
+    const totalUnits = mounted ? (cart.products?.reduce((sum, p) => sum + (p.qty || 0), 0) || 0) : 0
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
@@ -105,29 +107,62 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
 
                                     {/* Details */}
                                     <div className="flex min-w-0 flex-1 flex-col justify-center gap-1.5">
-                                        <h4 className="line-clamp-2 font-neue text-[13px] font-semibold leading-snug text-foreground">
-                                            {product.name}
-                                        </h4>
+                                        <div className="flex items-start justify-between gap-2">
+                                            <h4 className="line-clamp-2 font-neue text-[13px] font-semibold leading-snug text-foreground">
+                                                {product.name}
+                                            </h4>
+                                            <button
+                                                type="button"
+                                                aria-label="Remove item"
+                                                onClick={() => {
+                                                    dispatch(removeFromCart({ productId: product.productId, variantId: product.variantId }))
+                                                    showToast('success', 'Removed from your enquiry list.')
+                                                }}
+                                                className="cursor-pointer text-muted-foreground/40 transition-colors hover:text-[var(--dark-red)]"
+                                            >
+                                                <Trash2 className="size-3.5" />
+                                            </button>
+                                        </div>
                                         {(product.size || product.color) && (
                                             <span className="w-fit rounded-full bg-muted/60 px-2 py-0.5 text-[0.8rem] font-medium uppercase text-muted-foreground">
                                                 {[product.size, product.color].filter(Boolean).join(' / ')}
                                             </span>
                                         )}
-                                        <div className="flex items-center justify-between">
-                                            <span className="rounded-xs bg-[var(--dark-red)]/10 px-1.5 py-0.5 font-neue text-[0.8rem] font-semibold text-[var(--dark-red)]">
-                                                Qty ×{product.qty}
-                                            </span>
-                                            <span className="font-neue text-[0.8rem] font-medium uppercase text-muted-foreground">
+                                        <div className="flex items-center justify-between gap-2 pt-1">
+                                            {/* Quantity stepper: gainable (+) and deducible (-) */}
+                                            <div className="inline-flex h-7 items-center rounded-full border border-border/70 bg-background shadow-xs">
+                                                <button
+                                                    type="button"
+                                                    aria-label={product.qty <= 1 ? "Remove from enquiry list" : "Decrease quantity"}
+                                                    onClick={() => {
+                                                        if (product.qty <= 1) {
+                                                            dispatch(removeFromCart({ productId: product.productId, variantId: product.variantId }))
+                                                            showToast('success', 'Removed from your enquiry list.')
+                                                        } else {
+                                                            dispatch(decreaseQuantity({ productId: product.productId, variantId: product.variantId }))
+                                                        }
+                                                    }}
+                                                    className="flex h-7 w-7 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-muted hover:text-foreground cursor-pointer"
+                                                >
+                                                    {product.qty <= 1 ? <Trash2 className="size-3 text-[var(--dark-red)]" /> : <Minus className="size-3" />}
+                                                </button>
+                                                <span className="w-7 select-none text-center font-neue text-xs font-semibold tabular-nums text-foreground">
+                                                    {product.qty}
+                                                </span>
+                                                <button
+                                                    type="button"
+                                                    aria-label="Increase quantity"
+                                                    disabled={product.qty >= MAX_CART_QTY}
+                                                    onClick={() => dispatch(increaseQuantity({ productId: product.productId, variantId: product.variantId }))}
+                                                    className="flex h-7 w-7 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
+                                                >
+                                                    <Plus className="size-3" />
+                                                </button>
+                                            </div>
+                                            <span className="font-neue text-[0.75rem] font-medium uppercase text-muted-foreground">
                                                 Price on enquiry
                                             </span>
                                         </div>
-                                        <button
-                                            type="button"
-                                            onClick={() => dispatch(removeFromCart({ productId: product.productId, variantId: product.variantId }))}
-                                            className="w-fit cursor-pointer text-[0.8rem] font-medium uppercase text-muted-foreground/50 transition-colors hover:text-[var(--dark-red)]"
-                                        >
-                                            Remove
-                                        </button>
                                     </div>
                                 </div>
                             ))}
@@ -138,9 +173,15 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                 {/* Footer */}
                 <div className="flex-shrink-0 border-t border-border/50 bg-background px-6 pb-6 pt-5">
                     {cart.count > 0 && (
-                        <div className="flex items-center justify-between">
-                            <span className="font-neue text-[15px] text-muted-foreground">Items in list</span>
-                            <span className="font-neue text-[15px] font-semibold text-foreground tabular-nums">{cartCount}</span>
+                        <div className="space-y-1.5">
+                            <div className="flex items-center justify-between">
+                                <span className="font-neue text-[14px] text-muted-foreground">Items in list</span>
+                                <span className="font-neue text-[14px] font-semibold text-foreground tabular-nums">{cartCount}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="font-neue text-[14px] text-muted-foreground">Total quantity</span>
+                                <span className="font-neue text-[14px] font-semibold text-foreground tabular-nums">{totalUnits}</span>
+                            </div>
                         </div>
                     )}
 

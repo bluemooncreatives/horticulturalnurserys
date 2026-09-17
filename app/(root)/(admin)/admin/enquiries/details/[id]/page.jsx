@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { showToast } from '@/lib/showToast'
 import { ADMIN_ENQUIRY_SHOW, ADMIN_DASHBOARD } from '@/routes/AdminPanelRoute'
 import Link from 'next/link'
-import { Mail, User, Calendar, Phone, MapPin, Package, StickyNote, SearchX, ArrowLeft } from 'lucide-react'
+import { Mail, User, Calendar, Phone, MapPin, Package, StickyNote, SearchX, ArrowLeft, Minus, Plus } from 'lucide-react'
 import dayjs from 'dayjs'
 import { ENQUIRY_STATUSES, statusChipStyle, statusRingStyle } from '@/lib/adminStatus'
 import { FormSkeleton } from '@/components/Application/Admin/Loaders'
@@ -29,6 +29,7 @@ const STATUS_OPTIONS = ENQUIRY_STATUSES
 const EnquiryDetail = ({ params }) => {
   const { id } = use(params)
   const [enquiry, setEnquiry] = useState(null)
+  const [products, setProducts] = useState([])
   const [status, setStatus] = useState('new')
   const [adminNote, setAdminNote] = useState('')
   const [saving, setSaving] = useState(false)
@@ -37,17 +38,44 @@ const EnquiryDetail = ({ params }) => {
   useEffect(() => {
     if (data?.success) {
       setEnquiry(data.data)
+      setProducts(data.data.products || [])
       setStatus(data.data.status || 'new')
       setAdminNote(data.data.adminNote || '')
     }
   }, [data])
 
+  const updateProductQty = (index, delta) => {
+    setProducts((prev) => {
+      const next = [...prev]
+      const current = Number(next[index]?.qty) || 1
+      const newQty = Math.min(999, Math.max(1, current + delta))
+      next[index] = { ...next[index], qty: newQty }
+      return next
+    })
+  }
+
+  const setProductQtyDirect = (index, val) => {
+    const n = parseInt(val, 10)
+    setProducts((prev) => {
+      const next = [...prev]
+      const newQty = isNaN(n) ? 1 : Math.min(999, Math.max(1, n))
+      next[index] = { ...next[index], qty: newQty }
+      return next
+    })
+  }
+
   const saveChanges = async () => {
     setSaving(true)
     try {
-      const { data: res } = await axios.put('/api/enquiry/update-status', { id, status, adminNote })
+      const { data: res } = await axios.put('/api/enquiry/update-status', {
+        id,
+        status,
+        adminNote,
+        products,
+      })
       if (!res.success) throw new Error(res.message)
       setEnquiry(res.data)
+      setProducts(res.data.products || [])
       showToast('success', 'Enquiry updated.')
     } catch (error) {
       showToast('error', error.message)
@@ -59,6 +87,8 @@ const EnquiryDetail = ({ params }) => {
   const locationParts = enquiry
     ? [enquiry.address, enquiry.city, enquiry.state, enquiry.pincode, enquiry.country].filter(Boolean)
     : []
+
+  const totalUnits = products.reduce((sum, p) => sum + (Number(p.qty) || 0), 0)
 
   return (
     <div className="flex flex-col gap-4 sm:gap-6">
@@ -168,24 +198,56 @@ const EnquiryDetail = ({ params }) => {
 
             {/* Products */}
             <div className="rounded-xl border border-border/80 bg-card p-5 mb-6 shadow-2xs">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
-                  <Package className="size-3.5" />
-                </span>
-                <p className="text-xs uppercase font-medium text-muted-foreground">
-                  Products requested ({enquiry.products?.length || 0})
-                </p>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+                    <Package className="size-3.5" />
+                  </span>
+                  <p className="text-xs uppercase font-medium text-muted-foreground">
+                    Products requested ({products.length} {products.length === 1 ? 'item' : 'items'} · {totalUnits} {totalUnits === 1 ? 'unit' : 'units'})
+                  </p>
+                </div>
               </div>
               <div className="divide-y divide-border/60">
-                {enquiry.products?.map((p, i) => (
-                  <div key={i} className="flex items-center justify-between gap-3 py-3">
-                    <div className="min-w-0">
+                {products.map((p, i) => (
+                  <div key={i} className="flex items-center justify-between gap-4 py-3">
+                    <div className="min-w-0 flex-1">
                       <p className="text-sm font-semibold text-foreground truncate">{p.name}</p>
                       {(p.size || p.color) && (
                         <p className="text-xs text-muted-foreground mt-0.5">{[p.size, p.color].filter(Boolean).join(' / ')}</p>
                       )}
                     </div>
-                    <Badge variant="secondary" className="shrink-0 tabular-nums font-medium">Qty {p.qty}</Badge>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-xs text-muted-foreground font-medium mr-1">Qty:</span>
+                      <div className="inline-flex h-8 items-center rounded-lg border border-border/80 bg-background shadow-2xs">
+                        <button
+                          type="button"
+                          aria-label="Decrease quantity"
+                          disabled={p.qty <= 1}
+                          onClick={() => updateProductQty(i, -1)}
+                          className="flex size-7 items-center justify-center rounded-md text-foreground/70 transition hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-30 cursor-pointer"
+                        >
+                          <Minus className="size-3.5" />
+                        </button>
+                        <input
+                          type="number"
+                          min="1"
+                          max="999"
+                          value={p.qty}
+                          onChange={(e) => setProductQtyDirect(i, e.target.value)}
+                          className="w-12 border-none bg-transparent text-center text-xs font-semibold tabular-nums focus:outline-hidden"
+                        />
+                        <button
+                          type="button"
+                          aria-label="Increase quantity"
+                          disabled={p.qty >= 999}
+                          onClick={() => updateProductQty(i, 1)}
+                          className="flex size-7 items-center justify-center rounded-md text-foreground/70 transition hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-30 cursor-pointer"
+                        >
+                          <Plus className="size-3.5" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

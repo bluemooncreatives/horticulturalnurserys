@@ -13,7 +13,7 @@ export async function PUT(request) {
     }
 
     await connectDB()
-    const { id, status, adminNote } = await request.json()
+    const { id, status, adminNote, products } = await request.json()
 
     if (!isValidObjectId(id)) {
       return response(false, 400, 'Invalid enquiry id.')
@@ -33,6 +33,21 @@ export async function PUT(request) {
         return response(false, 400, 'Invalid admin note.')
       }
       update.adminNote = adminNote.trim()
+    }
+
+    if (products !== undefined) {
+      if (!Array.isArray(products) || products.length === 0) {
+        return response(false, 400, 'Enquiry must have at least one product.')
+      }
+      update.products = products.map((p) => ({
+        productId: p.productId,
+        variantId: p.variantId,
+        name: p.name,
+        slug: p.slug || '',
+        size: p.size || '',
+        color: p.color || '',
+        qty: Math.min(999, Math.max(1, Math.floor(Number(p.qty)) || 1)),
+      }))
     }
 
     if (Object.keys(update).length === 0) {

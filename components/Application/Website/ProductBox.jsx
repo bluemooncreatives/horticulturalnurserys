@@ -6,8 +6,9 @@ import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { WEBSITE_CART, WEBSITE_PRODUCT_DETAILS } from '@/routes/WebsiteRoute'
-import { Check, ChevronLeft, ChevronRight, Crown, Eye, ShoppingCart, Sparkles } from 'lucide-react'
-import { addIntoCart } from '@/store/reducer/cartReducer'
+import { Check, ChevronLeft, ChevronRight, Crown, Eye, Minus, Plus, ShoppingCart, Sparkles, Trash2 } from 'lucide-react'
+import { addIntoCart, decreaseQuantity, increaseQuantity, removeFromCart } from '@/store/reducer/cartReducer'
+import { MAX_CART_QTY } from '@/lib/cartConstants'
 import { showToast } from '@/lib/showToast'
 import { Button } from '@/components/ui/button'
 import useHydrated from '@/hooks/useHydrated'
@@ -17,12 +18,8 @@ import useHydrated from '@/hooks/useHydrated'
  *
  * Matches the homepage Bestsellers card: a bare 4:5 image with the name
  * underneath (no white card chrome), and the actions revealed on the image
- * itself - a filled "Add to Cart" pill plus an outlined view button. They sit
- * hidden until hover on pointer devices and stay visible on touch, where
- * there is no hover to reveal them.
- *
- * Keeps two things Bestsellers does not need: the bestseller/new badges, and
- * the multi-image arrows for products with more than one photo.
+ * itself - a filled "Add to Cart" pill plus an outlined view button. When added,
+ * transforms into an interactive counter stepper beside "Added".
  */
 const ProductBox = ({ product, priority = false }) => {
     const dispatch = useDispatch()
@@ -33,9 +30,11 @@ const ProductBox = ({ product, priority = false }) => {
     const hydrated = useHydrated()
 
     const variant = product?.defaultVariant
-    const isInCart = hydrated && variant
-        ? cartProducts.some((item) => item.productId === product._id && item.variantId === variant._id)
-        : false
+    const cartItem = hydrated && variant
+        ? cartProducts.find((item) => item.productId === product._id && item.variantId === variant._id)
+        : null
+    const isInCart = Boolean(cartItem)
+    const cartQty = cartItem?.qty || 1
 
     const images = product?.media?.length > 0
         ? product.media
@@ -70,39 +69,108 @@ const ProductBox = ({ product, priority = false }) => {
         showToast('success', 'Added to your enquiry list.')
     }
 
+    const handleCartInc = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        if (!variant || cartQty >= MAX_CART_QTY) return
+        dispatch(increaseQuantity({ productId: product._id, variantId: variant._id }))
+    }
+
+    const handleCartDec = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        if (!variant) return
+        if (cartQty <= 1) {
+            dispatch(removeFromCart({ productId: product._id, variantId: variant._id }))
+            showToast('success', 'Removed from your enquiry list.')
+            return
+        }
+        dispatch(decreaseQuantity({ productId: product._id, variantId: variant._id }))
+    }
+
     // Rendered twice - overlaid on the image at sm+, in flow beneath it on
     // mobile - so they are defined once here.
-    const CartButton = ({ className, label }) => (
-        isInCart ? (
-            <Button asChild variant="brand" size="pill" className={className}>
-                <Link href={WEBSITE_CART} aria-label="Go to enquiry list">
-                    <Check size={15} strokeWidth={2} />
-                    {label && 'Added'}
-                </Link>
-            </Button>
-        ) : (
-            <Button
-                type="button"
-                variant="brand"
-                size="pill"
-                className={className}
-                onClick={handleAddToCart}
-                disabled={!variant}
-                aria-label={`Add ${product?.name} to enquiry list`}
-            >
-                <ShoppingCart size={15} strokeWidth={1.8} />
-                {label}
-            </Button>
-        )
-    )
+    const ActionControls = ({ isMobile = false }) => {
+        const btnHeight = isMobile ? 'h-8' : 'h-9'
+        const iconSize = isMobile ? 'size-8' : 'size-9'
+        const textSize = isMobile ? 'text-[0.62rem]' : 'text-[0.7rem]'
 
-    const ViewButton = ({ className }) => (
-        <Button asChild variant="brand-outline" size="icon" className={className}>
-            <Link href={href} aria-label={`View ${product?.name}`}>
-                <Eye size={16} strokeWidth={1.8} />
-            </Link>
-        </Button>
-    )
+        if (isInCart) {
+            return (
+                <div className={`flex w-full items-center ${isMobile ? 'gap-1.5' : 'gap-2'}`}>
+                    {/* Stepper beside Added */}
+                    <div
+                        className={`inline-flex ${btnHeight} shrink-0 items-center justify-between rounded-lg border border-border/70 bg-background/95 px-1 shadow-xs backdrop-blur-xs`}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
+                    >
+                        <button
+                            type="button"
+                            aria-label={cartQty <= 1 ? 'Remove from enquiry list' : 'Decrease quantity'}
+                            onClick={handleCartDec}
+                            className={`flex ${isMobile ? 'size-6' : 'size-7'} items-center justify-center rounded-md text-foreground/70 transition hover:bg-muted hover:text-foreground cursor-pointer`}
+                        >
+                            {cartQty <= 1 ? <Trash2 className="size-3 text-[var(--dark-red)]" /> : <Minus className="size-3" />}
+                        </button>
+                        <span className={`min-w-5 select-none px-1 text-center font-neue ${isMobile ? 'text-[11px]' : 'text-xs'} font-bold tabular-nums text-foreground`}>
+                            {cartQty}
+                        </span>
+                        <button
+                            type="button"
+                            aria-label="Increase quantity"
+                            disabled={cartQty >= MAX_CART_QTY}
+                            onClick={handleCartInc}
+                            className={`flex ${isMobile ? 'size-6' : 'size-7'} items-center justify-center rounded-md text-foreground/70 transition hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer`}
+                        >
+                            <Plus className="size-3" />
+                        </button>
+                    </div>
+
+                    {/* Added button */}
+                    <Button
+                        asChild
+                        variant="brand"
+                        size="pill"
+                        className={`${btnHeight} min-w-0 flex-1 gap-1 rounded-lg px-2 ${textSize} uppercase tracking-wide`}
+                    >
+                        <Link href={WEBSITE_CART} aria-label="Go to enquiry list" onClick={(e) => e.stopPropagation()}>
+                            <Check size={isMobile ? 13 : 14} strokeWidth={2.2} />
+                            <span className="truncate">Added</span>
+                        </Link>
+                    </Button>
+
+                    {/* View details */}
+                    <Button asChild variant="brand-outline" size="icon" className={`${iconSize} shrink-0 rounded-lg bg-white`}>
+                        <Link href={href} aria-label={`View ${product?.name}`} onClick={(e) => e.stopPropagation()}>
+                            <Eye size={isMobile ? 14 : 16} strokeWidth={1.8} />
+                        </Link>
+                    </Button>
+                </div>
+            )
+        }
+
+        return (
+            <div className={`flex w-full items-center ${isMobile ? 'gap-1.5' : 'gap-2'}`}>
+                <Button
+                    type="button"
+                    variant="brand"
+                    size="pill"
+                    className={`${btnHeight} min-w-0 flex-1 gap-1.5 rounded-lg ${isMobile ? 'px-2.5 text-[0.64rem]' : 'px-4 text-[0.72rem]'} uppercase tracking-wide`}
+                    onClick={handleAddToCart}
+                    disabled={!variant}
+                    aria-label={`Add ${product?.name} to enquiry list`}
+                >
+                    <ShoppingCart size={isMobile ? 13 : 15} strokeWidth={1.8} />
+                    <span>{isMobile ? 'Add' : 'Add to Cart'}</span>
+                </Button>
+
+                <Button asChild variant="brand-outline" size="icon" className={`${iconSize} shrink-0 rounded-lg bg-white`}>
+                    <Link href={href} aria-label={`View ${product?.name}`} onClick={(e) => e.stopPropagation()}>
+                        <Eye size={isMobile ? 14 : 16} strokeWidth={1.8} />
+                    </Link>
+                </Button>
+            </div>
+        )
+    }
 
     return (
         <div className="group relative flex flex-col">
@@ -172,18 +240,16 @@ const ProductBox = ({ product, priority = false }) => {
                     Below sm they move out of the image entirely - see the
                     in-flow row under it. */}
                 <div
-                    className={`absolute inset-x-2.5 z-20 hidden items-center gap-2 opacity-0 transition-[opacity,transform] duration-200 translate-y-1.5 group-hover:translate-y-0 group-hover:opacity-100 sm:flex ${showArrows ? 'bottom-7' : 'bottom-2.5'}`}
+                    className={`absolute inset-x-2.5 z-20 hidden items-center opacity-0 transition-[opacity,transform] duration-200 translate-y-1.5 group-hover:translate-y-0 group-hover:opacity-100 sm:flex ${showArrows ? 'bottom-7' : 'bottom-2.5'}`}
                 >
-                    <CartButton className="h-9 min-w-0 flex-1 gap-1.5 rounded-lg px-4 text-[0.72rem] uppercase tracking-wide" label="Add to Cart" />
-                    <ViewButton className="size-9 shrink-0 rounded-lg bg-white" />
+                    <ActionControls isMobile={false} />
                 </div>
             </div>
 
             {/* Mobile: actions sit under the image and above the name, where
                 they never cover the product. */}
-            <div className="mt-2 flex items-center gap-2 sm:hidden">
-                <CartButton className="h-9 min-w-0 flex-1 gap-1.5 rounded-lg px-3 text-[0.64rem] uppercase tracking-wide" label="Add" />
-                <ViewButton className="size-9 shrink-0 rounded-lg bg-white" />
+            <div className="mt-2 flex items-center sm:hidden">
+                <ActionControls isMobile={true} />
             </div>
 
             <Link href={href} className="block pt-2.5 font-neue">

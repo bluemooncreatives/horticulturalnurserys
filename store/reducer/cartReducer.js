@@ -63,6 +63,16 @@ export const cartReducer = createSlice({
                 }
             }
         },
+        updateQuantity: (state, action) => {
+            const { productId, variantId, qty } = action.payload
+            const existingProduct = state.products.findIndex(
+                (product) => product.productId === productId && product.variantId === variantId
+            )
+
+            if (existingProduct >= 0) {
+                state.products[existingProduct].qty = clampQty(qty)
+            }
+        },
         removeFromCart: (state, action) => {
             const { productId, variantId } = action.payload
 
@@ -82,6 +92,7 @@ export const {
     addIntoCart,
     increaseQuantity,
     decreaseQuantity,
+    updateQuantity,
     removeFromCart,
     clearCart
 } = cartReducer.actions

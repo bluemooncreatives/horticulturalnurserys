@@ -219,6 +219,7 @@ export async function GET(request) {
       {
         $addFields: {
           totalItem: { $size: { $ifNull: ['$products', []] } },
+          totalQty: { $sum: '$products.qty' },
         },
       },
     ]

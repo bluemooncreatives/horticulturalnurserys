@@ -4,7 +4,7 @@ import { useCallback, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowLeftRight } from "lucide-react";
 
-import { WEBSITE_SHOP } from "@/routes/WebsiteRoute";
+import { WEBSITE_SHOP, WEBSITE_SERVICES } from "@/routes/WebsiteRoute";
 import CircleReveal from "@/components/ui/CircleReveal";
 import CrossfadeImage from "@/components/ui/CrossfadeImage";
 import CircleWipeImage from "@/components/ui/CircleWipeImage";
@@ -27,9 +27,35 @@ const REVEAL = {
   cardDuration: 780,
 };
 
-// Product-card title, split into characters so each glyph can roll
-// independently with a staggered delay on hover (see the card button below).
-const CARD_TITLE = "Botanical Catalogue";
+// Dynamic card content coordinated with the hero carousel frames.
+// Alternates between the Botanical Catalogue (/shop) and Landscape Architecture (/services),
+// shifting both vocabulary and destination as the garden frames cycle.
+const HERO_CARDS = [
+  {
+    title: "Botanical Catalogue",
+    description: "Acclimatised flora, architectural planters, and garden inputs.",
+    href: WEBSITE_SHOP,
+    ariaLabel: "Botanical Catalogue - explore plants, pots, and garden materials",
+  },
+  {
+    title: "Landscape Architecture",
+    description: "Comprehensive garden masterplanning, living walls, and estate grounds.",
+    href: WEBSITE_SERVICES,
+    ariaLabel: "Landscape Architecture - explore turnkey garden development and services",
+  },
+  {
+    title: "Botanical Catalogue",
+    description: "Farm-raised exotic flora, specimen trees, and organic inputs.",
+    href: WEBSITE_SHOP,
+    ariaLabel: "Botanical Catalogue - explore plants, pots, and garden materials",
+  },
+  {
+    title: "Landscape Architecture",
+    description: "Engineered rooftop gardens, automatic irrigation, and estate aftercare.",
+    href: WEBSITE_SERVICES,
+    ariaLabel: "Landscape Architecture - explore turnkey garden development and services",
+  },
+];
 
 // Horticultural credentials shown as the "trusted by" mark row - adapts the
 // reference's client-logo strip to the nursery's field capabilities.
@@ -84,6 +110,7 @@ const HeroSection = () => {
 
   const bigIndex = index;
   const smallIndex = (index + 1) % HERO_IMAGES.length;
+  const currentCard = HERO_CARDS[index % HERO_CARDS.length];
 
   return (
     <section className="website-gutter pt-[2.75rem] pb-[clamp(2rem,4vw,3.5rem)] sm:pt-[3.5rem]">
@@ -330,58 +357,66 @@ const HeroSection = () => {
                   drives three coordinated micro-interactions: the card lifts,
                   the title rolls glyph-by-glyph with a stagger, and the arrow
                   circle fills while the arrow rotates 45° → 0°. */}
+              {/* The entire white block is a dynamic action card. Hovering it
+                  drives three coordinated micro-interactions: the card lifts,
+                  the title rolls glyph-by-glyph with a stagger, and the arrow
+                  circle fills while the arrow rotates 45° → 0°.
+                  As the hero frames cycle, the text and destination dynamically
+                  shift between Botanical Catalogue (/shop) and Landscape Architecture (/services). */}
               <Link
-                href={WEBSITE_SHOP}
-                aria-label="Botanical Catalogue - explore plants, pots, and garden materials"
+                href={currentCard.href}
+                aria-label={currentCard.ariaLabel}
                 className="group relative flex items-center gap-2 rounded-[var(--radius-3xl)] bg-white/95 px-3 py-2 text-left shadow-lg backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]/40 focus-visible:ring-offset-2 sm:gap-3 sm:px-4 sm:py-3.5"
               >
                 {/* Lime circular reveal - sweeps in from the left on hover. */}
                 <CircleReveal color="var(--brand-lime)" />
 
-                <div className="relative z-10 min-w-0 flex-1">
+                <div
+                  key={index}
+                  className="animate-in fade-in-0 slide-in-from-bottom-1.5 duration-400 relative z-10 min-w-0 flex-1"
+                >
                   {/* Title: per-character roll. Each glyph is stacked over a
                       duplicate; on hover the top copy rolls up and out while the
                       bottom copy rolls into place, staggered left-to-right.
                       Words are kept in inline-block groups so the title wraps
                       cleanly between words on narrow mobile screens. */}
                   <span
-                    aria-label={CARD_TITLE}
-                    className="flex flex-wrap items-baseline gap-x-1 text-[0.8rem] font-semibold leading-tight text-[var(--brand-primary)] sm:text-[0.9rem]"
+                    aria-label={currentCard.title}
+                    className="block text-[0.8rem] font-semibold leading-[1.05] text-[var(--brand-primary)] sm:text-[0.9rem] sm:leading-tight"
                   >
-                    {CARD_TITLE.split(" ").map((word, wi, words) => {
-                      const prevCount = words.slice(0, wi).join("").length;
-                      return (
-                        <span key={wi} aria-hidden className="inline-block whitespace-nowrap">
-                          {[...word].map((ch, ci) => {
-                            const delay = `${(prevCount + ci) * 18}ms`;
-                            return (
+                    {currentCard.title.split(" ").flatMap((word, wi, words) => [
+                      <span key={wi} aria-hidden className="inline-block whitespace-nowrap">
+                        {[...word].map((ch, ci) => {
+                          const prevCount = words.slice(0, wi).join("").length;
+                          const delay = `${(prevCount + ci) * 18}ms`;
+                          return (
+                            <span
+                              key={ci}
+                              className="relative inline-block overflow-hidden align-bottom"
+                            >
                               <span
-                                key={ci}
-                                className="relative inline-block overflow-hidden align-baseline"
+                                className="inline-block transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full"
+                                style={{ transitionDelay: delay }}
                               >
-                                <span
-                                  className="inline-block transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full"
-                                  style={{ transitionDelay: delay }}
-                                >
-                                  {ch}
-                                </span>
-                                <span
-                                  className="absolute left-0 top-0 inline-block translate-y-full transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0"
-                                  style={{ transitionDelay: delay }}
-                                >
-                                  {ch}
-                                </span>
+                                {ch}
                               </span>
-                            );
-                          })}
-                        </span>
-                      );
-                    })}
+                              <span
+                                className="absolute left-0 top-0 inline-block translate-y-full transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0"
+                                style={{ transitionDelay: delay }}
+                              >
+                                {ch}
+                              </span>
+                            </span>
+                          );
+                        })}
+                      </span>,
+                      wi < words.length - 1 ? " " : null,
+                    ])}
                   </span>
                   {/* Description: gentler counterpart - colour deepens and the
                       line eases inward as the card is hovered. */}
                   <p className="mt-1.5 hidden text-[0.8rem] leading-[1.4] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)] sm:block">
-                    Acclimatised flora, architectural planters, and garden inputs.
+                    {currentCard.description}
                   </p>
                 </div>
 

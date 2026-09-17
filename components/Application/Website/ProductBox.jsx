@@ -158,7 +158,7 @@ const ProductBox = ({ product, priority = false }) => {
                     type="button"
                     variant="brand"
                     size="pill"
-                    className={`${btnHeight} min-w-0 flex-1 gap-1.5 rounded-lg ${isMobile ? 'px-2.5' : 'px-4'} text-[0.75rem] uppercase tracking-wide`}
+                    className={`${btnHeight} min-w-0 flex-1 gap-1.5 rounded-lg ${isMobile ? 'px-2.5' : 'px-4'} cta-text-caps uppercase tracking-wide`}
                     onClick={handleAddToCart}
                     disabled={!variant}
                     aria-label={`Add ${product?.name} to enquiry list`}

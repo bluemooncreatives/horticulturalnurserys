@@ -379,7 +379,7 @@ const ServicesSection = () => {
                                                 <Link
                                                     href={service.href}
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="group/mbtn relative flex w-full items-center justify-center gap-2 rounded-full border border-[var(--brand-lime)]/45 bg-[var(--brand-lime)]/10 px-4 py-3 text-[0.9375rem] font-medium text-[var(--brand-lime)] transition-colors active:bg-[var(--brand-lime)] active:text-[var(--brand-lime-ink)]"
+                                                    className="group/mbtn relative flex w-full items-center justify-center gap-2 rounded-full border border-[var(--brand-lime)]/45 bg-[var(--brand-lime)]/10 px-4 py-3 cta-text font-medium text-[var(--brand-lime)] transition-colors active:bg-[var(--brand-lime)] active:text-[var(--brand-lime-ink)]"
                                                 >
                                                     <span>Explore</span>
                                                     <ArrowUpRight className="size-4" />
@@ -505,7 +505,7 @@ const ServicesSection = () => {
                     </LimeArrowButton>
                     <Link
                         href="/services#enquiry-form"
-                        className="group inline-flex h-11 sm:h-14 w-full max-w-[260px] sm:w-auto items-center justify-center gap-2.5 sm:gap-3 rounded-full border border-white/20 bg-white/5 px-5 sm:px-7 font-neue text-[0.875rem] sm:text-[1.05rem] font-medium tracking-tight text-white transition-colors hover:border-white/40 hover:bg-white/10"
+                        className="group inline-flex h-11 sm:h-14 w-full max-w-[260px] sm:w-auto items-center justify-center gap-2.5 sm:gap-3 rounded-full border border-white/20 bg-white/5 px-5 sm:px-7 cta-text font-neue font-medium tracking-tight text-white transition-colors hover:border-white/40 hover:bg-white/10"
                     >
                         <span>Request a Site Visit</span>
                         <ArrowUpRight className="size-3.5 sm:size-4 opacity-70 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

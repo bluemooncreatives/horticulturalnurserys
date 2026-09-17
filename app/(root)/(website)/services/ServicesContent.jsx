@@ -69,7 +69,7 @@ function PrimaryButton({ href, children, className = '' }) {
     <Link
       href={href}
       onClick={(e) => handleAnchorClick(e, href)}
-      className={`group inline-flex h-11 sm:h-14 items-center gap-2 rounded-full bg-[var(--brand-primary)] px-6 text-[0.875rem] font-medium text-white transition-all duration-300 hover:bg-[var(--brand-primary-hover)] hover:shadow-[0_12px_30px_-12px_rgba(29,64,32,0.6)] ${className}`}
+      className={`group inline-flex h-11 sm:h-14 items-center gap-2 rounded-full bg-[var(--brand-primary)] px-6 cta-text font-medium text-white transition-all duration-300 hover:bg-[var(--brand-primary-hover)] hover:shadow-[0_12px_30px_-12px_rgba(29,64,32,0.6)] ${className}`}
     >
       {children}
       <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -210,7 +210,7 @@ function GhostButton({ href, children, className = '' }) {
   return (
     <Link
       href={href}
-      className={`inline-flex h-11 sm:h-14 items-center gap-2 rounded-full border border-[var(--brand-primary)]/25 bg-[var(--card)] px-6 text-[0.875rem] font-medium text-[var(--brand-primary)] transition-all duration-300 hover:border-[var(--brand-primary)]/50 hover:bg-[var(--secondary)] ${className}`}
+      className={`inline-flex h-11 sm:h-14 items-center gap-2 rounded-full border border-[var(--brand-primary)]/25 bg-[var(--card)] px-6 cta-text font-medium text-[var(--brand-primary)] transition-all duration-300 hover:border-[var(--brand-primary)]/50 hover:bg-[var(--secondary)] ${className}`}
     >
       {children}
     </Link>

@@ -509,7 +509,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
             <button
               type="submit"
               disabled={isPending}
-              className="group inline-flex h-12 items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--brand-primary)] px-8 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:opacity-60 cursor-pointer"
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--brand-primary)] px-8 cta-text font-semibold text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:opacity-60 cursor-pointer"
             >
               {isPending ? (
                 <>

@@ -177,7 +177,7 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                 type="button"
                                                 variant="brand"
                                                 size="pill"
-                                                className="h-8 min-w-0 flex-1 gap-1 rounded-lg px-2.5 text-[0.75rem] uppercase tracking-wide sm:h-9 sm:gap-1.5 sm:px-4"
+                                                className="h-8 min-w-0 flex-1 gap-1 rounded-lg px-2.5 cta-text-caps uppercase tracking-wide sm:h-9 sm:gap-1.5 sm:px-4"
                                                 onClick={(e) => handleAddToCart(e, product)}
                                                 disabled={!product?.defaultVariant}
                                                 aria-label="Add to enquiry list"

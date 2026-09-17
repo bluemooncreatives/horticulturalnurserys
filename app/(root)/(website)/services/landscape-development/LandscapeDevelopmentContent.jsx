@@ -231,7 +231,7 @@ export default function LandscapeDevelopmentContent({ service }) {
             href={WHOLESALE_WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 sm:h-14 items-center gap-2 rounded-full border border-[var(--brand-primary)]/25 px-4 sm:px-6 text-[0.875rem] font-medium text-[var(--brand-primary)] transition-colors hover:border-[var(--brand-primary)] hover:bg-[var(--secondary)]"
+            className="inline-flex h-11 sm:h-14 items-center gap-2 rounded-full border border-[var(--brand-primary)]/25 px-4 sm:px-6 cta-text font-medium text-[var(--brand-primary)] transition-colors hover:border-[var(--brand-primary)] hover:bg-[var(--secondary)]"
           >
             <MessageCircle className="size-4" strokeWidth={1.8} />
             Have a quick question? WhatsApp us
@@ -609,7 +609,7 @@ export default function LandscapeDevelopmentContent({ service }) {
               <LimeArrowButton href="#enquiry">Request a site visit</LimeArrowButton>
               <a
                 href={`tel:${WHOLESALE_PHONE_TEL}`}
-                className="group inline-flex h-11 sm:h-14 items-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-5 sm:px-7 text-[0.875rem] font-medium text-white transition-colors hover:border-white/40 hover:bg-white/10"
+                className="group inline-flex h-11 sm:h-14 items-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-5 sm:px-7 cta-text font-medium text-white transition-colors hover:border-white/40 hover:bg-white/10"
               >
                 <Phone className="size-4" strokeWidth={1.8} />
                 Call {WHOLESALE_PHONE_DISPLAY}

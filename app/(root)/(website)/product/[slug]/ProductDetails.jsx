@@ -573,7 +573,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 type="button"
                                 variant="brand"
                                 disabled
-                                className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-3 text-[0.875rem] font-semibold uppercase tracking-[0.04em] sm:px-4"
+                                className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-3 cta-text-caps font-semibold uppercase tracking-[0.04em] sm:px-4"
                             >
                                 Unavailable
                             </Button>
@@ -607,7 +607,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                         type="button"
                                         text="Add To Enquiry"
                                         variant="brand"
-                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-3 text-[0.875rem] font-semibold uppercase tracking-[0.04em] sm:px-4"
+                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-3 cta-text-caps font-semibold uppercase tracking-[0.04em] sm:px-4"
                                         onClick={handleAddToCart}
                                     />
                                 </div>
@@ -639,7 +639,7 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                                 <div className="flex-1">
                                     <Button
                                         variant="brand"
-                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-3 text-[0.875rem] font-semibold uppercase tracking-[0.04em] sm:px-4"
+                                        className="h-12 w-full whitespace-nowrap rounded-[var(--radius-sm)] px-3 cta-text-caps font-semibold uppercase tracking-[0.04em] sm:px-4"
                                         type="button"
                                         asChild
                                     >

@@ -415,11 +415,22 @@
   --btn-font-xs:     0.75rem;
   --btn-font-sm:     0.8rem;
   --btn-font-md:     0.875rem;
-  --btn-font-pill:   var(--text-sm);
+  --btn-font-pill:   var(--cta-font-caps);
   --btn-icon-xs:     0.75rem;
   --btn-icon-sm:     0.875rem;
   --btn-icon-md:     1rem;
   --btn-icon-lg:     1.25rem;
+
+  /* ── Website CTA label type ──
+     One knob for every marketing pill/button label (LimeArrowButton, the
+     services pills, ShopAllButton, form submits). These sit in 44-56px tall
+     pills, and the old flat 0.875rem read undersized in them - especially on
+     desktop, where only the lime CTA had a step-up and everything beside it
+     stayed at 14px. Applied through .cta-text / .cta-text-caps below. */
+  --cta-font:          0.9375rem;   /* 15px    sentence-case label, phone   */
+  --cta-font-lg:       1.0625rem;   /* 17px    sentence-case label, >=640px */
+  --cta-font-caps:     0.85rem;     /* ~13.6px uppercase label, phone       */
+  --cta-font-caps-lg:  0.9375rem;   /* 15px    uppercase label, >=640px     */
   /* brand CTA */
   --btn-brand-bg:       var(--brand-primary);
   --btn-brand-bg-hover: var(--brand-primary-hover);
@@ -799,6 +810,24 @@ body {
   padding-inline: calc(var(--website-gutter) + clamp(0rem, 4vw, var(--space-12)));
 }
 
+/* CTA label type.
+
+   Every marketing button label opts into one of these two instead of carrying
+   its own `text-[0.875rem] sm:text-[1.05rem]` pair, so the CTA scale is a
+   single edit in the token block above rather than ~20 inline arbitrary
+   values that had already drifted apart from each other.
+
+   Deliberately unlayered: Tailwind's utilities live in `@layer utilities`, so
+   these win over any leftover `text-*` on the same element instead of
+   depending on class order. */
+.cta-text      { font-size: var(--cta-font); }
+.cta-text-caps { font-size: var(--cta-font-caps); }
+
+@media (min-width: 640px) {
+  .cta-text      { font-size: var(--cta-font-lg); }
+  .cta-text-caps { font-size: var(--cta-font-caps-lg); }
+}
+
 /* Pill button base */
 .pill {
   display:         inline-flex;
@@ -809,7 +838,7 @@ body {
   padding-inline:  1.5rem;
   border-radius:   var(--radius-pill);
   font-family:     var(--font-body);
-  font-size:       var(--text-sm);
+  font-size:       var(--cta-font);
   font-weight:     var(--weight-medium);
   letter-spacing:  0.01em;
   white-space:     nowrap;
@@ -817,6 +846,7 @@ body {
   transition:      var(--transition-colors), transform var(--duration-fast) var(--ease-out);
 }
 .pill:active { transform: translateY(1px); }
+@media (min-width: 640px) { .pill { font-size: var(--cta-font-lg); } }
 
 .pill-dark  { background: var(--brand-primary); color: var(--brand-white); }
 .pill-dark:hover  { background: var(--brand-primary-hover); }

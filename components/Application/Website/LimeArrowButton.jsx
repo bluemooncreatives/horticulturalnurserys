@@ -39,7 +39,7 @@ const LimeArrowButton = ({ href, children, icon: Icon, external = false, classNa
             />
         )}
 
-        <span className="min-w-0 truncate whitespace-nowrap font-neue text-[0.875rem] font-medium tracking-tight text-[var(--brand-lime-ink)] sm:text-[1.05rem]">
+        <span className="min-w-0 truncate whitespace-nowrap cta-text font-neue font-medium tracking-tight text-[var(--brand-lime-ink)]">
             {children}
         </span>
 

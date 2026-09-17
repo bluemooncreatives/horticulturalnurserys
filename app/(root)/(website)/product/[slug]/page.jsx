@@ -57,7 +57,9 @@ const ProductPage = async ({ params, searchParams }) => {
         description: htmlToText(product?.description).slice(0, 5000),
         image: (variant?.media?.length ? variant.media : product?.media)?.map((m) => m.secure_url) || [],
         sku: variant?.sku,
-        category: product?.category?.name,
+        category: product?.category?.parent?.name
+            ? `${product.category.parent.name} > ${product?.category?.name}`
+            : product?.category?.name,
         brand: {
             '@type': 'Brand',
             name: 'Horticultural Development Centre',
@@ -79,6 +81,7 @@ const ProductPage = async ({ params, searchParams }) => {
     const breadcrumbSchema = buildBreadcrumbSchema([
         { name: 'Home', path: '/' },
         { name: 'Shop', path: '/shop' },
+        ...(product?.category?.parent?.name ? [{ name: product.category.parent.name, path: `/shop?parent=${product.category.parent.slug ?? ''}` }] : []),
         ...(product?.category?.name ? [{ name: product.category.name, path: `/shop?category=${product.category.slug ?? ''}` }] : []),
         { name: product?.name },
     ])

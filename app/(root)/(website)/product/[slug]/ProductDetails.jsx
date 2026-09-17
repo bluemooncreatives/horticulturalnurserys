@@ -276,6 +276,16 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
                             <BreadcrumbItem>
                                 <BreadcrumbLink href={WEBSITE_SHOP}>Shop</BreadcrumbLink>
                             </BreadcrumbItem>
+                            {product?.category?.parent?.name && (
+                                <>
+                                    <BreadcrumbSeparator />
+                                    <BreadcrumbItem>
+                                        <BreadcrumbLink href={`${WEBSITE_SHOP}?parent=${encodeURIComponent(product.category.parent.slug)}`}>
+                                            {product.category.parent.name}
+                                        </BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                </>
+                            )}
                             {product?.category?.name && (
                                 <>
                                     <BreadcrumbSeparator />
@@ -429,16 +439,29 @@ const ProductDetails = ({ product, variant, colors, colorEntries, sizes, variant
 
                     {/* ── INFO PANEL ──────────────────────────────────────── */}
                     <div className="flex min-w-0 flex-col">
-                        {product?.category?.name ? (
-                            <Link
-                                href={`${WEBSITE_SHOP}?category=${encodeURIComponent(product.category.slug)}`}
-                                className="w-fit max-w-full break-words text-[0.8rem] font-semibold uppercase text-[var(--dark-red)] transition-colors hover:text-[var(--dark-red-2)]"
-                            >
-                                {product.category.name}
-                            </Link>
-                        ) : (
-                            <p className="text-[0.8rem] font-semibold uppercase text-[var(--dark-red)]">From Our Nursery</p>
-                        )}
+                        <div className="flex w-fit max-w-full flex-wrap items-center gap-1.5 text-[0.8rem] font-semibold uppercase text-[var(--dark-red)]">
+                            {product?.category?.parent?.name && (
+                                <>
+                                    <Link
+                                        href={`${WEBSITE_SHOP}?parent=${encodeURIComponent(product.category.parent.slug)}`}
+                                        className="break-words transition-colors hover:text-[var(--dark-red-2)]"
+                                    >
+                                        {product.category.parent.name}
+                                    </Link>
+                                    <span aria-hidden className="text-muted-foreground/50 font-normal">/</span>
+                                </>
+                            )}
+                            {product?.category?.name ? (
+                                <Link
+                                    href={`${WEBSITE_SHOP}?category=${encodeURIComponent(product.category.slug)}`}
+                                    className="break-words transition-colors hover:text-[var(--dark-red-2)]"
+                                >
+                                    {product.category.name}
+                                </Link>
+                            ) : (
+                                <span>From Our Nursery</span>
+                            )}
+                        </div>
 
                         <h1 className="font-header mt-2 break-words text-[1.6rem] leading-[1.15] tracking-[-0.02em] text-foreground sm:text-[2rem] sm:leading-[1.1] lg:text-[2.25rem]">
                             {product?.name}

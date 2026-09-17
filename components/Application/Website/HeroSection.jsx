@@ -28,32 +28,31 @@ const REVEAL = {
 };
 
 // Dynamic card content coordinated with the hero carousel frames.
-// Alternates between the Botanical Catalogue (/shop) and Landscape Architecture (/services),
-// shifting both vocabulary and destination as the garden frames cycle.
+// Alternates between the plant shop and garden services with easy, clear vocabulary.
 const HERO_CARDS = [
   {
-    title: "Botanical Catalogue",
-    description: "Acclimatised flora, architectural planters, and garden inputs.",
+    title: "Plants & Pots",
+    description: "Fresh nursery plants, decorative pots, and garden supplies.",
     href: WEBSITE_SHOP,
-    ariaLabel: "Botanical Catalogue - explore plants, pots, and garden materials",
+    ariaLabel: "Plants & Pots - shop plants, pots, and garden supplies",
   },
   {
-    title: "Landscape Architecture",
-    description: "Comprehensive garden masterplanning, living walls, and estate grounds.",
+    title: "Garden Services",
+    description: "Custom garden design, lawns, and regular maintenance.",
     href: WEBSITE_SERVICES,
-    ariaLabel: "Landscape Architecture - explore turnkey garden development and services",
+    ariaLabel: "Garden Services - explore garden design and maintenance services",
   },
   {
-    title: "Botanical Catalogue",
-    description: "Farm-raised exotic flora, specimen trees, and organic inputs.",
+    title: "Plants & Pots",
+    description: "Indoor and outdoor plants, soil, fertilizers, and tools.",
     href: WEBSITE_SHOP,
-    ariaLabel: "Botanical Catalogue - explore plants, pots, and garden materials",
+    ariaLabel: "Plants & Pots - shop plants, pots, and garden supplies",
   },
   {
-    title: "Landscape Architecture",
-    description: "Engineered rooftop gardens, automatic irrigation, and estate aftercare.",
+    title: "Garden Services",
+    description: "Terrace gardens, green walls, and full garden care.",
     href: WEBSITE_SERVICES,
-    ariaLabel: "Landscape Architecture - explore turnkey garden development and services",
+    ariaLabel: "Garden Services - explore garden design and maintenance services",
   },
 ];
 

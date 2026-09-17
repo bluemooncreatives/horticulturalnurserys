@@ -24,7 +24,13 @@
   z-index: 1;                 /* sit above the sticky footer reveal */
   background: var(--about-bg);
   color: var(--about-fg);
-  overflow: clip;             /* contain the giant headline - no h-scroll */
+  /* overflow-x only, not the `overflow: clip` shorthand: setting both axes
+     makes this div look like a scroll boundary to Next's router, which then
+     resets *its* scroll instead of the window's on navigation here - the
+     page lands wherever the window scroll happened to be (often the
+     footer) instead of the top. See the same reasoning on html/body in
+     design-system.css. */
+  overflow-x: clip;           /* contain the giant headline - no h-scroll */
   /* Clear the fixed site header */
   padding-top: clamp(7rem, 12vw, 10rem);
   padding-bottom: var(--about-section-pb);

@@ -2,6 +2,7 @@ import Footer from '@/components/Application/Website/Footer'
 import Header from '@/components/Application/Website/Header'
 import LoaderProvider from '@/components/Application/Website/LoaderProvider'
 import MobileStickyCartBar from '@/components/Application/Website/MobileStickyCartBar'
+import ScrollTopOnNavigate from '@/components/Application/Website/ScrollTopOnNavigate'
 import { getFooterCategories } from '@/lib/services/categoryService'
 import { getHomeParents } from '@/lib/services/parentService'
 
@@ -22,6 +23,7 @@ const Layout = async ({ children }) => {
     // scrollport, which is why html/body in design-system.css use it too.
     return (
         <div className='font-neue overflow-x-clip'>
+            <ScrollTopOnNavigate />
             <LoaderProvider>
                 <Header shopParents={shopParents} />
                 <main id="main-content" className='relative min-h-screen bg-background'>

@@ -29,7 +29,7 @@ const REVEAL = {
 
 // Product-card title, split into characters so each glyph can roll
 // independently with a staggered delay on hover (see the card button below).
-const CARD_TITLE = "Winter Seedlings®";
+const CARD_TITLE = "Botanical Catalogue";
 
 // Horticultural credentials shown as the "trusted by" mark row - adapts the
 // reference's client-logo strip to the nursery's field capabilities.
@@ -332,7 +332,7 @@ const HeroSection = () => {
                   circle fills while the arrow rotates 45° → 0°. */}
               <Link
                 href={WEBSITE_SHOP}
-                aria-label="Winter Seedlings - shop this season's seedlings"
+                aria-label="Botanical Catalogue - explore plants, pots, and garden materials"
                 className="group relative flex items-center gap-2 rounded-[var(--radius-3xl)] bg-white/95 px-3 py-2 text-left shadow-lg backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]/40 focus-visible:ring-offset-2 sm:gap-3 sm:px-4 sm:py-3.5"
               >
                 {/* Lime circular reveal - sweeps in from the left on hover. */}
@@ -341,36 +341,47 @@ const HeroSection = () => {
                 <div className="relative z-10 min-w-0 flex-1">
                   {/* Title: per-character roll. Each glyph is stacked over a
                       duplicate; on hover the top copy rolls up and out while the
-                      bottom copy rolls into place, staggered left-to-right. */}
+                      bottom copy rolls into place, staggered left-to-right.
+                      Words are kept in inline-block groups so the title wraps
+                      cleanly between words on narrow mobile screens. */}
                   <span
                     aria-label={CARD_TITLE}
-                    className="flex text-[0.8rem] font-semibold leading-none text-[var(--brand-primary)] sm:text-[0.9rem]"
+                    className="flex flex-wrap items-baseline gap-x-1 text-[0.8rem] font-semibold leading-tight text-[var(--brand-primary)] sm:text-[0.9rem]"
                   >
-                    {CARD_TITLE.split("").map((ch, i) => (
-                      <span
-                        key={i}
-                        aria-hidden
-                        className="relative inline-block overflow-hidden"
-                      >
-                        <span
-                          className="inline-block transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full"
-                          style={{ transitionDelay: `${i * 18}ms` }}
-                        >
-                          {ch === " " ? " " : ch}
+                    {CARD_TITLE.split(" ").map((word, wi, words) => {
+                      const prevCount = words.slice(0, wi).join("").length;
+                      return (
+                        <span key={wi} aria-hidden className="inline-block whitespace-nowrap">
+                          {[...word].map((ch, ci) => {
+                            const delay = `${(prevCount + ci) * 18}ms`;
+                            return (
+                              <span
+                                key={ci}
+                                className="relative inline-block overflow-hidden align-baseline"
+                              >
+                                <span
+                                  className="inline-block transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full"
+                                  style={{ transitionDelay: delay }}
+                                >
+                                  {ch}
+                                </span>
+                                <span
+                                  className="absolute left-0 top-0 inline-block translate-y-full transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0"
+                                  style={{ transitionDelay: delay }}
+                                >
+                                  {ch}
+                                </span>
+                              </span>
+                            );
+                          })}
                         </span>
-                        <span
-                          className="absolute left-0 top-0 inline-block translate-y-full transition-transform duration-[450ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0"
-                          style={{ transitionDelay: `${i * 18}ms` }}
-                        >
-                          {ch === " " ? " " : ch}
-                        </span>
-                      </span>
-                    ))}
+                      );
+                    })}
                   </span>
                   {/* Description: gentler counterpart - colour deepens and the
                       line eases inward as the card is hovered. */}
                   <p className="mt-1.5 hidden text-[0.8rem] leading-[1.4] text-[var(--muted-foreground)] transition-[color,transform] duration-500 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)] sm:block">
-                    Hardy nursery-raised seedlings, ready to plant this season.
+                    Acclimatised flora, architectural planters, and garden inputs.
                   </p>
                 </div>
 

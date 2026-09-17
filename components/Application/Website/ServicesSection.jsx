@@ -9,7 +9,7 @@ import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
 import { NURSERY_BIGHAS, POLYSHED_SQM, GREEN_HOUSE_SQM, FANPAD_SQM, UNDER_COVER_SQM, FLAGSHIP_PROJECTS, yearsInBusiness } from '@/lib/companyInfo'
 
 // Row title, hover-rolled - same glyph-roll technique as the hero's
-// "Winter Seedlings" card title (stacked duplicate slides up into place),
+// "Botanical Catalogue" card title (stacked duplicate slides up into place),
 // but split word-then-character like the About section's heading so long
 // titles still wrap at word boundaries instead of splitting mid-word. The
 // row `<button>` already carries `group`, so no extra hover wiring is needed.

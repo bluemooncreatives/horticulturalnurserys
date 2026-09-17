@@ -141,6 +141,10 @@ const SERVICE = {
     label: 'Components & hardware',
     heading: 'Commercial-grade hardware built for zero leaks.',
     desc: 'A vertical garden lives or dies by its engineering tolerances. We use only industrial-grade brackets, UV-treated polymer trays, and precision drip lines that prevent water seepage into walls.',
+    // Required: ServiceDetailContent only supplies a fallback image when
+    // materialsSection is absent entirely, so a section defined here without
+    // an `image` renders with the right-hand column empty.
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/v1789672665/ChatGPT_Image_Sep_18_2026_12_46_22_AM_jf51sf.png',
     items: [
       {
         name: 'UV-stabilized polymer modules',

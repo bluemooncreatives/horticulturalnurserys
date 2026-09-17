@@ -12,7 +12,10 @@ export const metadata = {
 
 // Hero bento - two photos flanking an accent card over a dark card.
 const BENTO = {
-  images: ['/assets/images/hero/01.jpg', '/assets/images/hero/03.jpg'],
+  images: [
+    'https://res.cloudinary.com/heog9fna/image/upload/2_xa2q6p', // aerial view of a fully landscaped ground
+    'https://res.cloudinary.com/heog9fna/image/upload/zobtq95wnckowcapc7ue', // rows of potted trees ready at our own farm
+  ],
   accent: {
     caption: 'Designing, planting and maintaining gardens across Kolkata and West Bengal, without a break.',
     figure: `${yearsInBusiness()}+`,
@@ -75,28 +78,28 @@ const SERVICES = [
     num: '01',
     title: 'Landscape Development',
     slug: 'landscape-development',
-    image: '/assets/images/hero/01.jpg',
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/bowtlepfx2qbwrdk5msj',
     short: 'Site survey, planting plan, costing and build - for homes and commercial grounds alike, at any scale.',
   },
   {
     num: '02',
     title: 'Garden Maintenance',
     slug: 'garden-maintenance',
-    image: '/assets/images/hero/02.jpg',
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/3_iu83rq',
     short: 'Annual contracts covering pruning, feeding, pest control, lawn upkeep and seasonal replanting.',
   },
   {
     num: '03',
     title: 'Roof Garden Design',
     slug: 'roof-garden',
-    image: '/assets/images/hero/03.jpg',
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/w0zt9nz1h7pfhrbldqim',
     short: 'Geotextile and drain-cell systems that protect the slab while turning a rooftop into usable green space.',
   },
   {
     num: '04',
     title: 'Vertical Garden Systems',
     slug: 'vertical-garden',
-    image: '/assets/images/hero/02.jpg',
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/ChatGPT_Image_Aug_31_2026_01_02_16_AM_sg4o44',
     short: 'Modular living walls and trellises for interiors, facades and boundary screens, built to the available light.',
   },
 ]

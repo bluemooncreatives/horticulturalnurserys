@@ -20,7 +20,10 @@ const SERVICE = {
   tagline:
     'Alive through every season - hands-on care by the team that raised the plants and built the landscape.',
   accent: '#A5B33D',
-  images: ['/assets/images/hero/02.jpg', '/assets/images/hero/03.jpg'],
+  images: [
+    'https://res.cloudinary.com/heog9fna/image/upload/3_iu83rq', // manicured topiary hedges on a lawn
+    'https://res.cloudinary.com/heog9fna/image/upload/widepcpvlmouzxp2ogvt', // stacked turf rolls on a pallet - materials fallback
+  ],
 
   // Hero stat rail
   stats: [
@@ -157,8 +160,15 @@ const SERVICE = {
         desc: 'Chelated micronutrient cocktails (Zinc, Boron, Iron, Magnesium) absorbed immediately through leaf stomata.',
       },
     ],
-    image: '/assets/images/hero/03.jpg',
   },
+
+  // Real site + nursery photography, not stock. Distinct from the hero and
+  // materials images above, and from every other service page's gallery.
+  gallery: [
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/oqua65vnfxexsxsf0waw', alt: 'Rows of shrubs at our Bibirhut nursery' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/pneioxk7bqvtrdyyvvjc', alt: 'A tree canopy in vigorous, healthy growth' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/etap7hawlewjjx9rpczo', alt: 'Close-up of healthy variegated foliage' },
+  ],
 
   sectorsHeading: 'Private residences and commercial grounds, maintained with equal care.',
   sectors: [

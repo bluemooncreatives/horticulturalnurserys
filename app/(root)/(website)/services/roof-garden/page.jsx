@@ -19,7 +19,10 @@ const SERVICE = {
   slug: 'roof-garden',
   tagline: 'Protecting your slab, transforming your sky.',
   accent: '#356B38',
-  images: ['/assets/images/hero/03.jpg', '/assets/images/hero/01.jpg'],
+  images: [
+    'https://res.cloudinary.com/heog9fna/image/upload/w0zt9nz1h7pfhrbldqim', // potted palms along a covered terrace walkway
+    'https://res.cloudinary.com/heog9fna/image/upload/d26uc3bvn8m14n80ctoo', // mature tree set against an apartment facade
+  ],
 
   // Hero stat rail
   stats: [
@@ -156,8 +159,13 @@ const SERVICE = {
         desc: 'Weatherproof WPC and seasoned timber decking grids elevated on adjustable pedestals to maintain unobstructed slab drainage.',
       },
     ],
-    image: '/assets/images/hero/01.jpg',
   },
+
+  gallery: [
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/xhtaniuqh96rt8qk7h3i', alt: 'A rock garden with palms on a raised deck' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/s1fyp9pnjp21pcvdeplv', alt: 'A potted palm furnishing a terrace seating corner' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/i87sf29jufprrgl5scjy', alt: 'A container plant styled into a home corner' },
+  ],
 
   sectorsHeading: 'Penthouses, corporate terraces, and institutional green roofs.',
   sectors: [

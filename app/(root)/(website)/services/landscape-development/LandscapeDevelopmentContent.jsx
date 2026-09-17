@@ -10,11 +10,15 @@ import {
   PencilRuler,
   Calculator,
   Hammer,
+  MessageCircle,
+  Phone,
 } from 'lucide-react'
 import { RevealLines, RevealUp } from '@/components/ui/reveal'
 import { SectionHeading, SectionLabel } from '../SectionHeader'
+import ServiceGallery from '../ServiceGallery'
 import ServiceEnquiryForm from '@/components/Application/Website/ServiceEnquiryForm'
 import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
+import { WHOLESALE_WHATSAPP_URL, WHOLESALE_PHONE_TEL, WHOLESALE_PHONE_DISPLAY } from '@/lib/companyInfo'
 
 /* ────────────────────────────────────────────────────────────────
    LandscapeDevelopmentContent
@@ -213,11 +217,25 @@ export default function LandscapeDevelopmentContent({ service }) {
           {service.tags.map((tag) => (
             <span
               key={tag}
- className="rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-2.5 py-0.5 text-[0.75rem] font-medium uppercase tracking-[0.02em] text-[var(--brand-primary)] sm:px-4 sm:py-1.5 sm:text-[0.8rem] sm:tracking-normal"
+              className="rounded-full border border-[var(--brand-primary)]/15 bg-[var(--secondary)] px-2.5 py-0.5 text-[0.75rem] font-medium uppercase tracking-[0.02em] text-[var(--brand-primary)] sm:px-4 sm:py-1.5 sm:text-[0.8rem] sm:tracking-normal"
             >
               {tag}
             </span>
           ))}
+        </RevealUp>
+
+        {/* Quick-question CTA - see ServiceDetailContent.jsx for why this
+            sits here rather than only at the foot of the page. */}
+        <RevealUp delay={260} className="mt-8">
+          <a
+            href={WHOLESALE_WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-11 sm:h-14 items-center gap-2 rounded-full border border-[var(--brand-primary)]/25 px-4 sm:px-6 text-[0.875rem] font-medium text-[var(--brand-primary)] transition-colors hover:border-[var(--brand-primary)] hover:bg-[var(--secondary)]"
+          >
+            <MessageCircle className="size-4" strokeWidth={1.8} />
+            Have a quick question? WhatsApp us
+          </a>
         </RevealUp>
       </section>
 
@@ -303,7 +321,7 @@ export default function LandscapeDevelopmentContent({ service }) {
                 {cap.tags.map((t) => (
                   <li
                     key={t}
-                    className="rounded-[var(--radius-pill)] bg-[var(--secondary)] px-2.5 py-0.5 text-[0.75rem] font-medium text-[var(--brand-primary)]/75 sm:px-3 sm:py-1 sm:text-[0.8rem]"
+                    className="rounded-full bg-[var(--secondary)] px-2.5 py-0.5 text-[0.75rem] font-medium text-[var(--brand-primary)]/75 sm:px-3 sm:py-1 sm:text-[0.8rem]"
                   >
                     {t}
                   </li>
@@ -313,6 +331,9 @@ export default function LandscapeDevelopmentContent({ service }) {
           ))}
         </div>
       </section>
+
+      {/* ══ Gallery ════════════════════════════════════════════ */}
+      <ServiceGallery gallery={service.gallery} />
 
       {/* ══ Lawns - dark band ══════════════════════════════════ */}
       <section className="bg-[var(--brand-ink-soft)] py-16 lg:py-24">
@@ -491,7 +512,7 @@ export default function LandscapeDevelopmentContent({ service }) {
             {service.credentials.projects.map((project) => (
               <span
                 key={project}
-                className="rounded-[var(--radius-pill)] border border-white/15 px-2.5 py-0.5 text-[0.75rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white sm:px-4 sm:py-2 sm:text-[0.8rem]"
+                className="rounded-full border border-white/15 px-2.5 py-0.5 text-[0.75rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white sm:px-4 sm:py-2 sm:text-[0.8rem]"
               >
                 {project}
               </span>
@@ -584,8 +605,15 @@ export default function LandscapeDevelopmentContent({ service }) {
               No obligation. One of our qualified horticulturists comes out, reads the space and
               gives you an honest brief and an estimate before anything is committed.
             </RevealUp>
-            <RevealUp delay={200}>
+            <RevealUp delay={200} className="flex flex-wrap items-center gap-3">
               <LimeArrowButton href="#enquiry">Request a site visit</LimeArrowButton>
+              <a
+                href={`tel:${WHOLESALE_PHONE_TEL}`}
+                className="group inline-flex h-11 sm:h-14 items-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-5 sm:px-7 text-[0.875rem] font-medium text-white transition-colors hover:border-white/40 hover:bg-white/10"
+              >
+                <Phone className="size-4" strokeWidth={1.8} />
+                Call {WHOLESALE_PHONE_DISPLAY}
+              </a>
             </RevealUp>
           </div>
         </div>

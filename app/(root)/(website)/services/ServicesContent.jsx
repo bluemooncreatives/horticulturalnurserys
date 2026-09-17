@@ -21,6 +21,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { RevealLines, RevealUp } from '@/components/ui/reveal'
 import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
 import ServiceEnquiryForm from '@/components/Application/Website/ServiceEnquiryForm'
+import { WHOLESALE_WHATSAPP_URL } from '@/lib/companyInfo'
 
 /* ────────────────────────────────────────────────────────────────
    ServicesContent - the /services index.
@@ -55,7 +56,7 @@ function Chip({ children, tone = 'light', className = '' }) {
       : 'border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)]'
   return (
     <span
-      className={`inline-flex items-center rounded-[var(--radius-pill)] border px-4 py-1.5 text-[0.8rem] font-semibold uppercase ${skin} ${className}`}
+      className={`inline-flex items-center rounded-full border px-4 py-1.5 text-[0.8rem] font-semibold uppercase ${skin} ${className}`}
     >
       {children}
     </span>
@@ -66,7 +67,7 @@ function PrimaryButton({ href, children, className = '' }) {
   return (
     <Link
       href={href}
-      className={`group inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-[var(--brand-primary)] px-6 py-3 text-[0.875rem] font-medium text-white transition-all duration-300 hover:bg-[var(--brand-primary-hover)] hover:shadow-[0_12px_30px_-12px_rgba(29,64,32,0.6)] ${className}`}
+      className={`group inline-flex h-11 sm:h-14 items-center gap-2 rounded-full bg-[var(--brand-primary)] px-6 text-[0.875rem] font-medium text-white transition-all duration-300 hover:bg-[var(--brand-primary-hover)] hover:shadow-[0_12px_30px_-12px_rgba(29,64,32,0.6)] ${className}`}
     >
       {children}
       <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -207,7 +208,7 @@ function GhostButton({ href, children, className = '' }) {
   return (
     <Link
       href={href}
-      className={`inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--brand-primary)]/25 bg-[var(--card)] px-6 py-3 text-[0.875rem] font-medium text-[var(--brand-primary)] transition-all duration-300 hover:border-[var(--brand-primary)]/50 hover:bg-[var(--secondary)] ${className}`}
+      className={`inline-flex h-11 sm:h-14 items-center gap-2 rounded-full border border-[var(--brand-primary)]/25 bg-[var(--card)] px-6 text-[0.875rem] font-medium text-[var(--brand-primary)] transition-all duration-300 hover:border-[var(--brand-primary)]/50 hover:bg-[var(--secondary)] ${className}`}
     >
       {children}
     </Link>
@@ -560,7 +561,7 @@ export default function ServicesContent({
               {credentials.projects.map((project) => (
                 <span
                   key={project}
-                  className="rounded-[var(--radius-pill)] border border-white/15 px-4 py-2 text-[0.8rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white"
+                  className="rounded-full border border-white/15 px-4 py-2 text-[0.8rem] font-medium text-white/70 transition-colors duration-300 hover:border-[var(--brand-lime)]/50 hover:text-white"
                 >
                   {project}
                 </span>
@@ -591,9 +592,22 @@ export default function ServicesContent({
             Every project starts with a site visit and a conversation - no obligation, just honest
             advice from qualified horticulturists.
           </RevealUp>
-          <RevealUp delay={190} className="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <RevealUp delay={190} className="mt-9 flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
             <PrimaryButton href="#enquiry-form">Request consultation</PrimaryButton>
             <GhostButton href="/contact">Direct office contact</GhostButton>
+          </RevealUp>
+          {/* Third, lightest-weight action - a plain text link rather than
+              another pill, so the row doesn't read as three equally-loud
+              buttons competing for the same click. */}
+          <RevealUp delay={230} className="mt-4">
+            <a
+              href={WHOLESALE_WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[0.875rem] font-medium text-[var(--brand-primary)] underline underline-offset-4 decoration-[var(--brand-primary)]/30 transition-colors hover:decoration-[var(--brand-primary)]"
+            >
+              Or WhatsApp us directly
+            </a>
           </RevealUp>
         </div>
       </section>

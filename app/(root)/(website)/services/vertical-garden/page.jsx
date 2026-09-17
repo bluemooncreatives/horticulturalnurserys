@@ -19,7 +19,10 @@ const SERVICE = {
   slug: 'vertical-garden',
   tagline: 'Walls that breathe - living surfaces for every scale.',
   accent: '#C9F24E',
-  images: ['/assets/images/hero/02.jpg', '/assets/images/hero/01.jpg'],
+  images: [
+    'https://res.cloudinary.com/heog9fna/image/upload/ChatGPT_Image_Aug_31_2026_01_02_16_AM_sg4o44', // a full-colour living wall panel
+    'https://res.cloudinary.com/heog9fna/image/upload/g7moh0btr93ovvvwvj9w', // a flowering vine espaliered on a wire trellis
+  ],
 
   // Hero stat rail
   stats: [
@@ -156,8 +159,13 @@ const SERVICE = {
         desc: 'Bottom gutter trays in powder-coated aluminium or stainless steel that catch excess drip runoff and channel it to floor drains.',
       },
     ],
-    image: '/assets/images/hero/01.jpg',
   },
+
+  gallery: [
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/kgone9vxz0yvjfvtspn2', alt: 'A face-shaped wall planter trailing string-of-pearls' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/nvggmren8ke3zsg8m8qb', alt: 'Orchids hanging in a greenhouse' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/vibpzvlcnvq2rhhkygme', alt: 'Nursery greenhouse stock in flower' },
+  ],
 
   sectorsHeading: 'Corporate lobbies, luxury residences, and public facades.',
   sectors: [

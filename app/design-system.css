@@ -44,6 +44,12 @@
      section accents etc. resolve to the new light-grey surface. */
   --brand-warm-bg: #EFEEEA;
 
+  /* Warm paper surface for the full-width editorial bands (wholesale, the
+     company band). A half-step warmer than --background so the band reads as
+     its own sheet of paper against the page without introducing a second
+     hue - deliberately NOT a green tint. */
+  --surface-warm: #F5F3F0;
+
   /* Body copy - muted grey (Lumóra's secondary text) */
   --text-body: #6B6B6B;
 

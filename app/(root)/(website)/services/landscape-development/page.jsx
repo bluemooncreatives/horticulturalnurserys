@@ -23,14 +23,14 @@ const SERVICE = {
     'Garden development and landscaping for homes, campuses and public grounds - designed, planted and built by one team, from the first site visit to handover.',
   accent: '#C9F24E',
   images: [
-    'https://res.cloudinary.com/heog9fna/image/upload/bowtlepfx2qbwrdk5msj', // an avenue of trees along a hedged road
+    'https://res.cloudinary.com/heog9fna/image/upload/v1788116698/5_hsovs6.png', // an avenue of trees along a hedged road
     'https://res.cloudinary.com/heog9fna/image/upload/l8glrxxufmxtdgn5kubl', // a round-canopy tree beside a building
   ],
 
   gallery: [
-    { src: 'https://res.cloudinary.com/heog9fna/image/upload/gtaq9utmejrybds97sm0', alt: 'A flowering tree in a landscaped park' },
-    { src: 'https://res.cloudinary.com/heog9fna/image/upload/ift9ysi7frrwvvn9zgal', alt: 'A row of conifer topiary trees' },
-    { src: 'https://res.cloudinary.com/heog9fna/image/upload/j63phkl310hcflzpkxfy', alt: 'A flowering tree with fallen petals carpeting the lawn beneath it' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/v1788116700/4_zfdwiv.png', alt: 'A flowering tree in a landscaped park' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/v1788116698/2_xa2q6p.png', alt: 'A row of conifer topiary trees' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/v1788116698/3_iu83rq.png', alt: 'A flowering tree with fallen petals carpeting the lawn beneath it' },
   ],
 
   // Hero stat rail

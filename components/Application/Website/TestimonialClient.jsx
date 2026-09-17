@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import gsap from 'gsap'
 import { RevealLines } from '@/components/ui/reveal'
+import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
 
 /* ────────────────────────────────────────────────────────────────
    TestimonialCard - Baseline Three-Up Quote Card.
@@ -146,6 +147,16 @@ export default function TestimonialClient({ testimonials = [] }) {
             />
           ))}
         </div>
+      </div>
+
+      {/* ── Section CTA ──
+          Social proof with nowhere to go is a dead end; whoever has just read
+          four clients' words is the likeliest person on the page to ask for a
+          visit, so the action sits directly under them. */}
+      <div className="mt-10 flex justify-center px-(--website-gutter) sm:mt-12">
+        <LimeArrowButton href="/services#enquiry-form">
+          Start your own project
+        </LimeArrowButton>
       </div>
 
       {/* ── Keyframes for infinite left-to-right motion ── */}

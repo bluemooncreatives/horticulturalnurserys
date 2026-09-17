@@ -2,8 +2,12 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { MessageCircle } from 'lucide-react'
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
 import styles from './CategoryArchiveSection.module.css'
+import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
+import { WEBSITE_SHOP } from '@/routes/WebsiteRoute'
+import { WHOLESALE_WHATSAPP_URL } from '@/lib/companyInfo'
 
 /**
  * Circular Infinite Auto-Scrolling Carousel Archive Section.
@@ -76,6 +80,24 @@ const ArchiveSectionClient = ({ title, writeup, subtitle, items = [] }) => {
                         )
                     })}
                 </div>
+            </div>
+
+            {/* ── Section CTA ──
+                The marquee routes to one category at a time; these two give the
+                visitor who does not see their category an onward move - the full
+                catalogue, or a person to ask. Without them this section had no
+                action of its own at all. */}
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 px-(--website-gutter) sm:mt-10 sm:flex-row sm:gap-4">
+                <LimeArrowButton href={WEBSITE_SHOP}>Shop all categories</LimeArrowButton>
+                <a
+                    href={WHOLESALE_WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--brand-primary)]/25 px-5 cta-text font-medium text-[var(--brand-primary)] transition-colors hover:border-[var(--brand-primary)] hover:bg-[var(--secondary)] sm:h-14 sm:px-7"
+                >
+                    <MessageCircle className="size-4" strokeWidth={1.8} />
+                    Ask our counter staff
+                </a>
             </div>
         </section>
     )

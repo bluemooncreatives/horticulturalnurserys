@@ -21,7 +21,7 @@ const SERVICE = {
     'Alive through every season - hands-on care by the team that raised the plants and built the landscape.',
   accent: '#A5B33D',
   images: [
-    'https://res.cloudinary.com/heog9fna/image/upload/3_iu83rq', // manicured topiary hedges on a lawn
+    'https://res.cloudinary.com/heog9fna/image/upload/v1789666068/ChatGPT_Image_Sep_17_2026_10_56_32_PM_m3rx1o.png', // manicured topiary hedges on a lawn
     'https://res.cloudinary.com/heog9fna/image/upload/widepcpvlmouzxp2ogvt', // stacked turf rolls on a pallet - materials fallback
   ],
 
@@ -142,6 +142,7 @@ const SERVICE = {
     label: 'Inputs & equipment',
     heading: 'Only what we sell across our own counter.',
     desc: 'Every compost, manure, bio-fertilizer and spray applied to your garden is drawn from our own counter inventory at Alipore and Bibirhut. No substandard chemicals, no unverified blends.',
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/v1789666569/ChatGPT_Image_Sep_17_2026_11_04_58_PM_xah83u.png',
     items: [
       {
         name: 'Compost & vermi',
@@ -165,9 +166,9 @@ const SERVICE = {
   // Real site + nursery photography, not stock. Distinct from the hero and
   // materials images above, and from every other service page's gallery.
   gallery: [
-    { src: 'https://res.cloudinary.com/heog9fna/image/upload/oqua65vnfxexsxsf0waw', alt: 'Rows of shrubs at our Bibirhut nursery' },
-    { src: 'https://res.cloudinary.com/heog9fna/image/upload/pneioxk7bqvtrdyyvvjc', alt: 'A tree canopy in vigorous, healthy growth' },
-    { src: 'https://res.cloudinary.com/heog9fna/image/upload/etap7hawlewjjx9rpczo', alt: 'Close-up of healthy variegated foliage' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/v1789666128/ChatGPT_Image_Sep_17_2026_10_57_36_PM_veuokl.png', alt: 'Rows of shrubs at our Bibirhut nursery' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/v1789666247/ChatGPT_Image_Sep_17_2026_10_59_36_PM_dlfpfw.png', alt: 'A tree canopy in vigorous, healthy growth' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/v1789666357/ChatGPT_Image_Sep_17_2026_11_01_26_PM_fmiveg.png', alt: 'Close-up of healthy variegated foliage' },
   ],
 
   sectorsHeading: 'Private residences and commercial grounds, maintained with equal care.',

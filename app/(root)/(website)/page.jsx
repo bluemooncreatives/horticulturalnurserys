@@ -14,6 +14,7 @@ const InstagramReelsMarquee = dynamic(() => import('@/components/Application/Web
 const AboutUsSection = dynamic(() => import('@/components/Application/Website/AboutUsSection'))
 const ServicesSection = dynamic(() => import('@/components/Application/Website/ServicesSection'))
 const EditorialCardsSection = dynamic(() => import('@/components/Application/Website/EditorialCardsSection'))
+const CompanySection = dynamic(() => import('@/components/Application/Website/CompanySection'))
 const BenefitsSection = dynamic(() => import('@/components/Application/Website/BenefitsSection'))
 const WholesaleSection = dynamic(() => import('@/components/Application/Website/WholesaleSection'))
 const FAQSection = dynamic(() => import('@/components/Application/Website/FAQSection'))
@@ -42,28 +43,52 @@ const Home = () => {
                 LazyHydrate keeps each section's server HTML in the document but
                 defers its hydration until the user scrolls near it, so the
                 initial load only hydrates the hero + header. */}
+            {/* ── 1 · Entry: browse the catalogue by category ── */}
             <LazyHydrate>
                 <CategoryArchiveSection />
             </LazyHydrate>
 
+            {/* ── 2 · Who we are, and why the work holds up ──
+                AboutUsSection introduces the house; BenefitsSection follows it
+                immediately with the four reasons that introduction matters,
+                instead of being stranded near the foot of the page. */}
             <LazyHydrate>
                 <AboutUsSection />
             </LazyHydrate>
 
             <LazyHydrate>
+                <BenefitsSection />
+            </LazyHydrate>
+
+            {/* ── 3 · The nursery arm: what you can buy today ── */}
+            <LazyHydrate>
                 <BestsellersSection />
             </LazyHydrate>
 
-            {/* Featured ("freshly arrived") products */}
+            {/* Featured ("In Stock, Ready to Ship") products */}
             <LazyHydrate>
                 <FeaturedProduct />
             </LazyHydrate>
 
+            {/* ── 4 · The landscaping arm ──
+                Services follows the in-stock rail directly: whoever has just
+                seen what we grow is the right person to be shown what we do
+                with it. The three editorial ways in route out of it. */}
             <LazyHydrate>
                 <ServicesSection />
             </LazyHydrate>
 
-            {/* The gallery's styled-jsx CSS is client-only (no SSR registry), so
+            <LazyHydrate>
+                <EditorialCardsSection />
+            </LazyHydrate>
+
+            {/* ── 5 · The supply arm: bulk, pan-India ── */}
+            <LazyHydrate>
+                <WholesaleSection />
+            </LazyHydrate>
+
+            {/* ── 6 · Proof: our own feed, then clients' words ──
+                The gallery's styled-jsx CSS is client-only (no SSR registry), so
                 its server HTML is unstyled and ~1600px taller until hydration
                 reflows it. Hydrate it extra early so that reflow always happens
                 while the section is still far below the viewport. */}
@@ -75,21 +100,15 @@ const Home = () => {
                 <Testimonial />
             </LazyHydrate>
 
+            {/* ── 7 · Close: the company's record, and every way to reach it ── */}
             <LazyHydrate>
-                <EditorialCardsSection />
-            </LazyHydrate>
-
-            <LazyHydrate>
-                <BenefitsSection />
-            </LazyHydrate>
-
-            <LazyHydrate>
-                <WholesaleSection />
+                <CompanySection />
             </LazyHydrate>
 
             <LazyHydrate>
                 <FAQSection />
             </LazyHydrate>
+
         </>
     )
 }

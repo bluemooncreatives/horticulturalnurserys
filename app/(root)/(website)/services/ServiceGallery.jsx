@@ -29,8 +29,19 @@ export default function ServiceGallery({ gallery, label = 'From our work', headi
 
   return (
     <section className="lumora-shell pb-16 lg:pb-24">
-      <SectionLabel>{label}</SectionLabel>
-      <SectionHeading className="mt-6 max-w-2xl">{heading}</SectionHeading>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <SectionLabel>{label}</SectionLabel>
+          <SectionHeading className="mt-6 max-w-2xl">{heading}</SectionHeading>
+        </div>
+        <Link
+          href="/contact"
+          className="group mb-1 inline-flex shrink-0 items-center gap-1.5 text-[0.875rem] font-medium text-[var(--brand-primary)] transition-colors hover:text-[var(--brand-lime-ink)]"
+        >
+          Like what you see? Get a quote
+          <ArrowUpRight className="size-4 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+        </Link>
+      </div>
 
       <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:mt-12 lg:grid-cols-[1.3fr_1fr] lg:gap-5">
         <RevealUp

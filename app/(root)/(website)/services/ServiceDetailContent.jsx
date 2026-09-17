@@ -19,6 +19,7 @@ import { SectionHeading, SectionLabel } from './SectionHeader'
 import ServiceGallery from './ServiceGallery'
 import ServiceEnquiryForm from '@/components/Application/Website/ServiceEnquiryForm'
 import LimeArrowButton from '@/components/Application/Website/LimeArrowButton'
+import { ServiceCrossSell, ServiceHeroActions, ServiceStickyBar } from './ServiceActions'
 import { WHOLESALE_WHATSAPP_URL, WHOLESALE_PHONE_TEL, WHOLESALE_PHONE_DISPLAY } from '@/lib/companyInfo'
 
 const DEFAULT_STEP_ICONS = [ClipboardList, PencilRuler, Calculator, Hammer]
@@ -80,7 +81,7 @@ export default function ServiceDetailContent({ service }) {
     <main className="min-h-screen bg-[var(--background)]">
 
       {/* ══ Hero ═══════════════════════════════════════════════ */}
-      <section className="relative flex min-h-[34rem] flex-col overflow-hidden lg:h-[88svh] lg:min-h-[560px] bg-[var(--brand-ink-soft)]">
+      <section className="relative flex min-h-[34rem] flex-col overflow-hidden bg-[var(--brand-ink-soft)] lg:min-h-[88svh]">
         {service.images?.[0] && (
           <div
             ref={heroImgRef}
@@ -146,6 +147,10 @@ export default function ServiceDetailContent({ service }) {
           >
             {service.tagline}
           </RevealUp>
+
+          {/* The page's first action, in the hero itself - before this the
+              earliest CTA was several screens down. */}
+          <ServiceHeroActions />
         </div>
 
         {/* Stat rail - sits on the hero's lower edge */}
@@ -340,6 +345,25 @@ export default function ServiceDetailContent({ service }) {
         </section>
       )}
 
+      {/* ══ Mid-page CTA - between capabilities and the gallery, so
+          whoever has just read what's covered gets an action before
+          scrolling into proof-of-work photos. ═══════════════════ */}
+      {service.capabilities && service.capabilities.length > 0 && (
+        <section className="lumora-shell pb-16 lg:pb-24">
+          <RevealUp className="flex flex-col items-start justify-between gap-6 rounded-[var(--radius-4xl)] border border-[var(--border)] bg-[var(--secondary)] p-8 sm:flex-row sm:items-center lg:p-10">
+            <div>
+              <p className="text-[0.8rem] font-semibold uppercase text-[var(--brand-primary)]">Have a site in mind?</p>
+              <h3 className="mt-2 max-w-md font-neue text-[clamp(1.15rem,2.2vw,1.5rem)] font-medium leading-tight tracking-[-0.01em] text-[var(--brand-primary)]">
+                Let's work out what it needs.
+              </h3>
+            </div>
+            <LimeArrowButton href="#enquiry" className="shrink-0">
+              Request a site visit
+            </LimeArrowButton>
+          </RevealUp>
+        </section>
+      )}
+
       {/* ══ Gallery ════════════════════════════════════════════ */}
       <ServiceGallery gallery={service.gallery} />
 
@@ -443,6 +467,18 @@ export default function ServiceDetailContent({ service }) {
                   </RevealUp>
                 ))}
               </div>
+
+              <RevealUp delay={140} className="mt-8">
+                <a
+                  href={WHOLESALE_WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 sm:h-14 items-center gap-2 rounded-full border border-[var(--brand-primary)]/25 px-4 sm:px-6 cta-text font-medium text-[var(--brand-primary)] transition-colors hover:border-[var(--brand-primary)] hover:bg-[var(--secondary)]"
+                >
+                  <MessageCircle className="size-4" strokeWidth={1.8} />
+                  Ask about a specific material
+                </a>
+              </RevealUp>
             </div>
 
             {materialsData.image && (
@@ -588,11 +624,15 @@ export default function ServiceDetailContent({ service }) {
         </section>
       )}
 
+      {/* ══ Cross-sell - the counter, for whoever isn't commissioning
+          a whole project ═════════════════════════════════════════ */}
+      <ServiceCrossSell />
+
       {/* ══ Related Services ═══════════════════════════════════ */}
       {service.related && service.related.length > 0 && (
-        <section className="lumora-shell pb-16 lg:pb-20">
+        <section className="lumora-shell pb-16 lg:pb-24">
           <SectionLabel>Also explore</SectionLabel>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {service.related.map((rel, i) => (
               <RevealUp key={rel.slug} delay={60 + i * 70}>
                 <Link
@@ -606,12 +646,26 @@ export default function ServiceDetailContent({ service }) {
                 </Link>
               </RevealUp>
             ))}
+
+            {/* Fourth tile - the index page, so the related trio is not a
+                dead end for anyone whose site needs something else. */}
+            <RevealUp delay={60 + service.related.length * 70}>
+              <Link
+                href="/services"
+                className="group flex h-full items-center justify-between gap-4 rounded-[var(--radius-4xl)] border border-[var(--brand-primary)]/25 bg-[var(--secondary)] px-6 py-5 transition-all duration-300 hover:border-[var(--brand-primary)] hover:bg-[var(--brand-white)]"
+              >
+                <span className="text-[0.9375rem] font-medium leading-snug text-[var(--brand-primary)]">
+                  All four services
+                </span>
+                <ArrowUpRight className="size-4 shrink-0 text-[var(--brand-primary)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </RevealUp>
           </div>
         </section>
       )}
 
       {/* ══ CTA ════════════════════════════════════════════════ */}
-      <section className="lumora-shell pb-16 lg:pb-20">
+      <section className="lumora-shell pb-16 lg:pb-24">
         <div className="relative overflow-hidden rounded-[var(--radius-4xl)] bg-[var(--brand-ink-soft)] px-8 py-14 lg:px-16 lg:py-20">
           <div
             aria-hidden
@@ -656,6 +710,9 @@ export default function ServiceDetailContent({ service }) {
           </div>
         </div>
       </section>
+
+      {/* Mobile-only sticky actions, shown once the hero is scrolled past */}
+      <ServiceStickyBar />
     </main>
   )
 }

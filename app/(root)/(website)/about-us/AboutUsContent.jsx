@@ -9,11 +9,9 @@ import {
   Boxes,
   Building2,
   Bus,
-  ClipboardList,
   Clock,
   Droplets,
   Flower2,
-  Hammer,
   Headset,
   Layers,
   Leaf,
@@ -22,7 +20,6 @@ import {
   MessageCircle,
   Mountain,
   Package,
-  PencilRuler,
   Phone,
   Scissors,
   Shovel,
@@ -285,34 +282,6 @@ const CATALOGUE = [
   },
 ]
 
-/* ── How a project runs ──────────────────────────────────────── */
-const PROCESS = [
-  {
-    Icon: ClipboardList,
-    step: '01',
-    title: 'Site visit',
-    copy: 'A horticulturist walks the site and reads light, soil, drainage and circulation - then listens to how you actually want to use the space.',
-  },
-  {
-    Icon: PencilRuler,
-    step: '02',
-    title: 'Planting plan',
-    copy: 'A layout drawn against that reading: species, hardscape positions, lawn areas and structures, sized to the site rather than a template.',
-  },
-  {
-    Icon: Boxes,
-    step: '03',
-    title: 'Costing & phasing',
-    copy: 'Plant counts, material quantities and labour, itemised. Large sites are broken into phases so the work can be built as budget allows.',
-  },
-  {
-    Icon: Hammer,
-    step: '04',
-    title: 'Build & aftercare',
-    copy: 'Our own crew executes the plan, then hands over with watering, mowing and feeding schedules - and an AMC if you want us to keep it.',
-  },
-]
-
 /* ── Wholesale capability marks ──────────────────────────────── */
 const WHOLESALE_MARKS = [
   { Icon: Boxes, label: 'Wholesale quantity' },
@@ -470,7 +439,7 @@ const AboutUsContent = ({ products = [] }) => {
 
           {/* image cluster */}
           <RevealUp delay={120} className="grid grid-cols-2 gap-3 lg:gap-4">
-            <div className="relative col-span-1 row-span-2 aspect-3/4 overflow-hidden rounded-[var(--radius-3xl)]">
+            <div className="relative col-span-1 row-span-2 h-full overflow-hidden rounded-[var(--radius-3xl)]">
               <Image
                 src={IMG.heroMain}
                 alt="Planting stock raised at our farm in Bibirhut"
@@ -751,39 +720,7 @@ const AboutUsContent = ({ products = [] }) => {
         </div>
       </Section>
 
-      {/* ══ 7 · How a project runs ═════════════════════════════════ */}
-      <Section>
-        <SectionHead
-          eyebrow="How we work"
-          title={
-            <>
-              Site first, drawing second,
-              <br className="hidden sm:block" /> price in writing.
-            </>
-          }
-          lead="The same four steps whether it is a balcony or a township - nothing starts until the layout and the estimate are approved."
-        />
-
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
-          {PROCESS.map(({ Icon, step, title, copy }) => (
-            <div
-              key={step}
-              className="relative lg:px-8 [&:first-child]:lg:pl-0 [&:last-child]:lg:pr-0 [&:not(:last-child)]:lg:border-r [&:not(:last-child)]:lg:border-[var(--border)]"
-            >
-              <div className="mb-5 flex items-center justify-between">
-                <span className="flex size-11 items-center justify-center rounded-full border border-[var(--border)] bg-white">
-                  <Icon className="size-[18px] text-[var(--brand-primary)]" strokeWidth={1.6} />
-                </span>
-                <span className="text-[0.8rem] font-medium text-[var(--muted-foreground)]">[{step}]</span>
-              </div>
-              <h3 className="text-[1.05rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)]">{title}</h3>
-              <p className="mt-2 text-[0.8rem] leading-normal text-[var(--muted-foreground)]">{copy}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* ══ 8 · Credentials & flagship projects ════════════════════ */}
+      {/* ══ 7 · Credentials & flagship projects ════════════════════ */}
       <Section>
         <SectionHead
           eyebrow="Credentials"
@@ -838,7 +775,7 @@ const AboutUsContent = ({ products = [] }) => {
         </div>
       </Section>
 
-      {/* ══ 9 · What we stock ══════════════════════════════════════ */}
+      {/* ══ 8 · What we stock ══════════════════════════════════════ */}
       <Section>
         <SectionHead
           eyebrow="Products & supplies"
@@ -883,7 +820,7 @@ const AboutUsContent = ({ products = [] }) => {
         </div>
       </Section>
 
-      {/* ══ 10 · Wholesale ═════════════════════════════════════════ */}
+      {/* ══ 9 · Wholesale ═════════════════════════════════════════ */}
       <Section>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-5">
 
@@ -944,7 +881,7 @@ const AboutUsContent = ({ products = [] }) => {
         </div>
       </Section>
 
-      {/* ══ 11 · People ════════════════════════════════════════════ */}
+      {/* ══ 10 · People ════════════════════════════════════════════ */}
       <Section>
         <SectionHead
           eyebrow="The people"
@@ -996,7 +933,7 @@ const AboutUsContent = ({ products = [] }) => {
         </div>
       </Section>
 
-      {/* ══ 12 · Visit us ══════════════════════════════════════════ */}
+      {/* ══ 11 · Visit us ══════════════════════════════════════════ */}
       <Section>
         <SectionHead
           eyebrow="Visit us"
@@ -1071,14 +1008,14 @@ const AboutUsContent = ({ products = [] }) => {
         </div>
       </Section>
 
-      {/* ══ 13 · Enquiry form - the same-page target for every CTA ══ */}
+      {/* ══ 12 · Enquiry form - the same-page target for every CTA ══ */}
       <Section id="enquiry-form" className="scroll-mt-24">
         <Suspense fallback={<div className="min-h-[400px]" />}>
           <ServiceEnquiryForm />
         </Suspense>
       </Section>
 
-      {/* ══ 14 · From the nursery ══════════════════════════════════ */}
+      {/* ══ 13 · From the nursery ══════════════════════════════════ */}
       {products.length > 0 && (
         <Section>
           <SectionHead

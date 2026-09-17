@@ -440,7 +440,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
                       key={scale.id}
                       type="button"
                       onClick={() => setForm((prev) => ({ ...prev, projectScale: scale.label }))}
-                      className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+                      className={`rounded-lg border px-3 py-1.5 ctl-text font-medium transition-colors ${
                         active
                           ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
                           : 'border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--secondary)]'
@@ -466,7 +466,7 @@ export default function ServiceEnquiryForm({ defaultService = 'landscape-develop
                       key={t}
                       type="button"
                       onClick={() => setForm((prev) => ({ ...prev, preferredTimeline: t }))}
-                      className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+                      className={`rounded-lg border px-3 py-1.5 ctl-text font-medium transition-colors ${
                         active
                           ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white'
                           : 'border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--secondary)]'

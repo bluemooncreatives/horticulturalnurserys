@@ -78,7 +78,7 @@ export const FAQ = ({
                             onClick={() => setSelected(key)}
                             className={cn(
                                 'relative overflow-hidden rounded-[var(--radius-pill)] border px-2.5 py-1 sm:px-4 sm:py-2',
-                                'text-[0.75rem] font-semibold uppercase tracking-[0.03em] sm:text-[0.8rem] sm:tracking-normal',
+                                'ctl-text-caps font-semibold uppercase tracking-[0.03em] sm:tracking-normal',
                                 'transition-colors duration-300',
                                 active
                                     ? 'border-[var(--brand-primary)] text-white'
@@ -144,7 +144,7 @@ const FAQItem = ({ faq }) => {
             >
                 <span
                     className={cn(
-                        'font-neue text-[0.8rem] font-medium leading-[1.35] tracking-[-0.01em] transition-colors duration-300 sm:text-[0.9375rem] sm:leading-normal lg:text-[1rem]',
+                        'font-neue text-[0.875rem] font-medium leading-[1.35] tracking-[-0.01em] transition-colors duration-300 sm:text-[0.9375rem] sm:leading-normal lg:text-[1rem]',
                         isOpen ? 'text-[var(--brand-primary)]' : 'text-foreground/80'
                     )}
                 >

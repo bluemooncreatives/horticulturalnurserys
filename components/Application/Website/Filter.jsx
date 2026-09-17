@@ -23,7 +23,7 @@ const ChipSkeletons = ({ count = 4 }) => (
 // capsule, no per-item border - the only chrome is the checkbox and a hover
 // wash, so a long option reads as a line of text rather than a lozenge.
 const rowClass = (active) =>
-    `flex min-h-11 w-full items-center gap-2.5 rounded-[var(--radius-sm)] px-2 text-left text-[0.875rem] transition-colors lg:min-h-9 lg:text-[0.8rem] ${active
+    `flex min-h-11 w-full items-center gap-2.5 rounded-[var(--radius-sm)] px-2 text-left ctl-text transition-colors lg:min-h-9 ${active
         ? 'bg-[var(--secondary)] font-semibold text-[var(--brand-primary)]'
         : 'font-medium text-[var(--brand-primary)]/80 hover:bg-[var(--secondary)]/60'
     }`

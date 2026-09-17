@@ -414,23 +414,35 @@
   --btn-gap-md:      0.375rem;
   --btn-font-xs:     0.75rem;
   --btn-font-sm:     0.8rem;
-  --btn-font-md:     0.875rem;
+  --btn-font-md:     var(--ctl-font);   /* shadcn <Button> default label */
   --btn-font-pill:   var(--cta-font-caps);
   --btn-icon-xs:     0.75rem;
   --btn-icon-sm:     0.875rem;
   --btn-icon-md:     1rem;
   --btn-icon-lg:     1.25rem;
 
-  /* ── Website CTA label type ──
-     One knob for every marketing pill/button label (LimeArrowButton, the
-     services pills, ShopAllButton, form submits). These sit in 44-56px tall
-     pills, and the old flat 0.875rem read undersized in them - especially on
-     desktop, where only the lime CTA had a step-up and everything beside it
-     stayed at 14px. Applied through .cta-text / .cta-text-caps below. */
-  --cta-font:          0.9375rem;   /* 15px    sentence-case label, phone   */
-  --cta-font-lg:       1.0625rem;   /* 17px    sentence-case label, >=640px */
-  --cta-font-caps:     0.85rem;     /* ~13.6px uppercase label, phone       */
-  --cta-font-caps-lg:  0.9375rem;   /* 15px    uppercase label, >=640px     */
+  /* ── Interactive label type scale ──
+     THE single source of truth for the text inside anything clickable, so
+     button type stops being ~30 unrelated arbitrary values that drifted apart
+     (CTAs sat at a flat 0.875rem while only the lime button stepped up on
+     desktop, and chips bottomed out at 0.75rem). Every size below has a phone
+     value and a >=640px value; they are applied through the .cta-text /
+     .ctl-text utilities further down, never re-typed at the call site.
+
+     Two tiers:
+       cta - marketing calls to action. These live in 44-56px pills and carry
+             the page's main action, so they take the largest step-up.
+       ctl - controls: filter rows, tabs, option chips, selects, accordion
+             triggers. Denser, so one notch below the CTA tier, but still
+             above the old 12px floor that made them hard to read. */
+  --cta-font:          0.9375rem;   /* 15px    sentence-case CTA, phone     */
+  --cta-font-lg:       1.0625rem;   /* 17px    sentence-case CTA, >=640px   */
+  --cta-font-caps:     0.85rem;     /* ~13.6px uppercase CTA, phone         */
+  --cta-font-caps-lg:  0.9375rem;   /* 15px    uppercase CTA, >=640px       */
+  --ctl-font:          0.875rem;    /* 14px    control label, phone         */
+  --ctl-font-lg:       0.9375rem;   /* 15px    control label, >=640px       */
+  --ctl-font-caps:     0.8125rem;   /* 13px    uppercase control, phone     */
+  --ctl-font-caps-lg:  0.875rem;    /* 14px    uppercase control, >=640px   */
   /* brand CTA */
   --btn-brand-bg:       var(--brand-primary);
   --btn-brand-bg-hover: var(--brand-primary-hover);
@@ -810,22 +822,34 @@ body {
   padding-inline: calc(var(--website-gutter) + clamp(0rem, 4vw, var(--space-12)));
 }
 
-/* CTA label type.
+/* Interactive label type - the four classes every clickable label uses.
 
-   Every marketing button label opts into one of these two instead of carrying
-   its own `text-[0.875rem] sm:text-[1.05rem]` pair, so the CTA scale is a
-   single edit in the token block above rather than ~20 inline arbitrary
-   values that had already drifted apart from each other.
+   A button opts into one of these instead of carrying its own
+   `text-[0.875rem] sm:text-[1.05rem]` pair, so the whole interactive scale is
+   one edit in the token block above. Pick by role, not by size:
+
+     .cta-text       marketing CTA, sentence case  (pills, form submits)
+     .cta-text-caps  marketing CTA, UPPERCASE      (ShopAllButton, Add to Cart)
+     .ctl-text       control, sentence case        (filter rows, option chips)
+     .ctl-text-caps  control, UPPERCASE            (tabs, eyebrow toggles)
+
+   Each carries its own phone -> >=640px step, so a call site never needs a
+   responsive text- variant; that is what kept mobile and desktop drifting
+   apart before.
 
    Deliberately unlayered: Tailwind's utilities live in `@layer utilities`, so
    these win over any leftover `text-*` on the same element instead of
    depending on class order. */
 .cta-text      { font-size: var(--cta-font); }
 .cta-text-caps { font-size: var(--cta-font-caps); }
+.ctl-text      { font-size: var(--ctl-font); }
+.ctl-text-caps { font-size: var(--ctl-font-caps); }
 
 @media (min-width: 640px) {
   .cta-text      { font-size: var(--cta-font-lg); }
   .cta-text-caps { font-size: var(--cta-font-caps-lg); }
+  .ctl-text      { font-size: var(--ctl-font-lg); }
+  .ctl-text-caps { font-size: var(--ctl-font-caps-lg); }
 }
 
 /* Pill button base */
@@ -893,7 +917,7 @@ body {
   border-radius:   var(--radius-full);
   border:          1px solid color-mix(in srgb, currentColor 26%, transparent);
   color:           var(--brand-lime);
-  font-size:       var(--text-sm);
+  font-size:       var(--ctl-font);
   font-weight:     var(--weight-regular);
   letter-spacing:  0.01em;
   white-space:     nowrap;

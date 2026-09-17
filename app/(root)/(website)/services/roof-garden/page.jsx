@@ -20,7 +20,7 @@ const SERVICE = {
   tagline: 'Protecting your slab, transforming your sky.',
   accent: '#356B38',
   images: [
-    'https://res.cloudinary.com/heog9fna/image/upload/w0zt9nz1h7pfhrbldqim', // potted palms along a covered terrace walkway
+    'https://res.cloudinary.com/heog9fna/image/upload/v1789669928/ChatGPT_Image_Sep_17_2026_11_59_59_PM_mpiymo.png', // hero - roof garden
     'https://res.cloudinary.com/heog9fna/image/upload/d26uc3bvn8m14n80ctoo', // mature tree set against an apartment facade
   ],
 
@@ -141,6 +141,10 @@ const SERVICE = {
     label: 'Hardscape & planters',
     heading: 'UV-stable, marine-grade materials built for rooftop exposure.',
     desc: 'Rooftops endure searing summer heat, UV degradation, and monsoon gales. Every planter, edging strip, and fixture we install is engineered specifically for elevated extremes.',
+    // Required: ServiceDetailContent only supplies a fallback image when
+    // materialsSection is absent entirely, so a section defined here without
+    // an `image` renders with the right-hand column empty.
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/v1789670693/ChatGPT_Image_Sep_18_2026_12_13_37_AM_jzxhvd.png',
     items: [
       {
         name: 'Custom FRP planters',
@@ -162,9 +166,9 @@ const SERVICE = {
   },
 
   gallery: [
-    { src: 'https://res.cloudinary.com/heog9fna/image/upload/xhtaniuqh96rt8qk7h3i', alt: 'A rock garden with palms on a raised deck' },
-    { src: 'https://res.cloudinary.com/heog9fna/image/upload/s1fyp9pnjp21pcvdeplv', alt: 'A potted palm furnishing a terrace seating corner' },
-    { src: 'https://res.cloudinary.com/heog9fna/image/upload/i87sf29jufprrgl5scjy', alt: 'A container plant styled into a home corner' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/v1788118026/ChatGPT_Image_Aug_31_2026_12_56_08_AM_v2dwkd.png', alt: 'A rooftop garden laid out over a terrace slab' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/v1788118565/ChatGPT_Image_Aug_31_2026_01_05_03_AM_cgk80g.png', alt: 'Planting and seating on a completed roof garden' },
+    { src: 'https://res.cloudinary.com/heog9fna/image/upload/v1789670254/ChatGPT_Image_Sep_18_2026_12_06_17_AM_dmv1ou.png', alt: 'A roof garden completed by Horticultural Development Centre' },
   ],
 
   sectorsHeading: 'Penthouses, corporate terraces, and institutional green roofs.',

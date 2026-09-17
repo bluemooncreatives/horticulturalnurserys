@@ -167,33 +167,54 @@ const TIMELINE = [
   },
 ]
 
-/* ── Services ────────────────────────────────────────────────── */
+/* ── Services ──────────────────────────────────────────────────
+   The first entry carries the section's feature card, so it also
+   holds `points` (the three things that card has room to list) and
+   a wider frame. The other three render as index rows beside it.
+   Images are the same per-service frames the homepage services
+   section uses, so a visitor sees the same picture for the same
+   service in both places. ──────────────────────────────────────── */
 const SERVICES = [
   {
+    num: '01',
     Icon: Mountain,
     title: 'Landscape Development',
     href: WEBSITE_SERVICES_LANDSCAPE,
     copy: 'Site survey, soil conditioning, hardscaping, planting plans and lawn creation - homes, campuses and public ground.',
+    points: ['Site survey & soil profiling', 'Selection-I & Mexican lawns', 'Township and campus scale'],
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/v1788116698/5_hsovs6.png',
   },
   {
+    num: '02',
     Icon: Scissors,
     title: 'Garden Maintenance',
     href: WEBSITE_SERVICES_MAINTENANCE,
     copy: 'Annual contracts covering pruning, feeding, pest control, lawn upkeep and seasonal replanting by our own field staff.',
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/v1787667630/zuiiigfsl9h1rupinhq0.jpg',
   },
   {
+    num: '03',
     Icon: Building2,
     title: 'Roof Garden Design',
     href: WEBSITE_SERVICES_ROOF_GARDEN,
     copy: 'Root-barrier geotextile and drain-cell systems that protect the slab, with planting sized to the load the terrace can take.',
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/v1788118026/ChatGPT_Image_Aug_31_2026_12_56_08_AM_v2dwkd.png',
   },
   {
+    num: '04',
     Icon: Layers,
     title: 'Vertical Garden Systems',
     href: WEBSITE_SERVICES_VERTICAL_GARDEN,
     copy: 'Modular living walls and wire trellises for interiors, facades and boundary screens, built to the available light.',
+    image: 'https://res.cloudinary.com/heog9fna/image/upload/v1789671230/ChatGPT_Image_Sep_18_2026_12_22_32_AM_cptvmy.png',
   },
 ]
+
+// Service 01 takes the feature card; 02-04 take the index rows beside it.
+const [feature, ...rest] = SERVICES
+
+// The enquiry form lives on the services index, not on this page.
+const SERVICES_ENQUIRY_HREF = WEBSITE_SERVICES + '#enquiry-form'
 
 /* ── Farm infrastructure ─────────────────────────────────────── */
 const FARM_SPECS = [
@@ -693,30 +714,132 @@ const AboutUsContent = ({ products = [] }) => {
           lead="Four services, all executed by our own horticulturists and field staff - and stocked from our own farm."
         />
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5">
-          {SERVICES.map(({ Icon, title, copy, href }) => (
-            <RevealUp key={title}>
-              <Link
-                href={href}
-                className="group flex h-full flex-col rounded-[var(--radius-3xl)] border border-[var(--border)] bg-white p-6 transition-colors duration-300 hover:border-[var(--brand-primary)]/25 lg:p-8"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <span className="flex size-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--secondary)]">
-                    <Icon className="size-[18px] text-[var(--brand-primary)]" strokeWidth={1.6} />
-                  </span>
-                  <ArrowUpRight className="size-5 text-[var(--muted-foreground)] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)]" />
-                </div>
-                <h3 className="mt-6 text-[1.15rem] font-medium tracking-[-0.01em] text-[var(--brand-primary)] lg:text-[1.3rem]">
-                  {title}
+        {/* ── Feature card + index rows ──
+            A 1 + 3 split rather than the four equal slabs this section used
+            to run: one service carries a full photograph and room to list
+            what it involves, and the other three sit beside it as compact
+            rows. Nothing depends on hover, so the block reads the same on a
+            phone as it does under a cursor. */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-5">
+
+          {/* Feature - service 01, on a full-bleed photograph */}
+          <RevealUp className="lg:col-span-7">
+            <Link
+              href={feature.href}
+              className="group relative flex h-full min-h-[26rem] flex-col justify-end overflow-hidden rounded-[var(--radius-3xl)] p-6 sm:min-h-[30rem] lg:p-8"
+            >
+              <Image
+                src={feature.image}
+                alt={feature.title}
+                fill
+                quality={82}
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.06]"
+              />
+              {/* The copy sits in the bottom third, so the scrim only has to
+                  be dense there. */}
+              <span
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-[var(--brand-primary)] via-[var(--brand-primary)]/55 to-transparent"
+              />
+
+              {/* Number + icon, pinned top-left clear of the copy */}
+              <span className="absolute left-6 top-6 flex items-center gap-3 lg:left-8 lg:top-8">
+                <span className="flex size-11 items-center justify-center rounded-full bg-[var(--brand-lime)]">
+                  <feature.Icon className="size-[18px] text-[var(--brand-lime-ink)]" strokeWidth={1.6} />
+                </span>
+                <span className="text-[0.8rem] font-semibold uppercase text-[var(--brand-warm-bg)]/70">
+                  [{feature.num}]
+                </span>
+              </span>
+
+              <div className="relative">
+                <h3 className="max-w-md text-[clamp(1.5rem,3vw,2.15rem)] font-medium leading-[1.15] tracking-[-0.02em] text-[var(--brand-warm-bg)]">
+                  {feature.title}
                 </h3>
-                <p className="mt-2.5 text-[0.875rem] leading-normal text-[var(--muted-foreground)]">{copy}</p>
-              </Link>
-            </RevealUp>
-          ))}
+                <p className="mt-3 max-w-md text-[0.875rem] leading-normal text-[var(--brand-warm-bg)]/70">
+                  {feature.copy}
+                </p>
+
+                {/* What the service involves - the feature card is the only
+                    one with room to say. */}
+                <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+                  {feature.points.map((point) => (
+                    <li key={point} className="flex items-center gap-2 text-[0.8rem] font-medium text-[var(--brand-warm-bg)]/80">
+                      <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-[var(--brand-lime)]" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Matches LimeArrowButton's shape, but rendered as a span:
+                    the whole card is already the link. */}
+                <span className="mt-7 inline-flex items-center gap-2.5 rounded-full bg-[var(--brand-lime)] py-1.5 pl-5 pr-1.5 transition-colors group-hover:bg-[var(--brand-lime-hover)]">
+                  <span className="text-[0.875rem] font-medium text-[var(--brand-lime-ink)]">Explore this service</span>
+                  <span className="grid size-8 place-items-center rounded-full bg-[var(--brand-primary)] text-white transition-transform duration-300 ease-out group-hover:rotate-45">
+                    <ArrowUpRight className="size-3.5" />
+                  </span>
+                </span>
+              </div>
+            </Link>
+          </RevealUp>
+
+          {/* Index rows - the remaining three services */}
+          <div className="grid grid-cols-1 gap-4 lg:col-span-5 lg:gap-5">
+            {rest.map(({ num, Icon, title, copy, href, image }, i) => (
+              <RevealUp key={title} delay={80 + i * 70} className="h-full">
+                <Link
+                  href={href}
+                  className="group flex h-full items-center gap-4 rounded-[var(--radius-3xl)] border border-[var(--border)] bg-[var(--brand-white)] p-4 transition-colors duration-300 hover:border-[var(--brand-primary)]/30 hover:bg-[var(--brand-primary)]/5 sm:gap-5 sm:p-5"
+                >
+                  {/* The thumbnail carries the icon as a badge, so the row
+                      keeps the feature card's icon language without a second
+                      circle competing with the picture. */}
+                  <span className="relative size-20 shrink-0 overflow-hidden rounded-[var(--radius-2xl)] sm:size-24">
+                    <Image
+                      src={image}
+                      alt=""
+                      fill
+                      quality={78}
+                      sizes="96px"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
+                    />
+                    <span aria-hidden className="absolute inset-0 bg-[var(--brand-primary)]/20" />
+                    <span className="absolute bottom-1.5 left-1.5 flex size-7 items-center justify-center rounded-full bg-[var(--brand-lime)]">
+                      <Icon className="size-3.5 text-[var(--brand-lime-ink)]" strokeWidth={1.7} />
+                    </span>
+                  </span>
+
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center gap-2">
+                      <span className="text-[0.75rem] font-medium tabular-nums text-[var(--muted-foreground)]/60">
+                        [{num}]
+                      </span>
+                      <span className="text-[1rem] font-medium leading-snug tracking-[-0.01em] text-[var(--brand-primary)] lg:text-[1.1rem]">
+                        {title}
+                      </span>
+                    </span>
+                    <span className="mt-1.5 line-clamp-2 block text-[0.8rem] leading-normal text-[var(--muted-foreground)]">
+                      {copy}
+                    </span>
+                  </span>
+
+                  <ArrowUpRight className="size-5 shrink-0 self-start text-[var(--muted-foreground)] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--brand-primary)]" />
+                </Link>
+              </RevealUp>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-8 flex justify-center lg:mt-10">
+        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6 lg:mt-10">
           <LimeArrowButton href={WEBSITE_SERVICES}>See all services in detail</LimeArrowButton>
+          <Link
+            href={SERVICES_ENQUIRY_HREF}
+            className="group inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-[var(--brand-primary)] transition-opacity hover:opacity-70"
+          >
+            Or tell us about your site
+            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
         </div>
       </Section>
 

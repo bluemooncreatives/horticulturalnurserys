@@ -5,6 +5,7 @@ import { connectDB } from "@/lib/databaseConnection"
 import { catchError, response } from "@/lib/helperFunction"
 import ProductModel from "@/models/Product.model"
 import "@/models/Media.model"
+import { withCoverFirstAll } from '@/lib/coverMedia'
 
 const BESTSELLER_TAG = 'storefront-bestseller-products'
 
@@ -36,11 +37,11 @@ export async function GET() {
 
         const bestsellers = await ProductModel.find({ deletedAt: null, isBestseller: true })
             .sort({ bestsellerSortOrder: 1, createdAt: -1, _id: 1 })
-            .select('name slug media bestsellerSortOrder')
+            .select('name slug media coverMedia bestsellerSortOrder')
             .populate('media', 'secure_url alt')
             .lean()
 
-        return response(true, 200, 'Bestsellers fetched.', bestsellers)
+        return response(true, 200, 'Bestsellers fetched.', withCoverFirstAll(bestsellers))
     } catch (error) {
         return catchError(error)
     }

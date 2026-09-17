@@ -4,6 +4,7 @@ import { catchError, response } from "@/lib/helperFunction";
 import MediaModel from "@/models/Media.model";
 import ProductModel from "@/models/Product.model";
 import ReviewModel from "@/models/Review.model";
+import { withCoverFirst } from '@/lib/coverMedia'
 
 export async function GET() {
     try {
@@ -18,14 +19,23 @@ export async function GET() {
             .limit(10)
             .populate({
                 path: 'product',
-                select: 'name media',
+                select: 'name media coverMedia',
                 populate: {
                     path: 'media',
                     select: 'secure_url'
                 }
             })
+            // lean() so the documents are plain objects the cover normalizer can
+            // spread; they are only serialized into the response from here.
+            .lean()
 
-        return response(true, 200, 'Latest review', latestReview)
+        // The thumbnail reads product.media[0], so rotate each review's product
+        // onto its chosen cover before returning.
+        const reviews = latestReview.map((review) => (
+            review?.product ? { ...review, product: withCoverFirst(review.product) } : review
+        ))
+
+        return response(true, 200, 'Latest review', reviews)
 
     } catch {
         return catchError(error)

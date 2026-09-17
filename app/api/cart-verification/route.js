@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/databaseConnection";
 import { catchError, response } from "@/lib/helperFunction";
 import ProductVariantModel from "@/models/ProductVariant.model";
+import { resolveCoverMedia } from "@/lib/coverMedia";
 
 export async function POST(request) {
     try {
@@ -32,7 +33,7 @@ export async function POST(request) {
                 url: variant.product.slug,
                 size: variant.size || '',
                 color: variant.color,
-                media: variant?.media[0]?.secure_url,
+                media: resolveCoverMedia(variant)?.secure_url,
                 qty: cartItem.qty,
             }
         }).filter(Boolean)

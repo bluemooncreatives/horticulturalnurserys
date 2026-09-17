@@ -6,6 +6,13 @@ import { zSchema } from "@/lib/zodSchema"
 import ProductModel from "@/models/Product.model"
 import ProductVariantModel from "@/models/ProductVariant.model"
 
+
+// The cover must be one of the images actually being saved. Anything else - a
+// stale id left over after the admin removed that image, or a hand-crafted
+// payload - is discarded so `coverMedia` can never dangle.
+const pickCoverMedia = (coverMedia, media = []) =>
+    coverMedia && media.includes(coverMedia) ? coverMedia : null
+
 export async function POST(request) {
     try {
         const auth = await isAuthenticated('admin')
@@ -22,7 +29,8 @@ export async function POST(request) {
             color: true,
             colorHex: true,
             size: true,
-            media: true
+            media: true,
+            coverMedia: true
         })
 
 
@@ -70,6 +78,7 @@ export async function POST(request) {
             size: variantData.size || '',
             sku,
             media: variantData.media,
+            coverMedia: pickCoverMedia(variantData.coverMedia, variantData.media),
         })
 
         await newProductVariant.save()

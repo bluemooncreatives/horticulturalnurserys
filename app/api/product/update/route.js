@@ -7,6 +7,13 @@ import ProductModel from "@/models/Product.model"
 import { encode } from "entities"
 import { decodeHTMLDeep } from "@/lib/utils"
 
+
+// The cover must be one of the images actually being saved. Anything else - a
+// stale id left over after the admin removed that image, or a hand-crafted
+// payload - is discarded so `coverMedia` can never dangle.
+const pickCoverMedia = (coverMedia, media = []) =>
+    coverMedia && media.includes(coverMedia) ? coverMedia : null
+
 export async function PUT(request) {
     try {
         const auth = await isAuthenticated('admin')
@@ -24,7 +31,8 @@ export async function PUT(request) {
             parentSku: true,
             category: true,
             description: true,
-            media: true
+            media: true,
+            coverMedia: true
         })
         const validate = schema.safeParse(payload)
         if (!validate.success) {
@@ -47,11 +55,21 @@ export async function PUT(request) {
         // the `&amp;lt;p&amp;gt;` rows `decodeHTMLDeep` exists to clean up.
         getProduct.description = encode(decodeHTMLDeep(validatedData.description))
         getProduct.media = validatedData.media
+        getProduct.coverMedia = pickCoverMedia(validatedData.coverMedia, validatedData.media)
         await getProduct.save()
 
         // Re-categorising a product or changing its media can change category
         // counts and the homepage "Categories" representative image.
         revalidateTag('storefront-home-categories')
+        // Every cached surface that renders a product image reads media[0], which
+        // the cover choice changes - bust them or a new cover would not appear
+        // until each tag's own revalidate window lapsed.
+        revalidateTag('storefront-featured-products')
+        revalidateTag('storefront-bestseller-products')
+        revalidateTag('storefront-freshly-arrived-products')
+        revalidateTag('storefront-product-details')
+        revalidateTag('storefront-related-products')
+        revalidateTag('storefront-shop-default-products')
 
         return response(true, 200, 'Product updated successfully.')
 

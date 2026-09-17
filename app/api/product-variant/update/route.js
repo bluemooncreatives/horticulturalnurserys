@@ -6,6 +6,13 @@ import { zSchema } from "@/lib/zodSchema"
 import ProductModel from "@/models/Product.model"
 import ProductVariantModel from "@/models/ProductVariant.model"
 
+
+// The cover must be one of the images actually being saved. Anything else - a
+// stale id left over after the admin removed that image, or a hand-crafted
+// payload - is discarded so `coverMedia` can never dangle.
+const pickCoverMedia = (coverMedia, media = []) =>
+    coverMedia && media.includes(coverMedia) ? coverMedia : null
+
 export async function PUT(request) {
     try {
         const auth = await isAuthenticated('admin')
@@ -23,7 +30,8 @@ export async function PUT(request) {
             color: true,
             colorHex: true,
             size: true,
-            media: true
+            media: true,
+            coverMedia: true
         })
 
         const validate = schema.safeParse(payload)
@@ -74,12 +82,16 @@ export async function PUT(request) {
         getProductVariant.size = validatedData.size || ''
         getProductVariant.sku = sku
         getProductVariant.media = validatedData.media
+        getProductVariant.coverMedia = pickCoverMedia(validatedData.coverMedia, validatedData.media)
         await getProductVariant.save()
 
         // Colour / media edits can change the shop filter list and the homepage
         // "Shop by Colour" section (label + representative image).
         revalidateTag('storefront-shop-filters')
         revalidateTag('storefront-home-colors')
+        // The product page gallery renders the selected variant's media, led by
+        // its cover - a cover change has to invalidate that cache too.
+        revalidateTag('storefront-product-details')
 
         return response(true, 200, 'Product variant updated successfully.')
 

@@ -50,6 +50,14 @@ const ProductVariantSchema = new mongoose.Schema({
             required: true
         }
     ],
+    // Admin-chosen cover image. Always one of the ids in `media`; when unset
+    // (or pointing at an image since removed) read paths fall back to the first
+    // entry of `media`. See lib/coverMedia.js.
+    coverMedia: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Media',
+        default: null,
+    },
 
     deletedAt: {
         type: Date,

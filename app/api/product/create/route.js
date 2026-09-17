@@ -7,6 +7,13 @@ import ProductModel from "@/models/Product.model"
 import { encode } from "entities"
 import { decodeHTMLDeep } from "@/lib/utils"
 
+
+// The cover must be one of the images actually being saved. Anything else - a
+// stale id left over after the admin removed that image, or a hand-crafted
+// payload - is discarded so `coverMedia` can never dangle.
+const pickCoverMedia = (coverMedia, media = []) =>
+    coverMedia && media.includes(coverMedia) ? coverMedia : null
+
 export async function POST(request) {
     try {
         const auth = await isAuthenticated('admin')
@@ -24,7 +31,8 @@ export async function POST(request) {
             slug: true,
             category: true,
             description: true,
-            media: true
+            media: true,
+            coverMedia: true
         })
 
 
@@ -42,6 +50,7 @@ export async function POST(request) {
             category: productData.category,
             description: encode(decodeHTMLDeep(productData.description)),
             media: productData.media,
+            coverMedia: pickCoverMedia(productData.coverMedia, productData.media),
         })
 
         await newProduct.save()

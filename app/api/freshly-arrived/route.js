@@ -5,6 +5,7 @@ import { connectDB } from "@/lib/databaseConnection"
 import { catchError, response } from "@/lib/helperFunction"
 import ProductModel from "@/models/Product.model"
 import "@/models/Media.model"
+import { withCoverFirstAll } from '@/lib/coverMedia'
 
 const FRESHLY_ARRIVED_TAG = 'storefront-freshly-arrived-products'
 
@@ -36,11 +37,11 @@ export async function GET() {
 
         const items = await ProductModel.find({ deletedAt: null, isFreshlyArrived: true })
             .sort({ freshlyArrivedSortOrder: 1, createdAt: -1, _id: 1 })
-            .select('name slug media freshlyArrivedSortOrder')
+            .select('name slug media coverMedia freshlyArrivedSortOrder')
             .populate('media', 'secure_url alt')
             .lean()
 
-        return response(true, 200, 'Freshly arrived products fetched.', items)
+        return response(true, 200, 'Freshly arrived products fetched.', withCoverFirstAll(items))
     } catch (error) {
         return catchError(error)
     }

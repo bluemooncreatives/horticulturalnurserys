@@ -48,7 +48,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
             )}
 
             {/* ── Drawer ── */}
-            <SheetContent className="w-full gap-0 border-l border-border/40 bg-background p-0 shadow-xl sm:max-w-[440px]">
+            <SheetContent className="data-[side=right]:w-[88vw] gap-0 border-l border-border/40 bg-background p-0 shadow-2xl sm:data-[side=right]:w-full sm:data-[side=right]:max-w-[440px]">
 
                 {/* Header */}
                 <SheetHeader className="flex-shrink-0 border-b border-border/50 px-5 py-4 sm:px-6 sm:py-5">
@@ -95,11 +95,11 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                     className="group relative flex items-stretch gap-3 rounded-xs border border-border/40 bg-background p-3 transition-all duration-200 hover:border-border/70 hover:shadow-[0_4px_16px_rgba(0,0,0,0.07)]"
                                 >
                                     {/* Thumbnail */}
-                                    <div className="relative w-[80px] flex-shrink-0 overflow-hidden rounded-xs border border-border/30">
+                                    <div className="relative h-[76px] w-[64px] sm:h-[84px] sm:w-[76px] flex-shrink-0 overflow-hidden rounded-xs border border-border/30">
                                         <Image
                                             src={product?.media || imgPlaceholder.src}
                                             fill
-                                            sizes="80px"
+                                            sizes="76px"
                                             alt={product.name}
                                             className="object-cover object-center transition-transform duration-300 group-hover:scale-[1.06]"
                                         />
@@ -128,7 +128,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                                 {[product.size, product.color].filter(Boolean).join(' / ')}
                                             </span>
                                         )}
-                                        <div className="flex items-center justify-between gap-2 pt-1">
+                                        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5 pt-1">
                                             {/* Quantity stepper: gainable (+) and deducible (-) */}
                                             <div className="inline-flex h-7 items-center rounded-full border border-border/70 bg-background shadow-xs">
                                                 <button
@@ -159,7 +159,7 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                                     <Plus className="size-3" />
                                                 </button>
                                             </div>
-                                            <span className="font-neue text-[0.75rem] font-medium uppercase text-muted-foreground">
+                                            <span className="font-neue text-[0.72rem] sm:text-[0.75rem] font-medium uppercase text-muted-foreground whitespace-nowrap">
                                                 Price on enquiry
                                             </span>
                                         </div>
@@ -171,38 +171,30 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                 </div>
 
                 {/* Footer */}
-                <div className="flex-shrink-0 border-t border-border/50 bg-background px-6 pb-6 pt-5">
+                <div className="flex-shrink-0 border-t border-border/50 bg-background px-5 pb-8 pt-4 sm:px-6 sm:pb-6 sm:pt-5 pb-[calc(2rem+env(safe-area-inset-bottom,0px))]">
                     {cart.count > 0 && (
                         <div className="space-y-1.5">
                             <div className="flex items-center justify-between">
-                                <span className="font-neue text-[14px] text-muted-foreground">Items in list</span>
-                                <span className="font-neue text-[14px] font-semibold text-foreground tabular-nums">{cartCount}</span>
+                                <span className="font-neue text-[13px] sm:text-[14px] text-muted-foreground">Items in list</span>
+                                <span className="font-neue text-[13px] sm:text-[14px] font-semibold text-foreground tabular-nums">{cartCount}</span>
                             </div>
                             <div className="flex items-center justify-between">
-                                <span className="font-neue text-[14px] text-muted-foreground">Total quantity</span>
-                                <span className="font-neue text-[14px] font-semibold text-foreground tabular-nums">{totalUnits}</span>
+                                <span className="font-neue text-[13px] sm:text-[14px] text-muted-foreground">Total quantity</span>
+                                <span className="font-neue text-[13px] sm:text-[14px] font-semibold text-foreground tabular-nums">{totalUnits}</span>
                             </div>
                         </div>
                     )}
 
-                    <p className="mt-2.5 rounded-lg bg-muted/40 px-3 py-2 text-center text-[0.8rem] font-medium text-muted-foreground">
+                    <p className="mt-2.5 rounded-lg bg-muted/40 px-3 py-2 text-center text-[0.78rem] font-medium text-muted-foreground">
                         No payment now - submit the list and our team will share pricing.
                     </p>
 
-                    {/* Action buttons */}
-                    <div className="mt-4 grid grid-cols-2 gap-2.5">
-                        <BrandOutlineButton
-                            type="button"
-                            asChild
-                            className="text-[13px] sm:text-base sm:tracking-normal"
-                            onClick={() => setOpen(false)}
-                        >
-                            <Link href={WEBSITE_CART}>View List</Link>
-                        </BrandOutlineButton>
+                    {/* Action buttons (Stacked on mobile so neither button truncates or gets blocked by floating widgets) */}
+                    <div className="mt-3.5 flex flex-col gap-2 sm:grid sm:grid-cols-2 sm:gap-2.5">
                         <BrandButton
                             type="button"
                             asChild
-                            className="text-[13px] sm:text-base sm:tracking-normal"
+                            className="w-full text-sm font-semibold uppercase sm:order-2"
                             onClick={() => setOpen(false)}
                         >
                             {cart.count ? (
@@ -213,6 +205,14 @@ const Cart = ({ open: openProp, onOpenChange, hideTrigger = false }) => {
                                 </span>
                             )}
                         </BrandButton>
+                        <BrandOutlineButton
+                            type="button"
+                            asChild
+                            className="w-full text-sm font-semibold uppercase sm:order-1"
+                            onClick={() => setOpen(false)}
+                        >
+                            <Link href={WEBSITE_CART}>View List</Link>
+                        </BrandOutlineButton>
                     </div>
                 </div>
 

@@ -100,18 +100,18 @@ const ProductBox = ({ product, priority = false }) => {
                 <div className={`flex w-full items-center ${isMobile ? 'gap-1.5' : 'gap-2'}`}>
                     {/* Stepper beside Added */}
                     <div
-                        className={`inline-flex ${btnHeight} shrink-0 items-center justify-between rounded-lg border border-border/70 bg-background/95 px-1 shadow-xs backdrop-blur-xs`}
+                        className={`inline-grid grid-cols-3 ${btnHeight} ${isMobile ? 'min-w-0 flex-1' : 'w-24 shrink-0'} items-center rounded-lg border border-border/70 bg-background/95 shadow-xs backdrop-blur-xs`}
                         onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
                     >
                         <button
                             type="button"
                             aria-label={cartQty <= 1 ? 'Remove from enquiry list' : 'Decrease quantity'}
                             onClick={handleCartDec}
-                            className={`flex ${isMobile ? 'size-6' : 'size-7'} items-center justify-center rounded-md text-foreground/70 transition hover:bg-muted hover:text-foreground cursor-pointer`}
+                            className="flex h-full w-full items-center justify-center text-foreground/70 transition hover:bg-muted hover:text-foreground cursor-pointer"
                         >
-                            {cartQty <= 1 ? <Trash2 className="size-3 text-[var(--dark-red)]" /> : <Minus className="size-3" />}
+                            {cartQty <= 1 ? <Trash2 className="size-3 sm:size-3.5 text-[var(--dark-red)]" /> : <Minus className="size-3 sm:size-3.5" />}
                         </button>
-                        <span className={`min-w-5 select-none px-1 text-center font-neue ${isMobile ? 'text-[11px]' : 'text-xs'} font-bold tabular-nums text-foreground`}>
+                        <span className="flex h-full w-full select-none items-center justify-center text-center font-neue text-[11px] sm:text-xs font-bold leading-none tabular-nums text-foreground">
                             {cartQty}
                         </span>
                         <button
@@ -119,9 +119,9 @@ const ProductBox = ({ product, priority = false }) => {
                             aria-label="Increase quantity"
                             disabled={cartQty >= MAX_CART_QTY}
                             onClick={handleCartInc}
-                            className={`flex ${isMobile ? 'size-6' : 'size-7'} items-center justify-center rounded-md text-foreground/70 transition hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer`}
+                            className="flex h-full w-full items-center justify-center text-foreground/70 transition hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
                         >
-                            <Plus className="size-3" />
+                            <Plus className="size-3 sm:size-3.5" />
                         </button>
                     </div>
 
@@ -129,18 +129,22 @@ const ProductBox = ({ product, priority = false }) => {
                     <Button
                         asChild
                         variant="brand"
-                        size="pill"
-                        className={`${btnHeight} min-w-0 flex-1 gap-1 rounded-lg px-2 ${textSize} uppercase tracking-wide`}
+                        size={isMobile ? 'icon' : 'pill'}
+                        className={
+                            isMobile
+                                ? `${iconSize} shrink-0 rounded-lg p-0`
+                                : `${btnHeight} min-w-0 flex-1 gap-1 rounded-lg px-2 ${textSize} uppercase tracking-wide`
+                        }
                     >
-                        <Link href={WEBSITE_CART} aria-label="Go to enquiry list" onClick={(e) => e.stopPropagation()}>
-                            <Check size={isMobile ? 13 : 14} strokeWidth={2.2} />
-                            <span className="truncate">Added</span>
+                        <Link href={WEBSITE_CART} aria-label="Go to enquiry list" title="View Enquiry List" onClick={(e) => e.stopPropagation()}>
+                            <Check size={14} strokeWidth={2.2} />
+                            {!isMobile && <span className="truncate">Added</span>}
                         </Link>
                     </Button>
 
                     {/* View details */}
                     <Button asChild variant="brand-outline" size="icon" className={`${iconSize} shrink-0 rounded-lg bg-white`}>
-                        <Link href={href} aria-label={`View ${product?.name}`} onClick={(e) => e.stopPropagation()}>
+                        <Link href={href} aria-label={`View ${product?.name}`} title="View Details" onClick={(e) => e.stopPropagation()}>
                             <Eye size={isMobile ? 14 : 16} strokeWidth={1.8} />
                         </Link>
                     </Button>

@@ -9,11 +9,15 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSelector, useDispatch } from 'react-redux'
 import imgPlaceholder from '@/public/assets/images/img-placeholder.webp'
-import { Minus, Plus, XCircle } from 'lucide-react'
+import { Minus, Plus, Trash2 } from 'lucide-react'
 import { decreaseQuantity, increaseQuantity, removeFromCart } from '@/store/reducer/cartReducer'
 import { MAX_CART_QTY } from '@/lib/cartConstants'
 import { Skeleton } from '@/components/ui/skeleton'
 import useHydrated from '@/hooks/useHydrated'
+import WebsiteBreadcrumb from '@/components/Application/Website/WebsiteBreadcrumb'
+import { showToast } from '@/lib/showToast'
+
+const breadCrumb = { title: 'Enquiry' }
 
 const CartPageClient = () => {
     const dispatch = useDispatch()
@@ -28,27 +32,9 @@ const CartPageClient = () => {
 
     return (
         <div>
-            <section className="relative isolate h-[172px] overflow-hidden sm:h-[220px] lg:h-[280px]">
-                <div className="absolute inset-0 bg-[var(--dark-red-2)]" />
-                <div className="absolute inset-x-0 top-14 z-10 flex justify-center sm:top-5 lg:top-6">
-                    <div
-                        className="pointer-events-none select-none font-neue font-semibold uppercase text-white/90"
-                        style={{
-                            fontSize: "clamp(4.5rem, 20vw, 18rem)",
-                            lineHeight: 0.78,
-                            WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)",
-                            maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 38%, rgba(0,0,0,0) 100%)",
-                            textShadow: "0 12px 32px rgba(0,0,0,0.18)",
-                        }}
-                        aria-hidden
-                    >
-                        Enquiry
-                    </div>
-                </div>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-16 bg-gradient-to-b from-transparent via-white/50 to-white sm:h-36" />
-            </section>
+            <WebsiteBreadcrumb props={breadCrumb} />
 
-            <section className="website-gutter bg-background pt-4 pb-10 sm:py-10 lg:py-14">
+            <section className="website-gutter bg-background pt-4 pb-20 sm:py-10 lg:py-14">
                 <div className="grid w-full gap-6 lg:grid-cols-[290px_1fr] lg:gap-8">
                     {!hydrated ? (
                         /* Placeholder rather than the empty state: the server
@@ -78,13 +64,14 @@ const CartPageClient = () => {
                         </div>
                     ) : (
                         <>
-                            <aside className="w-full">
+                            {/* Mobile: Order 2 (below items). Desktop: Order 1 (sidebar on left). */}
+                            <aside className="w-full order-2 lg:order-1">
                                 <div className="lg:sticky lg:top-24">
-                                    <Card className="border-border/60 shadow-sm">
-                                        <CardHeader className="border-b border-border/60">
-                                            <CardTitle className="text-lg font-semibold uppercase">Enquiry Summary</CardTitle>
+                                    <Card className="border-border/60 shadow-xs">
+                                        <CardHeader className="border-b border-border/60 pb-3">
+                                            <CardTitle className="text-base font-semibold uppercase tracking-wide">Enquiry Summary</CardTitle>
                                         </CardHeader>
-                                        <CardContent className="space-y-3">
+                                        <CardContent className="space-y-3 pt-4">
                                             <div className="flex items-center justify-between text-sm">
                                                 <span className="text-muted-foreground">Products</span>
                                                 <span className="font-medium tabular-nums">{cart.count}</span>
@@ -99,8 +86,8 @@ const CartPageClient = () => {
                                                 No payment is taken here. Submit your enquiry and our team will get back to you with availability and pricing.
                                             </p>
                                         </CardContent>
-                                        <CardFooter className="flex flex-col gap-3">
-                                            <Button type="button" onClick={() => router.push(WEBSITE_ENQUIRY)} variant="brand" className="h-11 w-full text-[0.8rem] font-semibold uppercase">
+                                        <CardFooter className="flex flex-col gap-2.5 pt-2">
+                                            <Button type="button" onClick={() => router.push(WEBSITE_ENQUIRY)} variant="brand" className="h-11 w-full text-[0.8rem] font-semibold uppercase cursor-pointer">
                                                 Submit Enquiry
                                             </Button>
                                             <Button type="button" variant="link" asChild className="h-auto p-0 text-[0.8rem] font-semibold uppercase text-foreground">
@@ -111,93 +98,208 @@ const CartPageClient = () => {
                                 </div>
                             </aside>
 
-                            <div className="w-full">
-                                <div className="rounded-lg border border-border/60 bg-background shadow-sm">
-                                    <Table>
-                                        <TableHeader className="hidden bg-muted/40 md:table-header-group">
-                                            <TableRow>
-                                                <TableHead className="px-3">Product</TableHead>
-                                                <TableHead className="px-3 text-center">Quantity</TableHead>
-                                                <TableHead className="px-3 text-center">Action</TableHead>
-                                            </TableRow>
-                                        </TableHeader>
-                                        <TableBody>
-                                            {cart.products.map((product) => (
-                                                <TableRow key={product.variantId} className="block border-b md:table-row">
-                                                    <TableCell className="px-3 py-4">
-                                                        <div className="flex items-center gap-4">
-                                                            <Image
-                                                                src={product.media || imgPlaceholder.src}
-                                                                width={64}
-                                                                height={64}
-                                                                alt={product.name}
-                                                                className="h-16 w-16 rounded-md border border-border/60 object-cover"
-                                                            />
-                                                            <div>
-                                                                <h4 className="line-clamp-1 text-base font-semibold">
-                                                                    <Link href={WEBSITE_PRODUCT_DETAILS(product.url)}>
-                                                                        {product.name}
-                                                                    </Link>
-                                                                </h4>
-                                                                {(product.color || product.size) && (
-                                                                    <p className="text-xs uppercase text-muted-foreground">
-                                                                        {[product.color, product.size].filter(Boolean).join(' / ')}
-                                                                    </p>
-                                                                )}
-                                                                <p className="mt-1 text-[0.8rem] font-medium uppercase text-[var(--dark-red)]">
-                                                                    Price on enquiry
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell className="flex justify-between px-3 pb-3 md:table-cell md:py-4">
-                                                        <span className="font-medium md:hidden">Quantity</span>
-                                                        <div className="flex justify-center">
-                                                            <div className="flex items-center justify-center rounded-full border border-border/60 bg-background">
-                                                                <Button
-                                                                    type="button"
-                                                                    variant="ghost"
-                                                                    size="icon-sm"
-                                                                    className="rounded-full"
-                                                                    onClick={() => dispatch(decreaseQuantity({ productId: product.productId, variantId: product.variantId }))}
+                            {/* Mobile: Order 1 (at top). Desktop: Order 2 (main content on right). */}
+                            <div className="w-full order-1 lg:order-2">
+                                <div className="overflow-hidden rounded-xl border border-border/60 bg-background shadow-xs">
+                                    {/* Mobile Header */}
+                                    <div className="flex items-center justify-between border-b border-border/60 bg-muted/20 px-4 py-3 md:hidden">
+                                        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                            Items ({cart.count})
+                                        </span>
+                                        <span className="text-[11px] text-muted-foreground">
+                                            {cart.products.reduce((sum, p) => sum + (p.qty || 0), 0)} total units
+                                        </span>
+                                    </div>
+
+                                    {/* Mobile Card-Based List */}
+                                    <div className="divide-y divide-border/60 md:hidden">
+                                        {cart.products.map((product) => (
+                                            <div
+                                                key={product.variantId}
+                                                className="flex items-start gap-3.5 p-3.5 transition-colors hover:bg-muted/10 sm:p-4"
+                                            >
+                                                {/* Thumbnail */}
+                                                <Link
+                                                    href={WEBSITE_PRODUCT_DETAILS(product.url)}
+                                                    className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-muted/20"
+                                                >
+                                                    <Image
+                                                        src={product.media || imgPlaceholder.src}
+                                                        alt={product.name}
+                                                        fill
+                                                        sizes="80px"
+                                                        className="object-cover object-center"
+                                                    />
+                                                </Link>
+
+                                                {/* Content Column */}
+                                                <div className="flex min-w-0 flex-1 flex-col justify-between self-stretch">
+                                                    {/* Title & Delete */}
+                                                    <div>
+                                                        <div className="flex items-start justify-between gap-2">
+                                                            <h4 className="line-clamp-2 text-sm font-semibold leading-snug text-foreground">
+                                                                <Link
+                                                                    href={WEBSITE_PRODUCT_DETAILS(product.url)}
+                                                                    className="transition-colors hover:text-[var(--brand-primary)]"
                                                                 >
-                                                                    <Minus className="size-4" />
-                                                                </Button>
-                                                                <input
-                                                                    type="text"
-                                                                    value={product.qty}
-                                                                    className="w-10 border-none bg-transparent text-center text-sm outline-offset-0 md:w-12"
-                                                                    readOnly
-                                                                />
-                                                                <Button
-                                                                    type="button"
-                                                                    variant="ghost"
-                                                                    size="icon-sm"
-                                                                    className="rounded-full"
-                                                                    disabled={product.qty >= MAX_CART_QTY}
-                                                                    onClick={() => dispatch(increaseQuantity({ productId: product.productId, variantId: product.variantId }))}
-                                                                >
-                                                                    <Plus className="size-4" />
-                                                                </Button>
-                                                            </div>
+                                                                    {product.name}
+                                                                </Link>
+                                                            </h4>
+                                                            <button
+                                                                type="button"
+                                                                aria-label="Remove item"
+                                                                onClick={() => {
+                                                                    dispatch(removeFromCart({ productId: product.productId, variantId: product.variantId }))
+                                                                    showToast('success', 'Removed from your enquiry list.')
+                                                                }}
+                                                                className="flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-md text-muted-foreground/50 transition-colors hover:bg-destructive/10 hover:text-destructive active:scale-95"
+                                                            >
+                                                                <Trash2 className="size-4" />
+                                                            </button>
                                                         </div>
-                                                    </TableCell>
-                                                    <TableCell className="flex justify-between px-3 pb-4 text-center md:table-cell md:py-4">
-                                                        <span className="font-medium md:hidden">Remove</span>
-                                                        <Button
-                                                            type="button"
-                                                            variant="ghost"
-                                                            size="icon-sm"
-                                                            className="text-destructive"
-                                                            onClick={() => dispatch(removeFromCart({ productId: product.productId, variantId: product.variantId }))}
-                                                        >
-                                                            <XCircle className="size-5" />
-                                                        </Button>
-                                                    </TableCell>
+
+                                                        {/* Variant badge */}
+                                                        {(product.color || product.size) && (
+                                                            <div className="mt-1">
+                                                                <span className="inline-block rounded-full bg-muted/70 px-2.5 py-0.5 text-[0.72rem] font-medium uppercase tracking-wide text-muted-foreground">
+                                                                    {[product.color, product.size].filter(Boolean).join(' / ')}
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    {/* Bottom Row: Stepper + Price */}
+                                                    <div className="mt-3 flex flex-wrap items-center justify-between gap-2 pt-0.5">
+                                                        {/* Pill Stepper */}
+                                                        <div className="inline-flex h-8 items-center rounded-full border border-border/70 bg-background shadow-2xs">
+                                                            <button
+                                                                type="button"
+                                                                aria-label="Decrease quantity"
+                                                                disabled={product.qty <= 1}
+                                                                onClick={() => dispatch(decreaseQuantity({ productId: product.productId, variantId: product.variantId }))}
+                                                                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground active:scale-95 disabled:pointer-events-none disabled:opacity-35"
+                                                            >
+                                                                <Minus className="size-3.5" />
+                                                            </button>
+                                                            <span className="w-8 text-center text-xs font-semibold tabular-nums text-foreground">
+                                                                {product.qty}
+                                                            </span>
+                                                            <button
+                                                                type="button"
+                                                                aria-label="Increase quantity"
+                                                                disabled={product.qty >= MAX_CART_QTY}
+                                                                onClick={() => dispatch(increaseQuantity({ productId: product.productId, variantId: product.variantId }))}
+                                                                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground active:scale-95 disabled:pointer-events-none disabled:opacity-35"
+                                                            >
+                                                                <Plus className="size-3.5" />
+                                                            </button>
+                                                        </div>
+
+                                                        {/* Price on enquiry */}
+                                                        <span className="text-[0.75rem] font-bold uppercase tracking-wider text-[var(--dark-red)]">
+                                                            Price on enquiry
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Desktop Table View */}
+                                    <div className="hidden md:block">
+                                        <Table>
+                                            <TableHeader className="bg-muted/40">
+                                                <TableRow>
+                                                    <TableHead className="px-4">Product</TableHead>
+                                                    <TableHead className="px-4 text-center">Quantity</TableHead>
+                                                    <TableHead className="px-4 text-center">Action</TableHead>
                                                 </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {cart.products.map((product) => (
+                                                    <TableRow key={product.variantId} className="border-b">
+                                                        <TableCell className="px-4 py-4">
+                                                            <div className="flex items-center gap-4">
+                                                                <Link
+                                                                    href={WEBSITE_PRODUCT_DETAILS(product.url)}
+                                                                    className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-border/60"
+                                                                >
+                                                                    <Image
+                                                                        src={product.media || imgPlaceholder.src}
+                                                                        fill
+                                                                        sizes="64px"
+                                                                        alt={product.name}
+                                                                        className="object-cover"
+                                                                    />
+                                                                </Link>
+                                                                <div>
+                                                                    <h4 className="line-clamp-1 text-base font-semibold">
+                                                                        <Link
+                                                                            href={WEBSITE_PRODUCT_DETAILS(product.url)}
+                                                                            className="transition-colors hover:text-[var(--brand-primary)]"
+                                                                        >
+                                                                            {product.name}
+                                                                        </Link>
+                                                                    </h4>
+                                                                    {(product.color || product.size) && (
+                                                                        <p className="text-xs uppercase text-muted-foreground">
+                                                                            {[product.color, product.size].filter(Boolean).join(' / ')}
+                                                                        </p>
+                                                                    )}
+                                                                    <p className="mt-1 text-[0.8rem] font-medium uppercase text-[var(--dark-red)]">
+                                                                        Price on enquiry
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </TableCell>
+                                                        <TableCell className="px-4 py-4">
+                                                            <div className="flex justify-center">
+                                                                <div className="inline-flex h-9 items-center rounded-full border border-border/70 bg-background shadow-2xs">
+                                                                    <Button
+                                                                        type="button"
+                                                                        variant="ghost"
+                                                                        size="icon-sm"
+                                                                        className="h-8 w-8 rounded-full cursor-pointer"
+                                                                        disabled={product.qty <= 1}
+                                                                        onClick={() => dispatch(decreaseQuantity({ productId: product.productId, variantId: product.variantId }))}
+                                                                    >
+                                                                        <Minus className="size-4" />
+                                                                    </Button>
+                                                                    <span className="w-10 text-center text-sm font-semibold tabular-nums">
+                                                                        {product.qty}
+                                                                    </span>
+                                                                    <Button
+                                                                        type="button"
+                                                                        variant="ghost"
+                                                                        size="icon-sm"
+                                                                        className="h-8 w-8 rounded-full cursor-pointer"
+                                                                        disabled={product.qty >= MAX_CART_QTY}
+                                                                        onClick={() => dispatch(increaseQuantity({ productId: product.productId, variantId: product.variantId }))}
+                                                                    >
+                                                                        <Plus className="size-4" />
+                                                                    </Button>
+                                                                </div>
+                                                            </div>
+                                                        </TableCell>
+                                                        <TableCell className="px-4 py-4 text-center">
+                                                            <Button
+                                                                type="button"
+                                                                variant="ghost"
+                                                                size="icon-sm"
+                                                                className="cursor-pointer text-muted-foreground/50 transition-colors hover:bg-destructive/10 hover:text-destructive"
+                                                                onClick={() => {
+                                                                    dispatch(removeFromCart({ productId: product.productId, variantId: product.variantId }))
+                                                                    showToast('success', 'Removed from your enquiry list.')
+                                                                }}
+                                                            >
+                                                                <Trash2 className="size-5" />
+                                                            </Button>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
                                 </div>
                             </div>
                         </>

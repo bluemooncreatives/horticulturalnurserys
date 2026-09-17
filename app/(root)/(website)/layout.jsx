@@ -1,6 +1,7 @@
 import Footer from '@/components/Application/Website/Footer'
 import Header from '@/components/Application/Website/Header'
 import LoaderProvider from '@/components/Application/Website/LoaderProvider'
+import MobileStickyCartBar from '@/components/Application/Website/MobileStickyCartBar'
 import { getFooterCategories } from '@/lib/services/categoryService'
 import { getHomeParents } from '@/lib/services/parentService'
 
@@ -27,6 +28,7 @@ const Layout = async ({ children }) => {
                     {children}
                 </main>
                 <Footer categoryLinks={footerCategories} />
+                <MobileStickyCartBar />
             </LoaderProvider>
         </div>
     )

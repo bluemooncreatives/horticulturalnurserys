@@ -176,7 +176,7 @@ const ShopClient = ({ initialProducts = [], initialTotal = 0, initialTotalPages 
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-5 bg-gradient-to-b from-transparent via-background/50 to-background sm:h-7" />
             </section>
 
-            <section className='website-gutter bg-background pt-2 pb-10 sm:pt-4 sm:pb-10 lg:pt-6 lg:pb-14'>
+            <section className='website-gutter bg-background pt-2 pb-20 sm:pt-4 sm:pb-10 lg:pt-6 lg:pb-14'>
                 <div className="grid w-full gap-6 lg:grid-cols-[290px_1fr] lg:gap-8">
                     {/* The aside shell always renders (CSS-hidden below lg) so the
                         sidebar column is occupied from the server-rendered first

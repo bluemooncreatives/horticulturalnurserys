@@ -135,18 +135,18 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                         {product && isInCart(product) ? (
                                             <>
                                                 <div
-                                                    className="inline-flex h-8 shrink-0 items-center justify-between rounded-lg border border-border/70 bg-background/95 px-1 shadow-xs backdrop-blur-xs sm:h-9"
+                                                    className="inline-grid grid-cols-3 h-8 flex-1 min-w-0 items-center rounded-lg border border-border/70 bg-background/95 shadow-xs backdrop-blur-xs sm:h-9 sm:w-24 sm:flex-initial sm:shrink-0"
                                                     onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
                                                 >
                                                     <button
                                                         type="button"
                                                         aria-label={cartQty <= 1 ? 'Remove from enquiry list' : 'Decrease quantity'}
                                                         onClick={(e) => handleCartDec(e, product)}
-                                                        className="flex size-6 items-center justify-center rounded-md text-foreground/70 transition hover:bg-muted hover:text-foreground sm:size-7 cursor-pointer"
+                                                        className="flex h-full w-full items-center justify-center text-foreground/70 transition hover:bg-muted hover:text-foreground cursor-pointer"
                                                     >
-                                                        {cartQty <= 1 ? <Trash2 className="size-3 text-[var(--dark-red)]" /> : <Minus className="size-3" />}
+                                                        {cartQty <= 1 ? <Trash2 className="size-3 sm:size-3.5 text-[var(--dark-red)]" /> : <Minus className="size-3 sm:size-3.5" />}
                                                     </button>
-                                                    <span className="min-w-5 select-none px-1 text-center font-neue text-[11px] font-bold tabular-nums text-foreground sm:text-xs">
+                                                    <span className="flex h-full w-full select-none items-center justify-center text-center font-neue text-[11px] sm:text-xs font-bold leading-none tabular-nums text-foreground">
                                                         {cartQty}
                                                     </span>
                                                     <button
@@ -154,21 +154,21 @@ const BestsellersSectionClient = ({ products = [] }) => {
                                                         aria-label="Increase quantity"
                                                         disabled={cartQty >= MAX_CART_QTY}
                                                         onClick={(e) => handleCartInc(e, product)}
-                                                        className="flex size-6 items-center justify-center rounded-md text-foreground/70 transition hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 sm:size-7 cursor-pointer"
+                                                        className="flex h-full w-full items-center justify-center text-foreground/70 transition hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
                                                     >
-                                                        <Plus className="size-3" />
+                                                        <Plus className="size-3 sm:size-3.5" />
                                                     </button>
                                                 </div>
 
                                                 <Button
                                                     asChild
                                                     variant="brand"
-                                                    size="pill"
-                                                    className="h-8 min-w-0 flex-1 gap-1 rounded-lg px-2 text-[0.64rem] uppercase tracking-wide sm:h-9 sm:gap-1.5 sm:px-3 sm:text-[0.7rem]"
+                                                    size="icon"
+                                                    className="size-8 shrink-0 rounded-lg p-0 sm:h-9 sm:w-auto sm:flex-1 sm:gap-1.5 sm:px-3 sm:text-[0.7rem] uppercase tracking-wide"
                                                 >
-                                                    <Link href={WEBSITE_CART} aria-label="Go to cart" onClick={(e) => e.stopPropagation()}>
+                                                    <Link href={WEBSITE_CART} aria-label="Go to cart" title="View Enquiry List" onClick={(e) => e.stopPropagation()}>
                                                         <Check size={14} strokeWidth={2.2} />
-                                                        <span className="truncate">Added</span>
+                                                        <span className="hidden truncate sm:inline">Added</span>
                                                     </Link>
                                                 </Button>
                                             </>
